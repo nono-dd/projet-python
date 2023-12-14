@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="fileinput — Parcourt les lignes provenant de plusieurs entrées" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/fileinput.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/fileinput.py Ce module offre une classe auxiliaire et des fonctions pour lire facilement l'entrée standard ou bien les fichiers d'une liste. Si vous n'avez besoin de lire ou écrir..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/fileinput.py Ce module offre une classe auxiliaire et des fonctions pour lire facilement l'entrée standard ou bien les fichiers d'une liste. Si vous n'avez besoin de lire ou écrir..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>fileinput — Parcourt les lignes provenant de plusieurs entrées &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="stat --- Interpreting stat() results" href="stat.html" />
+    <link rel="prev" title="os.path — manipulation courante des chemins" href="os.path.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/fileinput.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="os.path.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — manipulation courante des chemins</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="stat.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> --- Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/fileinput.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="stat.html" title="stat --- Interpreting stat() results"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="os.path.html" title="os.path — manipulation courante des chemins"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="filesys.html" accesskey="U">Accès aux Fichiers et aux Dossiers</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Parcourt les lignes provenant de plusieurs entrées</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-fileinput">
+<span id="fileinput-iterate-over-lines-from-multiple-input-streams"></span><h1><a class="reference internal" href="#module-fileinput" title="fileinput: Loop over standard input or a list of files."><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code></a> — Parcourt les lignes provenant de plusieurs entrées<a class="headerlink" href="#module-fileinput" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/fileinput.py">Lib/fileinput.py</a></p>
+<hr class="docutils" />
+<p>Ce module offre une classe auxiliaire et des fonctions pour lire facilement l'entrée standard ou bien les fichiers d'une liste. Si vous n'avez besoin de lire ou écrire qu'un seul fichier, il suffit de <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>.</p>
+<p>Ce module s'utilise le plus couramment comme ceci :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fileinput</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">):</span>
+    <span class="n">process</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Ce code traite une à une les lignes des fichiers de <code class="docutils literal notranslate"><span class="pre">sys.argv[1:]</span></code>. Si cette liste est vide (pas d'argument en ligne de commande), il lit l'entrée standard. Le nom de fichier <code class="docutils literal notranslate"><span class="pre">'-'</span></code> est équivalent à l'entrée standard (les arguments facultatifs <em>mode</em> et <em>openhook</em> sont ignorés dans ce cas). On peut aussi passer la liste des fichiers comme argument à <a class="reference internal" href="#fileinput.input" title="fileinput.input"><code class="xref py py-func docutils literal notranslate"><span class="pre">input()</span></code></a>, voire un nom de fichier unique.</p>
+<p>Par défaut, tous les fichiers sont ouverts en mode texte. On peut changer ce comportement à l'aide du paramètre <em>mode</em> de la fonction <a class="reference internal" href="#fileinput.input" title="fileinput.input"><code class="xref py py-func docutils literal notranslate"><span class="pre">input()</span></code></a> ou du constructeur de <a class="reference internal" href="#fileinput.FileInput" title="fileinput.FileInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileInput</span></code></a>. Si une erreur d'entrée-sortie se produit durant l'ouverture ou la lecture d'un fichier, l'exception <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> est levée.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span><a class="reference internal" href="exceptions.html#IOError" title="IOError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IOError</span></code></a> était levée auparavant, elle est devenue un alias de <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>.</p>
+</div>
+<p>Si <code class="docutils literal notranslate"><span class="pre">sys.stdin</span></code> apparaît plus d'une fois dans la liste, toutes les lignes sont consommées dès la première fois, sauf éventuellement en cas d'usage interactif ou si le flux d'entrée standard a été modifié dans l'intervalle (par exemple avec <code class="docutils literal notranslate"><span class="pre">sys.stdin.seek(0)</span></code>).</p>
+<p>Les fichiers vides sont ouverts et refermés immédiatement. Ils ne sont pas détectables dans la liste des fichiers, sauf éventuellement dans le cas où le dernier fichier est vide.</p>
+<p>Les caractères de saut de ligne sont préservés, donc toutes les lignes se terminent par un saut de ligne, sauf éventuellement la dernière ligne d'un fichier.</p>
+<p>You can control how files are opened by providing an opening hook via the
+<em>openhook</em> parameter to <a class="reference internal" href="#fileinput.input" title="fileinput.input"><code class="xref py py-func docutils literal notranslate"><span class="pre">fileinput.input()</span></code></a> or <a class="reference internal" href="#fileinput.FileInput" title="fileinput.FileInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileInput()</span></code></a>. The
+hook must be a function that takes two arguments, <em>filename</em> and <em>mode</em>, and
+returns an accordingly opened file-like object. If <em>encoding</em> and/or <em>errors</em>
+are specified, they will be passed to the hook as additional keyword arguments.
+This module provides a <a class="reference internal" href="#fileinput.hook_compressed" title="fileinput.hook_compressed"><code class="xref py py-func docutils literal notranslate"><span class="pre">hook_compressed()</span></code></a> to support compressed files.</p>
+<p>La fonction suivante constitue l'interface principale du module :</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="fileinput.input">
+<span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">openhook</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.input" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée une instance de <a class="reference internal" href="#fileinput.FileInput" title="fileinput.FileInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileInput</span></code></a>, qui devient l'état global pour toutes les fonctions du module. Elle est également renvoyée afin que l'utilisateur puisse la parcourir comme un objet itérable. Tous les paramètres de cette fonction sont transmis au constructeur de <a class="reference internal" href="#fileinput.FileInput" title="fileinput.FileInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileInput</span></code></a>.</p>
+<p>Les instances de <a class="reference internal" href="#fileinput.FileInput" title="fileinput.FileInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileInput</span></code></a> peuvent s'utiliser comme gestionnaires de contexte, avec l'instruction <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a>. Dans le code suivant, <em>input</em> est fermé lorsque le bloc <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code> se termine, y compris si une exception l'a interrompu :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;spam.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;eggs.txt&#39;</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">process</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.2: </span>prise en charge du protocole de gestionnaire de contexte.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>les paramètres <em>mode</em> et <em>openhook</em> doivent être nommés.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.10: </span>The keyword-only parameter <em>encoding</em> and <em>errors</em> are added.</p>
+</div>
+</dd></dl>
+
+<p>Toutes les fonctions suivantes font appel à l'état global du module mis en place par <a class="reference internal" href="#fileinput.input" title="fileinput.input"><code class="xref py py-func docutils literal notranslate"><span class="pre">fileinput.input()</span></code></a>. L'absence de cet état déclenche l'exception <a class="reference internal" href="exceptions.html#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="fileinput.filename">
+<span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">filename</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.filename" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie le nom du fichier en train d'être lu, ou <code class="docutils literal notranslate"><span class="pre">None</span></code> avant la lecture de la toute première ligne.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fileinput.fileno">
+<span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">fileno</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.fileno" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie le descripteur de fichier (sous forme d'entier) utilisé pour lire le fichier courant. Si aucun fichier n'est ouvert (avant la première ligne et entre les fichiers), le résultat est <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fileinput.lineno">
+<span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">lineno</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.lineno" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie le numéro de la ligne qui vient d'être lue, en commençant par la première ligne du premier fichier. Avant cette toute première ligne, renvoie <code class="docutils literal notranslate"><span class="pre">0</span></code>. Après la dernière ligne du dernier fichier, renvoie le numéro de cette ligne.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fileinput.filelineno">
+<span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">filelineno</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.filelineno" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie le numéro de ligne relatif au fichier courant. Avant la toute première ligne, renvoie <code class="docutils literal notranslate"><span class="pre">0</span></code>. Après la toute dernière ligne, renvoie le numéro de cette ligne par rapport à son fichier source.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fileinput.isfirstline">
+<span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">isfirstline</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.isfirstline" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie <code class="docutils literal notranslate"><span class="pre">True</span></code> ou <code class="docutils literal notranslate"><span class="pre">False</span></code> selon que la ligne qui vient d'être lue est la première du fichier.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fileinput.isstdin">
+<span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">isstdin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.isstdin" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> ou <code class="docutils literal notranslate"><span class="pre">False</span></code> selon que la dernière ligne lue provenait de <code class="docutils literal notranslate"><span class="pre">sys.stdin</span></code> ou non.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fileinput.nextfile">
+<span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">nextfile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.nextfile" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ferme le fichier courant et laisse la lecture se poursuivre au début du suivant (ou se terminer si c'était le dernier fichier ; dans ce cas cette fonction ne fait rien). Les lignes court-circuitées ne comptent pas dans les numéros des lignes des fichiers suivants. Le nom du fichier courant n'est pas modifié immédiatement, mais seulement après que la première ligne du fichier suivant a été lue. Cette fonction n'a pas d'effet avant la lecture de la première ligne (elle ne peut pas sauter le premier fichier).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fileinput.close">
+<span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.close" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ferme le fichier courant et termine la lecture en sautant les fichiers suivants.</p>
+</dd></dl>
+
+<p>La classe qui implémente ce comportement du module est publique. On peut en créer des classes filles :</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="fileinput.FileInput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">FileInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">openhook</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.FileInput" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Class <a class="reference internal" href="#fileinput.FileInput" title="fileinput.FileInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileInput</span></code></a> is the implementation; its methods <a class="reference internal" href="#fileinput.filename" title="fileinput.filename"><code class="xref py py-meth docutils literal notranslate"><span class="pre">filename()</span></code></a>,
+<a class="reference internal" href="#fileinput.fileno" title="fileinput.fileno"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fileno()</span></code></a>, <a class="reference internal" href="#fileinput.lineno" title="fileinput.lineno"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lineno()</span></code></a>, <a class="reference internal" href="#fileinput.filelineno" title="fileinput.filelineno"><code class="xref py py-meth docutils literal notranslate"><span class="pre">filelineno()</span></code></a>, <a class="reference internal" href="#fileinput.isfirstline" title="fileinput.isfirstline"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isfirstline()</span></code></a>,
+<a class="reference internal" href="#fileinput.isstdin" title="fileinput.isstdin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isstdin()</span></code></a>, <a class="reference internal" href="#fileinput.nextfile" title="fileinput.nextfile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">nextfile()</span></code></a> and <a class="reference internal" href="#fileinput.close" title="fileinput.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> correspond to the
+functions of the same name in the module. In addition it is <a class="reference internal" href="../glossary.html#term-iterable"><span class="xref std std-term">iterable</span></a>
+and has a <a class="reference internal" href="io.html#io.TextIOBase.readline" title="io.TextIOBase.readline"><code class="xref py py-meth docutils literal notranslate"><span class="pre">readline()</span></code></a> method which returns the next
+input line. The sequence must be accessed in strictly sequential order;
+random access and <a class="reference internal" href="io.html#io.TextIOBase.readline" title="io.TextIOBase.readline"><code class="xref py py-meth docutils literal notranslate"><span class="pre">readline()</span></code></a> cannot be mixed.</p>
+<p>With <em>mode</em> you can specify which file mode will be passed to <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>. It
+must be one of <code class="docutils literal notranslate"><span class="pre">'r'</span></code> and <code class="docutils literal notranslate"><span class="pre">'rb'</span></code>.</p>
+<p>S'il est fourni, l'argument <em>openhook</em> est une fonction. Elle est appelée avec les paramètres <em>filename</em> et <em>mode</em>, et renvoie un objet fichier-compatible ouvert selon <em>mode</em>. Notez que <em>openhook</em> et <em>inplace</em> sont mutuellement exclusifs.</p>
+<p>You can specify <em>encoding</em> and <em>errors</em> that is passed to <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a> or <em>openhook</em>.</p>
+<p>Les objets <a class="reference internal" href="#fileinput.FileInput" title="fileinput.FileInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileInput</span></code></a> peuvent aussi fonctionner comme gestionnaires de contexte dans un bloc <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a>. Dans l'exemple suivant, <em>input</em> est fermé à la fin du bloc <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>, même arrêté par une exception :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">FileInput</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;spam.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;eggs.txt&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="nb">input</span><span class="p">:</span>
+    <span class="n">process</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.2: </span>prise en charge du protocole de gestionnaire de contexte.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>les paramètres <em>mode</em> et <em>openhook</em> doivent impérativement être nommés.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.10: </span>The keyword-only parameter <em>encoding</em> and <em>errors</em> are added.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.11: </span>The <code class="docutils literal notranslate"><span class="pre">'rU'</span></code> and <code class="docutils literal notranslate"><span class="pre">'U'</span></code> modes and the <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getitem__()</span></code> method have
+been removed.</p>
+</div>
+</dd></dl>
+
+<p><strong>Filtrage sur place optionnel :</strong> si <code class="docutils literal notranslate"><span class="pre">inplace=True</span></code> est passé à <a class="reference internal" href="#fileinput.input" title="fileinput.input"><code class="xref py py-func docutils literal notranslate"><span class="pre">fileinput.input()</span></code></a> ou au constructeur de <a class="reference internal" href="#fileinput.FileInput" title="fileinput.FileInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileInput</span></code></a>, chaque fichier d'entrée est déplacé vers une sauvegarde et la sortie standard est redirigée vers le fichier lui-même, ce qui permet d'écrire des filtres qui modifient directement les fichiers existants. Si le paramètre <em>backup</em> est fourni, il donne l'extension des fichiers de sauvegarde. Dans ce cas, la sauvegarde est conservée après l'opération. Par défaut, les fichiers de sauvegarde ont l'extension <code class="docutils literal notranslate"><span class="pre">'.bak'</span></code> et sont supprimés dès que le fichier de sortie est fermé. Si un fichier existe avec le même nom que la sauvegarde, il est écrasé. Le filtrage sur place ne fait rien pour l'entrée standard.</p>
+<p>Les deux fonctions suivantes fournissent des valeurs prédéfinies pour <em>openhook</em> :</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="fileinput.hook_compressed">
+<span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">hook_compressed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.hook_compressed" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ouvre de façon transparente les fichiers compressés avec gzip ou bzip2, à l'aide des modules <a class="reference internal" href="gzip.html#module-gzip" title="gzip: Interfaces for gzip compression and decompression using file objects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code></a> et <a class="reference internal" href="bz2.html#module-bz2" title="bz2: Interfaces for bzip2 compression and decompression."><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code></a>. Les fichiers compressés sont reconnus aux extensions <code class="docutils literal notranslate"><span class="pre">'.gz'</span></code> et <code class="docutils literal notranslate"><span class="pre">'.bz2'</span></code>. Tous les fichiers qui n'ont pas l'une de ces deux extensions sont ouverts normalement (avec <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>, sans décompression).</p>
+<p>The <em>encoding</em> and <em>errors</em> values are passed to <a class="reference internal" href="io.html#io.TextIOWrapper" title="io.TextIOWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.TextIOWrapper</span></code></a>
+for compressed files and open for normal files.</p>
+<p>Usage example:  <code class="docutils literal notranslate"><span class="pre">fi</span> <span class="pre">=</span> <span class="pre">fileinput.FileInput(openhook=fileinput.hook_compressed,</span> <span class="pre">encoding=&quot;utf-8&quot;)</span></code></p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.10: </span>The keyword-only parameter <em>encoding</em> and <em>errors</em> are added.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fileinput.hook_encoded">
+<span class="sig-prename descclassname"><span class="pre">fileinput.</span></span><span class="sig-name descname"><span class="pre">hook_encoded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fileinput.hook_encoded" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une fonction qui ouvre les fichiers en passant à <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a> les arguments <em>encoding</em> et <em>errors</em>. Le résultat peut être exploité à travers le point d'entrée automatique <em>openhook</em>.</p>
+<p>Exemple d'utilisation : <code class="docutils literal notranslate"><span class="pre">fi</span> <span class="pre">=</span> <span class="pre">fileinput.FileInput(openhook=fileinput.hook_encoded(&quot;utf-8&quot;,</span> <span class="pre">&quot;surrogateescape&quot;))</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>ajout du paramètre facultatif <em>errors</em>.</p>
+</div>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.10: </span>This function is deprecated since <a class="reference internal" href="#fileinput.input" title="fileinput.input"><code class="xref py py-func docutils literal notranslate"><span class="pre">fileinput.input()</span></code></a> and <a class="reference internal" href="#fileinput.FileInput" title="fileinput.FileInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileInput</span></code></a>
+now have <em>encoding</em> and <em>errors</em> parameters.</p>
+</div>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="os.path.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — manipulation courante des chemins</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="stat.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> --- Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/fileinput.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="stat.html" title="stat --- Interpreting stat() results"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="os.path.html" title="os.path — manipulation courante des chemins"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="filesys.html" >Accès aux Fichiers et aux Dossiers</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Parcourt les lignes provenant de plusieurs entrées</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

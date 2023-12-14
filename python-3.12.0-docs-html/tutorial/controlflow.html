@@ -1,0 +1,1122 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="4. D'autres outils de contrôle de flux" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/tutorial/controlflow.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="As well as the while statement just introduced, Python uses a few more that we will encounter in this chapter. L'instruction if: L'instruction if est sans doute la plus connue. Par exemple : Il peu..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="As well as the while statement just introduced, Python uses a few more that we will encounter in this chapter. L'instruction if: L'instruction if est sans doute la plus connue. Par exemple : Il peu..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>4. D&#39;autres outils de contrôle de flux &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="5. Structures de données" href="datastructures.html" />
+    <link rel="prev" title="3. Introduction informelle à Python" href="introduction.html" />
+    <link rel="canonical" href="https://docs.python.org/3/tutorial/controlflow.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">4. D'autres outils de contrôle de flux</a><ul>
+<li><a class="reference internal" href="#if-statements">4.1. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">if</span></code></a></li>
+<li><a class="reference internal" href="#for-statements">4.2. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a></li>
+<li><a class="reference internal" href="#the-range-function">4.3. La fonction <code class="xref py py-func docutils literal notranslate"><span class="pre">range()</span></code></a></li>
+<li><a class="reference internal" href="#break-and-continue-statements-and-else-clauses-on-loops">4.4. Les instructions <code class="xref std std-keyword docutils literal notranslate"><span class="pre">break</span></code>, <code class="xref std std-keyword docutils literal notranslate"><span class="pre">continue</span></code> et les clauses <code class="xref std std-keyword docutils literal notranslate"><span class="pre">else</span></code> au sein des boucles</a></li>
+<li><a class="reference internal" href="#pass-statements">4.5. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">pass</span></code></a></li>
+<li><a class="reference internal" href="#match-statements">4.6. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">match</span></code></a></li>
+<li><a class="reference internal" href="#defining-functions">4.7. Définir des fonctions</a></li>
+<li><a class="reference internal" href="#more-on-defining-functions">4.8. Davantage sur la définition des fonctions</a><ul>
+<li><a class="reference internal" href="#default-argument-values">4.8.1. Valeur par défaut des arguments</a></li>
+<li><a class="reference internal" href="#keyword-arguments">4.8.2. Les arguments nommés</a></li>
+<li><a class="reference internal" href="#special-parameters">4.8.3. Paramètres spéciaux</a><ul>
+<li><a class="reference internal" href="#positional-or-keyword-arguments">4.8.3.1. Les arguments positionnels-ou-nommés</a></li>
+<li><a class="reference internal" href="#positional-only-parameters">4.8.3.2. Paramètres positionnels uniquement</a></li>
+<li><a class="reference internal" href="#keyword-only-arguments">4.8.3.3. Arguments nommés uniquement</a></li>
+<li><a class="reference internal" href="#function-examples">4.8.3.4. Exemples de fonctions</a></li>
+<li><a class="reference internal" href="#recap">4.8.3.5. Récapitulatif</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#arbitrary-argument-lists">4.8.4. Listes d'arguments arbitraires</a></li>
+<li><a class="reference internal" href="#unpacking-argument-lists">4.8.5. Séparation des listes d'arguments</a></li>
+<li><a class="reference internal" href="#lambda-expressions">4.8.6. Fonctions anonymes</a></li>
+<li><a class="reference internal" href="#documentation-strings">4.8.7. Chaînes de documentation</a></li>
+<li><a class="reference internal" href="#function-annotations">4.8.8. Annotations de fonctions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#intermezzo-coding-style">4.9. Aparté : le style de codage</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="introduction.html"
+                          title="Chapitre précédent"><span class="section-number">3. </span>Introduction informelle à Python</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="datastructures.html"
+                          title="Chapitre suivant"><span class="section-number">5. </span>Structures de données</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/tutorial/controlflow.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="datastructures.html" title="5. Structures de données"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="3. Introduction informelle à Python"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Le tutoriel Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>D'autres outils de contrôle de flux</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="more-control-flow-tools">
+<span id="tut-morecontrol"></span><h1><span class="section-number">4. </span>D'autres outils de contrôle de flux<a class="headerlink" href="#more-control-flow-tools" title="Lien permanent vers ce titre">¶</a></h1>
+<p>As well as the <a class="reference internal" href="../reference/compound_stmts.html#while"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">while</span></code></a> statement just introduced, Python uses a few more
+that we will encounter in this chapter.</p>
+<section id="if-statements">
+<span id="tut-if"></span><h2><span class="section-number">4.1. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">if</span></code><a class="headerlink" href="#if-statements" title="Lien permanent vers ce titre">¶</a></h2>
+<p>L'instruction <a class="reference internal" href="../reference/compound_stmts.html#if"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">if</span></code></a> est sans doute la plus connue. Par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter an integer: &quot;</span><span class="p">))</span>
+<span class="go">Please enter an integer: 42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Negative changed to zero&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Zero&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Single&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;More&#39;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">More</span>
+</pre></div>
+</div>
+<p>Il peut y avoir un nombre quelconque de parties <a class="reference internal" href="../reference/compound_stmts.html#elif"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">elif</span></code></a> et la partie <a class="reference internal" href="../reference/compound_stmts.html#else"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">else</span></code></a> est facultative. Le mot clé <code class="xref std std-keyword docutils literal notranslate"><span class="pre">elif</span></code> est un raccourci pour <em>else if</em>, et permet de gagner un niveau d'indentation. Une séquence <code class="xref std std-keyword docutils literal notranslate"><span class="pre">if</span></code> ... <code class="xref std std-keyword docutils literal notranslate"><span class="pre">elif</span></code> ... <code class="xref std std-keyword docutils literal notranslate"><span class="pre">elif</span></code> ... est par ailleurs équivalente aux instructions <code class="docutils literal notranslate"><span class="pre">switch</span></code> ou <code class="docutils literal notranslate"><span class="pre">case</span></code> disponibles dans d'autres langages.</p>
+<p>Pour les comparaisons avec beaucoup de constantes, ainsi que les tests d'appartenance à un type ou de forme d'un attribut, l'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">match</span></code> décrite plus bas peut se révéler utile (voir <a class="reference internal" href="#tut-match"><span class="std std-ref">L'instruction match</span></a>).</p>
+</section>
+<section id="for-statements">
+<span id="tut-for"></span><h2><span class="section-number">4.2. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code><a class="headerlink" href="#for-statements" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-0">L'instruction <a class="reference internal" href="../reference/compound_stmts.html#for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a> que propose Python est un peu différente de celle que l'on peut trouver en C ou en Pascal. Au lieu de toujours itérer sur une suite arithmétique de nombres (comme en Pascal), ou de donner à l'utilisateur la possibilité de définir le pas d'itération et la condition de fin (comme en C), l'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code> en Python itère sur les éléments d'une séquence (qui peut être une liste, une chaîne de caractères…), dans l'ordre dans lequel ils apparaissent dans la séquence. Par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Measure some strings:</span>
+<span class="gp">... </span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;window&#39;</span><span class="p">,</span> <span class="s1">&#39;defenestrate&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="go">cat 3</span>
+<span class="go">window 6</span>
+<span class="go">defenestrate 12</span>
+</pre></div>
+</div>
+<p>Écrire du code qui modifie une collection tout en itérant dessus peut s'avérer délicat. Il est généralement plus simple de boucler sur une copie de la collection ou de créer une nouvelle collection :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a sample collection</span>
+<span class="n">users</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Hans&#39;</span><span class="p">:</span> <span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="s1">&#39;Éléonore&#39;</span><span class="p">:</span> <span class="s1">&#39;inactive&#39;</span><span class="p">,</span> <span class="s1">&#39;景太郎&#39;</span><span class="p">:</span> <span class="s1">&#39;active&#39;</span><span class="p">}</span>
+
+<span class="c1"># Strategy:  Iterate over a copy</span>
+<span class="k">for</span> <span class="n">user</span><span class="p">,</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">users</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;inactive&#39;</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">users</span><span class="p">[</span><span class="n">user</span><span class="p">]</span>
+
+<span class="c1"># Strategy:  Create a new collection</span>
+<span class="n">active_users</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">user</span><span class="p">,</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">users</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;active&#39;</span><span class="p">:</span>
+        <span class="n">active_users</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">=</span> <span class="n">status</span>
+</pre></div>
+</div>
+</section>
+<section id="the-range-function">
+<span id="tut-range"></span><h2><span class="section-number">4.3. </span>La fonction <a class="reference internal" href="../library/stdtypes.html#range" title="range"><code class="xref py py-func docutils literal notranslate"><span class="pre">range()</span></code></a><a class="headerlink" href="#the-range-function" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Si vous devez itérer sur une suite de nombres, la fonction native <a class="reference internal" href="../library/stdtypes.html#range" title="range"><code class="xref py py-func docutils literal notranslate"><span class="pre">range()</span></code></a> est faite pour cela. Elle génère des suites arithmétiques :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">0</span>
+<span class="go">1</span>
+<span class="go">2</span>
+<span class="go">3</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+<p>Le dernier élément fourni en paramètre ne fait jamais partie de la liste générée ; <code class="docutils literal notranslate"><span class="pre">range(10)</span></code> génère une liste de 10 valeurs, dont les valeurs vont de 0 à 9. Il est possible de spécifier une valeur de début et une valeur d'incrément différentes (y compris négative pour cette dernière, que l'on appelle également parfois le « pas ») :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="go">[5, 6, 7, 8, 9]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">[0, 3, 6, 9]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">30</span><span class="p">))</span>
+<span class="go">[-10, -40, -70]</span>
+</pre></div>
+</div>
+<p>Pour itérer sur les indices d'une séquence, on peut combiner les fonctions <a class="reference internal" href="../library/stdtypes.html#range" title="range"><code class="xref py py-func docutils literal notranslate"><span class="pre">range()</span></code></a> et <a class="reference internal" href="../library/functions.html#len" title="len"><code class="xref py py-func docutils literal notranslate"><span class="pre">len()</span></code></a> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;had&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;little&#39;</span><span class="p">,</span> <span class="s1">&#39;lamb&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="gp">...</span>
+<span class="go">0 Mary</span>
+<span class="go">1 had</span>
+<span class="go">2 a</span>
+<span class="go">3 little</span>
+<span class="go">4 lamb</span>
+</pre></div>
+</div>
+<p>Cependant, dans la plupart des cas, il est plus pratique d'utiliser la fonction <a class="reference internal" href="../library/functions.html#enumerate" title="enumerate"><code class="xref py py-func docutils literal notranslate"><span class="pre">enumerate()</span></code></a>. Voyez pour cela <a class="reference internal" href="datastructures.html#tut-loopidioms"><span class="std std-ref">Techniques de boucles</span></a>.</p>
+<p>Une chose étrange se produit lorsqu'on affiche un <em>range</em> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">range(0, 10)</span>
+</pre></div>
+</div>
+<p>L'objet renvoyé par <a class="reference internal" href="../library/stdtypes.html#range" title="range"><code class="xref py py-func docutils literal notranslate"><span class="pre">range()</span></code></a> se comporte presque comme une liste, mais ce n'en est pas une. Cet objet génère les éléments de la séquence au fur et à mesure de l'itération, sans réellement produire la liste en tant que telle, économisant ainsi de l'espace.</p>
+<p>On appelle de tels objets des <a class="reference internal" href="../glossary.html#term-iterable"><span class="xref std std-term">itérables</span></a>, c'est-à-dire des objets qui conviennent à des fonctions ou constructions qui s'attendent à quelque chose duquel elles peuvent tirer des éléments, successivement, jusqu'à épuisement. Nous avons vu que l'instruction <a class="reference internal" href="../reference/compound_stmts.html#for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a> est une de ces constructions, et un exemple de fonction qui prend un itérable en paramètre est <a class="reference internal" href="../library/functions.html#sum" title="sum"><code class="xref py py-func docutils literal notranslate"><span class="pre">sum()</span></code></a> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>  <span class="c1"># 0 + 1 + 2 + 3</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<p>Plus loin nous voyons d'autres fonctions qui donnent des itérables ou en prennent en paramètre. De plus amples détails sur <a class="reference internal" href="../library/stdtypes.html#list" title="list"><code class="xref py py-func docutils literal notranslate"><span class="pre">list()</span></code></a> sont donnés dans <a class="reference internal" href="datastructures.html#tut-structures"><span class="std std-ref">Structures de données</span></a>.</p>
+</section>
+<section id="break-and-continue-statements-and-else-clauses-on-loops">
+<span id="tut-break"></span><h2><span class="section-number">4.4. </span>Les instructions <code class="xref std std-keyword docutils literal notranslate"><span class="pre">break</span></code>, <code class="xref std std-keyword docutils literal notranslate"><span class="pre">continue</span></code> et les clauses <code class="xref std std-keyword docutils literal notranslate"><span class="pre">else</span></code> au sein des boucles<a class="headerlink" href="#break-and-continue-statements-and-else-clauses-on-loops" title="Lien permanent vers ce titre">¶</a></h2>
+<p>The <a class="reference internal" href="../reference/simple_stmts.html#break"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">break</span></code></a> statement breaks out of the innermost enclosing
+<a class="reference internal" href="../reference/compound_stmts.html#for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a> or <a class="reference internal" href="../reference/compound_stmts.html#while"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">while</span></code></a> loop.</p>
+<p>A <code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code> or <code class="xref std std-keyword docutils literal notranslate"><span class="pre">while</span></code> loop can include an <code class="xref std std-keyword docutils literal notranslate"><span class="pre">else</span></code> clause.</p>
+<p>In a <a class="reference internal" href="../reference/compound_stmts.html#for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a> loop, the <code class="xref std std-keyword docutils literal notranslate"><span class="pre">else</span></code> clause is executed
+after the loop reaches its final iteration.</p>
+<p>In a <a class="reference internal" href="../reference/compound_stmts.html#while"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">while</span></code></a> loop, it's executed after the loop's condition becomes false.</p>
+<p>In either kind of loop, the <code class="xref std std-keyword docutils literal notranslate"><span class="pre">else</span></code> clause is <strong>not</strong> executed
+if the loop was terminated by a <a class="reference internal" href="../reference/simple_stmts.html#break"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">break</span></code></a>.</p>
+<p>This is exemplified in the following <code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code> loop,
+which searches for prime numbers:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s1">&#39;equals&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">//</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">... </span>            <span class="k">break</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="c1"># loop fell through without finding a factor</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s1">&#39;is a prime number&#39;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">2 is a prime number</span>
+<span class="go">3 is a prime number</span>
+<span class="go">4 equals 2 * 2</span>
+<span class="go">5 is a prime number</span>
+<span class="go">6 equals 2 * 3</span>
+<span class="go">7 is a prime number</span>
+<span class="go">8 equals 2 * 4</span>
+<span class="go">9 equals 3 * 3</span>
+</pre></div>
+</div>
+<p>(Oui, ce code est correct. Regardez attentivement : l'instruction <code class="docutils literal notranslate"><span class="pre">else</span></code> est rattachée à la boucle <a class="reference internal" href="../reference/compound_stmts.html#for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a>, et <strong>non</strong> à l'instruction <a class="reference internal" href="../reference/compound_stmts.html#if"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">if</span></code></a>.)</p>
+<p>Lorsqu'elle utilisée dans une boucle, la clause <code class="docutils literal notranslate"><span class="pre">else</span></code> est donc plus proche de celle associée à une instruction <a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">try</span></code></a> que de celle associée à une instruction <a class="reference internal" href="../reference/compound_stmts.html#if"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">if</span></code></a> : la clause <code class="docutils literal notranslate"><span class="pre">else</span></code> d'une instruction <a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">try</span></code></a> s'exécute lorsqu'aucune exception n'est déclenchée, et celle d'une boucle lorsqu'aucun <code class="docutils literal notranslate"><span class="pre">break</span></code> n'intervient. Pour plus d'informations sur l'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">try</span></code> et le traitement des exceptions, consultez la section <a class="reference internal" href="errors.html#tut-handling"><span class="std std-ref">Gestion des exceptions</span></a>.</p>
+<p>L'instruction <a class="reference internal" href="../reference/simple_stmts.html#continue"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">continue</span></code></a>, également empruntée au C, fait passer la boucle à son itération suivante :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Found an even number&quot;</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="k">continue</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Found an odd number&quot;</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">Found an even number 2</span>
+<span class="go">Found an odd number 3</span>
+<span class="go">Found an even number 4</span>
+<span class="go">Found an odd number 5</span>
+<span class="go">Found an even number 6</span>
+<span class="go">Found an odd number 7</span>
+<span class="go">Found an even number 8</span>
+<span class="go">Found an odd number 9</span>
+</pre></div>
+</div>
+</section>
+<section id="pass-statements">
+<span id="tut-pass"></span><h2><span class="section-number">4.5. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">pass</span></code><a class="headerlink" href="#pass-statements" title="Lien permanent vers ce titre">¶</a></h2>
+<p>L'instruction <a class="reference internal" href="../reference/simple_stmts.html#pass"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">pass</span></code></a> ne fait rien. Elle peut être utilisée lorsqu'une instruction est nécessaire pour fournir une syntaxe correcte, mais qu'aucune action ne doit être effectuée. Par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">pass</span>  <span class="c1"># Busy-wait for keyboard interrupt (Ctrl+C)</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>On utilise couramment cette instruction pour créer des classes minimales :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyEmptyClass</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>Un autre cas d'utilisation du <a class="reference internal" href="../reference/simple_stmts.html#pass"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">pass</span></code></a> est de réserver un espace en phase de développement pour une fonction ou un traitement conditionnel, vous permettant ainsi de construire votre code à un niveau plus abstrait. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">pass</span></code> est alors ignorée silencieusement :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">initlog</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>   <span class="c1"># Remember to implement this!</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+</section>
+<section id="match-statements">
+<span id="tut-match"></span><h2><span class="section-number">4.6. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">match</span></code><a class="headerlink" href="#match-statements" title="Lien permanent vers ce titre">¶</a></h2>
+<p>L'instruction <a class="reference internal" href="../reference/compound_stmts.html#match"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">match</span></code></a> confronte la valeur d'une expression à plusieurs filtres successifs donnés par les instructions <code class="docutils literal notranslate"><span class="pre">case</span></code>. L’instruction <code class="docutils literal notranslate"><span class="pre">match</span></code> peut faire penser au <code class="docutils literal notranslate"><span class="pre">switch</span></code> que l'on trouve dans les langages C, Java, JavaScript et autres, mais elle ressemble plus au filtrage par motif des langages Rust et Haskell. Seul le premier filtre qui correspond est exécuté et elle permet aussi d'extraire dans des variables des composantes de la valeur, comme les éléments d'une séquence ou les attributs d'un objet.</p>
+<p>Dans sa plus simple expression, une instruction <code class="docutils literal notranslate"><span class="pre">match</span></code> compare une valeur à des littéraux :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">http_error</span><span class="p">(</span><span class="n">status</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">status</span><span class="p">:</span>
+        <span class="k">case</span> <span class="mi">400</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Bad request&quot;</span>
+        <span class="k">case</span> <span class="mi">404</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Not found&quot;</span>
+        <span class="k">case</span> <span class="mi">418</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;I&#39;m a teapot&quot;</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Something&#39;s wrong with the internet&quot;</span>
+</pre></div>
+</div>
+<p>Remarquez l'emploi du signe souligné <code class="docutils literal notranslate"><span class="pre">_</span></code> dans le dernier bloc, qui est normalement un nom de variable spécial. Ici, c'est un filtre <em>attrape-tout</em>, c'est-à-dire qu'il accepte toutes les valeurs. Si aucun des filtres dans les <code class="docutils literal notranslate"><span class="pre">case</span></code> ne fonctionne, aucune des branches indentées sous les <code class="docutils literal notranslate"><span class="pre">case</span></code> n'est exécutée.</p>
+<p>On peut combiner plusieurs littéraux en un seul filtre avec le signe <code class="docutils literal notranslate"><span class="pre">|</span></code>, qui se lit OU :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">case</span> <span class="mi">401</span> <span class="o">|</span> <span class="mi">403</span> <span class="o">|</span> <span class="mi">404</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;Not allowed&quot;</span>
+</pre></div>
+</div>
+<p>Les filtres peuvent prendre une forme similaire aux affectations multiples, et provoquer la liaison de variables :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># point is an (x, y) tuple</span>
+<span class="k">match</span> <span class="n">point</span><span class="p">:</span>
+    <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Origin&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Y=</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X=</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X=</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, Y=</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not a point&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Observez bien cet exemple ! Le premier filtre contient simplement deux littéraux. C'est une sorte d'extension des filtres littéraux. Mais les deux filtres suivants mélangent un littéral et un nom de variable. Si un tel filtre réussit, il provoque l'affectation à la variable. Le quatrième filtre est constitué de deux variables, ce qui le fait beaucoup ressembler à l'affectation multiple <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span> <span class="pre">=</span> <span class="pre">point</span></code>.</p>
+<p>Si vous structurez vos données par l'utilisation de classes, vous pouvez former des filtres avec le nom de la classe suivi d'une liste d'arguments. Ces filtres sont semblables à l'appel d'un constructeur, et permettent de capturer des attributs :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+<span class="k">def</span> <span class="nf">where_is</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">point</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Origin&quot;</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Y=</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X=</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">Point</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Somewhere else&quot;</span><span class="p">)</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not a point&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Un certain nombre de classes natives, notamment les classes de données, prennent en charge le filtrage par arguments positionnels en définissant un ordre des attributs. Vous pouvez ajouter cette possibilité à vos propres classes en y définissant l'attribut spécial <code class="docutils literal notranslate"><span class="pre">__match_args__</span></code>. Par exemple, le mettre à <code class="docutils literal notranslate"><span class="pre">(&quot;x&quot;,</span> <span class="pre">&quot;y&quot;)</span></code> rend tous les filtres ci-dessous équivalents (en particulier, tous provoquent la liaison de l'attribut <code class="docutils literal notranslate"><span class="pre">y</span></code> à la variable <code class="docutils literal notranslate"><span class="pre">var</span></code>) :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
+<span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">var</span><span class="p">)</span>
+<span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">var</span><span class="p">)</span>
+<span class="n">Point</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Une méthode préconisée pour lire les filtres est de les voir comme une extension de ce que l'on peut placer à gauche du signe <code class="docutils literal notranslate"><span class="pre">=</span></code> dans une affectation. Cela permet de visualiser quelles variables sont liées à quoi. Seuls les noms simples, comme <code class="docutils literal notranslate"><span class="pre">var</span></code> ci-dessus, sont des variables susceptibles d'être liées à une valeur. Il n'y a jamais de liaison pour les noms qualifiés (avec un point, comme dans <code class="docutils literal notranslate"><span class="pre">truc.machin</span></code>), les noms d'attributs (tels que <code class="docutils literal notranslate"><span class="pre">x=</span></code> et <code class="docutils literal notranslate"><span class="pre">y=</span></code> dans l'exemple précédent) et les noms de classes (identifiés par les parenthèses à leur droite, comme <code class="docutils literal notranslate"><span class="pre">Point</span></code>).</p>
+<p>Patterns can be arbitrarily nested.  For example, if we have a short
+list of Points, with <code class="docutils literal notranslate"><span class="pre">__match_args__</span></code> added, we could match it like this:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="n">__match_args__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+<span class="k">match</span> <span class="n">points</span><span class="p">:</span>
+    <span class="k">case</span> <span class="p">[]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No points&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The origin&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Single point </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y1</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y2</span><span class="p">)]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Two on the Y axis at </span><span class="si">{</span><span class="n">y1</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">y2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Something else&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Un filtre peut comporter un <code class="docutils literal notranslate"><span class="pre">if</span></code>, qui introduit ce que l'on appelle une garde. Si le filtre réussit, la garde est alors testée et, si elle s'évalue à une valeur fausse, l'exécution continue au bloc <code class="docutils literal notranslate"><span class="pre">case</span></code> suivant. Les variables sont liées avant l'évaluation de la garde, et peuvent être utilisées à l'intérieur :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">match</span> <span class="n">point</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Y=X at </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Not on the diagonal&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Voici d’autres caractéristiques importantes de cette instruction :</p>
+<ul>
+<li><p>comme dans les affectations multiples, les filtres de <em>n</em>-uplet et de liste sont totalement équivalents et autorisent tous les types de séquences. Exception importante, ils n'autorisent pas les itérateurs ni les chaînes de caractères ;</p></li>
+<li><p>les filtres de séquence peuvent faire intervenir l'affectation étoilée : <code class="docutils literal notranslate"><span class="pre">[x,</span> <span class="pre">y,</span> <span class="pre">*reste]</span></code> ou <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">*reste)</span></code> ont le même sens que dans une affectation avec <code class="docutils literal notranslate"><span class="pre">=</span></code>. Le nom de variable après l'étoile peut aussi être l'attrape-tout <code class="docutils literal notranslate"><span class="pre">_</span></code>. Ainsi, <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">*_)</span></code> est un filtre qui reconnaît les séquences à deux éléments ou plus, en capturant les deux premiers et en ignorant le reste ;</p></li>
+<li><p>Il existe des filtres d'association. Par exemple, le filtre <code class="docutils literal notranslate"><span class="pre">{&quot;bande_passante&quot;:</span> <span class="pre">b,</span> <span class="pre">&quot;latence&quot;:</span> <span class="pre">l}</span></code> extrait les valeurs des clés <code class="docutils literal notranslate"><span class="pre">&quot;bande_passante&quot;</span></code> et <code class="docutils literal notranslate"><span class="pre">&quot;latence&quot;</span></code> dans un dictionnaire. Contrairement aux filtres de séquence, les clés absentes du filtre sont ignorées. L'affectation double-étoilée (<code class="docutils literal notranslate"><span class="pre">**reste</span></code>) fonctionne aussi (cependant, <code class="docutils literal notranslate"><span class="pre">**_</span></code> serait redondant et n'est donc pas permis) ;</p></li>
+<li><p>on peut capturer la valeur d'une partie d'un filtre avec le mot-clé <code class="docutils literal notranslate"><span class="pre">as</span></code>, par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">case</span> <span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span> <span class="k">as</span> <span class="n">p2</span><span class="p">):</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Ce filtre, lorsqu'il est comparé à une séquence de deux points, réussit et capture le second dans la variable <code class="docutils literal notranslate"><span class="pre">p2</span></code> ;</p>
+</li>
+<li><p>la plupart des littéraux sont comparés par égalité. Néanmoins, les singletons <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code> et <code class="docutils literal notranslate"><span class="pre">None</span></code> sont comparés par identité ;</p></li>
+<li><p>les filtres peuvent contenir des noms qui se réfèrent à des constantes. Ces noms doivent impérativement être qualifiés (contenir un point) pour ne pas être interprétés comme des variables de capture :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">RED</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+    <span class="n">GREEN</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span>
+    <span class="n">BLUE</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
+
+<span class="n">color</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter your choice of &#39;red&#39;, &#39;blue&#39; or &#39;green&#39;: &quot;</span><span class="p">))</span>
+
+<span class="k">match</span> <span class="n">color</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I see red!&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Grass is green&quot;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">Color</span><span class="o">.</span><span class="n">BLUE</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I&#39;m feeling the blues :(&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Pour plus d'explications et d'exemples, lire la <span class="target" id="index-15"></span><a class="pep reference external" href="https://peps.python.org/pep-0636/"><strong>PEP 636</strong></a> (en anglais), qui est écrite sous forme de tutoriel.</p>
+</section>
+<section id="defining-functions">
+<span id="tut-functions"></span><h2><span class="section-number">4.7. </span>Définir des fonctions<a class="headerlink" href="#defining-functions" title="Lien permanent vers ce titre">¶</a></h2>
+<p>On peut créer une fonction qui écrit la suite de Fibonacci jusqu'à une limite imposée :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>    <span class="c1"># write Fibonacci series up to n</span>
+<span class="gp">... </span><span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a Fibonacci series up to n.&quot;&quot;&quot;</span>
+<span class="gp">... </span>    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">while</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Now call the function we just defined:</span>
+<span class="gp">... </span><span class="n">fib</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+<span class="go">0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597</span>
+</pre></div>
+</div>
+<p id="index-2">Le mot-clé <a class="reference internal" href="../reference/compound_stmts.html#def"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">def</span></code></a> introduit une <em>définition</em> de fonction. Il doit être suivi du nom de la fonction et d'une liste, entre parenthèses, de ses paramètres. L'instruction qui constitue le corps de la fonction débute à la ligne suivante et doit être indentée.</p>
+<p>La première instruction d'une fonction peut, de façon facultative, être une chaîne de caractères littérale ; cette chaîne de caractères sera alors la chaîne de documentation de la fonction, appelée <em class="dfn">docstring</em> (consultez la section <a class="reference internal" href="#tut-docstrings"><span class="std std-ref">Chaînes de documentation</span></a> pour en savoir plus). Il existe des outils qui utilisent ces chaînes de documentation pour générer automatiquement une documentation en ligne ou imprimée, ou pour permettre à l'utilisateur de naviguer de façon interactive dans le code ; prenez-en l'habitude, c'est une bonne pratique que de documenter le code que vous écrivez.</p>
+<p><em>L'exécution</em> d'une fonction introduit une nouvelle table de symboles utilisée par les variables locales de la fonction. Plus précisément, toutes les affectations de variables effectuées au sein d'une fonction stockent les valeurs dans la table des symboles locaux ; en revanche, les références de variables sont recherchées dans la table des symboles locaux, puis dans les tables des symboles locaux des fonctions englobantes, puis dans la table des symboles globaux et finalement dans la table des noms des primitives. Par conséquent, bien qu'elles puissent être référencées, il est impossible d'affecter une valeur à une variable globale ou à une variable d'une fonction englobante (sauf pour les variables globales désignées dans une instruction <a class="reference internal" href="../reference/simple_stmts.html#global"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code></a> et, pour les variables des fonctions englobantes, désignées dans une instruction <a class="reference internal" href="../reference/simple_stmts.html#nonlocal"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">nonlocal</span></code></a>).</p>
+<p>Les paramètres effectifs (arguments) d'une fonction sont introduits dans la table des symboles locaux de la fonction appelée, au moment où elle est appelée ; par conséquent, les passages de paramètres se font <em>par valeur</em>, la <em>valeur</em> étant toujours une <em>référence</em> à un objet et non la valeur de l'objet lui-même <a class="footnote-reference brackets" href="#id2" id="id1">1</a>. Lorsqu'une fonction appelle une autre fonction, ou s'appelle elle-même par récursion, une nouvelle table de symboles locaux est créée pour cet appel.</p>
+<p>Une définition de fonction associe un nom de fonction à un objet fonction dans l'espace de noms actuel. Pour l'interpréteur, l'objet référencé par ce nom est une fonction définie par l'utilisateur. Plusieurs noms peuvent faire référence à une même fonction, ils peuvent alors tous être utilisés pour appeler la fonction :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fib</span>
+<span class="go">&lt;function fib at 10042ed0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">fib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="go">0 1 1 2 3 5 8 13 21 34 55 89</span>
+</pre></div>
+</div>
+<p>Si vous venez d'autres langages, vous pouvez penser que <code class="docutils literal notranslate"><span class="pre">fib</span></code> n'est pas une fonction mais une procédure, puisqu'elle ne renvoie pas de résultat. En fait, même les fonctions sans instruction <a class="reference internal" href="../reference/simple_stmts.html#return"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code></a> renvoient une valeur, quoique ennuyeuse. Cette valeur est appelée <code class="docutils literal notranslate"><span class="pre">None</span></code> (c'est le nom d'une primitive). Écrire la valeur <code class="docutils literal notranslate"><span class="pre">None</span></code> est normalement supprimé par l'interpréteur lorsqu'il s'agit de la seule valeur qui doit être écrite. Vous pouvez le constater, si vous y tenez vraiment, en utilisant <a class="reference internal" href="../library/functions.html#print" title="print"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fib</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">fib</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="go">None</span>
+</pre></div>
+</div>
+<p>Il est facile d'écrire une fonction qui renvoie une liste de la série de Fibonacci au lieu de l'afficher :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">fib2</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># return Fibonacci series up to n</span>
+<span class="gp">... </span><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list containing the Fibonacci series up to n.&quot;&quot;&quot;</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">... </span>    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">while</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>    <span class="c1"># see below</span>
+<span class="gp">... </span>        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">result</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f100</span> <span class="o">=</span> <span class="n">fib2</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>    <span class="c1"># call it</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f100</span>                <span class="c1"># write the result</span>
+<span class="go">[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]</span>
+</pre></div>
+</div>
+<p>Cet exemple, comme d'habitude, illustre de nouvelles fonctionnalités de Python :</p>
+<ul class="simple">
+<li><p>l'instruction <a class="reference internal" href="../reference/simple_stmts.html#return"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code></a> provoque la sortie de la fonction en renvoyant une valeur. <code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code> sans expression en paramètre renvoie <code class="docutils literal notranslate"><span class="pre">None</span></code>. Arriver à la fin d'une fonction renvoie également <code class="docutils literal notranslate"><span class="pre">None</span></code> ;</p></li>
+<li><p>The statement <code class="docutils literal notranslate"><span class="pre">result.append(a)</span></code> calls a <em>method</em> of the list object
+<code class="docutils literal notranslate"><span class="pre">result</span></code>.  A method is a function that 'belongs' to an object and is named
+<code class="docutils literal notranslate"><span class="pre">obj.methodname</span></code>, where <code class="docutils literal notranslate"><span class="pre">obj</span></code> is some object (this may be an expression),
+and <code class="docutils literal notranslate"><span class="pre">methodname</span></code> is the name of a method that is defined by the object's type.
+Different types define different methods.  Methods of different types may have
+the same name without causing ambiguity.  (It is possible to define your own
+object types and methods, using <em>classes</em>, see <a class="reference internal" href="classes.html#tut-classes"><span class="std std-ref">Classes</span></a>)
+The method <code class="xref py py-meth docutils literal notranslate"><span class="pre">append()</span></code> shown in the example is defined for list objects; it
+adds a new element at the end of the list.  In this example it is equivalent to
+<code class="docutils literal notranslate"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">result</span> <span class="pre">+</span> <span class="pre">[a]</span></code>, but more efficient.</p></li>
+</ul>
+</section>
+<section id="more-on-defining-functions">
+<span id="tut-defining"></span><h2><span class="section-number">4.8. </span>Davantage sur la définition des fonctions<a class="headerlink" href="#more-on-defining-functions" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Il est également possible de définir des fonctions avec un nombre variable d'arguments. Trois syntaxes peuvent être utilisées, éventuellement combinées.</p>
+<section id="default-argument-values">
+<span id="tut-defaultargs"></span><h3><span class="section-number">4.8.1. </span>Valeur par défaut des arguments<a class="headerlink" href="#default-argument-values" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La forme la plus utile consiste à indiquer une valeur par défaut pour certains arguments. Ceci crée une fonction qui peut être appelée avec moins d'arguments que ceux présents dans sa définition. Par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ask_ok</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">reminder</span><span class="o">=</span><span class="s1">&#39;Please try again!&#39;</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">ok</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ok</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;ye&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">ok</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;nop&#39;</span><span class="p">,</span> <span class="s1">&#39;nope&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">retries</span> <span class="o">=</span> <span class="n">retries</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">retries</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid user response&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">reminder</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Cette fonction peut être appelée de plusieurs façons :</p>
+<ul class="simple">
+<li><p>en ne fournissant que les arguments obligatoires : <code class="docutils literal notranslate"><span class="pre">ask_ok('Do</span> <span class="pre">you</span> <span class="pre">really</span> <span class="pre">want</span> <span class="pre">to</span> <span class="pre">quit?')</span></code> ;</p></li>
+<li><p>en fournissant une partie des arguments facultatifs : <code class="docutils literal notranslate"><span class="pre">ask_ok('OK</span> <span class="pre">to</span> <span class="pre">overwrite</span> <span class="pre">the</span> <span class="pre">file?',</span> <span class="pre">2)</span></code> ;</p></li>
+<li><p>en fournissant tous les arguments : <code class="docutils literal notranslate"><span class="pre">ask_ok('OK</span> <span class="pre">to</span> <span class="pre">overwrite</span> <span class="pre">the</span> <span class="pre">file?',</span> <span class="pre">2,</span> <span class="pre">'Come</span> <span class="pre">on,</span> <span class="pre">only</span> <span class="pre">yes</span> <span class="pre">or</span> <span class="pre">no!')</span></code>.</p></li>
+</ul>
+<p>Cet exemple présente également le mot-clé <a class="reference internal" href="../reference/expressions.html#in"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">in</span></code></a>. Celui-ci permet de tester si une séquence contient une certaine valeur.</p>
+<p>Les valeurs par défaut sont évaluées lors de la définition de la fonction dans la portée de la <em>définition</em>, de telle sorte que</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">arg</span><span class="o">=</span><span class="n">i</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">f</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>affiche <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p>
+<p><strong>Avertissement important :</strong> la valeur par défaut n'est évaluée qu'une seule fois. Ceci fait une différence lorsque cette valeur par défaut est un objet muable tel qu'une liste, un dictionnaire ou des instances de la plupart des classes. Par exemple, la fonction suivante accumule les arguments qui lui sont passés au fil des appels successifs :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">L</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>affiche</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Si vous ne voulez pas que cette valeur par défaut soit partagée entre des appels successifs, vous pouvez écrire la fonction de cette façon :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">L</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">L</span>
+</pre></div>
+</div>
+</section>
+<section id="keyword-arguments">
+<span id="tut-keywordargs"></span><h3><span class="section-number">4.8.2. </span>Les arguments nommés<a class="headerlink" href="#keyword-arguments" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les fonctions peuvent également être appelées en utilisant des <a class="reference internal" href="../glossary.html#term-keyword-argument"><span class="xref std std-term">arguments nommés</span></a> sous la forme <code class="docutils literal notranslate"><span class="pre">kwarg=value</span></code>. Par exemple, la fonction suivante :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parrot</span><span class="p">(</span><span class="n">voltage</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;a stiff&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;voom&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Norwegian Blue&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-- This parrot wouldn&#39;t&quot;</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;if you put&quot;</span><span class="p">,</span> <span class="n">voltage</span><span class="p">,</span> <span class="s2">&quot;volts through it.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-- Lovely plumage, the&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-- It&#39;s&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="s2">&quot;!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>accepte un argument obligatoire (<code class="docutils literal notranslate"><span class="pre">voltage</span></code>) et trois arguments facultatifs (<code class="docutils literal notranslate"><span class="pre">state</span></code>, <code class="docutils literal notranslate"><span class="pre">action</span></code> et <code class="docutils literal notranslate"><span class="pre">type</span></code>). Cette fonction peut être appelée de n'importe laquelle des façons suivantes :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">parrot</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>                                          <span class="c1"># 1 positional argument</span>
+<span class="n">parrot</span><span class="p">(</span><span class="n">voltage</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>                                  <span class="c1"># 1 keyword argument</span>
+<span class="n">parrot</span><span class="p">(</span><span class="n">voltage</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;VOOOOOM&#39;</span><span class="p">)</span>             <span class="c1"># 2 keyword arguments</span>
+<span class="n">parrot</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;VOOOOOM&#39;</span><span class="p">,</span> <span class="n">voltage</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>             <span class="c1"># 2 keyword arguments</span>
+<span class="n">parrot</span><span class="p">(</span><span class="s1">&#39;a million&#39;</span><span class="p">,</span> <span class="s1">&#39;bereft of life&#39;</span><span class="p">,</span> <span class="s1">&#39;jump&#39;</span><span class="p">)</span>         <span class="c1"># 3 positional arguments</span>
+<span class="n">parrot</span><span class="p">(</span><span class="s1">&#39;a thousand&#39;</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;pushing up the daisies&#39;</span><span class="p">)</span>  <span class="c1"># 1 positional, 1 keyword</span>
+</pre></div>
+</div>
+<p>mais tous les appels qui suivent sont incorrects :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">parrot</span><span class="p">()</span>                     <span class="c1"># required argument missing</span>
+<span class="n">parrot</span><span class="p">(</span><span class="n">voltage</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="s1">&#39;dead&#39;</span><span class="p">)</span>  <span class="c1"># non-keyword argument after a keyword argument</span>
+<span class="n">parrot</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span> <span class="n">voltage</span><span class="o">=</span><span class="mi">220</span><span class="p">)</span>     <span class="c1"># duplicate value for the same argument</span>
+<span class="n">parrot</span><span class="p">(</span><span class="n">actor</span><span class="o">=</span><span class="s1">&#39;John Cleese&#39;</span><span class="p">)</span>  <span class="c1"># unknown keyword argument</span>
+</pre></div>
+</div>
+<p>Dans un appel de fonction, les arguments nommés doivent suivre les arguments positionnés. Tous les arguments nommés doivent correspondre à l'un des arguments acceptés par la fonction (par exemple, <code class="docutils literal notranslate"><span class="pre">actor</span></code> n'est pas un argument accepté par la fonction <code class="docutils literal notranslate"><span class="pre">parrot</span></code>), mais leur ordre n'est pas important. Ceci inclut également les arguments obligatoires (<code class="docutils literal notranslate"><span class="pre">parrot(voltage=1000)</span></code> est également correct). Aucun argument ne peut recevoir une valeur plus d'une fois, comme l'illustre cet exemple incorrect du fait de cette restriction :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">function</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">function() got multiple values for argument &#39;a&#39;</span>
+</pre></div>
+</div>
+<p>Quand un dernier paramètre formel est présent sous la forme <code class="docutils literal notranslate"><span class="pre">**name</span></code>, il reçoit un dictionnaire (voir <a class="reference internal" href="../library/stdtypes.html#typesmapping"><span class="std std-ref">Les types de correspondances — dict</span></a>) contenant tous les arguments nommés à l'exception de ceux correspondant à un paramètre formel. Ceci peut être combiné à un paramètre formel sous la forme <code class="docutils literal notranslate"><span class="pre">*name</span></code> (décrit dans la section suivante) qui lui reçoit un <a class="reference internal" href="datastructures.html#tut-tuples"><span class="std std-ref">n-uplet</span></a> contenant les arguments positionnés au-delà de la liste des paramètres formels (<code class="docutils literal notranslate"><span class="pre">*name</span></code> doit être présent avant <code class="docutils literal notranslate"><span class="pre">**name</span></code>). Par exemple, si vous définissez une fonction comme ceci :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cheeseshop</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-- Do you have any&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="s2">&quot;?&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-- I&#39;m sorry, we&#39;re all out of&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">arguments</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">keywords</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">kw</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">keywords</span><span class="p">[</span><span class="n">kw</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Elle pourrait être appelée comme ceci :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cheeseshop</span><span class="p">(</span><span class="s2">&quot;Limburger&quot;</span><span class="p">,</span> <span class="s2">&quot;It&#39;s very runny, sir.&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;It&#39;s really very, VERY runny, sir.&quot;</span><span class="p">,</span>
+           <span class="n">shopkeeper</span><span class="o">=</span><span class="s2">&quot;Michael Palin&quot;</span><span class="p">,</span>
+           <span class="n">client</span><span class="o">=</span><span class="s2">&quot;John Cleese&quot;</span><span class="p">,</span>
+           <span class="n">sketch</span><span class="o">=</span><span class="s2">&quot;Cheese Shop Sketch&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>et, bien sûr, elle affiche :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-- Do you have any Limburger ?
+-- I&#39;m sorry, we&#39;re all out of Limburger
+It&#39;s very runny, sir.
+It&#39;s really very, VERY runny, sir.
+----------------------------------------
+shopkeeper : Michael Palin
+client : John Cleese
+sketch : Cheese Shop Sketch
+</pre></div>
+</div>
+<p>Notez que Python garantit que l'ordre d'affichage des arguments est le même que l'ordre dans lesquels ils sont fournis lors de l'appel à la fonction.</p>
+</section>
+<section id="special-parameters">
+<h3><span class="section-number">4.8.3. </span>Paramètres spéciaux<a class="headerlink" href="#special-parameters" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Par défaut, les arguments peuvent être passés à une fonction Python par position, ou explicitement en les nommant. Pour la lisibilité et la performance, il est logique de restreindre la façon dont les arguments peuvent être transmis afin qu'un développeur n'ait qu'à regarder la définition de la fonction pour déterminer si les éléments sont transmis par position seule, par position ou nommé, ou seulement nommé.</p>
+<p>Voici à quoi ressemble une définition de fonction :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def f(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2):
+      -----------    ----------     ----------
+        |             |                  |
+        |        Positional or keyword   |
+        |                                - Keyword only
+         -- Positional only
+</pre></div>
+</div>
+<p>où <code class="docutils literal notranslate"><span class="pre">/</span></code> et <code class="docutils literal notranslate"><span class="pre">*</span></code> sont facultatifs. S'ils sont utilisés, ces symboles indiquent par quel type de paramètre un argument peut être transmis à la fonction : position seule, position ou nommé, et seulement nommé. Les paramètres par mot-clé sont aussi appelés paramètres nommés.</p>
+<section id="positional-or-keyword-arguments">
+<h4><span class="section-number">4.8.3.1. </span>Les arguments positionnels-ou-nommés<a class="headerlink" href="#positional-or-keyword-arguments" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Si <code class="docutils literal notranslate"><span class="pre">/</span></code> et <code class="docutils literal notranslate"><span class="pre">*</span></code> ne sont pas présents dans la définition de fonction, les arguments peuvent être passés à une fonction par position ou par nommés.</p>
+</section>
+<section id="positional-only-parameters">
+<h4><span class="section-number">4.8.3.2. </span>Paramètres positionnels uniquement<a class="headerlink" href="#positional-only-parameters" title="Lien permanent vers ce titre">¶</a></h4>
+<p>En y regardant de plus près, il est possible de marquer certains paramètres comme <em>positionnels uniquement</em>. S'ils sont marqués comme <em>positionnels uniquement</em>, l'ordre des paramètres est important, et les paramètres ne peuvent pas être transmis en tant que « arguments nommés ». Les paramètres « positionnels uniquement » sont placés avant un <code class="docutils literal notranslate"><span class="pre">/</span></code>. Le <code class="docutils literal notranslate"><span class="pre">/</span></code> est utilisé pour séparer logiquement les paramètres « positionnels uniquement » du reste des paramètres. S'il n'y a pas de <code class="docutils literal notranslate"><span class="pre">/</span></code> dans la définition de fonction, il n'y a pas de paramètres « positionnels uniquement ».</p>
+<p>Les paramètres qui suivent le <code class="docutils literal notranslate"><span class="pre">/</span></code> peuvent être <em>positionnels-ou-nommés</em> ou <em>nommés-uniquement</em>.</p>
+</section>
+<section id="keyword-only-arguments">
+<h4><span class="section-number">4.8.3.3. </span>Arguments nommés uniquement<a class="headerlink" href="#keyword-only-arguments" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Pour marquer les paramètres comme <em>uniquement nommés</em>, indiquant que les paramètres doivent être passés avec l'argument comme mot-clé, placez un <code class="docutils literal notranslate"><span class="pre">*</span></code> dans la liste des arguments juste avant le premier paramètre <em>uniquement nommé</em>.</p>
+</section>
+<section id="function-examples">
+<h4><span class="section-number">4.8.3.4. </span>Exemples de fonctions<a class="headerlink" href="#function-examples" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Considérons l'exemple suivant de définitions de fonctions en portant une attention particulière aux marqueurs <code class="docutils literal notranslate"><span class="pre">/</span></code> et <code class="docutils literal notranslate"><span class="pre">*</span></code> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">standard_arg</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">pos_only_arg</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="o">/</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">kwd_only_arg</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">combined_example</span><span class="p">(</span><span class="n">pos_only</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="n">standard</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">kwd_only</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">pos_only</span><span class="p">,</span> <span class="n">standard</span><span class="p">,</span> <span class="n">kwd_only</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La première définition de fonction, <code class="docutils literal notranslate"><span class="pre">standard_arg</span></code>, la forme la plus familière, n'impose aucune restriction sur la convention d'appel et les arguments peuvent être passés par position ou nommés :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">standard_arg</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">standard_arg</span><span class="p">(</span><span class="n">arg</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>La deuxième fonction <code class="docutils literal notranslate"><span class="pre">pos_only_arg</span></code> restreint le passage aux seuls arguments par position car il y a un <code class="docutils literal notranslate"><span class="pre">/</span></code> dans la définition de fonction :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pos_only_arg</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pos_only_arg</span><span class="p">(</span><span class="n">arg</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">pos_only_arg() got some positional-only arguments passed as keyword arguments: &#39;arg&#39;</span>
+</pre></div>
+</div>
+<p>La troisième fonction <code class="docutils literal notranslate"><span class="pre">kwd_only_args</span></code> n'autorise que les arguments nommés comme l'indique le <code class="docutils literal notranslate"><span class="pre">*</span></code> dans la définition de fonction :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kwd_only_arg</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">kwd_only_arg() takes 0 positional arguments but 1 was given</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kwd_only_arg</span><span class="p">(</span><span class="n">arg</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p>Et la dernière utilise les trois conventions d'appel dans la même définition de fonction :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">combined_example</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">combined_example() takes 2 positional arguments but 3 were given</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">combined_example</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">kwd_only</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">1 2 3</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">combined_example</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">standard</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">kwd_only</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">1 2 3</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">combined_example</span><span class="p">(</span><span class="n">pos_only</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">standard</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">kwd_only</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">combined_example() got some positional-only arguments passed as keyword arguments: &#39;pos_only&#39;</span>
+</pre></div>
+</div>
+<p>Enfin, considérons cette définition de fonction qui a une collision potentielle entre l'argument positionnel <code class="docutils literal notranslate"><span class="pre">name</span></code> et <code class="docutils literal notranslate"><span class="pre">**kwds</span></code> qui a <code class="docutils literal notranslate"><span class="pre">name</span></code> comme mot-clé :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">kwds</span>
+</pre></div>
+</div>
+<p>Il n'y a pas d'appel possible qui renvoie <code class="docutils literal notranslate"><span class="pre">True</span></code> car le mot-clé <code class="docutils literal notranslate"><span class="pre">'name'</span></code> est toujours lié au premier paramètre. Par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">foo() got multiple values for argument &#39;name&#39;</span>
+<span class="gp">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Mais en utilisant <code class="docutils literal notranslate"><span class="pre">/</span></code> (arguments positionnels seulement), c'est possible puisqu'il permet d'utiliser <code class="docutils literal notranslate"><span class="pre">name</span></code> comme argument positionnel et <code class="docutils literal notranslate"><span class="pre">'name'</span></code> comme mot-clé dans les arguments nommés :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">kwds</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>En d'autres termes, les noms des paramètres seulement positionnels peuvent être utilisés sans ambiguïté dans <code class="docutils literal notranslate"><span class="pre">**kwds</span></code>.</p>
+</section>
+<section id="recap">
+<h4><span class="section-number">4.8.3.5. </span>Récapitulatif<a class="headerlink" href="#recap" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Le cas d'utilisation détermine les paramètres à utiliser dans la définition de fonction :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">pos1</span><span class="p">,</span> <span class="n">pos2</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="n">pos_or_kwd</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">kwd1</span><span class="p">,</span> <span class="n">kwd2</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>Quelques conseils :</p>
+<ul class="simple">
+<li><p>utilisez les paramètres positionnels si vous voulez que le nom des paramètres soit masqué à l'utilisateur. Ceci est utile lorsque les noms de paramètres n'ont pas de signification réelle, si vous voulez faire respecter l'ordre des arguments lorsque la fonction est appelée ou si vous avez besoin de prendre certains paramètres positionnels et mots-clés arbitraires ;</p></li>
+<li><p>utilisez les paramètres nommés lorsque les noms ont un sens et que la définition de la fonction est plus compréhensible avec des noms explicites ou si vous voulez empêcher les utilisateurs de se fier à la position de l'argument qui est passé ;</p></li>
+<li><p>dans le cas d'une API, utilisez les paramètres seulement positionnels pour éviter de casser l'API si le nom du paramètre est modifié dans l'avenir.</p></li>
+</ul>
+</section>
+</section>
+<section id="arbitrary-argument-lists">
+<span id="tut-arbitraryargs"></span><h3><span class="section-number">4.8.4. </span>Listes d'arguments arbitraires<a class="headerlink" href="#arbitrary-argument-lists" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-3">Pour terminer, l'option la moins fréquente consiste à indiquer qu'une fonction peut être appelée avec un nombre arbitraire d'arguments. Ces arguments sont intégrés dans un <em>n</em>-uplet (voir <a class="reference internal" href="datastructures.html#tut-tuples"><span class="std std-ref">n-uplets et séquences</span></a>). Avant le nombre variable d'arguments, zéro ou plus arguments normaux peuvent apparaître</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write_multiple_items</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Normalement, ces arguments <code class="docutils literal notranslate"><span class="pre">variadiques</span></code> sont les derniers paramètres, parce qu'ils agrègent toutes les valeurs suivantes. Tout paramètre placé après le paramètre <code class="docutils literal notranslate"><span class="pre">*arg</span></code> ne pourra être utilisé que comme argument nommé, pas comme argument positionnel</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">concat</span><span class="p">(</span><span class="s2">&quot;earth&quot;</span><span class="p">,</span> <span class="s2">&quot;mars&quot;</span><span class="p">,</span> <span class="s2">&quot;venus&quot;</span><span class="p">)</span>
+<span class="go">&#39;earth/mars/venus&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">concat</span><span class="p">(</span><span class="s2">&quot;earth&quot;</span><span class="p">,</span> <span class="s2">&quot;mars&quot;</span><span class="p">,</span> <span class="s2">&quot;venus&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="go">&#39;earth.mars.venus&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="unpacking-argument-lists">
+<span id="tut-unpacking-arguments"></span><h3><span class="section-number">4.8.5. </span>Séparation des listes d'arguments<a class="headerlink" href="#unpacking-argument-lists" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La situation inverse intervient lorsque les arguments sont déjà dans une liste ou un <em>n</em>-uplet mais doivent être séparés pour un appel de fonction nécessitant des arguments positionnés séparés. Par exemple, la primitive <a class="reference internal" href="../library/stdtypes.html#range" title="range"><code class="xref py py-func docutils literal notranslate"><span class="pre">range()</span></code></a> attend des arguments <em>start</em> et <em>stop</em> distincts. S'ils ne sont pas disponibles séparément, écrivez l'appel de fonction en utilisant l'opérateur <code class="docutils literal notranslate"><span class="pre">*</span></code> pour séparer les arguments présents dans une liste ou un <em>n</em>-uplet :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>            <span class="c1"># normal call with separate arguments</span>
+<span class="go">[3, 4, 5]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span>            <span class="c1"># call with arguments unpacked from a list</span>
+<span class="go">[3, 4, 5]</span>
+</pre></div>
+</div>
+<p id="index-4">De la même façon, les dictionnaires peuvent fournir des arguments nommés en utilisant l'opérateur <code class="docutils literal notranslate"><span class="pre">**</span></code> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">parrot</span><span class="p">(</span><span class="n">voltage</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;a stiff&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;voom&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-- This parrot wouldn&#39;t&quot;</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;if you put&quot;</span><span class="p">,</span> <span class="n">voltage</span><span class="p">,</span> <span class="s2">&quot;volts through it.&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;E&#39;s&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="s2">&quot;!&quot;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;voltage&quot;</span><span class="p">:</span> <span class="s2">&quot;four million&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;bleedin&#39; demised&quot;</span><span class="p">,</span> <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;VOOM&quot;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parrot</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span>
+<span class="go">-- This parrot wouldn&#39;t VOOM if you put four million volts through it. E&#39;s bleedin&#39; demised !</span>
+</pre></div>
+</div>
+</section>
+<section id="lambda-expressions">
+<span id="tut-lambda"></span><h3><span class="section-number">4.8.6. </span>Fonctions anonymes<a class="headerlink" href="#lambda-expressions" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Avec le mot-clé <a class="reference internal" href="../reference/expressions.html#lambda"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">lambda</span></code></a>, vous pouvez créer de petites fonctions anonymes. En voici une qui renvoie la somme de ses deux arguments : <code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">a,</span> <span class="pre">b:</span> <span class="pre">a+b</span></code>. Les fonctions lambda peuvent être utilisées partout où un objet fonction est attendu. Elles sont syntaxiquement restreintes à une seule expression. Sémantiquement, elles ne sont que du sucre syntaxique pour une définition de fonction normale. Comme les fonctions imbriquées, les fonctions lambda peuvent référencer des variables de la portée englobante :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">make_incrementor</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">n</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">make_incrementor</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">43</span>
+</pre></div>
+</div>
+<p>L'exemple précédent utilise une fonction anonyme pour renvoyer une fonction. Une autre utilisation classique est de donner une fonction minimaliste directement en tant que paramètre :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pairs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">pair</span><span class="p">:</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pairs</span>
+<span class="go">[(4, &#39;four&#39;), (1, &#39;one&#39;), (3, &#39;three&#39;), (2, &#39;two&#39;)]</span>
+</pre></div>
+</div>
+</section>
+<section id="documentation-strings">
+<span id="tut-docstrings"></span><h3><span class="section-number">4.8.7. </span>Chaînes de documentation<a class="headerlink" href="#documentation-strings" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-5">Voici quelques conventions concernant le contenu et le format des chaînes de documentation.</p>
+<p>Il convient que la première ligne soit toujours courte et résume de manière concise l'utilité de l'objet. Afin d'être bref, nul besoin de rappeler le nom de l'objet ou son type, qui sont accessibles par d'autres moyens (sauf si le nom est un verbe qui décrit une opération). La convention veut que la ligne commence par une majuscule et se termine par un point.</p>
+<p>S'il y a d'autres lignes dans la chaîne de documentation, la deuxième ligne devrait être vide, pour la séparer visuellement du reste de la description. Les autres lignes peuvent alors constituer un ou plusieurs paragraphes décrivant le mode d'utilisation de l'objet, ses effets de bord, etc.</p>
+<p>L'analyseur de code Python ne supprime pas l'indentation des chaînes de caractères littérales multi-lignes, donc les outils qui utilisent la documentation doivent si besoin faire cette opération eux-mêmes. La convention suivante s'applique : la première ligne non vide <em>après</em> la première détermine la profondeur d'indentation de l'ensemble de la chaîne de documentation (on ne peut pas utiliser la première ligne qui est généralement accolée aux guillemets d'ouverture de la chaîne de caractères et dont l'indentation n'est donc pas visible). Les espaces « correspondant » à cette profondeur d'indentation sont alors supprimées du début de chacune des lignes de la chaîne. Aucune ligne ne devrait présenter un niveau d'indentation inférieur mais, si cela arrive, toutes les espaces situées en début de ligne doivent être supprimées. L'équivalent des espaces doit être testé après expansion des tabulations (normalement remplacées par 8 espaces).</p>
+<p>Voici un exemple de chaîne de documentation multi-lignes :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+<span class="gp">... </span><span class="w">    </span><span class="sd">&quot;&quot;&quot;Do nothing, but document it.</span>
+<span class="gp">...</span>
+<span class="gp">... </span><span class="sd">    No, really, it doesn&#39;t do anything.</span>
+<span class="gp">... </span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_function</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+<span class="go">Do nothing, but document it.</span>
+
+<span class="go">    No, really, it doesn&#39;t do anything.</span>
+</pre></div>
+</div>
+</section>
+<section id="function-annotations">
+<span id="tut-annotations"></span><h3><span class="section-number">4.8.8. </span>Annotations de fonctions<a class="headerlink" href="#function-annotations" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-6"><a class="reference internal" href="../reference/compound_stmts.html#function"><span class="std std-ref">Les annotations de fonction</span></a> sont des métadonnées optionnelles décrivant les types utilisés par une fonction définie par l'utilisateur (voir les <span class="target" id="index-16"></span><a class="pep reference external" href="https://peps.python.org/pep-3107/"><strong>PEP 3107</strong></a> et <span class="target" id="index-17"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a> pour plus d'informations).</p>
+<p><a class="reference internal" href="../glossary.html#term-function-annotation"><span class="xref std std-term">Annotations</span></a> are stored in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">__annotations__</span></code>
+attribute of the function as a dictionary and have no effect on any other part of the
+function.  Parameter annotations are defined by a colon after the parameter name, followed
+by an expression evaluating to the value of the annotation.  Return annotations are
+defined by a literal <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code>, followed by an expression, between the parameter
+list and the colon denoting the end of the <a class="reference internal" href="../reference/compound_stmts.html#def"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">def</span></code></a> statement.  The
+following example has a required argument, an optional argument, and the return
+value annotated:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">ham</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">eggs</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;eggs&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Annotations:&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="vm">__annotations__</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arguments:&quot;</span><span class="p">,</span> <span class="n">ham</span><span class="p">,</span> <span class="n">eggs</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">ham</span> <span class="o">+</span> <span class="s1">&#39; and &#39;</span> <span class="o">+</span> <span class="n">eggs</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="s1">&#39;spam&#39;</span><span class="p">)</span>
+<span class="go">Annotations: {&#39;ham&#39;: &lt;class &#39;str&#39;&gt;, &#39;return&#39;: &lt;class &#39;str&#39;&gt;, &#39;eggs&#39;: &lt;class &#39;str&#39;&gt;}</span>
+<span class="go">Arguments: spam eggs</span>
+<span class="go">&#39;spam and eggs&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="intermezzo-coding-style">
+<span id="tut-codingstyle"></span><h2><span class="section-number">4.9. </span>Aparté : le style de codage<a class="headerlink" href="#intermezzo-coding-style" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-9">Maintenant que vous êtes prêt à écrire des programmes plus longs et plus complexes, il est temps de parler du <em>style de codage</em>. La plupart des langages peuvent être écrits (ou plutôt <em>formatés</em>) selon différents styles ; certains sont plus lisibles que d'autres. Rendre la lecture de votre code plus facile aux autres est toujours une bonne idée et adopter un bon style de codage peut énormément vous y aider.</p>
+<p>En Python, la plupart des projets adhèrent au style défini dans la <span class="target" id="index-18"></span><a class="pep reference external" href="https://peps.python.org/pep-0008/"><strong>PEP 8</strong></a> ; elle met en avant un style de codage très lisible et agréable à l’œil. Chaque développeur Python se doit donc de la lire et de s'en inspirer autant que possible ; voici ses principaux points notables :</p>
+<ul>
+<li><p>utilisez des indentations de 4 espaces et pas de tabulation.</p>
+<p>4 espaces constituent un bon compromis entre une indentation courte (qui permet une profondeur d'imbrication plus importante) et une longue (qui rend le code plus facile à lire). Les tabulations introduisent de la confusion et doivent être proscrites autant que possible ;</p>
+</li>
+<li><p>faites en sorte que les lignes ne dépassent pas 79 caractères, au besoin en insérant des retours à la ligne.</p>
+<p>Vous facilitez ainsi la lecture pour les utilisateurs qui n'ont qu'un petit écran et, pour les autres, cela leur permet de visualiser plusieurs fichiers côte à côte ;</p>
+</li>
+<li><p>utilisez des lignes vides pour séparer les fonctions et les classes, ou pour scinder de gros blocs de code à l'intérieur de fonctions ;</p></li>
+<li><p>lorsque c'est possible, placez les commentaires sur leurs propres lignes ;</p></li>
+<li><p>utilisez les chaînes de documentation ;</p></li>
+<li><p>utilisez des espaces autour des opérateurs et après les virgules, mais pas juste à l'intérieur des parenthèses : <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">f(1,</span> <span class="pre">2)</span> <span class="pre">+</span> <span class="pre">g(3,</span> <span class="pre">4)</span></code> ;</p></li>
+<li><p>nommez toujours vos classes et fonctions de la même manière ; la convention est d'utiliser une notation <code class="docutils literal notranslate"><span class="pre">UpperCamelCase</span></code> pour les classes, et <code class="docutils literal notranslate"><span class="pre">minuscules_avec_trait_bas</span></code> pour les fonctions et méthodes. Utilisez toujours <code class="docutils literal notranslate"><span class="pre">self</span></code> comme nom du premier argument des méthodes (voyez <a class="reference internal" href="classes.html#tut-firstclasses"><span class="std std-ref">Une première approche des classes</span></a> pour en savoir plus sur les classes et les méthodes) ;</p></li>
+<li><p>n’utilisez pas d'encodage exotique dès lors que votre code est censé être utilisé dans des environnements internationaux. Par défaut, Python travaille en UTF-8. Pour couvrir tous les cas, préférez le simple ASCII ;</p></li>
+<li><p>de la même manière, n'utilisez que des caractères ASCII pour vos noms de variables s'il est envisageable qu'une personne parlant une autre langue lise ou doive modifier votre code.</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>En fait, <em>appels par référence d'objets</em> serait sans doute une description plus juste dans la mesure où, si un objet muable est passé en argument, l'appelant verra toutes les modifications qui lui auront été apportées par l'appelé (insertion d'éléments dans une liste…).</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">4. D'autres outils de contrôle de flux</a><ul>
+<li><a class="reference internal" href="#if-statements">4.1. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">if</span></code></a></li>
+<li><a class="reference internal" href="#for-statements">4.2. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a></li>
+<li><a class="reference internal" href="#the-range-function">4.3. La fonction <code class="xref py py-func docutils literal notranslate"><span class="pre">range()</span></code></a></li>
+<li><a class="reference internal" href="#break-and-continue-statements-and-else-clauses-on-loops">4.4. Les instructions <code class="xref std std-keyword docutils literal notranslate"><span class="pre">break</span></code>, <code class="xref std std-keyword docutils literal notranslate"><span class="pre">continue</span></code> et les clauses <code class="xref std std-keyword docutils literal notranslate"><span class="pre">else</span></code> au sein des boucles</a></li>
+<li><a class="reference internal" href="#pass-statements">4.5. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">pass</span></code></a></li>
+<li><a class="reference internal" href="#match-statements">4.6. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">match</span></code></a></li>
+<li><a class="reference internal" href="#defining-functions">4.7. Définir des fonctions</a></li>
+<li><a class="reference internal" href="#more-on-defining-functions">4.8. Davantage sur la définition des fonctions</a><ul>
+<li><a class="reference internal" href="#default-argument-values">4.8.1. Valeur par défaut des arguments</a></li>
+<li><a class="reference internal" href="#keyword-arguments">4.8.2. Les arguments nommés</a></li>
+<li><a class="reference internal" href="#special-parameters">4.8.3. Paramètres spéciaux</a><ul>
+<li><a class="reference internal" href="#positional-or-keyword-arguments">4.8.3.1. Les arguments positionnels-ou-nommés</a></li>
+<li><a class="reference internal" href="#positional-only-parameters">4.8.3.2. Paramètres positionnels uniquement</a></li>
+<li><a class="reference internal" href="#keyword-only-arguments">4.8.3.3. Arguments nommés uniquement</a></li>
+<li><a class="reference internal" href="#function-examples">4.8.3.4. Exemples de fonctions</a></li>
+<li><a class="reference internal" href="#recap">4.8.3.5. Récapitulatif</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#arbitrary-argument-lists">4.8.4. Listes d'arguments arbitraires</a></li>
+<li><a class="reference internal" href="#unpacking-argument-lists">4.8.5. Séparation des listes d'arguments</a></li>
+<li><a class="reference internal" href="#lambda-expressions">4.8.6. Fonctions anonymes</a></li>
+<li><a class="reference internal" href="#documentation-strings">4.8.7. Chaînes de documentation</a></li>
+<li><a class="reference internal" href="#function-annotations">4.8.8. Annotations de fonctions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#intermezzo-coding-style">4.9. Aparté : le style de codage</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="introduction.html"
+                          title="Chapitre précédent"><span class="section-number">3. </span>Introduction informelle à Python</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="datastructures.html"
+                          title="Chapitre suivant"><span class="section-number">5. </span>Structures de données</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/tutorial/controlflow.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="datastructures.html" title="5. Structures de données"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="3. Introduction informelle à Python"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Le tutoriel Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>D'autres outils de contrôle de flux</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,897 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="socketserver — Cadriciel pour serveurs réseaux" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/socketserver.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/socketserver.py Le module socketserver permet de simplifier le développement de serveurs réseaux. Availability: not Emscripten, not WASI. This module does not work or is not avail..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/socketserver.py Le module socketserver permet de simplifier le développement de serveurs réseaux. Availability: not Emscripten, not WASI. This module does not work or is not avail..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>socketserver — Cadriciel pour serveurs réseaux &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="http.server --- serveurs HTTP" href="http.server.html" />
+    <link rel="prev" title="uuid — Objets UUID d&#39;après la RFC 4122" href="uuid.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/socketserver.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — Cadriciel pour serveurs réseaux</a><ul>
+<li><a class="reference internal" href="#server-creation-notes">Notes sur la création de serveurs</a></li>
+<li><a class="reference internal" href="#server-objects">Objets serveur</a></li>
+<li><a class="reference internal" href="#request-handler-objects">Objets gestionnaire de requêtes</a></li>
+<li><a class="reference internal" href="#examples">Exemples</a><ul>
+<li><a class="reference internal" href="#socketserver-tcpserver-example">Exemple pour <code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.TCPServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver-udpserver-example">Exemple pour <code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.UDPServer</span></code></a></li>
+<li><a class="reference internal" href="#asynchronous-mixins">Classes de mélange asynchrone</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="uuid.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — Objets UUID d'après la <strong>RFC 4122</strong></a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="http.server.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> --- serveurs HTTP</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/socketserver.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="http.server.html" title="http.server --- serveurs HTTP"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="uuid.html" title="uuid — Objets UUID d&#39;après la RFC 4122"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" accesskey="U">Gestion des protocoles internet</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — Cadriciel pour serveurs réseaux</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-socketserver">
+<span id="socketserver-a-framework-for-network-servers"></span><h1><a class="reference internal" href="#module-socketserver" title="socketserver: A framework for network servers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code></a> — Cadriciel pour serveurs réseaux<a class="headerlink" href="#module-socketserver" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/socketserver.py">Lib/socketserver.py</a></p>
+<hr class="docutils" />
+<p>Le module <a class="reference internal" href="#module-socketserver" title="socketserver: A framework for network servers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code></a> permet de simplifier le développement de serveurs réseaux.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not Emscripten, not WASI.</p>
+<p>This module does not work or is not available on WebAssembly platforms
+<code class="docutils literal notranslate"><span class="pre">wasm32-emscripten</span></code> and <code class="docutils literal notranslate"><span class="pre">wasm32-wasi</span></code>. See
+<a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">Plateformes WebAssembly</span></a> for more information.</p>
+</div>
+<p>Il existe quatre classes concrètes fondamentales :</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.TCPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">TCPServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.TCPServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette classe permet de créer des flux continus de données entre un client et un serveur en utilisant le protocole internet TCP. Si <em>bind_and_activate</em> est vrai, le constructeur tente automatiquement d'invoquer  <a class="reference internal" href="#socketserver.BaseServer.server_bind" title="socketserver.BaseServer.server_bind"><code class="xref py py-meth docutils literal notranslate"><span class="pre">server_bind()</span></code></a> et <a class="reference internal" href="#socketserver.BaseServer.server_activate" title="socketserver.BaseServer.server_activate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">server_activate()</span></code></a>. Les autres paramètres sont passés à la classe de base <a class="reference internal" href="#socketserver.BaseServer" title="socketserver.BaseServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseServer</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.UDPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UDPServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UDPServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette classe utilise des datagrammes, qui sont des paquets d'information pouvant arriver dans le désordre, voire être perdus, durant le transport. Les paramètres sont identiques à <a class="reference internal" href="#socketserver.TCPServer" title="socketserver.TCPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TCPServer</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.UnixStreamServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UnixStreamServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UnixStreamServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.UnixDatagramServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UnixDatagramServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UnixDatagramServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ces classes, moins fréquemment utilisées, sont similaires aux classes pour TCP et UDP mais utilisent des connecteurs UNIX ; ces connecteurs ne sont disponibles que sur les plateformes UNIX. Les paramètres sont identiques à <a class="reference internal" href="#socketserver.TCPServer" title="socketserver.TCPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TCPServer</span></code></a>.</p>
+</dd></dl>
+
+<p>Ces quatre classes traitent les requêtes de façon <em class="dfn">synchrone</em> : chaque requête doit être terminée avant de pouvoir traiter la suivante. Cette méthode n'est pas adaptée si les requêtes prennent beaucoup de temps à être traitées. Cela peut arriver si les requêtes demandent beaucoup de calcul, ou si elles renvoient beaucoup de données que le client peine à traiter. Dans ce cas, la solution est de créer un processus ou un fil d’exécution séparé pour chaque requête ; les classes de mélange <a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a> et <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> peuvent être utilisées pour réaliser ce comportement asynchrone.</p>
+<p>La création d'un serveur requiert plusieurs étapes. Premièrement, vous devez créer une classe pour gérer les requêtes en héritant de <a class="reference internal" href="#socketserver.BaseRequestHandler" title="socketserver.BaseRequestHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRequestHandler</span></code></a> et surcharger sa méthode <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a>, laquelle traitera les requêtes entrantes. Deuxièmement, vous devez instancier l'une des classes serveurs et lui passer l’adresse du serveur ainsi que la classe gérant les requêtes. Il est recommandé de faire ceci dans une instruction <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a>. Ensuite, appelez la méthode <a class="reference internal" href="#socketserver.BaseServer.handle_request" title="socketserver.BaseServer.handle_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_request()</span></code></a> ou <a class="reference internal" href="#socketserver.BaseServer.serve_forever" title="socketserver.BaseServer.serve_forever"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serve_forever()</span></code></a> de l'objet serveur afin de traiter une ou plusieurs requêtes. Enfin, appelez la méthode <a class="reference internal" href="#socketserver.BaseServer.server_close" title="socketserver.BaseServer.server_close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">server_close()</span></code></a> pour fermer le connecteur (à moins que vous n'ayez utilisé une instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>).</p>
+<p>Lorsque vous héritez de <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> pour déléguer les connexions à différent fils d’exécution, vous devez déclarer explicitement comment les fils d’exécution doivent se comporter en cas d'arrêt abrupt. La classe <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> définit un attribut <em>daemon_threads</em>, indiquant si le serveur doit attendre la fin des fils d’exécution ou non. Vous pouvez utiliser cet attribut si vous souhaitez que les fils d’exécution soient autonomes. La valeur par défaut est <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code></a>, indiquant que Python ne doit pas quitter avant que tous les fils d'exécution créés par <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> ne soient terminés.</p>
+<p>Toutes les classes de serveurs exposent les mêmes méthodes et attributs, peu importe le protocole réseau utilisé.</p>
+<section id="server-creation-notes">
+<h2>Notes sur la création de serveurs<a class="headerlink" href="#server-creation-notes" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Il y a cinq classes dans la hiérarchie. Quatre d'entre elles représentent des serveurs synchrones de quatre types différents :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="o">+------------+</span>
+<span class="o">|</span> <span class="n">BaseServer</span> <span class="o">|</span>
+<span class="o">+------------+</span>
+      <span class="o">|</span>
+      <span class="n">v</span>
+<span class="o">+-----------+</span>        <span class="o">+------------------+</span>
+<span class="o">|</span> <span class="n">TCPServer</span> <span class="o">|-------&gt;|</span> <span class="n">UnixStreamServer</span> <span class="o">|</span>
+<span class="o">+-----------+</span>        <span class="o">+------------------+</span>
+      <span class="o">|</span>
+      <span class="n">v</span>
+<span class="o">+-----------+</span>        <span class="o">+--------------------+</span>
+<span class="o">|</span> <span class="n">UDPServer</span> <span class="o">|-------&gt;|</span> <span class="n">UnixDatagramServer</span> <span class="o">|</span>
+<span class="o">+-----------+</span>        <span class="o">+--------------------+</span>
+</pre></div>
+</div>
+<p>Note that <a class="reference internal" href="#socketserver.UnixDatagramServer" title="socketserver.UnixDatagramServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnixDatagramServer</span></code></a> derives from <a class="reference internal" href="#socketserver.UDPServer" title="socketserver.UDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UDPServer</span></code></a>, not from
+<a class="reference internal" href="#socketserver.UnixStreamServer" title="socketserver.UnixStreamServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnixStreamServer</span></code></a> --- the only difference between an IP and a Unix
+server is the address family.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.ForkingMixIn">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingMixIn</span></span><a class="headerlink" href="#socketserver.ForkingMixIn" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ThreadingMixIn">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingMixIn</span></span><a class="headerlink" href="#socketserver.ThreadingMixIn" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Des versions utilisant des fils d’exécution ou des processus peuvent être créées pour chaque type de serveur, en utilisant ces classes de mélange. Par exemple, <a class="reference internal" href="#socketserver.ThreadingUDPServer" title="socketserver.ThreadingUDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingUDPServer</span></code></a> est créé comme suit :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ThreadingUDPServer</span><span class="p">(</span><span class="n">ThreadingMixIn</span><span class="p">,</span> <span class="n">UDPServer</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>La classe de mélange est en premier car elle surcharge une méthode définie dans <a class="reference internal" href="#socketserver.UDPServer" title="socketserver.UDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UDPServer</span></code></a>. Configurer les différents attributs changera également le comportement du serveur.</p>
+<p>La classe <a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a> et les classes créant des processus mentionnées ci-dessous sont uniquement disponibles sur les plateformes POSIX prenant en charge <a class="reference internal" href="os.html#os.fork" title="os.fork"><code class="xref py py-func docutils literal notranslate"><span class="pre">fork()</span></code></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.ThreadingMixIn.block_on_close">
+<span class="sig-name descname"><span class="pre">block_on_close</span></span><a class="headerlink" href="#socketserver.ThreadingMixIn.block_on_close" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><a class="reference internal" href="#socketserver.BaseServer.server_close" title="socketserver.BaseServer.server_close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ForkingMixIn.server_close</span></code></a>
+waits until all child processes complete, except if
+<a class="reference internal" href="#socketserver.ThreadingMixIn.block_on_close" title="socketserver.ThreadingMixIn.block_on_close"><code class="xref py py-attr docutils literal notranslate"><span class="pre">block_on_close</span></code></a> attribute is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p><a class="reference internal" href="#socketserver.BaseServer.server_close" title="socketserver.BaseServer.server_close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ThreadingMixIn.server_close</span></code></a>
+waits until all non-daemon threads complete, except if
+<a class="reference internal" href="#socketserver.ThreadingMixIn.block_on_close" title="socketserver.ThreadingMixIn.block_on_close"><code class="xref py py-attr docutils literal notranslate"><span class="pre">block_on_close</span></code></a> attribute is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.ThreadingMixIn.daemon_threads">
+<span class="sig-name descname"><span class="pre">daemon_threads</span></span><a class="headerlink" href="#socketserver.ThreadingMixIn.daemon_threads" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>For <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> use daemonic threads by setting
+<a class="reference internal" href="#socketserver.ThreadingMixIn.daemon_threads" title="socketserver.ThreadingMixIn.daemon_threads"><code class="xref py py-data docutils literal notranslate"><span class="pre">ThreadingMixIn.daemon_threads</span></code></a>
+to <code class="docutils literal notranslate"><span class="pre">True</span></code> to not wait until threads complete.</p>
+</dd></dl>
+
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7: </span><a class="reference internal" href="#socketserver.BaseServer.server_close" title="socketserver.BaseServer.server_close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ForkingMixIn.server_close</span></code></a> and
+<a class="reference internal" href="#socketserver.BaseServer.server_close" title="socketserver.BaseServer.server_close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ThreadingMixIn.server_close</span></code></a> now waits until all
+child processes and non-daemonic threads complete.
+Add a new <a class="reference internal" href="#socketserver.ThreadingMixIn.block_on_close" title="socketserver.ThreadingMixIn.block_on_close"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ForkingMixIn.block_on_close</span></code></a> class
+attribute to opt-in for the pre-3.7 behaviour.</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.ForkingTCPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingTCPServer</span></span><a class="headerlink" href="#socketserver.ForkingTCPServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ForkingUDPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUDPServer</span></span><a class="headerlink" href="#socketserver.ForkingUDPServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ThreadingTCPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingTCPServer</span></span><a class="headerlink" href="#socketserver.ThreadingTCPServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ThreadingUDPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUDPServer</span></span><a class="headerlink" href="#socketserver.ThreadingUDPServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ForkingUnixStreamServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUnixStreamServer</span></span><a class="headerlink" href="#socketserver.ForkingUnixStreamServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ForkingUnixDatagramServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUnixDatagramServer</span></span><a class="headerlink" href="#socketserver.ForkingUnixDatagramServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ThreadingUnixStreamServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUnixStreamServer</span></span><a class="headerlink" href="#socketserver.ThreadingUnixStreamServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ThreadingUnixDatagramServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUnixDatagramServer</span></span><a class="headerlink" href="#socketserver.ThreadingUnixDatagramServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ces classes sont prédéfinies en utilisant les classes de mélange.</p>
+</dd></dl>
+
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.12: </span>The <code class="docutils literal notranslate"><span class="pre">ForkingUnixStreamServer</span></code> and <code class="docutils literal notranslate"><span class="pre">ForkingUnixDatagramServer</span></code> classes
+were added.</p>
+</div>
+<p>Pour implémenter un service, vous devez créer une classe héritant de <a class="reference internal" href="#socketserver.BaseRequestHandler" title="socketserver.BaseRequestHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRequestHandler</span></code></a> et redéfinir sa méthode <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a>. Ensuite, vous pourrez créer différentes versions de votre service en combinant les classes serveurs avec votre classe de gestion des requêtes. Cette classe de gestion des requêtes doit être différente pour les services utilisant des datagrammes ou des flux de données. Cette contrainte peut être dissimulée en utilisant les classes de gestion dérivées <a class="reference internal" href="#socketserver.StreamRequestHandler" title="socketserver.StreamRequestHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamRequestHandler</span></code></a> ou <a class="reference internal" href="#socketserver.DatagramRequestHandler" title="socketserver.DatagramRequestHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatagramRequestHandler</span></code></a>.</p>
+<p>Bien entendu, vous devrez toujours utiliser votre tête ! Par exemple, utiliser un serveur utilisant des processus clonés (<em>forking</em>) n'aurait aucun sens si le serveur garde en mémoire des états pouvant être modifiés par les requêtes reçues. En effet, un processus enfant traitant une requête n'aurait alors aucun moyen de propager le nouvel état à son parent. Dans ce cas, vous devez utiliser un serveur utilisant des fils d'exécution, mais cela demande probablement d'utiliser des verrous pour protéger l’intégrité des données partagées.</p>
+<p>D'un autre côté, si vous développez un serveur HTTP qui a toutes ses données stockées hors de la mémoire (sur un système de fichiers par exemple), une classe synchrone rendrait le service sourd à toute nouvelle requête aussi longtemps qu'une précédente soit en cours de traitement. Cette situation pourrait perdurer pendant un long moment si le client prend du temps à recevoir toutes les données demandées. Dans ce cas, un serveur utilisant des processus ou des fils d'exécutions est approprié.</p>
+<p>Dans certains cas, il peut être judicieux de commencer à traiter une requête de façon synchrone mais de pouvoir déléguer le reste du traitement à un processus enfant si besoin. Ce comportement peut être implémenté en utilisant un serveur synchrone et en laissant à la méthode <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a>, de la classe gérant les requêtes, le soin de créer le processus enfant explicitement.</p>
+<p>Another approach to handling multiple simultaneous requests in an environment
+that supports neither threads nor <a class="reference internal" href="os.html#os.fork" title="os.fork"><code class="xref py py-func docutils literal notranslate"><span class="pre">fork()</span></code></a> (or where these are too
+expensive or inappropriate for the service) is to maintain an explicit table of
+partially finished requests and to use <a class="reference internal" href="selectors.html#module-selectors" title="selectors: High-level I/O multiplexing."><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code></a> to decide which
+request to work on next (or whether to handle a new incoming request).  This is
+particularly important for stream services where each client can potentially be
+connected for a long time (if threads or subprocesses cannot be used).</p>
+</section>
+<section id="server-objects">
+<h2>Objets serveur<a class="headerlink" href="#server-objects" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.BaseServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">BaseServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Il s'agit de la classe parente de tous les objets serveur du module. Elle déclare l'interface, définie ci-dessous, mais laisse aux classes filles le soin d'implémenter la plupart des méthodes. Les deux paramètres sont stockés respectivement dans les attributs <a class="reference internal" href="#socketserver.BaseServer.server_address" title="socketserver.BaseServer.server_address"><code class="xref py py-attr docutils literal notranslate"><span class="pre">server_address</span></code></a> et <a class="reference internal" href="#socketserver.BaseServer.RequestHandlerClass" title="socketserver.BaseServer.RequestHandlerClass"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RequestHandlerClass</span></code></a>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.fileno">
+<span class="sig-name descname"><span class="pre">fileno</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.fileno" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie un entier représentant le descripteur de fichier pour le connecteur que le serveur écoute. Cette fonction est, la plupart du temps, passée à <a class="reference internal" href="selectors.html#module-selectors" title="selectors: High-level I/O multiplexing."><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code></a> afin de pouvoir surveiller plusieurs serveurs dans le même processus.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.handle_request">
+<span class="sig-name descname"><span class="pre">handle_request</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.handle_request" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Traite une seule requête. Cette fonction appelle, dans l'ordre, les méthodes <a class="reference internal" href="#socketserver.BaseServer.get_request" title="socketserver.BaseServer.get_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_request()</span></code></a>, <a class="reference internal" href="#socketserver.BaseServer.verify_request" title="socketserver.BaseServer.verify_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">verify_request()</span></code></a> et <a class="reference internal" href="#socketserver.BaseServer.process_request" title="socketserver.BaseServer.process_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">process_request()</span></code></a>. Si la méthode <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> de la classe de gestion des requêtes lève une exception, alors la méthode <a class="reference internal" href="#socketserver.BaseServer.handle_error" title="socketserver.BaseServer.handle_error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_error()</span></code></a> du serveur est appelée. Si aucune requête n'est reçue avant « <a class="reference internal" href="#socketserver.BaseServer.timeout" title="socketserver.BaseServer.timeout"><code class="xref py py-attr docutils literal notranslate"><span class="pre">timeout</span></code></a> » secondes, <a class="reference internal" href="#socketserver.BaseServer.handle_timeout" title="socketserver.BaseServer.handle_timeout"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_timeout()</span></code></a> est appelée et <a class="reference internal" href="#socketserver.BaseServer.handle_request" title="socketserver.BaseServer.handle_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_request()</span></code></a> rend la main.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.serve_forever">
+<span class="sig-name descname"><span class="pre">serve_forever</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">poll_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.serve_forever" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Gère les requêtes indéfiniment jusqu'à ce que <a class="reference internal" href="#socketserver.BaseServer.shutdown" title="socketserver.BaseServer.shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">shutdown()</span></code></a> soit appelée. Vérifie si une demande d’arrêt (<em>shutdown</em>) a été émise toutes les <em>poll_interval</em> secondes. Ignore l'attribut <a class="reference internal" href="#socketserver.BaseServer.timeout" title="socketserver.BaseServer.timeout"><code class="xref py py-attr docutils literal notranslate"><span class="pre">timeout</span></code></a>. Appelle également <a class="reference internal" href="#socketserver.BaseServer.service_actions" title="socketserver.BaseServer.service_actions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">service_actions()</span></code></a>, qui peut être utilisée par une classe enfant ou une classe de mélange afin d'implémenter une action spécifique pour un service donné. Par exemple, la classe <a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a> utilise <a class="reference internal" href="#socketserver.BaseServer.service_actions" title="socketserver.BaseServer.service_actions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">service_actions()</span></code></a> pour supprimer les processus enfants zombies.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span>La méthode <code class="docutils literal notranslate"><span class="pre">serve_forever</span></code> appelle dorénavant <code class="docutils literal notranslate"><span class="pre">service_actions</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.service_actions">
+<span class="sig-name descname"><span class="pre">service_actions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.service_actions" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette méthode est appelée dans la boucle de <a class="reference internal" href="#socketserver.BaseServer.serve_forever" title="socketserver.BaseServer.serve_forever"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serve_forever()</span></code></a>. Cette méthode peut être surchargée par une classe fille ou une classe de mélange afin d'effectuer une action spécifique à un service donné, comme une action de nettoyage.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.shutdown" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Demande l'arrêt de la boucle de <a class="reference internal" href="#socketserver.BaseServer.serve_forever" title="socketserver.BaseServer.serve_forever"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serve_forever()</span></code></a> et attend jusqu'à ce que ce soit fait. <a class="reference internal" href="#socketserver.BaseServer.shutdown" title="socketserver.BaseServer.shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">shutdown()</span></code></a> doit être appelée dans un fil d’exécution différent de <a class="reference internal" href="#socketserver.BaseServer.serve_forever" title="socketserver.BaseServer.serve_forever"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serve_forever()</span></code></a> sous peine d'interblocage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.server_close">
+<span class="sig-name descname"><span class="pre">server_close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.server_close" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Nettoie le serveur. Peut être surchargée.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.address_family">
+<span class="sig-name descname"><span class="pre">address_family</span></span><a class="headerlink" href="#socketserver.BaseServer.address_family" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La famille de protocoles auquel le connecteur appartient. Les exemples les plus communs sont <a class="reference internal" href="socket.html#socket.AF_INET" title="socket.AF_INET"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.AF_INET</span></code></a> et <a class="reference internal" href="socket.html#socket.AF_UNIX" title="socket.AF_UNIX"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.AF_UNIX</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.RequestHandlerClass">
+<span class="sig-name descname"><span class="pre">RequestHandlerClass</span></span><a class="headerlink" href="#socketserver.BaseServer.RequestHandlerClass" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La classe de gestion des requêtes, fournie par l'utilisateur. Une instance de cette classe est créée pour chaque requête.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.server_address">
+<span class="sig-name descname"><span class="pre">server_address</span></span><a class="headerlink" href="#socketserver.BaseServer.server_address" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l’adresse sur laquelle le serveur écoute. Le format de l’adresse dépend de la famille de protocoles utilisée ; pour plus de détails, voir la documentation du module <a class="reference internal" href="socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code></a>. Pour les protocoles Internet, cette valeur est une paire formée d'une chaine de caractère pour l’adresse et d'un entier pour le port. Exemple : <code class="docutils literal notranslate"><span class="pre">('127.0.0.1',</span> <span class="pre">80)</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.socket">
+<span class="sig-name descname"><span class="pre">socket</span></span><a class="headerlink" href="#socketserver.BaseServer.socket" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>L'objet connecteur utilisé par le serveur pour écouter les nouvelles requêtes.</p>
+</dd></dl>
+
+<p>Les classes serveurs prennent en charge les variables de classe suivantes :</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.allow_reuse_address">
+<span class="sig-name descname"><span class="pre">allow_reuse_address</span></span><a class="headerlink" href="#socketserver.BaseServer.allow_reuse_address" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Indique si le serveur autorise la réutilisation d'une adresse. La valeur par défaut est <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code></a> mais cela peut être changé dans les classes enfants.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.request_queue_size">
+<span class="sig-name descname"><span class="pre">request_queue_size</span></span><a class="headerlink" href="#socketserver.BaseServer.request_queue_size" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La taille de la file des requêtes. Lorsque traiter une requête prend du temps, toute nouvelle requête arrivant pendant que le serveur est occupé est placé dans une file jusqu'à atteindre « <a class="reference internal" href="#socketserver.BaseServer.request_queue_size" title="socketserver.BaseServer.request_queue_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">request_queue_size</span></code></a> » requêtes. Si la queue est pleine, les nouvelles requêtes clientes se voient renvoyer une erreur <em>Connection denied</em>. La valeur par défaut est habituellement 5 mais peut être changée par les classes filles.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.socket_type">
+<span class="sig-name descname"><span class="pre">socket_type</span></span><a class="headerlink" href="#socketserver.BaseServer.socket_type" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le type de connecteur utilisé par le serveur ; <a class="reference internal" href="socket.html#socket.SOCK_STREAM" title="socket.SOCK_STREAM"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.SOCK_STREAM</span></code></a> et <a class="reference internal" href="socket.html#socket.SOCK_DGRAM" title="socket.SOCK_DGRAM"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.SOCK_DGRAM</span></code></a> sont deux valeurs usuelles.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.timeout">
+<span class="sig-name descname"><span class="pre">timeout</span></span><a class="headerlink" href="#socketserver.BaseServer.timeout" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Délai d'attente en secondes, ou <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a> si aucune limite n'est demandée. Si <a class="reference internal" href="#socketserver.BaseServer.handle_request" title="socketserver.BaseServer.handle_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_request()</span></code></a> ne reçoit aucune requête entrante pendant le délai d'attente, la méthode <a class="reference internal" href="#socketserver.BaseServer.handle_timeout" title="socketserver.BaseServer.handle_timeout"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_timeout()</span></code></a> est appelée.</p>
+</dd></dl>
+
+<p>Il existe plusieurs méthodes serveur pouvant être surchargées par des classes dérivant de classes de base comme <a class="reference internal" href="#socketserver.TCPServer" title="socketserver.TCPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TCPServer</span></code></a> ; ces méthodes ne sont pas utiles aux utilisateurs externes de l'objet serveur.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.finish_request">
+<span class="sig-name descname"><span class="pre">finish_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.finish_request" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Méthode en charge de traiter la requête en instanciant <a class="reference internal" href="#socketserver.BaseServer.RequestHandlerClass" title="socketserver.BaseServer.RequestHandlerClass"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RequestHandlerClass</span></code></a> et en appelant sa méthode <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.get_request">
+<span class="sig-name descname"><span class="pre">get_request</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.get_request" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Accepte obligatoirement une requête depuis le connecteur et renvoie une paire contenant le <em>nouvel</em> objet connecteur utilisé pour communiquer avec le client et l'adresse du client.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.handle_error">
+<span class="sig-name descname"><span class="pre">handle_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.handle_error" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette fonction est appelée si la méthode <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> de l'objet <a class="reference internal" href="#socketserver.BaseServer.RequestHandlerClass" title="socketserver.BaseServer.RequestHandlerClass"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RequestHandlerClass</span></code></a> lève une exception. Par défaut, la méthode imprime la trace d'appels sur la sortie d'erreur standard et continue de traiter les requêtes suivantes.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>N'est maintenant appelée que sur les exceptions dérivant de la classe <a class="reference internal" href="exceptions.html#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.handle_timeout">
+<span class="sig-name descname"><span class="pre">handle_timeout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.handle_timeout" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette fonction est appelée lorsque l'attribut <a class="reference internal" href="#socketserver.BaseServer.timeout" title="socketserver.BaseServer.timeout"><code class="xref py py-attr docutils literal notranslate"><span class="pre">timeout</span></code></a> est réglé à autre chose que <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a> et que le délai d'attente expire sans qu'aucune requête ne soit reçue. Par défaut, cette fonction récupère le statut de tous les processus enfants ayant terminé pour les serveurs utilisant des processus ou ne fait rien pour le cas des serveurs utilisant des fils d’exécution.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.process_request">
+<span class="sig-name descname"><span class="pre">process_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.process_request" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Appelle <a class="reference internal" href="#socketserver.BaseServer.finish_request" title="socketserver.BaseServer.finish_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">finish_request()</span></code></a> pour instancier <a class="reference internal" href="#socketserver.BaseServer.RequestHandlerClass" title="socketserver.BaseServer.RequestHandlerClass"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RequestHandlerClass</span></code></a>. Si désiré, cette fonction peut créer des processus fils ou des fils d’exécution pour traiter les requêtes ; les classes de mélange <a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a> et <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> implémentent cela.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.server_activate">
+<span class="sig-name descname"><span class="pre">server_activate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.server_activate" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Appelée par le constructeur du serveur afin de l'activer. Le comportement par défaut pour un serveur TCP est de seulement invoquer <a class="reference internal" href="socket.html#socket.socket.listen" title="socket.socket.listen"><code class="xref py py-meth docutils literal notranslate"><span class="pre">listen()</span></code></a> sur le connecteur du serveur. Peut être surchargée.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.server_bind">
+<span class="sig-name descname"><span class="pre">server_bind</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.server_bind" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Appelée par le constructeur du serveur afin d'assigner (<em>bind</em>) l'adresse requise au connecteur du serveur. Peut être surchargée.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.verify_request">
+<span class="sig-name descname"><span class="pre">verify_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.verify_request" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Doit renvoyer un booléen. Si la valeur est <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code></a>, la requête sera traitée. Si la valeur est <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code></a>, la requête sera refusée. Cette fonction peut être surchargée afin d'implémenter une stratégie de contrôle d'accès au serveur. L'implémentation par défaut renvoie toujours <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code></a>.</p>
+</dd></dl>
+
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>La gestion du protocole <a class="reference internal" href="../glossary.html#term-context-manager"><span class="xref std std-term">context manager</span></a> a été ajoutée. Sortir du gestionnaire de contexte revient à appeler <a class="reference internal" href="#socketserver.BaseServer.server_close" title="socketserver.BaseServer.server_close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">server_close()</span></code></a>.</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="request-handler-objects">
+<h2>Objets gestionnaire de requêtes<a class="headerlink" href="#request-handler-objects" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.BaseRequestHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">BaseRequestHandler</span></span><a class="headerlink" href="#socketserver.BaseRequestHandler" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe de base de tous les objets gestionnaire de requêtes. Elle déclare l'interface, définie ci-dessous, pour tous les gestionnaires. Une implémentation concrète doit définir une nouvelle méthode <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> et peut surcharger n'importe quelle autre méthode. Cette classe concrète est instanciée pour chaque requête.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseRequestHandler.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseRequestHandler.setup" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Appelée avant la méthode <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> afin d'effectuer toutes les opérations d'initialisation requises. L'implémentation par défaut ne fait rien.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseRequestHandler.handle">
+<span class="sig-name descname"><span class="pre">handle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseRequestHandler.handle" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>This function must do all the work required to service a request.  The
+default implementation does nothing.  Several instance attributes are
+available to it; the request is available as <a class="reference internal" href="#socketserver.BaseRequestHandler.request" title="socketserver.BaseRequestHandler.request"><code class="xref py py-attr docutils literal notranslate"><span class="pre">request</span></code></a>; the client
+address as <a class="reference internal" href="#socketserver.BaseRequestHandler.client_address" title="socketserver.BaseRequestHandler.client_address"><code class="xref py py-attr docutils literal notranslate"><span class="pre">client_address</span></code></a>; and the server instance as
+<a class="reference internal" href="#socketserver.BaseRequestHandler.server" title="socketserver.BaseRequestHandler.server"><code class="xref py py-attr docutils literal notranslate"><span class="pre">server</span></code></a>, in case it needs access to per-server information.</p>
+<p>The type of <a class="reference internal" href="#socketserver.BaseRequestHandler.request" title="socketserver.BaseRequestHandler.request"><code class="xref py py-attr docutils literal notranslate"><span class="pre">request</span></code></a> is different for datagram or stream
+services.  For stream services, <a class="reference internal" href="#socketserver.BaseRequestHandler.request" title="socketserver.BaseRequestHandler.request"><code class="xref py py-attr docutils literal notranslate"><span class="pre">request</span></code></a> is a socket object; for
+datagram services, <a class="reference internal" href="#socketserver.BaseRequestHandler.request" title="socketserver.BaseRequestHandler.request"><code class="xref py py-attr docutils literal notranslate"><span class="pre">request</span></code></a> is a pair of string and socket.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseRequestHandler.finish">
+<span class="sig-name descname"><span class="pre">finish</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseRequestHandler.finish" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Appelée après la méthode <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> pour effectuer les opérations de nettoyage requises. L'implémentation par défaut ne fait rien. Si <a class="reference internal" href="#socketserver.BaseRequestHandler.setup" title="socketserver.BaseRequestHandler.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a> lève une exception, cette méthode n'est pas appelée.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseRequestHandler.request">
+<span class="sig-name descname"><span class="pre">request</span></span><a class="headerlink" href="#socketserver.BaseRequestHandler.request" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>The <em>new</em> <a class="reference internal" href="socket.html#socket.socket" title="socket.socket"><code class="xref py py-class docutils literal notranslate"><span class="pre">socket.socket</span></code></a> object
+to be used to communicate with the client.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseRequestHandler.client_address">
+<span class="sig-name descname"><span class="pre">client_address</span></span><a class="headerlink" href="#socketserver.BaseRequestHandler.client_address" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Client address returned by <a class="reference internal" href="#socketserver.BaseServer.get_request" title="socketserver.BaseServer.get_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BaseServer.get_request()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseRequestHandler.server">
+<span class="sig-name descname"><span class="pre">server</span></span><a class="headerlink" href="#socketserver.BaseRequestHandler.server" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><a class="reference internal" href="#socketserver.BaseServer" title="socketserver.BaseServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseServer</span></code></a> object used for handling the request.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.StreamRequestHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">StreamRequestHandler</span></span><a class="headerlink" href="#socketserver.StreamRequestHandler" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.DatagramRequestHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">DatagramRequestHandler</span></span><a class="headerlink" href="#socketserver.DatagramRequestHandler" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>These <a class="reference internal" href="#socketserver.BaseRequestHandler" title="socketserver.BaseRequestHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRequestHandler</span></code></a> subclasses override the
+<a class="reference internal" href="#socketserver.BaseRequestHandler.setup" title="socketserver.BaseRequestHandler.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a> and <a class="reference internal" href="#socketserver.BaseRequestHandler.finish" title="socketserver.BaseRequestHandler.finish"><code class="xref py py-meth docutils literal notranslate"><span class="pre">finish()</span></code></a>
+methods, and provide <a class="reference internal" href="#socketserver.DatagramRequestHandler.rfile" title="socketserver.DatagramRequestHandler.rfile"><code class="xref py py-attr docutils literal notranslate"><span class="pre">rfile</span></code></a> and <a class="reference internal" href="#socketserver.DatagramRequestHandler.wfile" title="socketserver.DatagramRequestHandler.wfile"><code class="xref py py-attr docutils literal notranslate"><span class="pre">wfile</span></code></a> attributes.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.DatagramRequestHandler.rfile">
+<span class="sig-name descname"><span class="pre">rfile</span></span><a class="headerlink" href="#socketserver.DatagramRequestHandler.rfile" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>A file object from which receives the request is read.
+Support the <a class="reference internal" href="io.html#io.BufferedIOBase" title="io.BufferedIOBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BufferedIOBase</span></code></a> readable interface.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.DatagramRequestHandler.wfile">
+<span class="sig-name descname"><span class="pre">wfile</span></span><a class="headerlink" href="#socketserver.DatagramRequestHandler.wfile" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>A file object to which the reply is written.
+Support the <a class="reference internal" href="io.html#io.BufferedIOBase" title="io.BufferedIOBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BufferedIOBase</span></code></a> writable interface</p>
+</dd></dl>
+
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span><a class="reference internal" href="#socketserver.DatagramRequestHandler.wfile" title="socketserver.DatagramRequestHandler.wfile"><code class="xref py py-attr docutils literal notranslate"><span class="pre">wfile</span></code></a> also supports the
+<a class="reference internal" href="io.html#io.BufferedIOBase" title="io.BufferedIOBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BufferedIOBase</span></code></a> writable interface.</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="examples">
+<h2>Exemples<a class="headerlink" href="#examples" title="Lien permanent vers ce titre">¶</a></h2>
+<section id="socketserver-tcpserver-example">
+<h3>Exemple pour <a class="reference internal" href="#socketserver.TCPServer" title="socketserver.TCPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.TCPServer</span></code></a><a class="headerlink" href="#socketserver-tcpserver-example" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Implémentation côté serveur :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">socketserver</span>
+
+<span class="k">class</span> <span class="nc">MyTCPHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The request handler class for our server.</span>
+
+<span class="sd">    It is instantiated once per connection to the server, and must</span>
+<span class="sd">    override the handle() method to implement communication to the</span>
+<span class="sd">    client.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># self.request is the TCP socket connected to the client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> wrote:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="c1"># just send back the same data, but upper-cased</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">9999</span>
+
+    <span class="c1"># Create the server, binding to localhost on port 9999</span>
+    <span class="k">with</span> <span class="n">socketserver</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">),</span> <span class="n">MyTCPHandler</span><span class="p">)</span> <span class="k">as</span> <span class="n">server</span><span class="p">:</span>
+        <span class="c1"># Activate the server; this will keep running until you</span>
+        <span class="c1"># interrupt the program with Ctrl-C</span>
+        <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Une implémentation alternative du gestionnaire de requêtes utilisant les flux de données (avec des objets fichier-compatibles simplifiant la communication en fournissant l'interface fichier standard) :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyTCPHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">StreamRequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># self.rfile is a file-like object created by the handler;</span>
+        <span class="c1"># we can now use e.g. readline() instead of raw recv() calls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rfile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> wrote:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="c1"># Likewise, self.wfile is a file-like object used to write back</span>
+        <span class="c1"># to the client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>La différence est que l'appel à <code class="docutils literal notranslate"><span class="pre">readline()</span></code> dans le second gestionnaire permet d'appeler <code class="docutils literal notranslate"><span class="pre">recv()</span></code> jusqu'à rencontrer un caractère de fin de ligne alors que dans le premier gestionnaire appelle directement <code class="docutils literal notranslate"><span class="pre">recv()</span></code>, renvoyant toutes les données envoyées par le client en un seul appel à <code class="docutils literal notranslate"><span class="pre">sendall()</span></code>.</p>
+<p>Implémentation côté client :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">9999</span>
+<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+<span class="c1"># Create a socket (SOCK_STREAM means a TCP socket)</span>
+<span class="k">with</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="k">as</span> <span class="n">sock</span><span class="p">:</span>
+    <span class="c1"># Connect to server and send data</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">data</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+
+    <span class="c1"># Receive data from the server and shut down</span>
+    <span class="n">received</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">),</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sent:     </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">received</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>La sortie de cet exemple devrait ressembler à ça :</p>
+<p>Serveur :</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>TCPServer.py
+<span class="go">127.0.0.1 wrote:</span>
+<span class="go">b&#39;hello world with TCP&#39;</span>
+<span class="go">127.0.0.1 wrote:</span>
+<span class="go">b&#39;python is nice&#39;</span>
+</pre></div>
+</div>
+<p>Client :</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>TCPClient.py<span class="w"> </span>hello<span class="w"> </span>world<span class="w"> </span>with<span class="w"> </span>TCP
+<span class="go">Sent:     hello world with TCP</span>
+<span class="go">Received: HELLO WORLD WITH TCP</span>
+<span class="gp">$ </span>python<span class="w"> </span>TCPClient.py<span class="w"> </span>python<span class="w"> </span>is<span class="w"> </span>nice
+<span class="go">Sent:     python is nice</span>
+<span class="go">Received: PYTHON IS NICE</span>
+</pre></div>
+</div>
+</section>
+<section id="socketserver-udpserver-example">
+<h3>Exemple pour <a class="reference internal" href="#socketserver.UDPServer" title="socketserver.UDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.UDPServer</span></code></a><a class="headerlink" href="#socketserver-udpserver-example" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Implémentation côté serveur :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">socketserver</span>
+
+<span class="k">class</span> <span class="nc">MyUDPHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class works similar to the TCP handler class, except that</span>
+<span class="sd">    self.request consists of a pair of data and client socket, and since</span>
+<span class="sd">    there is no connection the client address must be given explicitly</span>
+<span class="sd">    when sending data back via sendto().</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">socket</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> wrote:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">socket</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">9999</span>
+    <span class="k">with</span> <span class="n">socketserver</span><span class="o">.</span><span class="n">UDPServer</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">),</span> <span class="n">MyUDPHandler</span><span class="p">)</span> <span class="k">as</span> <span class="n">server</span><span class="p">:</span>
+        <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Implémentation côté client :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">9999</span>
+<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+<span class="c1"># SOCK_DGRAM is the socket type to use for UDP sockets</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+
+<span class="c1"># As you can see, there is no connect() call; UDP has no connections.</span>
+<span class="c1"># Instead, data is directly sent to the recipient via sendto().</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">data</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+<span class="n">received</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">),</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sent:     </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">received</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>La sortie de cet exemple devrait ressembler exactement à la sortie de l'exemple pour le serveur TCP.</p>
+</section>
+<section id="asynchronous-mixins">
+<h3>Classes de mélange asynchrone<a class="headerlink" href="#asynchronous-mixins" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pour développer des gestionnaires asynchrones, utilisez les classes <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> et <a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a>.</p>
+<p>Exemple pour <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">socketserver</span>
+
+<span class="k">class</span> <span class="nc">ThreadedTCPRequestHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">),</span> <span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+        <span class="n">cur_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cur_thread</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">),</span> <span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ThreadedTCPServer</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">ThreadingMixIn</span><span class="p">,</span> <span class="n">socketserver</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="k">as</span> <span class="n">sock</span><span class="p">:</span>
+        <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+        <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="s1">&#39;ascii&#39;</span><span class="p">))</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">),</span> <span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">response</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Port 0 means to select an arbitrary unused port</span>
+    <span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">0</span>
+
+    <span class="n">server</span> <span class="o">=</span> <span class="n">ThreadedTCPServer</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">),</span> <span class="n">ThreadedTCPRequestHandler</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">server</span><span class="p">:</span>
+        <span class="n">ip</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">server_address</span>
+
+        <span class="c1"># Start a thread with the server -- that thread will then start one</span>
+        <span class="c1"># more thread for each request</span>
+        <span class="n">server_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">)</span>
+        <span class="c1"># Exit the server thread when the main thread terminates</span>
+        <span class="n">server_thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">server_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Server loop running in thread:&quot;</span><span class="p">,</span> <span class="n">server_thread</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="n">client</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="s2">&quot;Hello World 1&quot;</span><span class="p">)</span>
+        <span class="n">client</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="s2">&quot;Hello World 2&quot;</span><span class="p">)</span>
+        <span class="n">client</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="s2">&quot;Hello World 3&quot;</span><span class="p">)</span>
+
+        <span class="n">server</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>La sortie de cet exemple devrait ressembler à ça :</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>ThreadedTCPServer.py
+<span class="go">Server loop running in thread: Thread-1</span>
+<span class="go">Received: Thread-2: Hello World 1</span>
+<span class="go">Received: Thread-3: Hello World 2</span>
+<span class="go">Received: Thread-4: Hello World 3</span>
+</pre></div>
+</div>
+<p>La classe <a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a> est utilisable de la même façon à la différence près que le serveur crée un nouveau processus fils pour chaque requête. Disponible uniquement sur les plateformes POSIX prenant en charge <a class="reference internal" href="os.html#os.fork" title="os.fork"><code class="xref py py-func docutils literal notranslate"><span class="pre">fork()</span></code></a>.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — Cadriciel pour serveurs réseaux</a><ul>
+<li><a class="reference internal" href="#server-creation-notes">Notes sur la création de serveurs</a></li>
+<li><a class="reference internal" href="#server-objects">Objets serveur</a></li>
+<li><a class="reference internal" href="#request-handler-objects">Objets gestionnaire de requêtes</a></li>
+<li><a class="reference internal" href="#examples">Exemples</a><ul>
+<li><a class="reference internal" href="#socketserver-tcpserver-example">Exemple pour <code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.TCPServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver-udpserver-example">Exemple pour <code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.UDPServer</span></code></a></li>
+<li><a class="reference internal" href="#asynchronous-mixins">Classes de mélange asynchrone</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="uuid.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — Objets UUID d'après la <strong>RFC 4122</strong></a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="http.server.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> --- serveurs HTTP</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/socketserver.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="http.server.html" title="http.server --- serveurs HTTP"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="uuid.html" title="uuid — Objets UUID d&#39;après la RFC 4122"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" >Gestion des protocoles internet</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — Cadriciel pour serveurs réseaux</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

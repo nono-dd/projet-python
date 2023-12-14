@@ -1,0 +1,990 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="2. Analyse lexicale" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/reference/lexical_analysis.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Un programme Python est lu par un analyseur syntaxique ( parser en anglais). En entrée de cet analyseur syntaxique, nous trouvons des lexèmes ( tokens en anglais), produits par un analyseur lexical..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Un programme Python est lu par un analyseur syntaxique ( parser en anglais). En entrée de cet analyseur syntaxique, nous trouvons des lexèmes ( tokens en anglais), produits par un analyseur lexical..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>2. Analyse lexicale &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="3. Modèle de données" href="datamodel.html" />
+    <link rel="prev" title="1. Introduction" href="introduction.html" />
+    <link rel="canonical" href="https://docs.python.org/3/reference/lexical_analysis.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">2. Analyse lexicale</a><ul>
+<li><a class="reference internal" href="#line-structure">2.1. Structure des lignes</a><ul>
+<li><a class="reference internal" href="#logical-lines">2.1.1. Lignes logiques</a></li>
+<li><a class="reference internal" href="#physical-lines">2.1.2. Lignes physiques</a></li>
+<li><a class="reference internal" href="#comments">2.1.3. Commentaires</a></li>
+<li><a class="reference internal" href="#encoding-declarations">2.1.4. Déclaration d'encodage</a></li>
+<li><a class="reference internal" href="#explicit-line-joining">2.1.5. Continuation de ligne explicite</a></li>
+<li><a class="reference internal" href="#implicit-line-joining">2.1.6. Continuation de ligne implicite</a></li>
+<li><a class="reference internal" href="#blank-lines">2.1.7. Lignes vierges</a></li>
+<li><a class="reference internal" href="#indentation">2.1.8. Indentation</a></li>
+<li><a class="reference internal" href="#whitespace-between-tokens">2.1.9. Espaces entre lexèmes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-tokens">2.2. Autres lexèmes</a></li>
+<li><a class="reference internal" href="#identifiers">2.3. Identifiants et mots-clés</a><ul>
+<li><a class="reference internal" href="#keywords">2.3.1. Mots-clés</a></li>
+<li><a class="reference internal" href="#soft-keywords">2.3.2. Mots-clés ad hoc</a></li>
+<li><a class="reference internal" href="#reserved-classes-of-identifiers">2.3.3. Classes réservées pour les identifiants</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#literals">2.4. Littéraux</a><ul>
+<li><a class="reference internal" href="#string-and-bytes-literals">2.4.1. Littéraux de chaînes de caractères et de suites d'octets</a><ul>
+<li><a class="reference internal" href="#escape-sequences">2.4.1.1. Escape sequences</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#string-literal-concatenation">2.4.2. Concaténation de chaînes de caractères</a></li>
+<li><a class="reference internal" href="#formatted-string-literals">2.4.3. Chaînes de caractères littérales formatées</a></li>
+<li><a class="reference internal" href="#numeric-literals">2.4.4. Littéraux numériques</a></li>
+<li><a class="reference internal" href="#integer-literals">2.4.5. Entiers littéraux</a></li>
+<li><a class="reference internal" href="#floating-point-literals">2.4.6. Nombres à virgule flottante littéraux</a></li>
+<li><a class="reference internal" href="#imaginary-literals">2.4.7. Imaginaires littéraux</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#operators">2.5. Opérateurs</a></li>
+<li><a class="reference internal" href="#delimiters">2.6. Délimiteurs</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="introduction.html"
+                          title="Chapitre précédent"><span class="section-number">1. </span>Introduction</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="datamodel.html"
+                          title="Chapitre suivant"><span class="section-number">3. </span>Modèle de données</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/reference/lexical_analysis.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="datamodel.html" title="3. Modèle de données"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1. Introduction"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">La référence du langage Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Analyse lexicale</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="lexical-analysis">
+<span id="lexical"></span><h1><span class="section-number">2. </span>Analyse lexicale<a class="headerlink" href="#lexical-analysis" title="Lien permanent vers ce titre">¶</a></h1>
+<p id="index-0">Un programme Python est lu par un analyseur syntaxique (<em>parser</em> en anglais). En entrée de cet analyseur syntaxique, nous trouvons des lexèmes (<em>tokens</em> en anglais), produits par un analyseur lexical. Ce chapitre décrit comment l'analyseur lexical découpe le fichier en lexèmes.</p>
+<p>Python lit le texte du programme comme des suites de caractères Unicode ; l'encodage du fichier source peut être spécifié par une déclaration d'encodage et vaut par défaut UTF-8, voir la <span class="target" id="index-38"></span><a class="pep reference external" href="https://peps.python.org/pep-3120/"><strong>PEP 3120</strong></a> pour les détails. Si le fichier source ne peut pas être décodé, une exception <a class="reference internal" href="../library/exceptions.html#SyntaxError" title="SyntaxError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxError</span></code></a> (erreur de syntaxe) est levée.</p>
+<section id="line-structure">
+<span id="id1"></span><h2><span class="section-number">2.1. </span>Structure des lignes<a class="headerlink" href="#line-structure" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-2">Un programme en Python est divisé en <em>lignes logiques</em>.</p>
+<section id="logical-lines">
+<span id="id2"></span><h3><span class="section-number">2.1.1. </span>Lignes logiques<a class="headerlink" href="#logical-lines" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-3">La fin d'une ligne logique est représentée par le lexème NEWLINE. Les instructions ne peuvent pas traverser les limites des lignes logiques, sauf quand NEWLINE est autorisé par la syntaxe (par exemple, entre les instructions des instructions composées). Une ligne logique est constituée d'une ou plusieurs <em>lignes physiques</em> en fonction des règles, explicites ou implicites, de <em>continuation de ligne</em>.</p>
+</section>
+<section id="physical-lines">
+<span id="id3"></span><h3><span class="section-number">2.1.2. </span>Lignes physiques<a class="headerlink" href="#physical-lines" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Une ligne physique est une suite de caractères terminée par une séquence de fin de ligne. Dans les fichiers sources et les chaînes de caractères, n'importe quelle séquence de fin de ligne des plateformes standards peut être utilisée ; Unix utilise le caractère ASCII LF (pour <em>linefeed</em>, saut de ligne en français), Windows utilise la séquence CR LF (<em>carriage return</em> suivi de <em>linefeed</em>) et Macintosh utilisait le caractère ASCII CR. Toutes ces séquences peuvent être utilisées, quelle que soit la plateforme. La fin de l'entrée est aussi une fin de ligne physique implicite.</p>
+<p>Lorsque vous encapsulez Python, les chaînes de code source doivent être passées à l'API Python en utilisant les conventions du C standard pour les caractères de fin de ligne : le caractère <code class="docutils literal notranslate"><span class="pre">\n</span></code>, dont le code ASCII est LF.</p>
+</section>
+<section id="comments">
+<span id="id4"></span><h3><span class="section-number">2.1.3. </span>Commentaires<a class="headerlink" href="#comments" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-4">Un commentaire commence par le caractère croisillon (<code class="docutils literal notranslate"><span class="pre">#</span></code>, <em>hash</em> en anglais et qui ressemble au symbole musical dièse, c'est pourquoi il est souvent improprement appelé caractère dièse) situé en dehors d'une chaine de caractères littérale et se termine à la fin de la ligne physique. Un commentaire signifie la fin de la ligne logique à moins qu'une règle de continuation de ligne implicite ne s'applique. Les commentaires sont ignorés au niveau syntaxique, ce ne sont pas des lexèmes.</p>
+</section>
+<section id="encoding-declarations">
+<span id="encodings"></span><h3><span class="section-number">2.1.4. </span>Déclaration d'encodage<a class="headerlink" href="#encoding-declarations" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-5">Si un commentaire placé sur la première ou deuxième ligne du script Python correspond à l'expression rationnelle <code class="docutils literal notranslate"><span class="pre">coding[=:]\s*([-\w.]+)</span></code>, ce commentaire est analysé comme une déclaration d'encodage ; le premier groupe de cette expression désigne l'encodage du fichier source. Cette déclaration d'encodage doit être seule sur sa ligne et, si elle est sur la deuxième ligne, la première ligne doit aussi être une ligne composée uniquement d'un commentaire. Les formes recommandées pour l'expression de l'encodage sont</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: &lt;encoding-name&gt; -*-</span>
+</pre></div>
+</div>
+<p>qui est reconnue aussi par GNU Emacs et</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># vim:fileencoding=&lt;encoding-name&gt;</span>
+</pre></div>
+</div>
+<p>qui est reconnue par VIM de Bram Moolenaar.</p>
+<p>Si aucune déclaration d'encodage n'est trouvée, l'encodage par défaut est utilisé : UTF-8. En plus, si les premiers octets du fichier sont l'indicateur d'ordre des octets UTF-8 (<code class="docutils literal notranslate"><span class="pre">b'\xef\xbb\xbf'</span></code>, <em>BOM</em> en anglais pour <em>byte order mark</em>), le fichier est considéré comme étant en UTF-8 (cette convention est reconnue, entre autres, par <strong class="program">notepad</strong> de Microsoft).</p>
+<p>Si un encodage est déclaré, le nom de l'encodage doit être reconnu par Python (voir <a class="reference internal" href="../library/codecs.html#standard-encodings"><span class="std std-ref">Standard Encodings</span></a>). L'encodage est utilisé pour toute l'analyse lexicale, y compris les chaînes de caractères, les commentaires et les identifiants.</p>
+</section>
+<section id="explicit-line-joining">
+<span id="explicit-joining"></span><h3><span class="section-number">2.1.5. </span>Continuation de ligne explicite<a class="headerlink" href="#explicit-line-joining" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-6">Deux lignes physiques, ou plus, peuvent être jointes pour former une seule ligne logique en utilisant la barre oblique inversée (<code class="docutils literal notranslate"><span class="pre">\</span></code>) selon la règle suivante : quand la ligne physique se termine par une barre oblique inversée qui ne fait pas partie d'une chaine de caractères ou d'un commentaire, la ligne immédiatement suivante lui est adjointe pour former une seule ligne logique, en supprimant la barre oblique inversée et le caractère de fin de ligne. Par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="mi">1900</span> <span class="o">&lt;</span> <span class="n">year</span> <span class="o">&lt;</span> <span class="mi">2100</span> <span class="ow">and</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">month</span> <span class="o">&lt;=</span> <span class="mi">12</span> \
+   <span class="ow">and</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">day</span> <span class="o">&lt;=</span> <span class="mi">31</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">24</span> \
+   <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">minute</span> <span class="o">&lt;</span> <span class="mi">60</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">second</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>   <span class="c1"># Looks like a valid date</span>
+        <span class="k">return</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Une ligne que se termine par une barre oblique inversée ne peut pas avoir de commentaire. La barre oblique inversée ne permet pas de continuer un commentaire. La barre oblique inversée ne permet pas de continuer un lexème, sauf s'il s'agit d'une chaîne de caractères (par exemple, les lexèmes autres que les chaînes de caractères ne peuvent pas être répartis sur plusieurs lignes en utilisant une barre oblique inversée). La barre oblique inversée n'est pas autorisée ailleurs sur la ligne, en dehors d'une chaîne de caractères.</p>
+</section>
+<section id="implicit-line-joining">
+<span id="implicit-joining"></span><h3><span class="section-number">2.1.6. </span>Continuation de ligne implicite<a class="headerlink" href="#implicit-line-joining" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les expressions entre parenthèses, crochets ou accolades peuvent être réparties sur plusieurs lignes sans utiliser de barre oblique inversée. Par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">month_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Januari&#39;</span><span class="p">,</span> <span class="s1">&#39;Februari&#39;</span><span class="p">,</span> <span class="s1">&#39;Maart&#39;</span><span class="p">,</span>      <span class="c1"># These are the</span>
+               <span class="s1">&#39;April&#39;</span><span class="p">,</span>   <span class="s1">&#39;Mei&#39;</span><span class="p">,</span>      <span class="s1">&#39;Juni&#39;</span><span class="p">,</span>       <span class="c1"># Dutch names</span>
+               <span class="s1">&#39;Juli&#39;</span><span class="p">,</span>    <span class="s1">&#39;Augustus&#39;</span><span class="p">,</span> <span class="s1">&#39;September&#39;</span><span class="p">,</span>  <span class="c1"># for the months</span>
+               <span class="s1">&#39;Oktober&#39;</span><span class="p">,</span> <span class="s1">&#39;November&#39;</span><span class="p">,</span> <span class="s1">&#39;December&#39;</span><span class="p">]</span>   <span class="c1"># of the year</span>
+</pre></div>
+</div>
+<p>Les lignes continuées implicitement peuvent avoir des commentaires. L'indentation des lignes de continuation n'est pas importante. Une ligne blanche est autorisée comme ligne de continuation. Il ne doit pas y avoir de lexème NEWLINE entre des lignes implicitement continuées. Les lignes continuées implicitement peuvent être utilisées dans des chaînes entre triples guillemets (voir ci-dessous) ; dans ce cas, elles ne peuvent pas avoir de commentaires.</p>
+</section>
+<section id="blank-lines">
+<span id="id5"></span><h3><span class="section-number">2.1.7. </span>Lignes vierges<a class="headerlink" href="#blank-lines" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-7">Une ligne logique qui ne contient que des espaces, tabulations, caractères de saut de page (<em>formfeed</em> en anglais) ou commentaires est ignorée (c'est-à-dire que le lexème NEWLINE n'est pas produit). Pendant l'édition interactive d'instructions, la gestion des lignes vierges peut différer en fonction de l'implémentation de la boucle REPL. Dans l'interpréteur standard, une ligne complètement vierge (c'est-à-dire ne contenant strictement rien, même pas une espace ou un commentaire) termine une instruction multi-lignes.</p>
+</section>
+<section id="indentation">
+<span id="id6"></span><h3><span class="section-number">2.1.8. </span>Indentation<a class="headerlink" href="#indentation" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-8">Des espaces ou tabulations au début d’une ligne logique sont utilisées pour connaître le niveau d’indentation de la ligne, qui est ensuite utilisé pour déterminer comment les instructions sont groupées.</p>
+<p>Les tabulations sont remplacées (de la gauche vers la droite) par une à huit espaces de manière à ce que le nombre de caractères remplacés soit un multiple de huit (nous avons ainsi la même règle que celle d'Unix). Le nombre total d'espaces précédant le premier caractère non blanc détermine alors le niveau d'indentation de la ligne. L'indentation ne peut pas être répartie sur plusieurs lignes physiques à l'aide de barres obliques inversées ; les espaces jusqu'à la première barre oblique inversée déterminent l'indentation.</p>
+<p>L'indentation est déclarée inconsistante et rejetée si, dans un même fichier source, le mélange des tabulations et des espaces est tel que la signification dépend du nombre d'espaces que représente une tabulation. Une exception <a class="reference internal" href="../library/exceptions.html#TabError" title="TabError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TabError</span></code></a> est levée dans ce cas.</p>
+<p><strong>Note de compatibilité entre les plateformes :</strong> en raison de la nature des éditeurs de texte sur les plateformes non Unix, il n'est pas judicieux d'utiliser un mélange d'espaces et de tabulations pour l'indentation dans un seul fichier source. Il convient également de noter que des plateformes peuvent explicitement limiter le niveau d'indentation maximal.</p>
+<p>Un caractère de saut de page peut être présent au début de la ligne ; il est ignoré pour les calculs d'indentation ci-dessus. Les caractères de saut de page se trouvant ailleurs avec les espaces en tête de ligne ont un effet indéfini (par exemple, ils peuvent remettre à zéro le nombre d'espaces).</p>
+<p id="index-9">Les niveaux d'indentation de lignes consécutives sont utilisés pour générer les lexèmes INDENT et DEDENT, en utilisant une pile, de cette façon :</p>
+<p>Avant que la première ligne du fichier ne soit lue, un « zéro » est posé sur la pile ; il ne sera plus jamais enlevé. Les nombres empilés sont toujours strictement croissants de bas en haut. Au début de chaque ligne logique, le niveau d'indentation de la ligne est comparé au sommet de la pile. S'ils sont égaux, il ne se passe rien. S'il est plus grand, il est empilé et un lexème INDENT est produit. S'il est plus petit, il <em>doit</em> être l'un des nombres présents dans la pile ; tous les nombres de la pile qui sont plus grands sont retirés et, pour chaque nombre retiré, un lexème DEDENT est produit. À la fin du fichier, un lexème DEDENT est produit pour chaque nombre supérieur à zéro restant sur la pile.</p>
+<p>Voici un exemple de code Python correctement indenté (bien que très confus) :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">perm</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+        <span class="c1"># Compute the list of all permutations of l</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+                  <span class="k">return</span> <span class="p">[</span><span class="n">l</span><span class="p">]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>
+             <span class="n">s</span> <span class="o">=</span> <span class="n">l</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+             <span class="n">p</span> <span class="o">=</span> <span class="n">perm</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+              <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r</span>
+</pre></div>
+</div>
+<p>L'exemple suivant montre plusieurs erreurs d'indentation :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span> <span class="k">def</span> <span class="nf">perm</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>                       <span class="c1"># error: first line indented</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>             <span class="c1"># error: not indented</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">l</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">perm</span><span class="p">(</span><span class="n">l</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span>   <span class="c1"># error: unexpected indent</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+                <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">r</span>                <span class="c1"># error: inconsistent dedent</span>
+</pre></div>
+</div>
+<p>En fait, les trois premières erreurs sont détectées par l'analyseur syntaxique ; seule la dernière erreur est trouvée par l'analyseur lexical (l'indentation de <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">r</span></code> ne correspond à aucun niveau dans la pile).</p>
+</section>
+<section id="whitespace-between-tokens">
+<span id="whitespace"></span><h3><span class="section-number">2.1.9. </span>Espaces entre lexèmes<a class="headerlink" href="#whitespace-between-tokens" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Sauf au début d'une ligne logique ou dans les chaînes de caractères, les caractères « blancs » espace, tabulation et saut de page peuvent être utilisés de manière interchangeable pour séparer les lexèmes. Un blanc n'est nécessaire entre deux lexèmes que si leur concaténation pourrait être interprétée comme un lexème différent (par exemple, ab est un lexème, mais a b comporte deux lexèmes).</p>
+</section>
+</section>
+<section id="other-tokens">
+<span id="id7"></span><h2><span class="section-number">2.2. </span>Autres lexèmes<a class="headerlink" href="#other-tokens" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Outre NEWLINE, INDENT et DEDENT, il existe les catégories de lexèmes suivantes : <em>identifiants</em>, <em>mots clés</em>, <em>littéraux</em>, <em>opérateurs</em> et <em>délimiteurs</em>. Les blancs (autres que les fins de lignes, vus auparavant) ne sont pas des lexèmes mais servent à délimiter les lexèmes. Quand une ambiguïté existe, le lexème correspond à la plus grande chaîne possible qui forme un lexème licite, en lisant de la gauche vers la droite.</p>
+</section>
+<section id="identifiers">
+<span id="identifiers-and-keywords"></span><h2><span class="section-number">2.3. </span>Identifiants et mots-clés<a class="headerlink" href="#identifiers" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-10">Les identifiants (aussi appelés <em>noms</em>) sont décrits par les définitions lexicales suivantes.</p>
+<p>La syntaxe des identifiants en Python est basée sur l'annexe UAX-31 du standard Unicode avec les modifications définies ci-dessous ; consultez la <span class="target" id="index-39"></span><a class="pep reference external" href="https://peps.python.org/pep-3131/"><strong>PEP 3131</strong></a> pour plus de détails.</p>
+<p>Dans l'intervalle ASCII (<em>U+0001..U+007F</em>), les caractères licites pour les identifiants sont les mêmes que pour Python 2.x : les lettres minuscules et majuscules de <code class="docutils literal notranslate"><span class="pre">A</span></code> à <code class="docutils literal notranslate"><span class="pre">Z</span></code>, le souligné (ou <em>underscore</em>) <code class="docutils literal notranslate"><span class="pre">_</span></code> et, sauf pour le premier caractère, les chiffres de <code class="docutils literal notranslate"><span class="pre">0</span></code> à <code class="docutils literal notranslate"><span class="pre">9</span></code>.</p>
+<p>Python 3.0 introduit des caractères supplémentaires en dehors de l'intervalle ASCII (voir la <span class="target" id="index-40"></span><a class="pep reference external" href="https://peps.python.org/pep-3131/"><strong>PEP 3131</strong></a>). Pour ces caractères, la classification utilise la version de la « base de données des caractères Unicode » telle qu'incluse dans le module <a class="reference internal" href="../library/unicodedata.html#module-unicodedata" title="unicodedata: Access the Unicode Database."><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code></a>.</p>
+<p>Les identifiants n'ont pas de limite de longueur. La casse est prise en compte.</p>
+<pre>
+<strong id="grammar-token-python-grammar-identifier"><span id="grammar-token-identifier"></span>identifier  </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-xid_start"><code class="xref docutils literal notranslate"><span class="pre">xid_start</span></code></a> <a class="reference internal" href="#grammar-token-python-grammar-xid_continue"><code class="xref docutils literal notranslate"><span class="pre">xid_continue</span></code></a>*
+<strong id="grammar-token-python-grammar-id_start"><span id="grammar-token-id-start"></span>id_start    </strong> ::=  &lt;all characters in general categories Lu, Ll, Lt, Lm, Lo, Nl, the underscore, and characters with the Other_ID_Start property&gt;
+<strong id="grammar-token-python-grammar-id_continue"><span id="grammar-token-id-continue"></span>id_continue </strong> ::=  &lt;all characters in <a class="reference internal" href="#grammar-token-python-grammar-id_start"><code class="xref docutils literal notranslate"><span class="pre">id_start</span></code></a>, plus characters in the categories Mn, Mc, Nd, Pc and others with the Other_ID_Continue property&gt;
+<strong id="grammar-token-python-grammar-xid_start"><span id="grammar-token-xid-start"></span>xid_start   </strong> ::=  &lt;all characters in <a class="reference internal" href="#grammar-token-python-grammar-id_start"><code class="xref docutils literal notranslate"><span class="pre">id_start</span></code></a> whose NFKC normalization is in &quot;id_start xid_continue*&quot;&gt;
+<strong id="grammar-token-python-grammar-xid_continue"><span id="grammar-token-xid-continue"></span>xid_continue</strong> ::=  &lt;all characters in <a class="reference internal" href="#grammar-token-python-grammar-id_continue"><code class="xref docutils literal notranslate"><span class="pre">id_continue</span></code></a> whose NFKC normalization is in &quot;id_continue*&quot;&gt;
+</pre>
+<p>Les codes de catégories Unicode cités ci-dessus signifient :</p>
+<ul class="simple">
+<li><p><em>Lu</em> — lettres majuscules</p></li>
+<li><p><em>Ll</em> — lettres minuscules</p></li>
+<li><p><em>Lt</em> — lettres majuscules particulières (catégorie <em>titlecase</em> de l'Unicode)</p></li>
+<li><p><em>Lm</em> — lettres modificatives avec chasse</p></li>
+<li><p><em>Lo</em> — autres lettres</p></li>
+<li><p><em>Nl</em> — nombres lettres (par exemple, les nombres romains)</p></li>
+<li><p><em>Mn</em> — symboles que l'on combine avec d'autres (accents ou autres) sans générer d'espace (<em>nonspacing marks</em> en anglais)</p></li>
+<li><p><em>Mc</em> — symboles que l'on combine avec d'autres en générant une espace (<em>spacing combining marks</em> en anglais)</p></li>
+<li><p><em>Nd</em> — chiffres (arabes et autres)</p></li>
+<li><p><em>Pc</em> — connecteurs (tirets et autres lignes)</p></li>
+<li><p><em>Other_ID_Start</em> - explicit list of characters in <a class="reference external" href="https://www.unicode.org/Public/15.0.0/ucd/PropList.txt">PropList.txt</a> to support backwards
+compatibility</p></li>
+<li><p><em>Other_ID_Continue</em> — pareillement</p></li>
+</ul>
+<p>Tous les identifiants sont convertis dans la forme normale NFKC pendant l'analyse syntaxique : la comparaison des identifiants se base sur leur forme NFKC.</p>
+<p>A non-normative HTML file listing all valid identifier characters for Unicode
+15.0.0 can be found at
+<a class="reference external" href="https://www.unicode.org/Public/15.0.0/ucd/DerivedCoreProperties.txt">https://www.unicode.org/Public/15.0.0/ucd/DerivedCoreProperties.txt</a></p>
+<section id="keywords">
+<span id="id8"></span><h3><span class="section-number">2.3.1. </span>Mots-clés<a class="headerlink" href="#keywords" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-13">Les identifiants suivants sont des mots réservés par le langage et ne peuvent pas être utilisés en tant qu'identifiants normaux. Ils doivent être écrits exactement comme ci-dessous :</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>False      await      else       import     pass
+None       break      except     in         raise
+True       class      finally    is         return
+and        continue   for        lambda     try
+as         def        from       nonlocal   while
+assert     del        global     not        with
+async      elif       if         or         yield
+</pre></div>
+</div>
+</section>
+<section id="soft-keywords">
+<span id="id9"></span><h3><span class="section-number">2.3.2. </span>Mots-clés ad hoc<a class="headerlink" href="#soft-keywords" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="versionadded" id="index-14">
+<p><span class="versionmodified added">Nouveau dans la version 3.10.</span></p>
+</div>
+<p>Some identifiers are only reserved under specific contexts. These are known as
+<em>soft keywords</em>.  The identifiers <code class="docutils literal notranslate"><span class="pre">match</span></code>, <code class="docutils literal notranslate"><span class="pre">case</span></code>, <code class="docutils literal notranslate"><span class="pre">type</span></code> and <code class="docutils literal notranslate"><span class="pre">_</span></code> can
+syntactically act as keywords in certain contexts,
+but this distinction is done at the parser level, not when tokenizing.</p>
+<p>As soft keywords, their use in the grammar is possible while still
+preserving compatibility with existing code that uses these names as
+identifier names.</p>
+<p><code class="docutils literal notranslate"><span class="pre">match</span></code>, <code class="docutils literal notranslate"><span class="pre">case</span></code>, and <code class="docutils literal notranslate"><span class="pre">_</span></code> are used in the <a class="reference internal" href="compound_stmts.html#match"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">match</span></code></a> statement.
+<code class="docutils literal notranslate"><span class="pre">type</span></code> is used in the <a class="reference internal" href="simple_stmts.html#type"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">type</span></code></a> statement.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span><code class="docutils literal notranslate"><span class="pre">type</span></code> is now a soft keyword.</p>
+</div>
+</section>
+<section id="reserved-classes-of-identifiers">
+<span id="id-classes"></span><span id="index-15"></span><h3><span class="section-number">2.3.3. </span>Classes réservées pour les identifiants<a class="headerlink" href="#reserved-classes-of-identifiers" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Certaines classes d'identifiants (outre les mots-clés) ont une signification particulière. Ces classes se reconnaissent par des caractères de soulignement en tête et en queue d'identifiant :</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">_*</span></code></dt><dd><p>N'est pas importé par <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">module</span> <span class="pre">import</span> <span class="pre">*</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">_</span></code></dt><dd><p>Dans un motif <code class="docutils literal notranslate"><span class="pre">case</span></code> d'une instruction <a class="reference internal" href="compound_stmts.html#match"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">match</span></code></a>, <code class="docutils literal notranslate"><span class="pre">_</span></code> est un <a class="reference internal" href="#soft-keywords"><span class="std std-ref">mot-clé ad hoc</span></a> qui décrit un motif <a class="reference internal" href="compound_stmts.html#wildcard-patterns"><span class="std std-ref">attrape-tout</span></a>.</p>
+<p>De son côté, l'interpréteur interactif place le résultat de la dernière évaluation dans la variable <code class="docutils literal notranslate"><span class="pre">-</span></code> (son emplacement se situe dans le module <a class="reference internal" href="../library/builtins.html#module-builtins" title="builtins: The module that provides the built-in namespace."><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code></a>, avec les fonctions natives telles que <code class="docutils literal notranslate"><span class="pre">print</span></code>).</p>
+<p>Ailleurs, <code class="docutils literal notranslate"><span class="pre">_</span></code> est un identifiant comme un autre. Il est souvent utilisé pour désigner des éléments « spéciaux », mais il n'est pas spécial pour Python en tant que tel.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Le nom <code class="docutils literal notranslate"><span class="pre">_</span></code> est souvent utilisé pour internationaliser l'affichage ; reportez-vous à la documentation du module <a class="reference internal" href="../library/gettext.html#module-gettext" title="gettext: Multilingual internationalization services."><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code></a> pour plus d'informations sur cette convention.</p>
+<p>Il est aussi communément utilisé pour signifier que la variable n'est pas utilisée.</p>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">__*__</span></code></dt><dd><p>Noms définis par le système, appelés noms « <em>dunder</em> » (pour <em>Double Underscores</em>) de manière informelle. Ces noms sont définis par l'interpréteur et son implémentation (y compris la bibliothèque standard). Les noms actuels définis par le système sont abordés dans la section <a class="reference internal" href="datamodel.html#specialnames"><span class="std std-ref">Méthodes spéciales</span></a>, mais aussi ailleurs. D'autres noms seront probablement définis dans les futures versions de Python. Toute utilisation de noms de la forme <code class="docutils literal notranslate"><span class="pre">__*__</span></code>, dans n'importe quel contexte, qui n'est pas conforme à ce qu'indique explicitement la documentation, est sujette à des mauvaises surprises sans avertissement.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">__*</span></code></dt><dd><p>Noms privés pour une classe. Les noms de cette forme, lorsqu'ils sont utilisés dans le contexte d'une définition de classe, sont réécrits sous une forme modifiée pour éviter les conflits de noms entre les attributs « privés » des classes de base et les classes dérivées. Voir la section <a class="reference internal" href="expressions.html#atom-identifiers"><span class="std std-ref">Identifiants (noms)</span></a>.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="literals">
+<span id="id10"></span><h2><span class="section-number">2.4. </span>Littéraux<a class="headerlink" href="#literals" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-16">Les littéraux sont des notations pour indiquer des valeurs constantes de certains types natifs.</p>
+<section id="string-and-bytes-literals">
+<span id="strings"></span><span id="index-17"></span><h3><span class="section-number">2.4.1. </span>Littéraux de chaînes de caractères et de suites d'octets<a class="headerlink" href="#string-and-bytes-literals" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les chaînes de caractères littérales sont définies par les définitions lexicales suivantes :</p>
+<pre>
+<strong id="grammar-token-python-grammar-stringliteral"><span id="grammar-token-stringliteral"></span>stringliteral  </strong> ::=  [<a class="reference internal" href="#grammar-token-python-grammar-stringprefix"><code class="xref docutils literal notranslate"><span class="pre">stringprefix</span></code></a>](<a class="reference internal" href="#grammar-token-python-grammar-shortstring"><code class="xref docutils literal notranslate"><span class="pre">shortstring</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-longstring"><code class="xref docutils literal notranslate"><span class="pre">longstring</span></code></a>)
+<strong id="grammar-token-python-grammar-stringprefix"><span id="grammar-token-stringprefix"></span>stringprefix   </strong> ::=  &quot;r&quot; | &quot;u&quot; | &quot;R&quot; | &quot;U&quot; | &quot;f&quot; | &quot;F&quot;
+                     | &quot;fr&quot; | &quot;Fr&quot; | &quot;fR&quot; | &quot;FR&quot; | &quot;rf&quot; | &quot;rF&quot; | &quot;Rf&quot; | &quot;RF&quot;
+<strong id="grammar-token-python-grammar-shortstring"><span id="grammar-token-shortstring"></span>shortstring    </strong> ::=  &quot;'&quot; <a class="reference internal" href="#grammar-token-python-grammar-shortstringitem"><code class="xref docutils literal notranslate"><span class="pre">shortstringitem</span></code></a>* &quot;'&quot; | '&quot;' <a class="reference internal" href="#grammar-token-python-grammar-shortstringitem"><code class="xref docutils literal notranslate"><span class="pre">shortstringitem</span></code></a>* '&quot;'
+<strong id="grammar-token-python-grammar-longstring"><span id="grammar-token-longstring"></span>longstring     </strong> ::=  &quot;'''&quot; <a class="reference internal" href="#grammar-token-python-grammar-longstringitem"><code class="xref docutils literal notranslate"><span class="pre">longstringitem</span></code></a>* &quot;'''&quot; | '&quot;&quot;&quot;' <a class="reference internal" href="#grammar-token-python-grammar-longstringitem"><code class="xref docutils literal notranslate"><span class="pre">longstringitem</span></code></a>* '&quot;&quot;&quot;'
+<strong id="grammar-token-python-grammar-shortstringitem"><span id="grammar-token-shortstringitem"></span>shortstringitem</strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-shortstringchar"><code class="xref docutils literal notranslate"><span class="pre">shortstringchar</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-stringescapeseq"><code class="xref docutils literal notranslate"><span class="pre">stringescapeseq</span></code></a>
+<strong id="grammar-token-python-grammar-longstringitem"><span id="grammar-token-longstringitem"></span>longstringitem </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-longstringchar"><code class="xref docutils literal notranslate"><span class="pre">longstringchar</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-stringescapeseq"><code class="xref docutils literal notranslate"><span class="pre">stringescapeseq</span></code></a>
+<strong id="grammar-token-python-grammar-shortstringchar"><span id="grammar-token-shortstringchar"></span>shortstringchar</strong> ::=  &lt;any source character except &quot;\&quot; or newline or the quote&gt;
+<strong id="grammar-token-python-grammar-longstringchar"><span id="grammar-token-longstringchar"></span>longstringchar </strong> ::=  &lt;any source character except &quot;\&quot;&gt;
+<strong id="grammar-token-python-grammar-stringescapeseq"><span id="grammar-token-stringescapeseq"></span>stringescapeseq</strong> ::=  &quot;\&quot; &lt;any source character&gt;
+</pre>
+<pre>
+<strong id="grammar-token-python-grammar-bytesliteral"><span id="grammar-token-bytesliteral"></span>bytesliteral  </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-bytesprefix"><code class="xref docutils literal notranslate"><span class="pre">bytesprefix</span></code></a>(<a class="reference internal" href="#grammar-token-python-grammar-shortbytes"><code class="xref docutils literal notranslate"><span class="pre">shortbytes</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-longbytes"><code class="xref docutils literal notranslate"><span class="pre">longbytes</span></code></a>)
+<strong id="grammar-token-python-grammar-bytesprefix"><span id="grammar-token-bytesprefix"></span>bytesprefix   </strong> ::=  &quot;b&quot; | &quot;B&quot; | &quot;br&quot; | &quot;Br&quot; | &quot;bR&quot; | &quot;BR&quot; | &quot;rb&quot; | &quot;rB&quot; | &quot;Rb&quot; | &quot;RB&quot;
+<strong id="grammar-token-python-grammar-shortbytes"><span id="grammar-token-shortbytes"></span>shortbytes    </strong> ::=  &quot;'&quot; <a class="reference internal" href="#grammar-token-python-grammar-shortbytesitem"><code class="xref docutils literal notranslate"><span class="pre">shortbytesitem</span></code></a>* &quot;'&quot; | '&quot;' <a class="reference internal" href="#grammar-token-python-grammar-shortbytesitem"><code class="xref docutils literal notranslate"><span class="pre">shortbytesitem</span></code></a>* '&quot;'
+<strong id="grammar-token-python-grammar-longbytes"><span id="grammar-token-longbytes"></span>longbytes     </strong> ::=  &quot;'''&quot; <a class="reference internal" href="#grammar-token-python-grammar-longbytesitem"><code class="xref docutils literal notranslate"><span class="pre">longbytesitem</span></code></a>* &quot;'''&quot; | '&quot;&quot;&quot;' <a class="reference internal" href="#grammar-token-python-grammar-longbytesitem"><code class="xref docutils literal notranslate"><span class="pre">longbytesitem</span></code></a>* '&quot;&quot;&quot;'
+<strong id="grammar-token-python-grammar-shortbytesitem"><span id="grammar-token-shortbytesitem"></span>shortbytesitem</strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-shortbyteschar"><code class="xref docutils literal notranslate"><span class="pre">shortbyteschar</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-bytesescapeseq"><code class="xref docutils literal notranslate"><span class="pre">bytesescapeseq</span></code></a>
+<strong id="grammar-token-python-grammar-longbytesitem"><span id="grammar-token-longbytesitem"></span>longbytesitem </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-longbyteschar"><code class="xref docutils literal notranslate"><span class="pre">longbyteschar</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-bytesescapeseq"><code class="xref docutils literal notranslate"><span class="pre">bytesescapeseq</span></code></a>
+<strong id="grammar-token-python-grammar-shortbyteschar"><span id="grammar-token-shortbyteschar"></span>shortbyteschar</strong> ::=  &lt;any ASCII character except &quot;\&quot; or newline or the quote&gt;
+<strong id="grammar-token-python-grammar-longbyteschar"><span id="grammar-token-longbyteschar"></span>longbyteschar </strong> ::=  &lt;any ASCII character except &quot;\&quot;&gt;
+<strong id="grammar-token-python-grammar-bytesescapeseq"><span id="grammar-token-bytesescapeseq"></span>bytesescapeseq</strong> ::=  &quot;\&quot; &lt;any ASCII character&gt;
+</pre>
+<p>Une restriction syntaxique non indiquée par ces règles est qu'aucun blanc n'est autorisé entre le <a class="reference internal" href="#grammar-token-python-grammar-stringprefix"><code class="xref std std-token docutils literal notranslate"><span class="pre">stringprefix</span></code></a> ou <a class="reference internal" href="#grammar-token-python-grammar-bytesprefix"><code class="xref std std-token docutils literal notranslate"><span class="pre">bytesprefix</span></code></a> et le reste du littéral. Le jeu de caractères source est défini par la déclaration d'encodage ; il vaut UTF-8 si aucune déclaration d'encodage n'est donnée dans le fichier source ; voir la section <a class="reference internal" href="#encodings"><span class="std std-ref">Déclaration d'encodage</span></a>.</p>
+<p id="index-18">In plain English: Both types of literals can be enclosed in matching single quotes
+(<code class="docutils literal notranslate"><span class="pre">'</span></code>) or double quotes (<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>).  They can also be enclosed in matching groups
+of three single or double quotes (these are generally referred to as
+<em>triple-quoted strings</em>). The backslash (<code class="docutils literal notranslate"><span class="pre">\</span></code>) character is used to give special
+meaning to otherwise ordinary characters like <code class="docutils literal notranslate"><span class="pre">n</span></code>, which means 'newline' when
+escaped (<code class="docutils literal notranslate"><span class="pre">\n</span></code>). It can also be used to escape characters that otherwise have a
+special meaning, such as newline, backslash itself, or the quote character.
+See <a class="reference internal" href="#escape-sequences"><span class="std std-ref">escape sequences</span></a> below for examples.</p>
+<p id="index-19">Les littéraux de suites d'octets sont toujours préfixés par <code class="docutils literal notranslate"><span class="pre">'b'</span></code> ou <code class="docutils literal notranslate"><span class="pre">'B'</span></code> ; cela crée une instance de type <a class="reference internal" href="../library/stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> au lieu du type <a class="reference internal" href="../library/stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>. Ils ne peuvent contenir que des caractères ASCII ; les octets dont la valeur est supérieure ou égale à 128 doivent être exprimés à l'aide d'échappements.</p>
+<p id="index-20">Les chaînes et suites d'octets littérales peuvent être préfixées par la lettre <code class="docutils literal notranslate"><span class="pre">'r'</span></code> ou <code class="docutils literal notranslate"><span class="pre">'R'</span></code> ; de telles chaînes sont appelées <em class="dfn">chaines brutes</em> (<em>raw strings</em> en anglais) et traitent la barre oblique inversée comme un caractère normal. En conséquence, les chaînes littérales <code class="docutils literal notranslate"><span class="pre">'\U'</span></code> et <code class="docutils literal notranslate"><span class="pre">'\u'</span></code> ne sont pas considérées comme spéciales. Comme les littéraux Unicode de Python 2.x se comportent différemment, la syntaxe <code class="docutils literal notranslate"><span class="pre">'ur'</span></code> n'est pas reconnue en Python 3.x.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.3: </span>le préfixe <code class="docutils literal notranslate"><span class="pre">'rb'</span></code> a été ajouté comme synonyme de <code class="docutils literal notranslate"><span class="pre">'br'</span></code> pour les littéraux de suites d'octets.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.3: </span>la gestion du préfixe historique pour les chaînes Unicode (<code class="docutils literal notranslate"><span class="pre">u'chaine'</span></code>) a été réintroduite afin de simplifier la maintenance de code compatible Python 2.x et 3.x. Voir la <span class="target" id="index-41"></span><a class="pep reference external" href="https://peps.python.org/pep-0414/"><strong>PEP 414</strong></a> pour davantage d'informations.</p>
+</div>
+<p id="index-22">Une chaîne littérale qui contient <code class="docutils literal notranslate"><span class="pre">'f'</span></code> ou <code class="docutils literal notranslate"><span class="pre">'F'</span></code> dans le préfixe est une <em class="dfn">chaîne de caractères littérale formatée</em> ; lisez <a class="reference internal" href="#f-strings"><span class="std std-ref">Chaînes de caractères littérales formatées</span></a>. Le <code class="docutils literal notranslate"><span class="pre">'f'</span></code> peut être combiné avec <code class="docutils literal notranslate"><span class="pre">'r'</span></code> mais pas avec <code class="docutils literal notranslate"><span class="pre">'b'</span></code> ou <code class="docutils literal notranslate"><span class="pre">'u'</span></code>, donc les chaînes de caractères formatées sont possibles mais les littéraux de suites d'octets ne peuvent pas l'être.</p>
+<p>Dans les chaînes entre triples guillemets, les sauts de ligne et guillemets peuvent ne pas être échappés (et sont donc pris en compte), mais trois guillemets non échappés à la suite terminent le littéral (on entend par guillemet le caractère utilisé pour commencer le littéral, c'est-à-dire <code class="docutils literal notranslate"><span class="pre">'</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>).</p>
+<section id="escape-sequences">
+<span id="index-23"></span><span id="id11"></span><h4><span class="section-number">2.4.1.1. </span>Escape sequences<a class="headerlink" href="#escape-sequences" title="Lien permanent vers ce titre">¶</a></h4>
+<p>À moins que le préfixe <code class="docutils literal notranslate"><span class="pre">'r'</span></code> ou <code class="docutils literal notranslate"><span class="pre">'R'</span></code> ne soit présent, les séquences d'échappement dans les littéraux de chaînes et suites d'octets sont interprétées comme elles le seraient par le C Standard. Les séquences d'échappement reconnues sont :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 51%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Séquence d'échappement</p></th>
+<th class="head"><p>Signification</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\</span></code>&lt;newline&gt;</p></td>
+<td><p>barre oblique inversée et retour à la ligne ignorés</p></td>
+<td><p>(1)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">\\</span></code></p></td>
+<td><p>barre oblique inversée (<code class="docutils literal notranslate"><span class="pre">\</span></code>)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\'</span></code></p></td>
+<td><p>guillemet simple (<code class="docutils literal notranslate"><span class="pre">'</span></code>)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">\&quot;</span></code></p></td>
+<td><p>guillemet double (<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\a</span></code></p></td>
+<td><p>cloche ASCII (BEL)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">\b</span></code></p></td>
+<td><p>retour arrière ASCII (BS)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\f</span></code></p></td>
+<td><p>saut de page ASCII (FF)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">\n</span></code></p></td>
+<td><p>saut de ligne ASCII (LF)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\r</span></code></p></td>
+<td><p>retour à la ligne ASCII (CR)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">\t</span></code></p></td>
+<td><p>tabulation horizontale ASCII (TAB)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\v</span></code></p></td>
+<td><p>tabulation verticale ASCII (VT)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="samp docutils literal notranslate"><span class="pre">\</span><em><span class="pre">ooo</span></em></code></p></td>
+<td><p>caractère dont le code est <em>ooo</em> en octal</p></td>
+<td><p>(2,4)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="samp docutils literal notranslate"><span class="pre">\x</span><em><span class="pre">hh</span></em></code></p></td>
+<td><p>caractère dont le code est <em>ooo</em> en hexadécimal</p></td>
+<td><p>(3,4)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Les séquences d'échappement reconnues seulement dans les chaînes littérales sont :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 51%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Séquence d'échappement</p></th>
+<th class="head"><p>Signification</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="samp docutils literal notranslate"><span class="pre">\N{</span><em><span class="pre">name</span></em><span class="pre">}</span></code></p></td>
+<td><p>caractère dont le nom est <em>name</em> dans la base de données Unicode</p></td>
+<td><p>(5)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="samp docutils literal notranslate"><span class="pre">\u</span><em><span class="pre">xxxx</span></em></code></p></td>
+<td><p>caractère dont le code est <em>xxxx</em> en hexadécimal</p></td>
+<td><p>(6)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="samp docutils literal notranslate"><span class="pre">\U</span><em><span class="pre">xxxxxxxx</span></em></code></p></td>
+<td><p>caractère dont le code est <em>xxxxxxxx</em> en hexadécimal sur 32 bits</p></td>
+<td><p>(7)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Notes :</p>
+<ol class="arabic">
+<li><p>A backslash can be added at the end of a line to ignore the newline:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;This string will not include </span><span class="se">\</span>
+<span class="gp">... </span><span class="s1">backslashes or newline characters.&#39;</span>
+<span class="go">&#39;This string will not include backslashes or newline characters.&#39;</span>
+</pre></div>
+</div>
+<p>The same result can be achieved using <a class="reference internal" href="#strings"><span class="std std-ref">triple-quoted strings</span></a>,
+or parentheses and <a class="reference internal" href="#string-concatenation"><span class="std std-ref">string literal concatenation</span></a>.</p>
+</li>
+<li><p>Comme dans le C Standard, jusqu'à trois chiffres en base huit sont acceptés.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.11: </span>Octal escapes with value larger than <code class="docutils literal notranslate"><span class="pre">0o377</span></code> produce a
+<a class="reference internal" href="../library/exceptions.html#DeprecationWarning" title="DeprecationWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">DeprecationWarning</span></code></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span>Octal escapes with value larger than <code class="docutils literal notranslate"><span class="pre">0o377</span></code> produce a
+<a class="reference internal" href="../library/exceptions.html#SyntaxWarning" title="SyntaxWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxWarning</span></code></a>. In a future Python version they will be eventually
+a <a class="reference internal" href="../library/exceptions.html#SyntaxError" title="SyntaxError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxError</span></code></a>.</p>
+</div>
+</li>
+<li><p>Contrairement au C Standard, il est obligatoire de fournir deux chiffres hexadécimaux.</p></li>
+<li><p>Dans un littéral de suite d'octets, un échappement hexadécimal ou octal est un octet dont la valeur est donnée. Dans une chaîne littérale, un échappement est un caractère Unicode dont le code est donné.</p></li>
+<li><div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span>Ajout du support pour les alias de noms <a class="footnote-reference brackets" href="#id15" id="id12">1</a>.</p>
+</div>
+</li>
+<li><p>Exactement quatre chiffres hexadécimaux sont requis.</p></li>
+<li><p>N'importe quel caractère Unicode peut être encodé de cette façon. Exactement huit chiffres hexadécimaux sont requis.</p></li>
+</ol>
+<p id="index-24">Contrairement au C standard, toutes les séquences d'échappement non reconnues sont laissées inchangées dans la chaîne, c'est-à-dire que <em>la barre oblique inversée est laissée dans le résultat</em> (ce comportement est utile en cas de débogage : si une séquence d'échappement est mal tapée, la sortie résultante est plus facilement reconnue comme source de l'erreur). Notez bien également que les séquences d'échappement reconnues uniquement dans les littéraux de chaînes de caractères ne sont pas reconnues pour les littéraux de suites d'octets.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>Unrecognized escape sequences produce a <a class="reference internal" href="../library/exceptions.html#DeprecationWarning" title="DeprecationWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">DeprecationWarning</span></code></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span>Unrecognized escape sequences produce a <a class="reference internal" href="../library/exceptions.html#SyntaxWarning" title="SyntaxWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxWarning</span></code></a>. In a future
+Python version they will be eventually a <a class="reference internal" href="../library/exceptions.html#SyntaxError" title="SyntaxError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxError</span></code></a>.</p>
+</div>
+<p>Même dans une chaîne littérale brute, les guillemets peuvent être échappés avec une barre oblique inversée mais la barre oblique inversée reste dans le résultat ; par exemple, <code class="docutils literal notranslate"><span class="pre">r&quot;\&quot;&quot;</span></code> est une chaîne de caractères valide composée de deux caractères : une barre oblique inversée et un guillemet double ; <code class="docutils literal notranslate"><span class="pre">r&quot;\&quot;</span></code> n'est pas une chaîne de caractères valide (même une chaîne de caractères brute ne peut pas se terminer par un nombre impair de barres obliques inversées). Plus précisément, <em>une chaîne littérale brute ne peut pas se terminer par une seule barre oblique inversée</em> (puisque la barre oblique inversée échappe le guillemet suivant). Notez également qu'une simple barre oblique inversée suivie d'un saut de ligne est interprétée comme deux caractères faisant partie du littéral et <em>non</em> comme une continuation de ligne.</p>
+</section>
+</section>
+<section id="string-literal-concatenation">
+<span id="string-concatenation"></span><h3><span class="section-number">2.4.2. </span>Concaténation de chaînes de caractères<a class="headerlink" href="#string-literal-concatenation" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Plusieurs chaînes de caractères ou suites d'octets adjacentes (séparées par des blancs), utilisant éventuellement des conventions de guillemets différentes, sont autorisées. La signification est la même que leur concaténation. Ainsi, <code class="docutils literal notranslate"><span class="pre">&quot;hello&quot;</span> <span class="pre">'world'</span></code> est l'équivalent de <code class="docutils literal notranslate"><span class="pre">&quot;helloworld&quot;</span></code>. Cette fonctionnalité peut être utilisée pour réduire le nombre de barres obliques inverses, pour diviser de longues chaînes de caractères sur plusieurs lignes ou même pour ajouter des commentaires à des portions de chaînes de caractères. Par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;[A-Za-z_]&quot;</span>       <span class="c1"># letter or underscore</span>
+           <span class="s2">&quot;[A-Za-z0-9_]*&quot;</span>   <span class="c1"># letter, digit or underscore</span>
+          <span class="p">)</span>
+</pre></div>
+</div>
+<p>Notez que cette fonctionnalité agit au niveau syntaxique mais est implémentée au moment de la compilation. Pour concaténer les expressions des chaînes de caractères au moment de l'exécution, vous devez utiliser l'opérateur <code class="docutils literal notranslate"><span class="pre">+</span></code>. Notez également que la concaténation littérale peut utiliser un style différent de guillemets pour chaque composant (et même mélanger des chaînes de caractères brutes et des chaînes de caractères entre triples guillemets). Enfin, les chaînes de caractères formatées peuvent être concaténées avec des chaînes de caractères ordinaires.</p>
+</section>
+<section id="formatted-string-literals">
+<span id="f-strings"></span><span id="index-25"></span><h3><span class="section-number">2.4.3. </span>Chaînes de caractères littérales formatées<a class="headerlink" href="#formatted-string-literals" title="Lien permanent vers ce titre">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.6.</span></p>
+</div>
+<p>Une <em class="dfn">chaine de caractères littérale formatée</em> ou <em class="dfn">f-string</em> est une chaine de caractères littérale préfixée par <code class="docutils literal notranslate"><span class="pre">'f'</span></code> ou <code class="docutils literal notranslate"><span class="pre">'F'</span></code>. Ces chaines peuvent contenir des champs à remplacer, c'est-à-dire des expressions délimitées par des accolades <code class="docutils literal notranslate"><span class="pre">{}</span></code>. Alors que les autres littéraux de chaines ont des valeurs constantes, les chaines formatées sont de vraies expressions évaluées à l'exécution.</p>
+<p>Les séquences d'échappement sont décodées comme à l'intérieur des chaînes de caractères ordinaires (sauf lorsqu'une chaîne de caractères est également marquée comme une chaîne brute). Après décodage, la grammaire s'appliquant au contenu de la chaîne de caractères est :</p>
+<pre>
+<strong id="grammar-token-python-grammar-f_string"><span id="grammar-token-f-string"></span>f_string         </strong> ::=  (<a class="reference internal" href="#grammar-token-python-grammar-literal_char"><code class="xref docutils literal notranslate"><span class="pre">literal_char</span></code></a> | &quot;{{&quot; | &quot;}}&quot; | <a class="reference internal" href="#grammar-token-python-grammar-replacement_field"><code class="xref docutils literal notranslate"><span class="pre">replacement_field</span></code></a>)*
+<strong id="grammar-token-python-grammar-replacement_field"><span id="grammar-token-replacement-field"></span>replacement_field</strong> ::=  &quot;{&quot; <a class="reference internal" href="#grammar-token-python-grammar-f_expression"><code class="xref docutils literal notranslate"><span class="pre">f_expression</span></code></a> [&quot;=&quot;] [&quot;!&quot; <a class="reference internal" href="#grammar-token-python-grammar-conversion"><code class="xref docutils literal notranslate"><span class="pre">conversion</span></code></a>] [&quot;:&quot; <a class="reference internal" href="#grammar-token-python-grammar-format_spec"><code class="xref docutils literal notranslate"><span class="pre">format_spec</span></code></a>] &quot;}&quot;
+<strong id="grammar-token-python-grammar-f_expression"><span id="grammar-token-f-expression"></span>f_expression     </strong> ::=  (<a class="reference internal" href="expressions.html#grammar-token-python-grammar-conditional_expression"><code class="xref docutils literal notranslate"><span class="pre">conditional_expression</span></code></a> | &quot;*&quot; <a class="reference internal" href="expressions.html#grammar-token-python-grammar-or_expr"><code class="xref docutils literal notranslate"><span class="pre">or_expr</span></code></a>)
+                         (&quot;,&quot; <a class="reference internal" href="expressions.html#grammar-token-python-grammar-conditional_expression"><code class="xref docutils literal notranslate"><span class="pre">conditional_expression</span></code></a> | &quot;,&quot; &quot;*&quot; <a class="reference internal" href="expressions.html#grammar-token-python-grammar-or_expr"><code class="xref docutils literal notranslate"><span class="pre">or_expr</span></code></a>)* [&quot;,&quot;]
+                       | <a class="reference internal" href="expressions.html#grammar-token-python-grammar-yield_expression"><code class="xref docutils literal notranslate"><span class="pre">yield_expression</span></code></a>
+<strong id="grammar-token-python-grammar-conversion"><span id="grammar-token-conversion"></span>conversion       </strong> ::=  &quot;s&quot; | &quot;r&quot; | &quot;a&quot;
+<strong id="grammar-token-python-grammar-format_spec"><span id="grammar-token-format-spec"></span>format_spec      </strong> ::=  (<a class="reference internal" href="#grammar-token-python-grammar-literal_char"><code class="xref docutils literal notranslate"><span class="pre">literal_char</span></code></a> | NULL | <a class="reference internal" href="#grammar-token-python-grammar-replacement_field"><code class="xref docutils literal notranslate"><span class="pre">replacement_field</span></code></a>)*
+<strong id="grammar-token-python-grammar-literal_char"><span id="grammar-token-literal-char"></span>literal_char     </strong> ::=  &lt;any code point except &quot;{&quot;, &quot;}&quot; or NULL&gt;
+</pre>
+<p>Les portions qui sont en dehors des accolades sont traitées comme les littéraux, sauf les doubles accolades <code class="docutils literal notranslate"><span class="pre">'{{'</span></code> ou <code class="docutils literal notranslate"><span class="pre">'}}'</span></code> qui sont remplacées par la simple accolade correspondante. Une simple accolade ouvrante <code class="docutils literal notranslate"><span class="pre">'{'</span></code> marque le début du champ à remplacer, qui commence par une expression Python. Pour afficher à la fois le texte de l'expression et sa valeur une fois évaluée (utile lors du débogage), un signe égal <code class="docutils literal notranslate"><span class="pre">'='</span></code> peut être ajouté après l'expression. Ensuite, il peut y avoir un champ de conversion, introduit par un point d'exclamation <code class="docutils literal notranslate"><span class="pre">'!'</span></code>. Une spécification de format peut aussi être rajoutée, introduite par le caractère deux-points <code class="docutils literal notranslate"><span class="pre">':'</span></code>. Le champ à remplacer se termine par une accolade fermante <code class="docutils literal notranslate"><span class="pre">'}'</span></code>.</p>
+<p>Expressions in formatted string literals are treated like regular
+Python expressions surrounded by parentheses, with a few exceptions.
+An empty expression is not allowed, and both <a class="reference internal" href="expressions.html#lambda"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">lambda</span></code></a>  and
+assignment expressions <code class="docutils literal notranslate"><span class="pre">:=</span></code> must be surrounded by explicit parentheses.
+Each expression is evaluated in the context where the formatted string literal
+appears, in order from left to right.  Replacement expressions can contain
+newlines in both single-quoted and triple-quoted f-strings and they can contain
+comments.  Everything that comes after a <code class="docutils literal notranslate"><span class="pre">#</span></code> inside a replacement field
+is a comment (even closing braces and quotes). In that case, replacement fields
+must be closed in a different line.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; f&quot;abc{a # This is a comment }&quot;
+... + 3}&quot;
+&#39;abc5&#39;
+</pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7: </span>Avant Python 3.7, il était illégal d’utiliser <a class="reference internal" href="expressions.html#await"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">await</span></code></a> ainsi que les compréhensions utilisant <a class="reference internal" href="compound_stmts.html#async-for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">async</span> <span class="pre">for</span></code></a> dans les expressions au sein des chaînes de caractères formatées littérales à cause d’un problème dans l’implémentation.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span>Prior to Python 3.12, comments were not allowed inside f-string replacement
+fields.</p>
+</div>
+<p>Lorsqu'un signe égal <code class="docutils literal notranslate"><span class="pre">'='</span></code> est présent, la sortie comprend le texte de l'expression, le signe <code class="docutils literal notranslate"><span class="pre">'='</span></code> et la valeur calculée. Les espaces après l'accolade ouvrante <code class="docutils literal notranslate"><span class="pre">'{'</span></code>, dans l'expression et après le signe <code class="docutils literal notranslate"><span class="pre">'='</span></code> sont conservées à l'affichage. Par défaut, le signe <code class="docutils literal notranslate"><span class="pre">'='</span></code> utilise la <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code></a> de l'expression, sauf si un format est indiqué. Quand le format est indiqué, c'est <a class="reference internal" href="../library/stdtypes.html#str" title="str"><code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code></a> de l'expression qui est utilisée à moins qu'une conversion <code class="docutils literal notranslate"><span class="pre">!r</span></code> ne soit déclarée.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.8: </span>le signe égal <code class="docutils literal notranslate"><span class="pre">'='</span></code>.</p>
+</div>
+<p>Si une conversion est spécifiée, le résultat de l'évaluation de l'expression est converti avant d'être formaté. La conversion <code class="docutils literal notranslate"><span class="pre">'!s'</span></code> appelle <a class="reference internal" href="../library/stdtypes.html#str" title="str"><code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code></a> sur le résultat, <code class="docutils literal notranslate"><span class="pre">'!r'</span></code> appelle <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code></a> et <code class="docutils literal notranslate"><span class="pre">'!a'</span></code> appelle <a class="reference internal" href="../library/functions.html#ascii" title="ascii"><code class="xref py py-func docutils literal notranslate"><span class="pre">ascii()</span></code></a>.</p>
+<p>The result is then formatted using the <a class="reference internal" href="../library/functions.html#format" title="format"><code class="xref py py-func docutils literal notranslate"><span class="pre">format()</span></code></a> protocol.  The
+format specifier is passed to the <a class="reference internal" href="datamodel.html#object.__format__" title="object.__format__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__format__()</span></code></a> method of the
+expression or conversion result.  An empty string is passed when the
+format specifier is omitted.  The formatted result is then included in
+the final value of the whole string.</p>
+<p>Top-level format specifiers may include nested replacement fields. These nested
+fields may include their own conversion fields and <a class="reference internal" href="../library/string.html#formatspec"><span class="std std-ref">format specifiers</span></a>, but may not include more deeply nested replacement fields. The
+<a class="reference internal" href="../library/string.html#formatspec"><span class="std std-ref">format specifier mini-language</span></a> is the same as that used by
+the <a class="reference internal" href="../library/stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.format()</span></code></a> method.</p>
+<p>Les chaînes formatées littérales peuvent être concaténées mais les champs à remplacer ne peuvent pas être divisés entre les littéraux.</p>
+<p>Quelques exemples de chaines formatées littérales :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Fred&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;He said his name is </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2">.&quot;</span>
+<span class="go">&quot;He said his name is &#39;Fred&#39;.&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;He said his name is </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>  <span class="c1"># repr() is equivalent to !r</span>
+<span class="go">&quot;He said his name is &#39;Fred&#39;.&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">width</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">precision</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">value</span> <span class="o">=</span> <span class="n">decimal</span><span class="o">.</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;12.34567&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;result: </span><span class="si">{</span><span class="n">value</span><span class="si">:{</span><span class="n">width</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">precision</span><span class="si">}}</span><span class="s2">&quot;</span>  <span class="c1"># nested fields</span>
+<span class="go">&#39;result:      12.35&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2017</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">27</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">today</span><span class="si">:</span><span class="s2">%B %d, %Y</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># using date format specifier</span>
+<span class="go">&#39;January 27, 2017&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">today</span><span class="si">=:</span><span class="s2">%B %d, %Y</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># using date format specifier and debugging</span>
+<span class="go">&#39;today=January 27, 2017&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">number</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">number</span><span class="si">:</span><span class="s2">#0x</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># using integer format specifier</span>
+<span class="go">&#39;0x400&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span> <span class="o">=</span> <span class="s2">&quot;bar&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span> <span class="c1"># preserves whitespace</span>
+<span class="go">&quot; foo = &#39;bar&#39;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;The mill&#39;s closed&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">line</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span>
+<span class="go">&#39;line = &quot;The mill\&#39;s closed&quot;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">line</span><span class="w"> </span><span class="si">= :</span><span class="s2">20</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&quot;line = The mill&#39;s closed   &quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">line</span><span class="w"> </span><span class="si">= !r:</span><span class="s2">20</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&#39;line = &quot;The mill\&#39;s closed&quot; &#39;</span>
+</pre></div>
+</div>
+<p>Reusing the outer f-string quoting type inside a replacement field is
+permitted:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;abc </span><span class="si">{</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="si">}</span><span class="s2"> def&quot;</span>
+<span class="go">&#39;abc 2 def&#39;</span>
+</pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span>Prior to Python 3.12, reuse of the same quoting type of the outer f-string
+inside a replacement field was not possible.</p>
+</div>
+<p>Backslashes are also allowed in replacement fields and are evaluated the same
+way as in any other context:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;List a contains:</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">List a contains:</span>
+<span class="go">a</span>
+<span class="go">b</span>
+<span class="go">c</span>
+</pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span>Prior to Python 3.12, backslashes were not permitted inside an f-string
+replacement field.</p>
+</div>
+<p>Une chaine formatée littérale ne peut pas être utilisée en tant que <em>docstring</em>, même si elle ne comporte pas d'expression.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="sa">f</span><span class="s2">&quot;Not a docstring&quot;</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Consultez aussi la <span class="target" id="index-42"></span><a class="pep reference external" href="https://peps.python.org/pep-0498/"><strong>PEP 498</strong></a> qui propose l'ajout des chaines formatées littérales et <a class="reference internal" href="../library/stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.format()</span></code></a> qui utilise un mécanisme similaire pour formater les chaînes de caractères.</p>
+</section>
+<section id="numeric-literals">
+<span id="numbers"></span><h3><span class="section-number">2.4.4. </span>Littéraux numériques<a class="headerlink" href="#numeric-literals" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-27">Il existe trois types de littéraux numériques : les entiers, les nombres à virgule flottante et les nombres imaginaires. Il n'y a pas de littéraux complexes (les nombres complexes peuvent être construits en ajoutant un nombre réel et un nombre imaginaire).</p>
+<p>Notez que les littéraux numériques ne comportent pas de signe ; une phrase telle que <code class="docutils literal notranslate"><span class="pre">-1</span></code> est en fait une expression composée de l'opérateur unitaire <code class="docutils literal notranslate"><span class="pre">-</span></code> et du littéral <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+</section>
+<section id="integer-literals">
+<span id="integers"></span><span id="index-28"></span><h3><span class="section-number">2.4.5. </span>Entiers littéraux<a class="headerlink" href="#integer-literals" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les entiers littéraux sont décrits par les définitions lexicales suivantes :</p>
+<pre>
+<strong id="grammar-token-python-grammar-integer"><span id="grammar-token-integer"></span>integer     </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-decinteger"><code class="xref docutils literal notranslate"><span class="pre">decinteger</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-bininteger"><code class="xref docutils literal notranslate"><span class="pre">bininteger</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-octinteger"><code class="xref docutils literal notranslate"><span class="pre">octinteger</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-hexinteger"><code class="xref docutils literal notranslate"><span class="pre">hexinteger</span></code></a>
+<strong id="grammar-token-python-grammar-decinteger"><span id="grammar-token-decinteger"></span>decinteger  </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-nonzerodigit"><code class="xref docutils literal notranslate"><span class="pre">nonzerodigit</span></code></a> ([&quot;_&quot;] <a class="reference internal" href="#grammar-token-python-grammar-digit"><code class="xref docutils literal notranslate"><span class="pre">digit</span></code></a>)* | &quot;0&quot;+ ([&quot;_&quot;] &quot;0&quot;)*
+<strong id="grammar-token-python-grammar-bininteger"><span id="grammar-token-bininteger"></span>bininteger  </strong> ::=  &quot;0&quot; (&quot;b&quot; | &quot;B&quot;) ([&quot;_&quot;] <a class="reference internal" href="#grammar-token-python-grammar-bindigit"><code class="xref docutils literal notranslate"><span class="pre">bindigit</span></code></a>)+
+<strong id="grammar-token-python-grammar-octinteger"><span id="grammar-token-octinteger"></span>octinteger  </strong> ::=  &quot;0&quot; (&quot;o&quot; | &quot;O&quot;) ([&quot;_&quot;] <a class="reference internal" href="#grammar-token-python-grammar-octdigit"><code class="xref docutils literal notranslate"><span class="pre">octdigit</span></code></a>)+
+<strong id="grammar-token-python-grammar-hexinteger"><span id="grammar-token-hexinteger"></span>hexinteger  </strong> ::=  &quot;0&quot; (&quot;x&quot; | &quot;X&quot;) ([&quot;_&quot;] <a class="reference internal" href="#grammar-token-python-grammar-hexdigit"><code class="xref docutils literal notranslate"><span class="pre">hexdigit</span></code></a>)+
+<strong id="grammar-token-python-grammar-nonzerodigit"><span id="grammar-token-nonzerodigit"></span>nonzerodigit</strong> ::=  &quot;1&quot;...&quot;9&quot;
+<strong id="grammar-token-python-grammar-digit"><span id="grammar-token-digit"></span>digit       </strong> ::=  &quot;0&quot;...&quot;9&quot;
+<strong id="grammar-token-python-grammar-bindigit"><span id="grammar-token-bindigit"></span>bindigit    </strong> ::=  &quot;0&quot; | &quot;1&quot;
+<strong id="grammar-token-python-grammar-octdigit"><span id="grammar-token-octdigit"></span>octdigit    </strong> ::=  &quot;0&quot;...&quot;7&quot;
+<strong id="grammar-token-python-grammar-hexdigit"><span id="grammar-token-hexdigit"></span>hexdigit    </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-digit"><code class="xref docutils literal notranslate"><span class="pre">digit</span></code></a> | &quot;a&quot;...&quot;f&quot; | &quot;A&quot;...&quot;F&quot;
+</pre>
+<p>Il n'y a pas de limite pour la longueur des entiers littéraux, sauf celle relative à la capacité mémoire.</p>
+<p>Les tirets bas sont ignorés pour déterminer la valeur numérique du littéral. Ils peuvent être utilisés pour grouper les chiffres afin de faciliter la lecture. Un souligné peut être placé entre des chiffres ou après la spécification de la base telle que <code class="docutils literal notranslate"><span class="pre">0x</span></code>.</p>
+<p>Notez que placer des zéros en tête de nombre pour un nombre décimal différent de zéro n'est pas autorisé. Cela permet d'éviter l’ambigüité avec les littéraux en base octale selon le style C que Python utilisait avant la version 3.0.</p>
+<p>Quelques exemples d'entiers littéraux :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="mi">7</span>     <span class="mi">2147483647</span>                        <span class="mo">0o177</span>    <span class="mb">0b100110111</span>
+<span class="mi">3</span>     <span class="mi">79228162514264337593543950336</span>     <span class="mo">0o377</span>    <span class="mh">0xdeadbeef</span>
+      <span class="mi">100_000_000_000</span>                   <span class="mb">0b_1110_0101</span>
+</pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>Les tirets bas ne sont pas autorisés pour grouper les littéraux.</p>
+</div>
+</section>
+<section id="floating-point-literals">
+<span id="floating"></span><span id="index-29"></span><h3><span class="section-number">2.4.6. </span>Nombres à virgule flottante littéraux<a class="headerlink" href="#floating-point-literals" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les nombres à virgule flottante littéraux sont décrits par les définitions lexicales suivantes :</p>
+<pre>
+<strong id="grammar-token-python-grammar-floatnumber"><span id="grammar-token-floatnumber"></span>floatnumber  </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-pointfloat"><code class="xref docutils literal notranslate"><span class="pre">pointfloat</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-exponentfloat"><code class="xref docutils literal notranslate"><span class="pre">exponentfloat</span></code></a>
+<strong id="grammar-token-python-grammar-pointfloat"><span id="grammar-token-pointfloat"></span>pointfloat   </strong> ::=  [<a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a>] <a class="reference internal" href="#grammar-token-python-grammar-fraction"><code class="xref docutils literal notranslate"><span class="pre">fraction</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a> &quot;.&quot;
+<strong id="grammar-token-python-grammar-exponentfloat"><span id="grammar-token-exponentfloat"></span>exponentfloat</strong> ::=  (<a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-pointfloat"><code class="xref docutils literal notranslate"><span class="pre">pointfloat</span></code></a>) <a class="reference internal" href="#grammar-token-python-grammar-exponent"><code class="xref docutils literal notranslate"><span class="pre">exponent</span></code></a>
+<strong id="grammar-token-python-grammar-digitpart"><span id="grammar-token-digitpart"></span>digitpart    </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-digit"><code class="xref docutils literal notranslate"><span class="pre">digit</span></code></a> ([&quot;_&quot;] <a class="reference internal" href="#grammar-token-python-grammar-digit"><code class="xref docutils literal notranslate"><span class="pre">digit</span></code></a>)*
+<strong id="grammar-token-python-grammar-fraction"><span id="grammar-token-fraction"></span>fraction     </strong> ::=  &quot;.&quot; <a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a>
+<strong id="grammar-token-python-grammar-exponent"><span id="grammar-token-exponent"></span>exponent     </strong> ::=  (&quot;e&quot; | &quot;E&quot;) [&quot;+&quot; | &quot;-&quot;] <a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a>
+</pre>
+<p>Notez que la partie entière et l'exposant sont toujours interprétés comme étant en base 10. Par exemple, <code class="docutils literal notranslate"><span class="pre">077e010</span></code> est licite et désigne le même nombre que <code class="docutils literal notranslate"><span class="pre">77e10</span></code>. La plage autorisée pour les littéraux de nombres à virgule flottante dépend de l'implémentation. Comme pour les entiers littéraux, les soulignés permettent de grouper des chiffres.</p>
+<p>Quelques exemples de nombres à virgule flottante littéraux :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="mf">3.14</span>    <span class="mf">10.</span>    <span class="mf">.001</span>    <span class="mf">1e100</span>    <span class="mf">3.14e-10</span>    <span class="mf">0e0</span>    <span class="mf">3.14_15_93</span>
+</pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>Les tirets bas ne sont pas autorisés pour grouper les littéraux.</p>
+</div>
+</section>
+<section id="imaginary-literals">
+<span id="imaginary"></span><span id="index-30"></span><h3><span class="section-number">2.4.7. </span>Imaginaires littéraux<a class="headerlink" href="#imaginary-literals" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les nombres imaginaires sont décrits par les définitions lexicales suivantes :</p>
+<pre>
+<strong id="grammar-token-python-grammar-imagnumber"><span id="grammar-token-imagnumber"></span>imagnumber</strong> ::=  (<a class="reference internal" href="#grammar-token-python-grammar-floatnumber"><code class="xref docutils literal notranslate"><span class="pre">floatnumber</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a>) (&quot;j&quot; | &quot;J&quot;)
+</pre>
+<p>Un littéral imaginaire produit un nombre complexe dont la partie réelle est <code class="docutils literal notranslate"><span class="pre">0.0</span></code>. Les nombres complexes sont représentés comme une paire de nombres à virgule flottante et possèdent les mêmes restrictions concernant les plages autorisées. Pour créer un nombre complexe dont la partie réelle est non nulle, ajoutez un nombre à virgule flottante à votre littéral imaginaire. Par exemple <code class="docutils literal notranslate"><span class="pre">(3+4j)</span></code>. Voici d'autres exemples de littéraux imaginaires :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="mf">3.14</span><span class="n">j</span>   <span class="mf">10.</span><span class="n">j</span>    <span class="mi">10</span><span class="n">j</span>     <span class="mf">.001</span><span class="n">j</span>   <span class="mf">1e100j</span>   <span class="mf">3.14e-10</span><span class="n">j</span>   <span class="mf">3.14_15_93</span><span class="n">j</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="operators">
+<span id="id13"></span><h2><span class="section-number">2.5. </span>Opérateurs<a class="headerlink" href="#operators" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-31">Les lexèmes suivants sont des opérateurs :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+       -       *       **      /       //      %      @
+&lt;&lt;      &gt;&gt;      &amp;       |       ^       ~       :=
+&lt;       &gt;       &lt;=      &gt;=      ==      !=
+</pre></div>
+</div>
+</section>
+<section id="delimiters">
+<span id="id14"></span><h2><span class="section-number">2.6. </span>Délimiteurs<a class="headerlink" href="#delimiters" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-32">Les lexèmes suivants servent de délimiteurs dans la grammaire :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(       )       [       ]       {       }
+,       :       .       ;       @       =       -&gt;
++=      -=      *=      /=      //=     %=      @=
+&amp;=      |=      ^=      &gt;&gt;=     &lt;&lt;=     **=
+</pre></div>
+</div>
+<p>Le point peut aussi apparaître dans les littéraux de nombres à virgule flottante et imaginaires. Une suite de trois points possède une signification spéciale : c'est une ellipse littérale. La deuxième partie de la liste, les opérateurs d'affectation augmentés, servent de délimiteurs pour l'analyseur lexical mais sont aussi des opérateurs.</p>
+<p>Les caractères ASCII suivants ont une signification spéciale en tant que partie d'autres lexèmes ou ont une signification particulière pour l'analyseur lexical :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;       &quot;       #       \
+</pre></div>
+</div>
+<p>Les caractères ASCII suivants ne sont pas utilisés en Python. S'ils apparaissent en dehors de chaines littérales ou de commentaires, ils produisent une erreur :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$       ?       `
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<dl class="footnote brackets">
+<dt class="label" id="id15"><span class="brackets"><a class="fn-backref" href="#id12">1</a></span></dt>
+<dd><p><a class="reference external" href="https://www.unicode.org/Public/15.0.0/ucd/NameAliases.txt">https://www.unicode.org/Public/15.0.0/ucd/NameAliases.txt</a></p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">2. Analyse lexicale</a><ul>
+<li><a class="reference internal" href="#line-structure">2.1. Structure des lignes</a><ul>
+<li><a class="reference internal" href="#logical-lines">2.1.1. Lignes logiques</a></li>
+<li><a class="reference internal" href="#physical-lines">2.1.2. Lignes physiques</a></li>
+<li><a class="reference internal" href="#comments">2.1.3. Commentaires</a></li>
+<li><a class="reference internal" href="#encoding-declarations">2.1.4. Déclaration d'encodage</a></li>
+<li><a class="reference internal" href="#explicit-line-joining">2.1.5. Continuation de ligne explicite</a></li>
+<li><a class="reference internal" href="#implicit-line-joining">2.1.6. Continuation de ligne implicite</a></li>
+<li><a class="reference internal" href="#blank-lines">2.1.7. Lignes vierges</a></li>
+<li><a class="reference internal" href="#indentation">2.1.8. Indentation</a></li>
+<li><a class="reference internal" href="#whitespace-between-tokens">2.1.9. Espaces entre lexèmes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-tokens">2.2. Autres lexèmes</a></li>
+<li><a class="reference internal" href="#identifiers">2.3. Identifiants et mots-clés</a><ul>
+<li><a class="reference internal" href="#keywords">2.3.1. Mots-clés</a></li>
+<li><a class="reference internal" href="#soft-keywords">2.3.2. Mots-clés ad hoc</a></li>
+<li><a class="reference internal" href="#reserved-classes-of-identifiers">2.3.3. Classes réservées pour les identifiants</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#literals">2.4. Littéraux</a><ul>
+<li><a class="reference internal" href="#string-and-bytes-literals">2.4.1. Littéraux de chaînes de caractères et de suites d'octets</a><ul>
+<li><a class="reference internal" href="#escape-sequences">2.4.1.1. Escape sequences</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#string-literal-concatenation">2.4.2. Concaténation de chaînes de caractères</a></li>
+<li><a class="reference internal" href="#formatted-string-literals">2.4.3. Chaînes de caractères littérales formatées</a></li>
+<li><a class="reference internal" href="#numeric-literals">2.4.4. Littéraux numériques</a></li>
+<li><a class="reference internal" href="#integer-literals">2.4.5. Entiers littéraux</a></li>
+<li><a class="reference internal" href="#floating-point-literals">2.4.6. Nombres à virgule flottante littéraux</a></li>
+<li><a class="reference internal" href="#imaginary-literals">2.4.7. Imaginaires littéraux</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#operators">2.5. Opérateurs</a></li>
+<li><a class="reference internal" href="#delimiters">2.6. Délimiteurs</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="introduction.html"
+                          title="Chapitre précédent"><span class="section-number">1. </span>Introduction</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="datamodel.html"
+                          title="Chapitre suivant"><span class="section-number">3. </span>Modèle de données</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/reference/lexical_analysis.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="datamodel.html" title="3. Modèle de données"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1. Introduction"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La référence du langage Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Analyse lexicale</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

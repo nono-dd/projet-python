@@ -1,0 +1,1755 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="tkinter.ttk — Widgets sur le thème Tk" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/tkinter.ttk.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/tkinter/ttk.py Le module tkinter.ttk donne accès à l'ensemble de widgets sur le thème Tk, introduit dans Tk 8.5. Il offre des avantages supplémentaires, notamment le rendu des pol..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/tkinter/ttk.py Le module tkinter.ttk donne accès à l'ensemble de widgets sur le thème Tk, introduit dans Tk 8.5. Il offre des avantages supplémentaires, notamment le rendu des pol..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>tkinter.ttk — Widgets sur le thème Tk &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="tkinter.tix — Widgets d&#39;extension pour Tk" href="tkinter.tix.html" />
+    <link rel="prev" title="tkinter.dnd – Prise en charge du glisser-déposer" href="tkinter.dnd.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/tkinter.ttk.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Widgets sur le thème <em>Tk</em></a><ul>
+<li><a class="reference internal" href="#using-ttk">Utilisation de <em>Ttk</em></a></li>
+<li><a class="reference internal" href="#ttk-widgets">Widgets <em>Ttk</em></a></li>
+<li><a class="reference internal" href="#widget">Widget</a><ul>
+<li><a class="reference internal" href="#standard-options">Options standards</a></li>
+<li><a class="reference internal" href="#scrollable-widget-options">Options de widget avec barre de défilement</a></li>
+<li><a class="reference internal" href="#label-options">Options d'étiquette (<em>label</em>)</a></li>
+<li><a class="reference internal" href="#compatibility-options">Options de compatibilité</a></li>
+<li><a class="reference internal" href="#widget-states">États des widgets</a></li>
+<li><a class="reference internal" href="#ttk-widget">ttk.Widget</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#combobox">Combobox</a><ul>
+<li><a class="reference internal" href="#options">Options</a></li>
+<li><a class="reference internal" href="#virtual-events">Événements virtuels</a></li>
+<li><a class="reference internal" href="#ttk-combobox">ttk.Combobox</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spinbox">Spinbox</a><ul>
+<li><a class="reference internal" href="#id1">Options</a></li>
+<li><a class="reference internal" href="#id2">Événements virtuels</a></li>
+<li><a class="reference internal" href="#ttk-spinbox">ttk.Spinbox</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#notebook">Carnet de notes (<em>notebook</em>)</a><ul>
+<li><a class="reference internal" href="#id3">Options</a></li>
+<li><a class="reference internal" href="#tab-options">Options d'onglet</a></li>
+<li><a class="reference internal" href="#tab-identifiers">Identifiants d'onglet</a></li>
+<li><a class="reference internal" href="#id4">Événements virtuels</a></li>
+<li><a class="reference internal" href="#ttk-notebook">ttk.Notebook</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#progressbar">Barre de progression</a><ul>
+<li><a class="reference internal" href="#id5">Options</a></li>
+<li><a class="reference internal" href="#ttk-progressbar">ttk.Progressbar</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#separator">Séparateur</a><ul>
+<li><a class="reference internal" href="#id6">Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sizegrip">Poignée de redimensionnement</a><ul>
+<li><a class="reference internal" href="#platform-specific-notes">Notes spécifiques à une plateforme</a></li>
+<li><a class="reference internal" href="#bugs">Bogues</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#treeview">Arborescence</a><ul>
+<li><a class="reference internal" href="#id7">Options</a></li>
+<li><a class="reference internal" href="#item-options">Options d'éléments</a></li>
+<li><a class="reference internal" href="#tag-options">Options de balise</a></li>
+<li><a class="reference internal" href="#column-identifiers">Identifiants de colonnes</a></li>
+<li><a class="reference internal" href="#id8">Événements virtuels</a></li>
+<li><a class="reference internal" href="#ttk-treeview">ttk.Treeview</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ttk-styling">Style Ttk</a><ul>
+<li><a class="reference internal" href="#layouts">Dispositions de mise en page</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="tkinter.dnd.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> – Prise en charge du glisser-déposer</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="tkinter.tix.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code> — Widgets d'extension pour <em>Tk</em></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/tkinter.ttk.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tkinter.tix.html" title="tkinter.tix — Widgets d&#39;extension pour Tk"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="tkinter.dnd.html" title="tkinter.dnd – Prise en charge du glisser-déposer"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="tk.html" accesskey="U">Interfaces Utilisateur Graphiques avec Tk</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Widgets sur le thème <em>Tk</em></a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-tkinter.ttk">
+<span id="tkinter-ttk-tk-themed-widgets"></span><h1><a class="reference internal" href="#module-tkinter.ttk" title="tkinter.ttk: Tk themed widget set"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code></a> — Widgets sur le thème <em>Tk</em><a class="headerlink" href="#module-tkinter.ttk" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/tkinter/ttk.py">Lib/tkinter/ttk.py</a></p>
+<hr class="docutils" id="index-0" />
+<p>Le module <a class="reference internal" href="#module-tkinter.ttk" title="tkinter.ttk: Tk themed widget set"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code></a> donne accès à l'ensemble de widgets sur le thème <em>Tk</em>, introduit dans <em>Tk</em> 8.5. Il offre des avantages supplémentaires, notamment le rendu des polices avec anticrénelage sous <em>X11</em> et la transparence des fenêtres (nécessitant un gestionnaire de fenêtres de composition sur <em>X11</em>).</p>
+<p>L'idée de base de <a class="reference internal" href="#module-tkinter.ttk" title="tkinter.ttk: Tk themed widget set"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code></a> est de séparer, dans la mesure du possible, le code implémentant le comportement d'un widget du code implémentant son apparence.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://core.tcl.tk/tips/doc/trunk/tip/48.md">Tk Widget Styling Support</a></dt><dd><p>Document présentant la prise en charge des thèmes pour <em>Tk</em></p>
+</dd>
+</dl>
+</div>
+<section id="using-ttk">
+<h2>Utilisation de <em>Ttk</em><a class="headerlink" href="#using-ttk" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Pour commencer à utiliser <em>Ttk</em>, importez son module :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span>
+</pre></div>
+</div>
+<p>Pour remplacer les widgets <em>Tk</em> de base, l'importation doit suivre l'importation <em>Tk</em> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Ce code implique que plusieurs widgets <a class="reference internal" href="#module-tkinter.ttk" title="tkinter.ttk: Tk themed widget set"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code></a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Checkbutton</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Entry</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Label</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">LabelFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Menubutton</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PanedWindow</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Radiobutton</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Scale</span></code> et <code class="xref py py-class docutils literal notranslate"><span class="pre">Scrollbar</span></code>) remplacent automatiquement les widgets <em>Tk</em>.</p>
+<p>L'avantage immédiat est d'utiliser les nouveaux widgets qui donnent une meilleure apparence sur toutes les plateformes ; cependant, les widgets de remplacement ne sont pas complètement compatibles. La principale différence est que les options de widget telles que <code class="docutils literal notranslate"><span class="pre">&quot;fg&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bg&quot;</span></code> et d'autres liées au style des widgets ne sont plus présentes dans les widgets <em>Ttk</em>. Utilisez plutôt la classe <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Style</span></code> pour des effets de style améliorés.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://tktable.sourceforge.net/tile/doc/converting.txt">Converting existing applications to use Tile widgets</a></dt><dd><p>Monographie (utilisant la terminologie <em>Tcl</em>) sur les différences généralement rencontrées lors de la modification d'applications pour utiliser les nouveaux widgets.</p>
+</dd>
+</dl>
+</div>
+</section>
+<section id="ttk-widgets">
+<h2>Widgets <em>Ttk</em><a class="headerlink" href="#ttk-widgets" title="Lien permanent vers ce titre">¶</a></h2>
+<p><em>Ttk</em> est livré avec 18 widgets, dont douze existaient déjà dans <em>tkinter</em> : <code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Checkbutton</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Entry</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Label</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">LabelFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Menubutton</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PanedWindow</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Radiobutton</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Scale</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Scrollbar</span></code> et <a class="reference internal" href="#tkinter.ttk.Spinbox" title="tkinter.ttk.Spinbox"><code class="xref py py-class docutils literal notranslate"><span class="pre">Spinbox</span></code></a>. Les six autres sont nouveaux : <a class="reference internal" href="#tkinter.ttk.Combobox" title="tkinter.ttk.Combobox"><code class="xref py py-class docutils literal notranslate"><span class="pre">Combobox</span></code></a>, <a class="reference internal" href="#tkinter.ttk.Notebook" title="tkinter.ttk.Notebook"><code class="xref py py-class docutils literal notranslate"><span class="pre">Notebook</span></code></a>, <a class="reference internal" href="#tkinter.ttk.Progressbar" title="tkinter.ttk.Progressbar"><code class="xref py py-class docutils literal notranslate"><span class="pre">Progressbar</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Separator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Sizegrip</span></code> et <a class="reference internal" href="#tkinter.ttk.Treeview" title="tkinter.ttk.Treeview"><code class="xref py py-class docutils literal notranslate"><span class="pre">Treeview</span></code></a>. Et tous sont des sous-classes de <a class="reference internal" href="#tkinter.ttk.Widget" title="tkinter.ttk.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a>.</p>
+<p>L'utilisation des widgets <em>Ttk</em> donne à l'application une apparence et une convivialité améliorées. Comme indiqué ci-dessus, il existe des différences dans la façon dont le style est codé.</p>
+<p>Code <em>Tk</em> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">l1</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">fg</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">fg</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Code <em>Ttk</em> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">style</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Style</span><span class="p">()</span>
+<span class="n">style</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;BW.TLabel&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+
+<span class="n">l1</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;BW.TLabel&quot;</span><span class="p">)</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;BW.TLabel&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pour plus d'informations sur <a class="reference internal" href="#ttkstyling">TtkStyling</a>, consultez la documentation de la classe <a class="reference internal" href="#tkinter.ttk.Style" title="tkinter.ttk.Style"><code class="xref py py-class docutils literal notranslate"><span class="pre">Style</span></code></a>.</p>
+</section>
+<section id="widget">
+<h2>Widget<a class="headerlink" href="#widget" title="Lien permanent vers ce titre">¶</a></h2>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Widget</span></code> définit les options et méthodes standard prises en charge par les widgets à thème <em>Tk</em> et n'est pas censé être directement instancié.</p>
+<section id="standard-options">
+<h3>Options standards<a class="headerlink" href="#standard-options" title="Lien permanent vers ce titre">¶</a></h3>
+<p>All the <code class="xref py py-mod docutils literal notranslate"><span class="pre">ttk</span></code> Widgets accept the following options:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>class</em></p></td>
+<td><p>Spécifie la classe de fenêtre. La classe est utilisée lors de l'interrogation de la base de données d'options pour les autres options de la fenêtre, pour déterminer les balises de liaison par défaut pour la fenêtre et pour sélectionner la disposition et le style par défaut du widget. Cette option est en lecture seule et ne peut être spécifiée qu'à la création de la fenêtre.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>cursor</em></p></td>
+<td><p>Spécifie le curseur de la souris à utiliser pour le widget. S'il est défini sur la chaîne vide (valeur par défaut), le curseur est hérité du widget parent.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>takefocus</em></p></td>
+<td><p>Détermine si la fenêtre accepte le focus pendant le parcours du clavier. 0, 1 ou une chaîne vide est renvoyée. Si 0 est renvoyé, cela signifie que la fenêtre doit être entièrement ignorée lors du parcours au clavier. Si 1, cela signifie que la fenêtre doit recevoir le focus d'entrée tant qu'elle est visible. Et une chaîne vide signifie que les scripts de parcours prennent la décision de donner ou non le focus à la fenêtre.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>style</em></p></td>
+<td><p>Peut être utilisé pour spécifier un style de widget personnalisé.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="scrollable-widget-options">
+<h3>Options de widget avec barre de défilement<a class="headerlink" href="#scrollable-widget-options" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les options suivantes sont prises en charge par les widgets contrôlés par une barre de défilement.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>xscrollcommand</em></p></td>
+<td><p>Utilisé pour communiquer avec les barres de défilement horizontal.</p>
+<p>Lorsque la vue dans la fenêtre du widget change, le widget génère une commande <em>Tcl</em> basée sur <em>scrollcommand</em>.</p>
+<p>Habituellement, cette option consiste en la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">Scrollbar.set()</span></code> d'une barre de défilement. Cela entraîne la mise à jour de la barre de défilement chaque fois que la vue dans la fenêtre change.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><em>yscrollcommand</em></p></td>
+<td><p>Utilisé pour communiquer avec les barres de défilement vertical. Pour plus d'informations, voir ci-dessus.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="label-options">
+<h3>Options d'étiquette (<em>label</em>)<a class="headerlink" href="#label-options" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les options suivantes sont prises en charge par les étiquettes (<em>labels</em>), les boutons et autres widgets de type bouton.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>text</em></p></td>
+<td><p>Spécifie une chaîne de texte à afficher dans le widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>textvariable</em></p></td>
+<td><p>Spécifie un nom dont la valeur est utilisée à la place de la ressource d'option de texte.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>underline</em></p></td>
+<td><p>S'il est défini, spécifie l'indice (commençant à 0) d'un caractère à souligner dans la chaîne de texte. Le caractère de soulignement est utilisé pour l'activation mnémonique.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>image</em></p></td>
+<td><p>Spécifie une image à afficher. C'est une liste de un ou plusieurs éléments. Le premier élément est le nom de l'image par défaut. Le reste de la liste est une séquence de paires <em>statespec</em>-<em>valeur</em> telles que définies par <a class="reference internal" href="#tkinter.ttk.Style.map" title="tkinter.ttk.Style.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Style.map()</span></code></a>, spécifiant différentes images à utiliser lorsque le widget est dans un état particulier ou une combinaison d'états. Toutes les images de la liste doivent avoir la même taille.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>compound</em></p></td>
+<td><p>Spécifie comment afficher l'image par rapport au texte, dans le cas où les options de texte et d'images sont présentes. Les valeurs valides sont :</p>
+<ul class="simple">
+<li><p><em>text</em> : afficher uniquement le texte</p></li>
+<li><p><em>image</em> : afficher uniquement l'image</p></li>
+<li><p><em>top</em>, <em>bottom</em>, <em>left</em>, <em>right</em> : afficher l'image au-dessus, en dessous, à gauche ou à droite du texte, respectivement.</p></li>
+<li><p><em>none</em> : la valeur par défaut. Afficher l'image si présente, sinon le texte.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><em>width</em></p></td>
+<td><p>Si supérieur à zéro, spécifie la quantité d'espace, en largeurs de caractères, à allouer à l'étiquette de texte, si inférieur à zéro, spécifie une largeur minimale. Si zéro ou non spécifié, la largeur naturelle de l'étiquette de texte est utilisée.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="compatibility-options">
+<h3>Options de compatibilité<a class="headerlink" href="#compatibility-options" title="Lien permanent vers ce titre">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>state</em></p></td>
+<td><p>Peut être défini sur <code class="docutils literal notranslate"><span class="pre">&quot;normal&quot;</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;disabled&quot;</span></code> pour contrôler le bit d'état d'activation. Il s'agit d'une option en écriture seule : sa définition modifie l'état du widget, mais la méthode <a class="reference internal" href="#tkinter.ttk.Widget.state" title="tkinter.ttk.Widget.state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.state()</span></code></a> n'affecte pas cette option.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="widget-states">
+<h3>États des widgets<a class="headerlink" href="#widget-states" title="Lien permanent vers ce titre">¶</a></h3>
+<p>L'état du widget est une combinaison d'indicateurs d'état indépendants.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>active</em></p></td>
+<td><p>Le curseur de la souris est sur le widget et appuyer sur un bouton de la souris provoquera une action</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>disabled</em></p></td>
+<td><p>Le widget est désactivé sous le contrôle du programme</p></td>
+</tr>
+<tr class="row-even"><td><p><em>focus</em></p></td>
+<td><p>Le widget a le focus du clavier</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>pressed</em></p></td>
+<td><p>Le widget est en train d'être pressé</p></td>
+</tr>
+<tr class="row-even"><td><p><em>selected</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;On&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;true&quot;</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;current&quot;</span></code> pour des choses comme les boutons de contrôle et les boutons radio</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>background</em></p></td>
+<td><p>Windows et Mac ont une notion de fenêtre « active » ou de premier plan. L'état <em>background</em> est défini pour les widgets dans une fenêtre en arrière-plan et effacé pour ceux de la fenêtre au premier plan</p></td>
+</tr>
+<tr class="row-even"><td><p><em>readonly</em></p></td>
+<td><p>Le widget ne doit pas permettre la modification par l'utilisateur</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>alternate</em></p></td>
+<td><p>Un format d'affichage alternatif spécifique au widget</p></td>
+</tr>
+<tr class="row-even"><td><p><em>invalid</em></p></td>
+<td><p>La valeur du widget est invalide</p></td>
+</tr>
+</tbody>
+</table>
+<p>Une spécification d'état est une séquence de noms d'état, éventuellement précédée d'un point d'exclamation indiquant que le bit est désactivé.</p>
+</section>
+<section id="ttk-widget">
+<h3>ttk.Widget<a class="headerlink" href="#ttk-widget" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Outre les méthodes décrites ci-dessous, la <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Widget</span></code> prend en charge les méthodes <code class="xref py py-meth docutils literal notranslate"><span class="pre">tkinter.Widget.cget()</span></code> et <code class="xref py py-meth docutils literal notranslate"><span class="pre">tkinter.Widget.configure()</span></code>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.ttk.Widget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.ttk.</span></span><span class="sig-name descname"><span class="pre">Widget</span></span><a class="headerlink" href="#tkinter.ttk.Widget" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Widget.identify">
+<span class="sig-name descname"><span class="pre">identify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Widget.identify" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie le nom de l'élément à la position <em>x</em> <em>y</em>, ou la chaîne vide si le point ne se trouve dans aucun élément.</p>
+<p><em>x</em> et <em>y</em> sont des coordonnées en pixels relatives au widget.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Widget.instate">
+<span class="sig-name descname"><span class="pre">instate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statespec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Widget.instate" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Teste l'état du widget. Si un rappel n'est pas spécifié, renvoie <code class="docutils literal notranslate"><span class="pre">True</span></code> si l'état du widget correspond à <em>statespec</em> et <code class="docutils literal notranslate"><span class="pre">False</span></code> sinon. Si le rappel est spécifié, il est appelé avec des arguments si l'état du widget correspond à <em>statespec</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Widget.state">
+<span class="sig-name descname"><span class="pre">state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statespec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Widget.state" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Modifie ou demande l'état du widget. Si <em>statespec</em> est spécifié, définit l'état du widget en fonction de celui-ci et renvoie un nouveau <em>statespec</em> indiquant quels drapeaux ont été modifiés. Si <em>statespec</em> n'est pas spécifié, renvoie les indicateurs d'état actuellement activés.</p>
+</dd></dl>
+
+<p><em>statespec</em> est généralement une liste ou un <em>n</em>-uplet.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="combobox">
+<h2>Combobox<a class="headerlink" href="#combobox" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le widget <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Combobox</span></code> combine un champ de texte avec une liste déroulante de valeurs. Ce widget est une sous-classe de <code class="xref py py-class docutils literal notranslate"><span class="pre">Entry</span></code>.</p>
+<p>En plus des méthodes héritées de <a class="reference internal" href="#tkinter.ttk.Widget" title="tkinter.ttk.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a> : <code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.cget()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.configure()</span></code>, <a class="reference internal" href="#tkinter.ttk.Widget.identify" title="tkinter.ttk.Widget.identify"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.identify()</span></code></a>, <a class="reference internal" href="#tkinter.ttk.Widget.instate" title="tkinter.ttk.Widget.instate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.instate()</span></code></a> et <a class="reference internal" href="#tkinter.ttk.Widget.state" title="tkinter.ttk.Widget.state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.state()</span></code></a>, et les suivants hérités de <code class="xref py py-class docutils literal notranslate"><span class="pre">Entry</span></code> : <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.bbox()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.delete()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.icursor()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.index()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.insert()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.selection()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.xview()</span></code>, il a quelques autres méthodes, décrites dans <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Combobox</span></code>.</p>
+<section id="options">
+<h3>Options<a class="headerlink" href="#options" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Ce widget accepte les options spécifiques suivantes :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>exportationsselection</em></p></td>
+<td><p>Valeur booléenne. Si elle est définie, la sélection du widget est liée à la sélection du gestionnaire de fenêtres (qui peut être renvoyée en appelant <em>Misc.selection_get</em>, par exemple).</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>justify</em></p></td>
+<td><p>Spécifie comment le texte est aligné dans le widget. Les valeurs possibles sont <code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;center&quot;</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>height</em></p></td>
+<td><p>Spécifie la hauteur de la liste déroulante, en lignes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>postcommand</em></p></td>
+<td><p>Script (éventuellement enregistré avec <em>Misc.register</em>) qui est appelé immédiatement avant d'afficher les valeurs. Il peut spécifier les valeurs à afficher.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>state</em></p></td>
+<td><p>Les valeurs sont <code class="docutils literal notranslate"><span class="pre">&quot;normal&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;readonly&quot;</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;disabled&quot;</span></code>. Dans l'état <em>readonly</em>, la valeur ne peut pas être modifiée directement et l'utilisateur ne peut que sélectionner les valeurs dans la liste déroulante. Dans l'état <em>normal</em>, le champ texte est directement éditable. Dans l'état <em>disabled</em>, aucune interaction n'est possible.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>textvariable</em></p></td>
+<td><p>Spécifie un nom dont la valeur est liée à la valeur du widget. Chaque fois que la valeur associée à ce nom change, la valeur du widget est mise à jour, et vice versa. Voir <code class="xref py py-class docutils literal notranslate"><span class="pre">tkinter.StringVar</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>values</em></p></td>
+<td><p>Spécifie la liste de valeurs à afficher dans la liste déroulante.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>width</em></p></td>
+<td><p>Spécifie une valeur entière indiquant la largeur souhaitée de la fenêtre d'entrée, en caractères de taille moyenne de la police du widget.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="virtual-events">
+<h3>Événements virtuels<a class="headerlink" href="#virtual-events" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les widgets <em>combobox</em> génèrent un événement virtuel <strong>&lt;&lt;ComboboxSelected&gt;&gt;</strong> lorsque l'utilisateur sélectionne un élément dans la liste de valeurs.</p>
+</section>
+<section id="ttk-combobox">
+<h3>ttk.Combobox<a class="headerlink" href="#ttk-combobox" title="Lien permanent vers ce titre">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.ttk.Combobox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.ttk.</span></span><span class="sig-name descname"><span class="pre">Combobox</span></span><a class="headerlink" href="#tkinter.ttk.Combobox" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Combobox.current">
+<span class="sig-name descname"><span class="pre">current</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">newindex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Combobox.current" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Si <em>newindex</em> est spécifié, définit la valeur de la <em>combobox</em> à la position de l'élément <em>newindex</em>. Sinon, renvoie l'indice de la valeur courante ou −1 si la valeur courante n'est pas dans la liste des valeurs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Combobox.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Combobox.get" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la valeur actuelle de la <em>combobox</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Combobox.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Combobox.set" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la valeur de la <em>combobox</em> sur <em>value</em>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="spinbox">
+<h2>Spinbox<a class="headerlink" href="#spinbox" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le widget <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Spinbox</span></code> est un <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Entry</span></code> amélioré avec des flèches d'incrémentation et de décrémentation. Il peut être utilisé pour des nombres ou des listes de valeurs de chaîne. Ce widget est une sous-classe de <code class="xref py py-class docutils literal notranslate"><span class="pre">Entry</span></code>.</p>
+<p>En plus des méthodes héritées de <a class="reference internal" href="#tkinter.ttk.Widget" title="tkinter.ttk.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a> : <code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.cget()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.configure()</span></code>, <a class="reference internal" href="#tkinter.ttk.Widget.identify" title="tkinter.ttk.Widget.identify"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.identify()</span></code></a>, <a class="reference internal" href="#tkinter.ttk.Widget.instate" title="tkinter.ttk.Widget.instate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.instate()</span></code></a> et <a class="reference internal" href="#tkinter.ttk.Widget.state" title="tkinter.ttk.Widget.state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.state()</span></code></a>, et les suivantes héritées de <code class="xref py py-class docutils literal notranslate"><span class="pre">Entry</span></code> : <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.bbox()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.delete()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.icursor()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.index()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.insert()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Entry.xview()</span></code>, il a quelques autres méthodes, décrites dans <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Spinbox</span></code>.</p>
+<section id="id1">
+<h3>Options<a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Ce widget accepte les options spécifiques suivantes :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>from</em></p></td>
+<td><p>Valeur flottante. Si elle est définie, il s'agit de la valeur minimale à laquelle le bouton de décrémentation décrémentera. Doit être orthographié comme <code class="docutils literal notranslate"><span class="pre">from_</span></code> lorsqu'il est utilisé comme argument, car <code class="docutils literal notranslate"><span class="pre">from</span></code> est un mot-clé Python.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>to</em></p></td>
+<td><p>Valeur flottante. Si elle est définie, il s'agit de la valeur maximale du bouton d'incrémentation.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>increment</em></p></td>
+<td><p>Valeur flottante. Spécifie la quantité dont les boutons d'incrémentation/décrémentation modifient la valeur. La valeur par défaut est 1.0.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>values</em></p></td>
+<td><p>Séquence de valeurs de chaîne ou flottantes. S'ils sont spécifiés, les boutons d'incrémentation/décrémentation font défiler les éléments dans cette séquence plutôt que d'incrémenter ou de décrémenter les nombres.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>wrap</em></p></td>
+<td><p>Valeur booléenne. Si <code class="docutils literal notranslate"><span class="pre">True</span></code>, les boutons d'incrémentation et de décrémentation passent de la valeur <code class="docutils literal notranslate"><span class="pre">to</span></code> à la valeur <code class="docutils literal notranslate"><span class="pre">from</span></code> ou de la valeur <code class="docutils literal notranslate"><span class="pre">from</span></code> à la valeur <code class="docutils literal notranslate"><span class="pre">to</span></code>, respectivement.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>format</em></p></td>
+<td><p>Valeur sous forme de chaîne. Cela spécifie le format des nombres définis par les boutons d'incrémentation/décrémentation. Il doit être sous la forme <code class="docutils literal notranslate"><span class="pre">&quot;%W.Pf&quot;</span></code>, où W est la largeur de la valeur, P est la précision et <code class="docutils literal notranslate"><span class="pre">'%'</span></code> et <code class="docutils literal notranslate"><span class="pre">'f'</span></code> sont littéraux.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>command</em></p></td>
+<td><p>appelable Python. Est appelé sans argument chaque fois que l'un des boutons d'incrémentation ou de décrémentation est enfoncé.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id2">
+<h3>Événements virtuels<a class="headerlink" href="#id2" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le widget <em>spinbox</em> génère un événement virtuel <strong>&lt;&lt;Increment&gt;&gt;</strong> lorsque l'utilisateur appuie sur &lt;Up&gt;, et un événement virtuel <strong>&lt;&lt;Decrement&gt;&gt;</strong> lorsque l'utilisateur appuie sur &lt;Down&gt;.</p>
+</section>
+<section id="ttk-spinbox">
+<h3>ttk.Spinbox<a class="headerlink" href="#ttk-spinbox" title="Lien permanent vers ce titre">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.ttk.Spinbox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.ttk.</span></span><span class="sig-name descname"><span class="pre">Spinbox</span></span><a class="headerlink" href="#tkinter.ttk.Spinbox" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Spinbox.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Spinbox.get" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la valeur actuelle du <em>spinbox</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Spinbox.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Spinbox.set" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la valeur du <em>spinbox</em> sur <em>value</em>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="notebook">
+<h2>Carnet de notes (<em>notebook</em>)<a class="headerlink" href="#notebook" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le widget <em>Ttk Notebook</em> gère une collection de fenêtres et n'en affiche qu'une seule à la fois. Chaque fenêtre enfant est associée à un onglet, que l'utilisateur peut sélectionner pour changer la fenêtre actuellement affichée.</p>
+<section id="id3">
+<h3>Options<a class="headerlink" href="#id3" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Ce widget accepte les options spécifiques suivantes :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>height</em></p></td>
+<td><p>S'il est présent et supérieur à zéro, spécifie la hauteur souhaitée de la zone du volet (sans compter l'ajustement interne ni les onglets). Sinon, la hauteur maximale de tous les volets est utilisée.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>padding</em></p></td>
+<td><p>Spécifie la quantité d'espace supplémentaire à ajouter autour de l'extérieur du bloc-notes. L'ajustement est défini par une liste jusqu'à quatre spécifications de longueur à gauche en haut à droite en bas. Si moins de quatre éléments sont spécifiés, <em>bottom</em> vaut par défaut <em>top</em>, <em>right</em> vaut par défaut <em>left</em> et <em>top</em> vaut par défaut <em>left</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>width</em></p></td>
+<td><p>S'il est présent et supérieur à zéro, spécifiez la largeur souhaitée de la zone du volet (hors ajustement interne). Sinon, la largeur maximale de tous les volets est utilisée.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tab-options">
+<h3>Options d'onglet<a class="headerlink" href="#tab-options" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Il existe également des options spécifiques pour les onglets :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>state</em></p></td>
+<td><p>Soit <code class="docutils literal notranslate"><span class="pre">&quot;normal&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;disabled&quot;</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;hidden&quot;</span></code>. Si <em>disabled</em>, l'onglet n'est pas sélectionnable. S'il est <em>hidden</em>, l'onglet n'est pas affiché.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>sticky</em></p></td>
+<td><p>Spécifie comment la fenêtre enfant est positionnée dans la zone du volet. La valeur est une chaîne contenant zéro ou plusieurs des caractères &quot;n&quot;, &quot;s&quot;, &quot;e&quot; ou &quot;w&quot;. Chaque lettre fait référence à un côté (nord, sud, est ou ouest) auquel la fenêtre enfant colle, selon le gestionnaire de géométrie <code class="xref py py-meth docutils literal notranslate"><span class="pre">grid()</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>padding</em></p></td>
+<td><p>Spécifie la quantité d'espace supplémentaire à ajouter entre le bloc-notes et ce volet. La syntaxe est la même que pour l'option d'ajustement utilisée par ce widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>text</em></p></td>
+<td><p>Spécifie un texte à afficher dans l'onglet.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>image</em></p></td>
+<td><p>Spécifie une image à afficher dans l'onglet. Voir l'option <em>image</em> décrite dans <a class="reference internal" href="#tkinter.ttk.Widget" title="tkinter.ttk.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>compound</em></p></td>
+<td><p>Spécifie comment afficher l'image par rapport au texte, dans le cas où les deux options texte et image sont présentes. Voir <a class="reference internal" href="#label-options">Label Options</a> pour les valeurs autorisées.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>underline</em></p></td>
+<td><p>Spécifie l'indice (en commençant à 0) d'un caractère à souligner dans la chaîne de texte. Le caractère souligné est utilisé pour l'activation mnémonique si <a class="reference internal" href="#tkinter.ttk.Notebook.enable_traversal" title="tkinter.ttk.Notebook.enable_traversal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Notebook.enable_traversal()</span></code></a> est appelé.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tab-identifiers">
+<h3>Identifiants d'onglet<a class="headerlink" href="#tab-identifiers" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le <em>tab_id</em> présent dans plusieurs méthodes de <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Notebook</span></code> peut prendre l'une des formes suivantes :</p>
+<ul class="simple">
+<li><p>Un entier compris entre zéro et le nombre d'onglets</p></li>
+<li><p>Le nom d'une fenêtre fille</p></li>
+<li><p>Une spécification de position de la forme &quot;&#64;x,y&quot;, qui identifie l'onglet</p></li>
+<li><p>La chaîne littérale <code class="docutils literal notranslate"><span class="pre">&quot;current&quot;</span></code>, qui identifie l'onglet actuellement sélectionné</p></li>
+<li><p>La chaîne littérale <code class="docutils literal notranslate"><span class="pre">&quot;end&quot;</span></code>, qui renvoie le nombre d'onglets (valable uniquement pour <a class="reference internal" href="#tkinter.ttk.Notebook.index" title="tkinter.ttk.Notebook.index"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Notebook.index()</span></code></a>)</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Événements virtuels<a class="headerlink" href="#id4" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Ce widget génère un événement virtuel <strong>&lt;&lt;NotebookTabChanged&gt;&gt;</strong> après la sélection d'un nouvel onglet.</p>
+</section>
+<section id="ttk-notebook">
+<h3>ttk.Notebook<a class="headerlink" href="#ttk-notebook" title="Lien permanent vers ce titre">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.ttk.Notebook">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.ttk.</span></span><span class="sig-name descname"><span class="pre">Notebook</span></span><a class="headerlink" href="#tkinter.ttk.Notebook" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Notebook.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Notebook.add" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ajoute un nouvel onglet au bloc-notes.</p>
+<p>Si la fenêtre est actuellement gérée par le <em>notebook</em> mais masquée, elle est restaurée à sa position précédente.</p>
+<p>Voir <a class="reference internal" href="#tab-options">Options d'onglet</a> pour la liste des options disponibles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Notebook.forget">
+<span class="sig-name descname"><span class="pre">forget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Notebook.forget" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Supprime l'onglet spécifié par <em>tab_id</em>, et ne gère plus la fenêtre associée.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Notebook.hide">
+<span class="sig-name descname"><span class="pre">hide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Notebook.hide" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Masque l'onglet spécifié par <em>tab_id</em>.</p>
+<p>L'onglet ne s'affiche pas, mais la fenêtre associée reste gérée par le <em>notebook</em> et sa configuration mémorisée. Les onglets cachés peuvent être restaurés avec la commande <a class="reference internal" href="#tkinter.ttk.Notebook.add" title="tkinter.ttk.Notebook.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Notebook.identify">
+<span class="sig-name descname"><span class="pre">identify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Notebook.identify" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie le nom de l'élément <em>tab</em> à la position <em>x</em>, <em>y</em>, ou la chaîne vide s'il n'y en a pas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Notebook.index">
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Notebook.index" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l'indice de l'onglet spécifié par <em>tab_id</em>, ou le nombre total d'onglets si <em>tab_id</em> est la chaîne <code class="docutils literal notranslate"><span class="pre">&quot;end&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Notebook.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Notebook.insert" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Insère un volet à la position spécifiée.</p>
+<p><em>pos</em> est soit la chaîne <code class="docutils literal notranslate"><span class="pre">&quot;end&quot;</span></code>, un indice entier ou le nom d'un enfant géré. Si <em>child</em> est déjà géré par le <em>notebook</em>, le déplace vers la position spécifiée.</p>
+<p>Voir <a class="reference internal" href="#tab-options">Options d'onglet</a> pour la liste des options disponibles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Notebook.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Notebook.select" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Sélectionne le <em>tab_id</em> spécifié.</p>
+<p>La fenêtre enfant associée est affichée, et la fenêtre précédemment sélectionnée (si différente) est masquée. Si <em>tab_id</em> est omis, renvoie le nom du widget du volet actuellement sélectionné.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Notebook.tab">
+<span class="sig-name descname"><span class="pre">tab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Notebook.tab" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interroge ou modifie les options du <em>tab_id</em> spécifique.</p>
+<p>Si <em>kw</em> n'est pas donné, renvoie un dictionnaire des valeurs des options de l'onglet. Si <em>option</em> est spécifié, renvoie la valeur de cette <em>option</em>. Sinon, définit les options sur les valeurs correspondantes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Notebook.tabs">
+<span class="sig-name descname"><span class="pre">tabs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Notebook.tabs" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une liste des fenêtres gérées par le <em>notebook</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Notebook.enable_traversal">
+<span class="sig-name descname"><span class="pre">enable_traversal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Notebook.enable_traversal" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Active la traversée du clavier pour une fenêtre de niveau supérieur contenant ce bloc-notes.</p>
+<p>Cela étend les liaisons pour la fenêtre de niveau supérieur contenant le bloc-notes comme suit :</p>
+<ul class="simple">
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Control</kbd>-<kbd class="kbd docutils literal notranslate">Tab</kbd></kbd> : sélectionne l'onglet suivant celui actuellement sélectionné.</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Shift</kbd>-<kbd class="kbd docutils literal notranslate">Control</kbd>-<kbd class="kbd docutils literal notranslate">Tab</kbd></kbd> : sélectionne l'onglet précédant celui actuellement sélectionné.</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Alt</kbd>-<kbd class="kbd docutils literal notranslate">K</kbd></kbd> : où <em>K</em> est le caractère mnémonique (souligné) de n'importe quel onglet, sélectionne cet onglet.</p></li>
+</ul>
+<p>Plusieurs blocs-notes dans un seul niveau supérieur peuvent être activés pour la traversée, y compris les blocs-notes imbriqués. Cependant, la traversée du bloc-notes ne fonctionne correctement que si tous les volets ont le bloc-notes dans lequel ils se trouvent en tant que maître.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="progressbar">
+<h2>Barre de progression<a class="headerlink" href="#progressbar" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le widget <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Progressbar</span></code> affiche l'état d'une opération de longue durée. Il peut fonctionner en deux modes : 1) le mode déterminé qui indique la quantité achevée par rapport à la quantité totale de travail à effectuer et 2) le mode indéterminé qui fournit un affichage animé pour informer l'utilisateur que le travail progresse.</p>
+<section id="id5">
+<h3>Options<a class="headerlink" href="#id5" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Ce widget accepte les options spécifiques suivantes :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>orient</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;horizontal&quot;</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;vertical&quot;</span></code>. Spécifie l'orientation de la barre de progression.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>length</em></p></td>
+<td><p>Spécifie la longueur de l'axe long de la barre de progression (largeur si horizontale, hauteur si verticale).</p></td>
+</tr>
+<tr class="row-even"><td><p><em>mode</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;determinate&quot;</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;indeterminate&quot;</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>maximum</em></p></td>
+<td><p>Nombre spécifiant la valeur maximale. La valeur par défaut est 100.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>value</em></p></td>
+<td><p>La valeur actuelle de la barre de progression. En mode <em>determinate</em>, cela représente la quantité de travail accompli. En mode <em>indeterminate</em>, il est interprété comme modulo <em>maximum</em> ; c'est-à-dire que la barre de progression effectue un « cycle » lorsque sa valeur augmente de <em>maximum</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>variable</em></p></td>
+<td><p>Nom lié à la valeur de l'option. Si spécifié, la valeur de la barre de progression est automatiquement fixée à la valeur de ce nom à chaque modification de ce dernier.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>phase</em></p></td>
+<td><p>Option en lecture seule. Le widget incrémente périodiquement la valeur de cette option chaque fois que sa valeur est supérieure à 0 et, en mode <em>déterminate</em>, inférieure au maximum. Cette option peut être utilisée par le thème actuel pour fournir des effets d'animation supplémentaires.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ttk-progressbar">
+<h3>ttk.Progressbar<a class="headerlink" href="#ttk-progressbar" title="Lien permanent vers ce titre">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.ttk.Progressbar">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.ttk.</span></span><span class="sig-name descname"><span class="pre">Progressbar</span></span><a class="headerlink" href="#tkinter.ttk.Progressbar" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Progressbar.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Progressbar.start" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Commence le mode d'auto-incrémentation : planifie un événement de minuterie récurrent qui appelle <a class="reference internal" href="#tkinter.ttk.Progressbar.step" title="tkinter.ttk.Progressbar.step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Progressbar.step()</span></code></a> toutes les <em>interval</em> millisecondes. S'il est omis, <em>interval</em> est par défaut de 50 millisecondes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Progressbar.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Progressbar.step" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Incrémente la valeur de la barre de progression de <em>amount</em>.</p>
+<p><em>amount</em> est par défaut égal à <code class="docutils literal notranslate"><span class="pre">1.0</span></code> s'il est omis.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Progressbar.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Progressbar.stop" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Arrête le mode d'auto-incrémentation : annule tout événement de minuterie récurrent initié par <a class="reference internal" href="#tkinter.ttk.Progressbar.start" title="tkinter.ttk.Progressbar.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Progressbar.start()</span></code></a> pour cette barre de progression.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="separator">
+<h2>Séparateur<a class="headerlink" href="#separator" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le widget <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Separator</span></code> affiche une barre de séparation horizontale ou verticale.</p>
+<p>Il n'a pas d'autres méthodes que celles héritées de <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Widget</span></code>.</p>
+<section id="id6">
+<h3>Options<a class="headerlink" href="#id6" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Ce widget accepte l'option spécifique suivante :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>orient</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;horizontal&quot;</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;vertical&quot;</span></code>. Spécifie l'orientation du séparateur.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="sizegrip">
+<h2>Poignée de redimensionnement<a class="headerlink" href="#sizegrip" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le widget <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Sizegrip</span></code> (également connu sous le nom de <em>grow box</em>) permet à l'utilisateur de redimensionner la fenêtre de niveau supérieur en appuyant et en faisant glisser la poignée.</p>
+<p>Ce widget n'a ni options spécifiques ni méthodes spécifiques, à part celles héritées de <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Widget</span></code>.</p>
+<section id="platform-specific-notes">
+<h3>Notes spécifiques à une plateforme<a class="headerlink" href="#platform-specific-notes" title="Lien permanent vers ce titre">¶</a></h3>
+<ul class="simple">
+<li><p>Sur macOS, les fenêtres de niveau supérieur incluent automatiquement une poignée de redimensionnement intégrée par défaut. L'ajout d'un <code class="xref py py-class docutils literal notranslate"><span class="pre">Sizegrip</span></code> est sans danger, car la poignée intégrée masquera simplement le widget.</p></li>
+</ul>
+</section>
+<section id="bugs">
+<h3>Bogues<a class="headerlink" href="#bugs" title="Lien permanent vers ce titre">¶</a></h3>
+<ul class="simple">
+<li><p>Si la position du contenant de niveau supérieur a été spécifiée par rapport à la droite ou au bas de l'écran (par exemple…), le widget <code class="xref py py-class docutils literal notranslate"><span class="pre">Sizegrip</span></code> ne redimensionne pas la fenêtre.</p></li>
+<li><p>Ce widget ne prend en charge que le redimensionnement <code class="docutils literal notranslate"><span class="pre">&quot;southeast&quot;</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section id="treeview">
+<h2>Arborescence<a class="headerlink" href="#treeview" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le widget <code class="xref py py-class docutils literal notranslate"><span class="pre">ttk.Treeview</span></code> affiche une collection hiérarchique d'éléments. Chaque élément possède une étiquette textuelle, une image facultative et une liste facultative de valeurs de données. Les valeurs des données sont affichées dans des colonnes successives après l'étiquette de l'arbre.</p>
+<p>L'ordre dans lequel les valeurs de données sont affichées peut être contrôlé en définissant l'option de widget <code class="docutils literal notranslate"><span class="pre">displaycolumns</span></code>. Le widget d'arborescence peut également afficher les en-têtes de colonne. Les colonnes sont accessibles par des numéros ou des noms symboliques indiqués dans l'option <em>columns</em> du widget. Voir <a class="reference internal" href="#column-identifiers">Identifiants de colonnes</a>.</p>
+<p>Chaque élément est identifié par un nom unique. Le widget génère des identifiants d'éléments s'ils ne sont pas fournis par l'appelant. Il existe un élément racine distinct, nommé <code class="docutils literal notranslate"><span class="pre">{}</span></code>. L'élément racine lui-même n'est pas affiché ; ses enfants apparaissent au niveau supérieur de la hiérarchie.</p>
+<p>Chaque élément possède également une liste de balises, qui peuvent être utilisées pour associer des liaisons d'événements à des éléments individuels et contrôler l'apparence de l'élément.</p>
+<p>Le widget <em>Treeview</em> prend en charge le défilement horizontal et vertical, selon les options décrites dans <a class="reference internal" href="#scrollable-widget-options">Scrollable Widget Options</a> et les méthodes <a class="reference internal" href="#tkinter.ttk.Treeview.xview" title="tkinter.ttk.Treeview.xview"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Treeview.xview()</span></code></a> et <a class="reference internal" href="#tkinter.ttk.Treeview.yview" title="tkinter.ttk.Treeview.yview"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Treeview.yview()</span></code></a>.</p>
+<section id="id7">
+<h3>Options<a class="headerlink" href="#id7" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Ce widget accepte les options spécifiques suivantes :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>columns</em></p></td>
+<td><p>Une liste d'identificateurs de colonne, spécifiant le nombre de colonnes et leurs noms.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>displaycolumns</em></p></td>
+<td><p>Une liste d'identificateurs de colonne (indices symboliques ou entiers) spécifiant quelles colonnes de données sont affichées et l'ordre dans lequel elles apparaissent, ou la chaîne <code class="docutils literal notranslate"><span class="pre">&quot;#all&quot;</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>height</em></p></td>
+<td><p>Spécifie le nombre de lignes qui doivent être visibles. Remarque : la largeur demandée est déterminée à partir de la somme des largeurs de colonne.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>padding</em></p></td>
+<td><p>Spécifie le remplissage interne du widget. L'ajustement est décrit par une liste jusqu'à quatre spécifications de longueur.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>selectmode</em></p></td>
+<td><p>Contrôle la façon dont les liaisons de classe intégrées gèrent la sélection. Les valeurs possibles sont <code class="docutils literal notranslate"><span class="pre">&quot;extended&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;browse&quot;</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code>. S'il est défini sur <em>extended</em> (valeur par défaut), plusieurs éléments peuvent être sélectionnés. Si c'est <em>browse</em> un seul élément ne peut être sélectionné à la fois. Si c'est <em>none</em>, la sélection ne peut pas être modifiée.</p>
+<p>Notez que le code d'application et les liaisons de balises peuvent définir la sélection comme ils le souhaitent, quelle que soit la valeur de cette option.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><em>show</em></p></td>
+<td><p>Une liste contenant zéro ou plusieurs des valeurs suivantes, spécifiant les éléments de l'arborescence à afficher.</p>
+<ul class="simple">
+<li><p><em>tree</em> : affiche les étiquettes de l'arbre dans la colonne 0.</p></li>
+<li><p><em>headings</em> : affiche la ligne d'en-tête.</p></li>
+</ul>
+<p>La valeur par défaut est <code class="docutils literal notranslate"><span class="pre">&quot;tree</span> <span class="pre">headings&quot;</span></code>, c'est-à-dire afficher tous les éléments.</p>
+<p><strong>Remarque</strong> : la colonne 0 fait toujours référence à la colonne de l'arborescence, même si <code class="docutils literal notranslate"><span class="pre">show=&quot;tree&quot;</span></code> n'est pas spécifié.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="item-options">
+<h3>Options d'éléments<a class="headerlink" href="#item-options" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les options d'éléments suivantes peuvent être spécifiées pour les éléments dans les commandes <em>insert</em> et les widgets de type élément.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>text</em></p></td>
+<td><p>Libellé textuel à afficher pour l'élément.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>image</em></p></td>
+<td><p>Image <em>Tk</em>, affichée à gauche de l'étiquette.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>values</em></p></td>
+<td><p>Liste des valeurs associées à l'élément.</p>
+<p>Chaque élément doit avoir le même nombre de valeurs que les colonnes d'options du widget. S'il y a moins de valeurs que de colonnes, les valeurs restantes sont supposées vides. S'il y a plus de valeurs que de colonnes, les valeurs supplémentaires sont ignorées.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><em>open</em></p></td>
+<td><p>Valeur <code class="docutils literal notranslate"><span class="pre">True</span></code> ou <code class="docutils literal notranslate"><span class="pre">False</span></code> indiquant si les enfants de l'élément doivent être affichés ou masqués.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>tags</em></p></td>
+<td><p>Liste de balises associées à cet élément.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tag-options">
+<h3>Options de balise<a class="headerlink" href="#tag-options" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les options suivantes peuvent être spécifiées sur les balises :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>foreground</em></p></td>
+<td><p>Spécifie la couleur de premier plan du texte.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>background</em></p></td>
+<td><p>Spécifie la couleur d'arrière-plan de la cellule ou de l'élément.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>font</em></p></td>
+<td><p>Spécifie la police à utiliser lors du dessin du texte.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>image</em></p></td>
+<td><p>Spécifie l'image de l'élément, au cas où l'option d'image de l'élément est vide.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="column-identifiers">
+<h3>Identifiants de colonnes<a class="headerlink" href="#column-identifiers" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les identifiants de colonnes prennent l'une des formes suivantes :</p>
+<ul class="simple">
+<li><p>Un nom symbolique de l'option de liste de colonnes.</p></li>
+<li><p>Un entier n, spécifiant la n<sup>ième</sup> colonne de données.</p></li>
+<li><p>Une chaîne de la forme #n, où n est un entier, spécifiant la n<sup>ième</sup> colonne d'affichage.</p></li>
+</ul>
+<p>Notes :</p>
+<ul class="simple">
+<li><p>Les valeurs d'option de l'élément peuvent être affichées dans un ordre différent de celui dans lequel elles sont stockées.</p></li>
+<li><p>La colonne #0 fait toujours référence à la colonne de l'arborescence, même si <code class="docutils literal notranslate"><span class="pre">show=&quot;tree&quot;</span></code> n'est pas spécifié.</p></li>
+</ul>
+<p>Un numéro de colonne de données est un indice dans la liste des valeurs d'option d'un élément ; un numéro de colonne d'affichage est le numéro de colonne dans l'arborescence où les valeurs sont affichées. Les étiquettes d'arbre sont affichées dans la colonne #0. Si l'option <em>displaycolumns</em> n'est pas définie, la colonne de données n s'affiche dans la colonne #n+1. Encore une fois, <strong>la colonne #0 fait toujours référence à la colonne de l'arborescence</strong>.</p>
+</section>
+<section id="id8">
+<h3>Événements virtuels<a class="headerlink" href="#id8" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le widget <em>Treeview</em> génère les événements virtuels suivants.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Événement</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;&lt;TreeviewSelect&gt;&gt;</p></td>
+<td><p>Généré chaque fois que la sélection change.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;&lt;TreeviewOpen&gt;&gt;</p></td>
+<td><p>Généré juste avant de définir l'élément de focus sur <code class="docutils literal notranslate"><span class="pre">open=True</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;&lt;TreeviewClose&gt;&gt;</p></td>
+<td><p>Généré juste après avoir défini l'élément de focus sur <code class="docutils literal notranslate"><span class="pre">open=False</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Les méthodes <a class="reference internal" href="#tkinter.ttk.Treeview.focus" title="tkinter.ttk.Treeview.focus"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Treeview.focus()</span></code></a> et <a class="reference internal" href="#tkinter.ttk.Treeview.selection" title="tkinter.ttk.Treeview.selection"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Treeview.selection()</span></code></a> peuvent être utilisées pour déterminer le ou les éléments concernés.</p>
+</section>
+<section id="ttk-treeview">
+<h3>ttk.Treeview<a class="headerlink" href="#ttk-treeview" title="Lien permanent vers ce titre">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.ttk.</span></span><span class="sig-name descname"><span class="pre">Treeview</span></span><a class="headerlink" href="#tkinter.ttk.Treeview" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.bbox">
+<span class="sig-name descname"><span class="pre">bbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.bbox" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la boîte englobante (relative à la fenêtre du widget <em>treeview</em>) de l'<em>item</em> spécifié sous la forme (x, y, largeur, hauteur).</p>
+<p>Si <em>column</em> est spécifié, renvoie la boîte englobante de cette cellule. Si <em>item</em> n'est pas visible (c'est-à-dire s'il est un descendant d'un élément fermé ou se trouve hors écran en raison du défilement), renvoie une chaîne vide.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.get_children">
+<span class="sig-name descname"><span class="pre">get_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.get_children" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la liste des enfants appartenant à <em>item</em>.</p>
+<p>Si <em>item</em> n'est pas spécifié, renvoie les enfants racine.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.set_children">
+<span class="sig-name descname"><span class="pre">set_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">newchildren</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.set_children" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Remplace l'enfant de <em>item</em> par <em>newchildren</em>.</p>
+<p>Les enfants présents dans <em>item</em> qui ne sont pas présents dans <em>newchildren</em> sont détachés de l'arbre. Aucun élément de <em>newchildren</em> ne peut être un ancêtre de <em>item</em>. Notez que ne pas spécifier <em>newchildren</em> entraîne le détachement des enfants de <em>item</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.column">
+<span class="sig-name descname"><span class="pre">column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.column" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interroge ou modifie les options pour la <em>column</em> spécifiée.</p>
+<p>Si <em>kw</em> n'est pas donné, renvoie un dictionnaire des valeurs d'option de colonne. Si <em>option</em> est spécifié, la valeur de cette <em>option</em> est renvoyée. Sinon, définit les options sur les valeurs correspondantes.</p>
+<p>Les options/valeurs valides sont :</p>
+<dl class="simple">
+<dt>id</dt><dd><p>Renvoie le nom de la colonne. Il s'agit d'une option en lecture seule.</p>
+</dd>
+<dt><em>anchor</em> : une des valeurs d'ancre <em>Tk</em> standard.</dt><dd><p>Spécifie comment le texte de cette colonne doit être aligné par rapport à la cellule.</p>
+</dd>
+<dt><em>minwidth</em> : largeur</dt><dd><p>La largeur minimale de la colonne en pixels. Le widget <em>Treeview</em> ne rend pas la colonne plus petite que celle spécifiée par cette option lorsque le widget est redimensionné ou que l'utilisateur fait glisser une colonne.</p>
+</dd>
+<dt><em>stretch</em> : <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code></dt><dd><p>Spécifie si la largeur de la colonne doit être ajustée lorsque le widget est redimensionné.</p>
+</dd>
+<dt><em>width</em> : largeur</dt><dd><p>La largeur de la colonne en pixels.</p>
+</dd>
+</dl>
+<p>Pour configurer la colonne d'arborescence, appelez-la avec <code class="docutils literal notranslate"><span class="pre">column</span> <span class="pre">=</span> <span class="pre">&quot;#0&quot;</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.delete" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Supprime tous les <em>items</em> spécifiés et tous leurs descendants.</p>
+<p>L'élément racine ne peut pas être supprimé.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.detach">
+<span class="sig-name descname"><span class="pre">detach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.detach" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Dissocie tous les <em>items</em> spécifiés de l'arborescence.</p>
+<p>Les éléments et tous leurs descendants sont toujours présents et peuvent être réinsérés à un autre point de l'arborescence, mais ne seront pas affichés.</p>
+<p>L'élément racine ne peut pas être détaché.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.exists">
+<span class="sig-name descname"><span class="pre">exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.exists" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie <code class="docutils literal notranslate"><span class="pre">True</span></code> si l'<em>item</em> spécifié est présent dans l'arborescence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.focus">
+<span class="sig-name descname"><span class="pre">focus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.focus" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Si <em>item</em> est spécifié, définit l'élément de focus sur <em>item</em>. Sinon, renvoie l'élément de focus actuel, ou <code class="docutils literal notranslate"><span class="pre">''</span></code> s'il n'y en a pas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.heading">
+<span class="sig-name descname"><span class="pre">heading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.heading" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interroge ou modifie les options d'en-tête pour la <em>column</em> spécifiée.</p>
+<p>Si <em>kw</em> n'est pas donné, renvoie un dictionnaire des valeurs d'option d'en-tête. Si <em>option</em> est spécifié, la valeur de cette <em>option</em> est renvoyée. Sinon, définit les options sur les valeurs correspondantes.</p>
+<p>Les options/valeurs valides sont :</p>
+<dl class="simple">
+<dt><em>text</em> : texte</dt><dd><p>Texte à afficher dans l'en-tête de colonne.</p>
+</dd>
+<dt><em>image</em> : nom de l'image</dt><dd><p>Spécifie une image à afficher à droite de l'en-tête de colonne.</p>
+</dd>
+<dt><em>anchor</em> : ancre</dt><dd><p>Spécifie comment le texte du titre doit être aligné. Une des valeurs d'ancrage <em>Tk</em> standard.</p>
+</dd>
+<dt><em>command</em> : rappel</dt><dd><p>Un rappel à invoquer lorsque l'étiquette d'en-tête est pressée.</p>
+</dd>
+</dl>
+<p>Pour configurer l'en-tête de colonne de l'arborescence, appelez-la avec <code class="docutils literal notranslate"><span class="pre">column</span> <span class="pre">=</span> <span class="pre">&quot;#0&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.identify">
+<span class="sig-name descname"><span class="pre">identify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.identify" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une description du <em>component</em> spécifié sous le point donné par <em>x</em> et <em>y</em>, ou la chaîne vide si aucun <em>component</em> de ce type n'est présent à cette position.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.identify_row">
+<span class="sig-name descname"><span class="pre">identify_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.identify_row" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l'ID d'élément de l'élément à la position <em>y</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.identify_column">
+<span class="sig-name descname"><span class="pre">identify_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.identify_column" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l'identificateur de colonne de données de la cellule à la position <em>x</em>.</p>
+<p>La colonne arborescence possède l'ID #0.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.identify_region">
+<span class="sig-name descname"><span class="pre">identify_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.identify_region" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l'un des éléments suivants :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><em>region</em></p></th>
+<th class="head"><p>signification</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>heading</em></p></td>
+<td><p>Zone d'en-tête de l'arbre.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>separator</em></p></td>
+<td><p>Espace entre deux en-têtes de colonnes.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>tree</em> (arbre)</p></td>
+<td><p>Une zone de l'arbre.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>cell</em></p></td>
+<td><p>Une cellule de données.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Disponibilité : <em>Tk</em> 8.6.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.identify_element">
+<span class="sig-name descname"><span class="pre">identify_element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.identify_element" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l'élément à la position <em>x</em>, <em>y</em>.</p>
+<p>Disponibilité : <em>Tk</em> 8.6.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.index">
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.index" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l'indice (entier) de <em>item</em> dans la liste des enfants de son parent.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.insert" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un nouvel élément et renvoie l'identifiant de l'élément nouvellement créé.</p>
+<p><em>parent</em> est l'ID d'élément de l'élément parent ou la chaîne vide pour créer un nouvel élément de niveau supérieur. <em>index</em> est un entier, ou la valeur <code class="docutils literal notranslate"><span class="pre">&quot;end&quot;</span></code>, spécifiant où dans la liste des enfants du parent insérer le nouvel élément. Si <em>index</em> est inférieur ou égal à zéro, le nouveau nœud est inséré au début ; si <em>index</em> est supérieur ou égal au nombre actuel d'enfants, il est inséré à la fin. Si <em>iid</em> est spécifié, il est utilisé comme identifiant d'élément ; <em>iid</em> ne doit pas déjà exister dans l'arborescence. Sinon, un nouvel identifiant unique est généré.</p>
+<p>Voir <a class="reference internal" href="#item-options">Options d'éléments</a> pour la liste des options disponibles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.item">
+<span class="sig-name descname"><span class="pre">item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.item" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interroge ou modifie les options pour l'<em>item</em> spécifié.</p>
+<p>Si aucune option n'est donnée, un dictionnaire avec des options/valeurs pour l'élément est renvoyé. Si <em>option</em> est spécifié, la valeur de cette option est renvoyée. Sinon, définit les options sur les valeurs correspondantes données par <em>kw</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.move" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Déplace <em>item</em> vers la position <em>index</em> dans la liste des enfants de <em>parent</em>.</p>
+<p>Il est interdit de déplacer un élément sous l'un de ses descendants. Si <em>index</em> est inférieur ou égal à zéro, <em>item</em> est déplacé au début ; s'il est supérieur ou égal au nombre d'enfants, il est déplacé à la fin. Si <em>item</em> a été détaché, il est rattaché.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.next">
+<span class="sig-name descname"><span class="pre">next</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.next" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l'identifiant du frère suivant de <em>item</em>, ou <code class="docutils literal notranslate"><span class="pre">''</span></code> si <em>item</em> est le dernier enfant de son parent.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.parent" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l'identifiant du parent de <em>item</em>, ou <code class="docutils literal notranslate"><span class="pre">''</span></code> si <em>item</em> est au niveau supérieur de la hiérarchie.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.prev">
+<span class="sig-name descname"><span class="pre">prev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.prev" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l'identifiant du frère précédent de <em>item</em>, ou <code class="docutils literal notranslate"><span class="pre">''</span></code> si <em>item</em> est le premier enfant de son parent.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.reattach">
+<span class="sig-name descname"><span class="pre">reattach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.reattach" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Alias pour <a class="reference internal" href="#tkinter.ttk.Treeview.move" title="tkinter.ttk.Treeview.move"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Treeview.move()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.see">
+<span class="sig-name descname"><span class="pre">see</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.see" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fait en sorte que <em>item</em> soit visible.</p>
+<p>Définit l'option d'ouverture de tous les ancêtres de <em>item</em> sur <code class="docutils literal notranslate"><span class="pre">True</span></code>, et fait défiler le widget si nécessaire afin que <em>item</em> soit dans la partie visible de l'arborescence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.selection">
+<span class="sig-name descname"><span class="pre">selection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.selection" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie un <em>n</em>-uplet d'éléments sélectionnés.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span><code class="docutils literal notranslate"><span class="pre">selection()</span></code> ne prend plus d'arguments. Pour modifier l'état de sélection, utilisez les méthodes de sélection suivantes.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.selection_set">
+<span class="sig-name descname"><span class="pre">selection_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.selection_set" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><em>items</em> devient la nouvelle sélection.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span><em>items</em> peut être passé en tant qu'arguments séparés, pas seulement en tant que <em>n</em>-uplet.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.selection_add">
+<span class="sig-name descname"><span class="pre">selection_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.selection_add" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ajoute des <em>items</em> à la sélection.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span><em>items</em> peut être passé en tant qu'arguments séparés, pas seulement en tant que <em>n</em>-uplet.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.selection_remove">
+<span class="sig-name descname"><span class="pre">selection_remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.selection_remove" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Supprime les <em>items</em> de la sélection.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span><em>items</em> peut être passé en tant qu'arguments séparés, pas seulement en tant que <em>n</em>-uplet.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.selection_toggle">
+<span class="sig-name descname"><span class="pre">selection_toggle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.selection_toggle" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Bascule l'état de sélection de chaque élément de <em>items</em>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span><em>items</em> peut être passé en tant qu'arguments séparés, pas seulement en tant que <em>n</em>-uplet.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.set" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Avec un argument, renvoie un dictionnaire de paires colonne/valeur pour l'<em>item</em> spécifié. Avec deux arguments, renvoie la valeur actuelle de la <em>column</em> spécifiée. Avec trois arguments, définit la valeur de la <em>column</em> donnée dans l'<em>item</em> donné à la <em>value</em> spécifiée.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.tag_bind">
+<span class="sig-name descname"><span class="pre">tag_bind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.tag_bind" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Lie le rappel <em>callback</em> à l'événement donné <em>sequence</em> pour la balise <em>tagname</em>. Lorsqu'un événement est envoyé à un élément, les rappels pour chacune des options de balises de l'élément sont appelés.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.tag_configure">
+<span class="sig-name descname"><span class="pre">tag_configure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.tag_configure" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interroge ou modifie les options pour le <em>tagname</em> spécifié.</p>
+<p>Si <em>kw</em> n'est pas donné, renvoie un dictionnaire des paramètres d'option pour <em>tagname</em>. Si <em>option</em> est spécifié, renvoie la valeur de cette <em>option</em> pour le <em>tagname</em> spécifié. Sinon, définit les options sur les valeurs correspondantes pour le <em>tagname</em> donné.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.tag_has">
+<span class="sig-name descname"><span class="pre">tag_has</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.tag_has" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Si <em>item</em> est spécifié, renvoie 1 ou 0 selon que <em>item</em> spécifié a le <em>tagname</em> donné. Sinon, renvoie une liste de tous les éléments qui ont la balise spécifiée.</p>
+<p>Disponibilité : <em>Tk</em> 8.6</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.xview">
+<span class="sig-name descname"><span class="pre">xview</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.xview" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interroge ou modifie la position horizontale de l'arborescence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Treeview.yview">
+<span class="sig-name descname"><span class="pre">yview</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Treeview.yview" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interroge ou modifie la position verticale de l'arborescence.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="ttk-styling">
+<span id="ttkstyling"></span><h2>Style Ttk<a class="headerlink" href="#ttk-styling" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Chaque widget dans <code class="xref py py-mod docutils literal notranslate"><span class="pre">ttk</span></code> se voit attribuer un style, qui spécifie l'ensemble d'éléments composant le widget et la façon dont ils sont disposés, ainsi que les paramètres dynamiques et par défaut pour les options d'élément. Par défaut, le nom du style est le même que le nom de la classe du widget, mais il peut être remplacé par l'option de style du widget. Si vous ne connaissez pas le nom de classe d'un widget, utilisez la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">Misc.winfo_class()</span></code> (<em>somewidget.winfo_class()</em>).</p>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://tktable.sourceforge.net/tile/tile-tcl2004.pdf">Tcl'2004 conference presentation</a></dt><dd><p>Ce document explique le fonctionnement du moteur de thème</p>
+</dd>
+</dl>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.ttk.Style">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.ttk.</span></span><span class="sig-name descname"><span class="pre">Style</span></span><a class="headerlink" href="#tkinter.ttk.Style" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette classe est utilisée pour manipuler la base de données de style.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Style.configure">
+<span class="sig-name descname"><span class="pre">configure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Style.configure" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interroge ou définit la valeur par défaut des options spécifiées dans <em>style</em>.</p>
+<p>Chaque clé dans <em>kw</em> est une option et chaque valeur est une chaîne identifiant la valeur de cette option.</p>
+<p>Par exemple, pour changer chaque bouton par défaut en un bouton plat avec un ajustement et une couleur d'arrière-plan différente :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span>
+<span class="kn">import</span> <span class="nn">tkinter</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">ttk</span><span class="o">.</span><span class="n">Style</span><span class="p">()</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;TButton&quot;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+   <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#ccc&quot;</span><span class="p">)</span>
+
+<span class="n">btn</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Sample&quot;</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Style.map">
+<span class="sig-name descname"><span class="pre">map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Style.map" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interroge ou définit les valeurs dynamiques des options spécifiées dans <em>style</em>.</p>
+<p>Chaque clé dans <em>kw</em> est une option et chaque valeur doit être une liste ou un <em>n</em>-uplet (généralement) contenant des spécifications d'état regroupées dans des <em>n</em>-uplets, des listes ou une autre préférence. Un <em>statespec</em> est un composé d'un ou plusieurs états, puis d'une valeur.</p>
+<p>Un exemple peut le rendre plus compréhensible :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tkinter</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">style</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Style</span><span class="p">()</span>
+<span class="n">style</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s2">&quot;C.TButton&quot;</span><span class="p">,</span>
+    <span class="n">foreground</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;pressed&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">)],</span>
+    <span class="n">background</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;pressed&#39;</span><span class="p">,</span> <span class="s1">&#39;!disabled&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="s1">&#39;white&#39;</span><span class="p">)]</span>
+    <span class="p">)</span>
+
+<span class="n">colored_btn</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;C.TButton&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Notez que l'ordre des séquences (états, valeur) pour une option est important, si l'ordre est changé en <code class="docutils literal notranslate"><span class="pre">[('active',</span> <span class="pre">'blue'),</span> <span class="pre">('pressed',</span> <span class="pre">'red')]</span></code> dans l'option de premier plan, par exemple, le résultat est un premier plan bleu lorsque le widget est dans les états actif ou pressé.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Style.lookup">
+<span class="sig-name descname"><span class="pre">lookup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Style.lookup" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la valeur spécifiée pour <em>option</em> dans <em>style</em>.</p>
+<p>Si <em>state</em> est spécifié, on s'attend à ce qu'il s'agisse d'une séquence d'un ou plusieurs états. Si l'argument <em>default</em> est défini, il est utilisé comme valeur de secours au cas où aucune spécification d'option n'est trouvée.</p>
+<p>Pour vérifier quelle police un bouton utilise par défaut :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">ttk</span><span class="o">.</span><span class="n">Style</span><span class="p">()</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s2">&quot;TButton&quot;</span><span class="p">,</span> <span class="s2">&quot;font&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Style.layout">
+<span class="sig-name descname"><span class="pre">layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layoutspec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Style.layout" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la disposition du widget pour un <em>style</em> donné. Si <em>layoutspec</em> est omis, renvoie la spécification de mise en page pour le style donné.</p>
+<p><em>layoutspec</em>, si spécifié, doit être une liste ou un autre type de séquence (à l'exception des chaînes), où chaque élément doit être un <em>n</em>-uplet et le premier élément est le nom de la mise en page et le deuxième élément doit avoir le format décrit dans <a class="reference internal" href="#layouts">Layouts</a>.</p>
+<p>Pour comprendre le format, consultez l'exemple suivant (il n'est pas destiné à faire quoi que ce soit d'utile) :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span>
+<span class="kn">import</span> <span class="nn">tkinter</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">style</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Style</span><span class="p">()</span>
+<span class="n">style</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="s2">&quot;TMenubutton&quot;</span><span class="p">,</span> <span class="p">[</span>
+   <span class="p">(</span><span class="s2">&quot;Menubutton.background&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+   <span class="p">(</span><span class="s2">&quot;Menubutton.button&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;children&quot;</span><span class="p">:</span>
+       <span class="p">[(</span><span class="s2">&quot;Menubutton.focus&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;children&quot;</span><span class="p">:</span>
+           <span class="p">[(</span><span class="s2">&quot;Menubutton.padding&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;children&quot;</span><span class="p">:</span>
+               <span class="p">[(</span><span class="s2">&quot;Menubutton.label&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;side&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;expand&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})]</span>
+           <span class="p">})]</span>
+       <span class="p">})]</span>
+   <span class="p">}),</span>
+<span class="p">])</span>
+
+<span class="n">mbtn</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Menubutton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Text&#39;</span><span class="p">)</span>
+<span class="n">mbtn</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Style.element_create">
+<span class="sig-name descname"><span class="pre">element_create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elementname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etype</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Style.element_create" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un nouvel élément dans le thème actuel, du <em>etype</em> donné qui doit être <code class="docutils literal notranslate"><span class="pre">&quot;image&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;from&quot;</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;vsapi&quot;</span></code>. Ce dernier n'est disponible que dans <em>Tk</em> 8.6a pour Windows XP et Vista et n'est pas décrit ici.</p>
+<p>Si <em>image</em> est utilisé, <em>args</em> doit contenir le nom de l'image par défaut suivi de paires <em>statespec</em> / <em>value</em> (il s'agit de l'<em>imagespec</em>), et <em>kw</em> peut avoir les options suivantes :</p>
+<dl class="simple">
+<dt><em>border</em>=remplissage</dt><dd><p><em>padding</em> est une liste de quatre entiers maximum, spécifiant respectivement les bordures gauche, supérieure, droite et inférieure.</p>
+</dd>
+<dt><em>height</em>=hauteur</dt><dd><p>Spécifie une hauteur minimale pour l'élément. Si elle est inférieure à zéro, la hauteur de l'image de base est utilisée par défaut.</p>
+</dd>
+<dt><em>padding</em>= ajustement</dt><dd><p>Spécifie l'ajustement intérieur de l'élément. La valeur par défaut est la valeur de <em>border</em> si elle n'est pas spécifiée.</p>
+</dd>
+<dt><em>sticky</em>= <em>spec</em></dt><dd><p>Spécifie comment l'image est placée dans la partie de l'espace attribué finale. <em>spec</em> contient zéro ou plusieurs caractères &quot;n&quot;, &quot;s&quot;, &quot;w&quot; ou &quot;e&quot;.</p>
+</dd>
+<dt><em>width</em>=largeur</dt><dd><p>Spécifie une largeur minimale pour l'élément. Si inférieur à zéro, la largeur de l'image de base est utilisée par défaut.</p>
+</dd>
+</dl>
+<p>Si <em>from</em> est utilisé comme valeur de <em>etype</em>, <a class="reference internal" href="#tkinter.ttk.Style.element_create" title="tkinter.ttk.Style.element_create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">element_create()</span></code></a> clone un élément existant. <em>args</em> doit contenir un nom de thème, à partir duquel l'élément est cloné, et éventuellement un élément à cloner. Si cet élément qu'il faut cloner n'est pas spécifié, un élément vide est utilisé. <em>kw</em> est ignoré.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Style.element_names">
+<span class="sig-name descname"><span class="pre">element_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Style.element_names" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la liste des éléments définis dans le thème courant.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Style.element_options">
+<span class="sig-name descname"><span class="pre">element_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elementname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Style.element_options" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la liste des options de <em>elementname</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Style.theme_create">
+<span class="sig-name descname"><span class="pre">theme_create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">themename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Style.theme_create" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un nouveau thème.</p>
+<p>C'est une erreur si <em>themename</em> existe déjà. Si <em>parent</em> est spécifié, le nouveau thème hérite des styles, des éléments et des mises en page du thème parent. Si <em>settings</em> est présent, il doit avoir la même syntaxe que celle utilisée pour <a class="reference internal" href="#tkinter.ttk.Style.theme_settings" title="tkinter.ttk.Style.theme_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">theme_settings()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Style.theme_settings">
+<span class="sig-name descname"><span class="pre">theme_settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">themename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Style.theme_settings" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit temporairement le thème actuel sur <em>themename</em>, applique les <em>settings</em> spécifiés, puis restaure le thème précédent.</p>
+<p>Chaque clé dans <em>settings</em> est un style et chaque valeur peut contenir les clés <code class="docutils literal notranslate"><span class="pre">'configure'</span></code>, <code class="docutils literal notranslate"><span class="pre">'map'</span></code>, <code class="docutils literal notranslate"><span class="pre">'layout'</span></code> et <code class="docutils literal notranslate"><span class="pre">'element</span> <span class="pre">create'</span></code> et elles doivent avoir le même format que celui spécifié par les méthodes <a class="reference internal" href="#tkinter.ttk.Style.configure" title="tkinter.ttk.Style.configure"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Style.configure()</span></code></a>, <a class="reference internal" href="#tkinter.ttk.Style.map" title="tkinter.ttk.Style.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Style.map()</span></code></a>, <a class="reference internal" href="#tkinter.ttk.Style.layout" title="tkinter.ttk.Style.layout"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Style.layout()</span></code></a> et <a class="reference internal" href="#tkinter.ttk.Style.element_create" title="tkinter.ttk.Style.element_create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Style.element_create()</span></code></a> respectivement.</p>
+<p>À titre d'exemple, changeons un peu la <em>Combobox</em> pour le thème par défaut :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span>
+<span class="kn">import</span> <span class="nn">tkinter</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">style</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Style</span><span class="p">()</span>
+<span class="n">style</span><span class="o">.</span><span class="n">theme_settings</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="p">{</span>
+   <span class="s2">&quot;TCombobox&quot;</span><span class="p">:</span> <span class="p">{</span>
+       <span class="s2">&quot;configure&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;padding&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+       <span class="s2">&quot;map&quot;</span><span class="p">:</span> <span class="p">{</span>
+           <span class="s2">&quot;background&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;active&quot;</span><span class="p">,</span> <span class="s2">&quot;green2&quot;</span><span class="p">),</span>
+                          <span class="p">(</span><span class="s2">&quot;!disabled&quot;</span><span class="p">,</span> <span class="s2">&quot;green4&quot;</span><span class="p">)],</span>
+           <span class="s2">&quot;fieldbackground&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;!disabled&quot;</span><span class="p">,</span> <span class="s2">&quot;green3&quot;</span><span class="p">)],</span>
+           <span class="s2">&quot;foreground&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;focus&quot;</span><span class="p">,</span> <span class="s2">&quot;OliveDrab1&quot;</span><span class="p">),</span>
+                          <span class="p">(</span><span class="s2">&quot;!disabled&quot;</span><span class="p">,</span> <span class="s2">&quot;OliveDrab2&quot;</span><span class="p">)]</span>
+       <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="n">combo</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Combobox</span><span class="p">()</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Style.theme_names">
+<span class="sig-name descname"><span class="pre">theme_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Style.theme_names" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une liste de tous les thèmes connus.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.ttk.Style.theme_use">
+<span class="sig-name descname"><span class="pre">theme_use</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">themename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.ttk.Style.theme_use" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Si <em>themename</em> n'est pas donné, renvoie le thème utilisé. Sinon, définit le thème actuel sur <em>themename</em>, actualise tous les widgets et lève un événement &lt;&lt;ThemeChanged&gt;&gt;.</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="layouts">
+<h3>Dispositions de mise en page<a class="headerlink" href="#layouts" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Une mise en page peut être juste <code class="docutils literal notranslate"><span class="pre">None</span></code>, si elle ne prend aucune option, ou un dictionnaire d'options spécifiant comment organiser l'élément. Le mécanisme de mise en page utilise une version simplifiée du gestionnaire de disposition <em>pack</em> : étant donné un espace initial vide, chaque élément se voit attribuer une partie de cet espace. Les options/valeurs valides sont :</p>
+<dl class="simple">
+<dt><em>side</em> : de quel côté</dt><dd><p>Spécifie de quel côté de l'espace vide placer l'élément ; <em>top</em> (en haut), <em>right</em> (à droite), <em>bottom</em> (en bas) ou <em>left</em> (à gauche). S'il est omis, l'élément occupe toute l'espace.</p>
+</dd>
+<dt><em>sticky</em> : <em>nswe</em></dt><dd><p>Spécifie où l'élément est placé à l'intérieur de sa partie d'espace alloué.</p>
+</dd>
+<dt><em>unit</em> : 0 ou 1</dt><dd><p>Si défini sur 1, l'élément et tous ses descendants sont traités comme un seul élément aux fins de <a class="reference internal" href="#tkinter.ttk.Widget.identify" title="tkinter.ttk.Widget.identify"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Widget.identify()</span></code></a> et consœurs. Il est utilisé pour des choses comme la barre de défilement ou les agrandissements.</p>
+</dd>
+<dt><em>children</em> : [sous-disposition… ]</dt><dd><p>Spécifie une liste d'éléments à placer à l'intérieur de l'élément. Chaque élément est un <em>n</em>-uplet (ou un autre type de séquence) où le premier élément est le nom de la mise en page et l'autre est un <a class="reference internal" href="#layouts">Layout</a>.</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Widgets sur le thème <em>Tk</em></a><ul>
+<li><a class="reference internal" href="#using-ttk">Utilisation de <em>Ttk</em></a></li>
+<li><a class="reference internal" href="#ttk-widgets">Widgets <em>Ttk</em></a></li>
+<li><a class="reference internal" href="#widget">Widget</a><ul>
+<li><a class="reference internal" href="#standard-options">Options standards</a></li>
+<li><a class="reference internal" href="#scrollable-widget-options">Options de widget avec barre de défilement</a></li>
+<li><a class="reference internal" href="#label-options">Options d'étiquette (<em>label</em>)</a></li>
+<li><a class="reference internal" href="#compatibility-options">Options de compatibilité</a></li>
+<li><a class="reference internal" href="#widget-states">États des widgets</a></li>
+<li><a class="reference internal" href="#ttk-widget">ttk.Widget</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#combobox">Combobox</a><ul>
+<li><a class="reference internal" href="#options">Options</a></li>
+<li><a class="reference internal" href="#virtual-events">Événements virtuels</a></li>
+<li><a class="reference internal" href="#ttk-combobox">ttk.Combobox</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spinbox">Spinbox</a><ul>
+<li><a class="reference internal" href="#id1">Options</a></li>
+<li><a class="reference internal" href="#id2">Événements virtuels</a></li>
+<li><a class="reference internal" href="#ttk-spinbox">ttk.Spinbox</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#notebook">Carnet de notes (<em>notebook</em>)</a><ul>
+<li><a class="reference internal" href="#id3">Options</a></li>
+<li><a class="reference internal" href="#tab-options">Options d'onglet</a></li>
+<li><a class="reference internal" href="#tab-identifiers">Identifiants d'onglet</a></li>
+<li><a class="reference internal" href="#id4">Événements virtuels</a></li>
+<li><a class="reference internal" href="#ttk-notebook">ttk.Notebook</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#progressbar">Barre de progression</a><ul>
+<li><a class="reference internal" href="#id5">Options</a></li>
+<li><a class="reference internal" href="#ttk-progressbar">ttk.Progressbar</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#separator">Séparateur</a><ul>
+<li><a class="reference internal" href="#id6">Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sizegrip">Poignée de redimensionnement</a><ul>
+<li><a class="reference internal" href="#platform-specific-notes">Notes spécifiques à une plateforme</a></li>
+<li><a class="reference internal" href="#bugs">Bogues</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#treeview">Arborescence</a><ul>
+<li><a class="reference internal" href="#id7">Options</a></li>
+<li><a class="reference internal" href="#item-options">Options d'éléments</a></li>
+<li><a class="reference internal" href="#tag-options">Options de balise</a></li>
+<li><a class="reference internal" href="#column-identifiers">Identifiants de colonnes</a></li>
+<li><a class="reference internal" href="#id8">Événements virtuels</a></li>
+<li><a class="reference internal" href="#ttk-treeview">ttk.Treeview</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ttk-styling">Style Ttk</a><ul>
+<li><a class="reference internal" href="#layouts">Dispositions de mise en page</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="tkinter.dnd.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> – Prise en charge du glisser-déposer</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="tkinter.tix.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code> — Widgets d'extension pour <em>Tk</em></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/tkinter.ttk.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tkinter.tix.html" title="tkinter.tix — Widgets d&#39;extension pour Tk"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="tkinter.dnd.html" title="tkinter.dnd – Prise en charge du glisser-déposer"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="tk.html" >Interfaces Utilisateur Graphiques avec Tk</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Widgets sur le thème <em>Tk</em></a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,647 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="tkinter.tix — Widgets d'extension pour Tk" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/tkinter.tix.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/tkinter/tix.py Le module tkinter.tix( Tk Interface Extension) fournit un riche ensemble supplémentaire de widgets. Bien que la bibliothèque Tk standard contienne de nombreux widge..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/tkinter/tix.py Le module tkinter.tix( Tk Interface Extension) fournit un riche ensemble supplémentaire de widgets. Bien que la bibliothèque Tk standard contienne de nombreux widge..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>tkinter.tix — Widgets d&#39;extension pour Tk &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="IDLE" href="idle.html" />
+    <link rel="prev" title="tkinter.ttk — Widgets sur le thème Tk" href="tkinter.ttk.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/tkinter.tix.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code> — Widgets d'extension pour <em>Tk</em></a><ul>
+<li><a class="reference internal" href="#using-tix">Utilisation de <em>Tix</em></a></li>
+<li><a class="reference internal" href="#tix-widgets">Widgets <em>Tix</em></a><ul>
+<li><a class="reference internal" href="#basic-widgets">Widgets de base</a></li>
+<li><a class="reference internal" href="#file-selectors">Sélecteurs de fichiers</a></li>
+<li><a class="reference internal" href="#hierarchical-listbox"><em>ListBox</em> hiérarchique</a></li>
+<li><a class="reference internal" href="#tabular-listbox"><em>ListBox</em> tabulaire</a></li>
+<li><a class="reference internal" href="#manager-widgets">Gestionnaire de widgets</a></li>
+<li><a class="reference internal" href="#image-types">Types d'images</a></li>
+<li><a class="reference internal" href="#miscellaneous-widgets">Widgets divers</a></li>
+<li><a class="reference internal" href="#form-geometry-manager">Gestionnaire de forme de formulaire</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tix-commands">Commandes <em>Tix</em></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="tkinter.ttk.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Widgets sur le thème <em>Tk</em></a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="idle.html"
+                          title="Chapitre suivant"><em>IDLE</em></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/tkinter.tix.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="idle.html" title="IDLE"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="tkinter.ttk.html" title="tkinter.ttk — Widgets sur le thème Tk"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="tk.html" accesskey="U">Interfaces Utilisateur Graphiques avec Tk</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code> — Widgets d'extension pour <em>Tk</em></a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-tkinter.tix">
+<span id="tkinter-tix-extension-widgets-for-tk"></span><h1><a class="reference internal" href="#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a> — Widgets d'extension pour <em>Tk</em><a class="headerlink" href="#module-tkinter.tix" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/tkinter/tix.py">Lib/tkinter/tix.py</a></p>
+<div class="deprecated" id="index-0">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.6: </span>cette extension <em>Tk</em> n'est pas maintenue et ne doit pas être utilisée dans le nouveau code. Utilisez <a class="reference internal" href="tkinter.ttk.html#module-tkinter.ttk" title="tkinter.ttk: Tk themed widget set"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code></a> à la place.</p>
+</div>
+<hr class="docutils" />
+<p>Le module <a class="reference internal" href="#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a> (<em>Tk</em> Interface Extension) fournit un riche ensemble supplémentaire de widgets. Bien que la bibliothèque <em>Tk</em> standard contienne de nombreux widgets utiles, ils sont loin d'être complets. La bibliothèque <a class="reference internal" href="#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a> fournit la plupart des widgets couramment nécessaires qui manquent dans <em>Tk</em> standard : <a class="reference internal" href="#tkinter.tix.HList" title="tkinter.tix.HList"><code class="xref py py-class docutils literal notranslate"><span class="pre">HList</span></code></a>, <a class="reference internal" href="#tkinter.tix.ComboBox" title="tkinter.tix.ComboBox"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComboBox</span></code></a>, <a class="reference internal" href="#tkinter.tix.Control" title="tkinter.tix.Control"><code class="xref py py-class docutils literal notranslate"><span class="pre">Control</span></code></a> (alias SpinBox) et un assortiment de widgets déroulants. <a class="reference internal" href="#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a> comprend également de nombreux autres widgets qui sont généralement utiles dans un large éventail d'applications : <a class="reference internal" href="#tkinter.tix.NoteBook" title="tkinter.tix.NoteBook"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoteBook</span></code></a>, <a class="reference internal" href="#tkinter.tix.FileEntry" title="tkinter.tix.FileEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileEntry</span></code></a>, <a class="reference internal" href="#tkinter.tix.PanedWindow" title="tkinter.tix.PanedWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">PanedWindow</span></code></a>, etc. il y en a plus de 40.</p>
+<p>Avec tous ces nouveaux widgets, vous pouvez introduire de nouvelles techniques d'interaction dans les applications, créant ainsi des interfaces utilisateur plus utiles et plus intuitives. Vous pouvez concevoir votre application en choisissant les widgets les plus appropriés pour répondre aux besoins particuliers de votre application et des utilisateurs.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://tix.sourceforge.net/">Page d'accueil de Tix</a></dt><dd><p>La page d'accueil de <code class="xref py py-mod docutils literal notranslate"><span class="pre">Tix</span></code> (en anglais). Cela inclut des liens vers de la documentation supplémentaire et des téléchargements.</p>
+</dd>
+<dt><a class="reference external" href="https://tix.sourceforge.net/dist/current/man/">Tix Man Pages</a></dt><dd><p>Version en ligne des pages de manuel et du manuel de référence (en anglais).</p>
+</dd>
+<dt><a class="reference external" href="https://tix.sourceforge.net/dist/current/docs/tix-book/tix.book.html">Guide de programmation Tix</a></dt><dd><p>Version en ligne du manuel de référence du programmeur (en anglais).</p>
+</dd>
+<dt><a class="reference external" href="https://tix.sourceforge.net/Tixapps/src/Tide.html">Applications pour le développement Tix</a></dt><dd><p>Applications <em>Tix</em> pour le développement de programmes <em>Tix</em> et <em>Tkinter</em>. Les applications <em>Tide</em> fonctionnent sous <em>Tk</em> ou <em>Tkinter</em>, et incluent <strong class="program">TixInspect</strong>, un inspecteur pour modifier et déboguer à distance les applications <em>Tix/Tk/Tkinter</em>.</p>
+</dd>
+</dl>
+</div>
+<section id="using-tix">
+<h2>Utilisation de <em>Tix</em><a class="headerlink" href="#using-tix" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.Tk">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">Tk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screenName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">className</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Tix'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.tix.Tk" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Widget de niveau supérieur de <em>Tix</em> qui représente principalement la fenêtre principale d'une application. Il a un interpréteur <em>Tcl</em> associé.</p>
+<p>Les classes du module <a class="reference internal" href="#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a> sous-classent les classes du module <a class="reference internal" href="tkinter.html#module-tkinter" title="tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code></a>. Le premier importe le second, donc pour utiliser <a class="reference internal" href="#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a> avec Tkinter, il vous suffit d'importer un module. En général, vous pouvez simplement importer <a class="reference internal" href="#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a> et remplacer l'appel de niveau supérieur à <a class="reference internal" href="tkinter.html#tkinter.Tk" title="tkinter.Tk"><code class="xref py py-class docutils literal notranslate"><span class="pre">tkinter.Tk</span></code></a> par <code class="xref py py-class docutils literal notranslate"><span class="pre">tix.Tk</span></code> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">tix</span>
+<span class="kn">from</span> <span class="nn">tkinter.constants</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">tix</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Pour utiliser <a class="reference internal" href="#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a>, vous devez avoir installé les widgets <em>Tix</em>, généralement en même temps que votre installation des widgets <em>Tk</em>. Pour tester votre installation, essayez ce qui suit : :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">tix</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">tix</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">root</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;package require Tix&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="tix-widgets">
+<h2>Widgets <em>Tix</em><a class="headerlink" href="#tix-widgets" title="Lien permanent vers ce titre">¶</a></h2>
+<p><a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/TixIntro.htm">Tix</a> introduit plus de 40 classes de widgets dans le répertoire <a class="reference internal" href="tkinter.html#module-tkinter" title="tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code></a>.</p>
+<section id="basic-widgets">
+<h3>Widgets de base<a class="headerlink" href="#basic-widgets" title="Lien permanent vers ce titre">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.Balloon">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">Balloon</span></span><a class="headerlink" href="#tkinter.tix.Balloon" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Une <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixBalloon.htm">bulle</a> qui apparaît sur un widget pour fournir de l'aide. Lorsque l'utilisateur déplace le curseur à l'intérieur d'un widget auquel un widget <em>Ballon</em> a été lié, une petite fenêtre contextuelle avec un message descriptif s'affiche à l'écran.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.ButtonBox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">ButtonBox</span></span><a class="headerlink" href="#tkinter.tix.ButtonBox" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixButtonBox.htm">ButtonBox</a> crée une boîte de boutons, telle qu'elle est couramment utilisée pour <code class="docutils literal notranslate"><span class="pre">Ok</span> <span class="pre">Cancel</span></code>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.ComboBox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">ComboBox</span></span><a class="headerlink" href="#tkinter.tix.ComboBox" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixComboBox.htm">ComboBox</a> est similaire au contrôle de zone de liste déroulante dans Windows. L'utilisateur peut sélectionner un choix en tapant dans le sous-widget d'entrée ou en sélectionnant dans le sous-widget de la liste déroulante.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.Control">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">Control</span></span><a class="headerlink" href="#tkinter.tix.Control" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixControl.htm">Control</a> est également connu sous le nom de widget <code class="xref py py-class docutils literal notranslate"><span class="pre">SpinBox</span></code>. L'utilisateur peut ajuster la valeur en appuyant sur les deux boutons fléchés ou en saisissant la valeur directement dans l'entrée. La nouvelle valeur sera comparée aux limites supérieures et inférieures définies par l'utilisateur.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.LabelEntry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">LabelEntry</span></span><a class="headerlink" href="#tkinter.tix.LabelEntry" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixLabelEntry.htm">LabelEntry</a> regroupe un widget d'entrée et une étiquette dans un méga widget. Il peut être utilisé pour simplifier la création d'interfaces de type &quot;formulaire de saisie&quot;.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.LabelFrame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">LabelFrame</span></span><a class="headerlink" href="#tkinter.tix.LabelFrame" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixLabelFrame.htm">LabelFrame</a> regroupe un widget cadre et une étiquette dans un méga widget. Pour créer des widgets à l'intérieur d'un widget LabelFrame, on crée les nouveaux widgets relatifs au sous-widget <code class="xref py py-attr docutils literal notranslate"><span class="pre">frame</span></code> et on les gère à l'intérieur du sous-widget <code class="xref py py-attr docutils literal notranslate"><span class="pre">frame</span></code>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.Meter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">Meter</span></span><a class="headerlink" href="#tkinter.tix.Meter" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixMeter.htm">Meter</a> peut être utilisé pour afficher la progression d'une tâche en arrière-plan qui peut prendre beaucoup de temps à s'exécuter .</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.OptionMenu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">OptionMenu</span></span><a class="headerlink" href="#tkinter.tix.OptionMenu" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixOptionMenu.htm">OptionMenu</a> crée un bouton de menu d'options.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.PopupMenu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">PopupMenu</span></span><a class="headerlink" href="#tkinter.tix.PopupMenu" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixPopupMenu.htm">PopupMenu</a> peut être utilisé en remplacement de la commande <code class="docutils literal notranslate"><span class="pre">tk_popup</span></code>. L'avantage du widget <code class="xref py py-mod docutils literal notranslate"><span class="pre">Tix</span></code> <a class="reference internal" href="#tkinter.tix.PopupMenu" title="tkinter.tix.PopupMenu"><code class="xref py py-class docutils literal notranslate"><span class="pre">PopupMenu</span></code></a> est qu'il nécessite moins de manipulation de code dans l'application.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.Select">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">Select</span></span><a class="headerlink" href="#tkinter.tix.Select" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixSelect.htm">Select</a> est un conteneur de sous-widgets de bouton. Il peut être utilisé pour afficher des boutons radio ou des cases à cocher.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.StdButtonBox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">StdButtonBox</span></span><a class="headerlink" href="#tkinter.tix.StdButtonBox" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixStdButtonBox.htm">StdButtonBox</a> est un groupe de boutons standard pour afficher des boîtes de dialogue similaires à celle de la bibliothèque graphique <em>Motif</em>.</p>
+</dd></dl>
+
+</section>
+<section id="file-selectors">
+<h3>Sélecteurs de fichiers<a class="headerlink" href="#file-selectors" title="Lien permanent vers ce titre">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.DirList">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">DirList</span></span><a class="headerlink" href="#tkinter.tix.DirList" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixDirList.htm">DirList</a> affiche une liste d'un répertoire, de ses répertoires précédents et de ses sous-répertoires. L'utilisateur peut choisir l'un des répertoires affichés dans la liste ou passer à un autre répertoire.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.DirTree">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">DirTree</span></span><a class="headerlink" href="#tkinter.tix.DirTree" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixDirTree.htm">DirTree</a> affiche une arborescence d'un répertoire, de ses répertoires précédents et de ses sous-répertoires. L'utilisateur peut choisir l'un des répertoires affichés dans la liste ou passer à un autre répertoire.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.DirSelectDialog">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">DirSelectDialog</span></span><a class="headerlink" href="#tkinter.tix.DirSelectDialog" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixDirSelectDialog.htm">DirSelectDialog</a> présente les répertoires du système de fichiers dans une fenêtre de dialogue. L'utilisateur peut utiliser cette fenêtre de dialogue pour naviguer dans le système de fichiers afin de sélectionner le répertoire souhaité.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.DirSelectBox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">DirSelectBox</span></span><a class="headerlink" href="#tkinter.tix.DirSelectBox" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference internal" href="#tkinter.tix.DirSelectBox" title="tkinter.tix.DirSelectBox"><code class="xref py py-class docutils literal notranslate"><span class="pre">DirSelectBox</span></code></a> est similaire à la boîte de sélection de répertoire <em>Motif</em><sup>(TM)</sup> standard. Il est généralement utilisé pour que l'utilisateur choisisse un répertoire. <em>DirSelectBox</em> stocke les répertoires les plus récemment sélectionnés dans un widget <em>ComboBox</em> afin qu'ils puissent être rapidement sélectionnés à nouveau.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.ExFileSelectBox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">ExFileSelectBox</span></span><a class="headerlink" href="#tkinter.tix.ExFileSelectBox" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixExFileSelectBox.htm">ExFileSelectBox</a> est généralement intégré dans un widget <em>tixExFileSelectDialog</em>. Il fournit à l'utilisateur une méthode pratique pour sélectionner des fichiers. Le style du widget <a class="reference internal" href="#tkinter.tix.ExFileSelectBox" title="tkinter.tix.ExFileSelectBox"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExFileSelectBox</span></code></a> est très similaire à la boîte de dialogue de fichier standard sur MS Windows 3.1.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.FileSelectBox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">FileSelectBox</span></span><a class="headerlink" href="#tkinter.tix.FileSelectBox" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixFileSelectBox.htm">FileSelectBox</a> est similaire à la boîte de sélection de fichiers <em>Motif</em><sup>(TM)</sup> standard. Il est généralement utilisé pour que l'utilisateur choisisse un fichier. <em>FileSelectBox</em> stocke les fichiers les plus récemment sélectionnés dans un widget <a class="reference internal" href="#tkinter.tix.ComboBox" title="tkinter.tix.ComboBox"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComboBox</span></code></a> afin qu'ils puissent être rapidement sélectionnés à nouveau.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.FileEntry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">FileEntry</span></span><a class="headerlink" href="#tkinter.tix.FileEntry" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixFileEntry.htm">FileEntry</a> peut être utilisé pour saisir un nom de fichier. L'utilisateur peut saisir manuellement le nom du fichier. Alternativement, l'utilisateur peut appuyer sur le widget de bouton qui se trouve à côté de l'entrée, ce qui fera apparaître une boîte de dialogue de sélection de fichier.</p>
+</dd></dl>
+
+</section>
+<section id="hierarchical-listbox">
+<h3><em>ListBox</em> hiérarchique<a class="headerlink" href="#hierarchical-listbox" title="Lien permanent vers ce titre">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.HList">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">HList</span></span><a class="headerlink" href="#tkinter.tix.HList" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixHList.htm">HList</a> peut être utilisé pour afficher toutes les données qui ont une structure hiérarchique, par exemple, l'arborescence du système de fichiers. Les entrées de la liste sont mises en retrait et reliées par des lignes secondaires en fonction de leur place dans la hiérarchie.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.CheckList">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">CheckList</span></span><a class="headerlink" href="#tkinter.tix.CheckList" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixCheckList.htm">CheckList</a> affiche une liste d'éléments à sélectionner par l'utilisateur. CheckList agit de la même manière que les widgets <em>checkbutton</em> ou <em>radiobutton</em> de <em>Tk</em>, sauf qu'il est capable de gérer beaucoup plus d'éléments que les <em>checkbuttons</em> ou les <em>radiobuttons</em>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.Tree">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">Tree</span></span><a class="headerlink" href="#tkinter.tix.Tree" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixTree.htm">Tree</a> peut être utilisé pour afficher des données hiérarchiques sous forme d'arborescence. L'utilisateur peut ajuster la vue de l'arborescence en ouvrant ou en fermant des parties de l'arborescence.</p>
+</dd></dl>
+
+</section>
+<section id="tabular-listbox">
+<h3><em>ListBox</em> tabulaire<a class="headerlink" href="#tabular-listbox" title="Lien permanent vers ce titre">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.TList">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">TList</span></span><a class="headerlink" href="#tkinter.tix.TList" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixTList.htm">TList</a> peut être utilisé pour afficher des données sous forme de tableau. Les entrées de liste d'un widget <a class="reference internal" href="#tkinter.tix.TList" title="tkinter.tix.TList"><code class="xref py py-class docutils literal notranslate"><span class="pre">TList</span></code></a> sont similaires aux entrées du widget <em>listbox</em> <em>Tk</em>. Les principales différences sont (1) le widget <a class="reference internal" href="#tkinter.tix.TList" title="tkinter.tix.TList"><code class="xref py py-class docutils literal notranslate"><span class="pre">TList</span></code></a> peut afficher les entrées de la liste dans un format bidimensionnel et (2) vous pouvez utiliser des images graphiques ainsi que plusieurs couleurs et polices pour les entrées de la liste.</p>
+</dd></dl>
+
+</section>
+<section id="manager-widgets">
+<h3>Gestionnaire de widgets<a class="headerlink" href="#manager-widgets" title="Lien permanent vers ce titre">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.PanedWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">PanedWindow</span></span><a class="headerlink" href="#tkinter.tix.PanedWindow" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixPanedWindow.htm">PanedWindow</a> permet à l'utilisateur de manipuler de manière interactive la taille de plusieurs volets. Les volets peuvent être disposés verticalement ou horizontalement. L'utilisateur modifie la taille des volets en faisant glisser la poignée de redimensionnement entre deux volets.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.ListNoteBook">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">ListNoteBook</span></span><a class="headerlink" href="#tkinter.tix.ListNoteBook" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixListNoteBook.htm">ListNoteBook</a> est très similaire au widget <code class="xref py py-class docutils literal notranslate"><span class="pre">TixNoteBook</span></code> : il peut être utilisé pour afficher de nombreuses fenêtres dans un espace limité en utilisant une métaphore de bloc-notes. Le bloc-notes est divisé en une pile de pages (fenêtres). Une seule de ces pages peut être affichée à la fois. L'utilisateur peut naviguer dans ces pages en choisissant le nom de la page souhaitée dans le sous-widget <code class="xref py py-attr docutils literal notranslate"><span class="pre">hlist</span></code>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.NoteBook">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">NoteBook</span></span><a class="headerlink" href="#tkinter.tix.NoteBook" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le widget <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixNoteBook.htm">NoteBook</a> peut être utilisé pour afficher de nombreuses fenêtres dans un espace limité en utilisant une métaphore de bloc-notes. Le bloc-notes est divisé en une pile de pages. Une seule de ces pages peut être affichée à la fois. L'utilisateur peut naviguer dans ces pages en choisissant les « onglets » visuels en haut du widget NoteBook.</p>
+</dd></dl>
+
+</section>
+<section id="image-types">
+<h3>Types d'images<a class="headerlink" href="#image-types" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le module <a class="reference internal" href="#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a> ajoute :</p>
+<ul class="simple">
+<li><p>les capacités <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/pixmap.htm">pixmap</a> pour tous les widgets <a class="reference internal" href="#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a> et <a class="reference internal" href="tkinter.html#module-tkinter" title="tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code></a> afin de créer des images couleurs à partir de fichiers XPM ;</p>
+</li>
+<li><p>les types d'images <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/compound.htm">Compound</a> peuvent être utilisés pour créer des images composées de plusieurs lignes horizontales ; chaque ligne est composée d'une suite d'éléments (textes, bitmaps, images ou espaces) disposés de gauche à droite. Par exemple, une image composée peut être utilisée pour afficher simultanément un bitmap et une chaîne de texte dans un widget <em>Tk</em> <code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code>.</p>
+</li>
+</ul>
+</section>
+<section id="miscellaneous-widgets">
+<h3>Widgets divers<a class="headerlink" href="#miscellaneous-widgets" title="Lien permanent vers ce titre">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.InputOnly">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">InputOnly</span></span><a class="headerlink" href="#tkinter.tix.InputOnly" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Les widgets <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixInputOnly.htm">InputOnly</a> acceptent les entrées de l'utilisateur, ce qui peut être fait avec la commande <code class="docutils literal notranslate"><span class="pre">bind</span></code> (Unix uniquement).</p>
+</dd></dl>
+
+</section>
+<section id="form-geometry-manager">
+<h3>Gestionnaire de forme de formulaire<a class="headerlink" href="#form-geometry-manager" title="Lien permanent vers ce titre">¶</a></h3>
+<p>De plus, <a class="reference internal" href="#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a> étend <a class="reference internal" href="tkinter.html#module-tkinter" title="tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code></a> en fournissant :</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.Form">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">Form</span></span><a class="headerlink" href="#tkinter.tix.Form" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le gestionnaire de géométrie <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tixForm.htm">Form</a> basé sur les règles de connexions pour tous les widgets <em>Tk</em>.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="tix-commands">
+<h2>Commandes <em>Tix</em><a class="headerlink" href="#tix-commands" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.tix.tixCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.tix.</span></span><span class="sig-name descname"><span class="pre">tixCommand</span></span><a class="headerlink" href="#tkinter.tix.tixCommand" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Les commandes <a class="reference external" href="https://tix.sourceforge.net/dist/current/man/html/TixCmd/tix.htm">tix</a> permettent d'accéder à divers éléments de l'état interne de <code class="xref py py-mod docutils literal notranslate"><span class="pre">Tix</span></code> et du contexte d'application <code class="xref py py-mod docutils literal notranslate"><span class="pre">Tix</span></code>. La plupart des informations manipulées par ces méthodes concernent l'application dans son ensemble, ou un écran ou un affichage, plutôt qu'une fenêtre particulière.</p>
+<p>Pour afficher les paramètres actuels, l'utilisation courante est :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">tix</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">tix</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">tix_configure</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.tix.tixCommand.tix_configure">
+<span class="sig-prename descclassname"><span class="pre">tixCommand.</span></span><span class="sig-name descname"><span class="pre">tix_configure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cnf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.tix.tixCommand.tix_configure" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interroge ou modifie les options de configuration du contexte applicatif <em>Tix</em>. Si aucune option n'est spécifiée, renvoie un dictionnaire de toutes les options disponibles. Si l'option est spécifiée sans valeur, alors la méthode renvoie une liste décrivant l'option nommée (cette liste sera identique à la sous-liste correspondante de la valeur renvoyée si aucune option n'est spécifiée). Si une ou plusieurs paires option-valeur sont spécifiées, alors la méthode modifie la ou les options données pour avoir la ou les valeurs données ; dans ce cas, la méthode renvoie une chaîne vide. L'option peut être n'importe laquelle des options de configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.tix.tixCommand.tix_cget">
+<span class="sig-prename descclassname"><span class="pre">tixCommand.</span></span><span class="sig-name descname"><span class="pre">tix_cget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.tix.tixCommand.tix_cget" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la valeur actuelle de l'option de configuration donnée par <em>option</em>. L'option peut être n'importe laquelle des options de configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.tix.tixCommand.tix_getbitmap">
+<span class="sig-prename descclassname"><span class="pre">tixCommand.</span></span><span class="sig-name descname"><span class="pre">tix_getbitmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.tix.tixCommand.tix_getbitmap" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cherche un fichier bitmap du nom <code class="docutils literal notranslate"><span class="pre">name.xpm</span></code> ou <code class="docutils literal notranslate"><span class="pre">name</span></code> dans l'un des répertoires bitmap (voir la méthode <a class="reference internal" href="#tkinter.tix.tixCommand.tix_addbitmapdir" title="tkinter.tix.tixCommand.tix_addbitmapdir"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_addbitmapdir()</span></code></a>). En utilisant <a class="reference internal" href="#tkinter.tix.tixCommand.tix_getbitmap" title="tkinter.tix.tixCommand.tix_getbitmap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_getbitmap()</span></code></a>, vous pouvez éviter de coder en dur les noms de chemin des fichiers bitmap dans votre application. En cas de succès, il renvoie le chemin d'accès complet du fichier bitmap, préfixé par le caractère <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>. La valeur renvoyée peut être utilisée pour configurer l'option <code class="docutils literal notranslate"><span class="pre">bitmap</span></code> des widgets <em>Tk</em> et <em>Tix</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.tix.tixCommand.tix_addbitmapdir">
+<span class="sig-prename descclassname"><span class="pre">tixCommand.</span></span><span class="sig-name descname"><span class="pre">tix_addbitmapdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.tix.tixCommand.tix_addbitmapdir" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><em>Tix</em> maintient une liste de répertoires dans lesquels les méthodes <a class="reference internal" href="#tkinter.tix.tixCommand.tix_getimage" title="tkinter.tix.tixCommand.tix_getimage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_getimage()</span></code></a> et <a class="reference internal" href="#tkinter.tix.tixCommand.tix_getbitmap" title="tkinter.tix.tixCommand.tix_getbitmap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_getbitmap()</span></code></a> recherchent les fichiers images. Le répertoire bitmap standard est <code class="file docutils literal notranslate"><span class="pre">$TIX_LIBRARY/bitmaps</span></code>. La méthode <a class="reference internal" href="#tkinter.tix.tixCommand.tix_addbitmapdir" title="tkinter.tix.tixCommand.tix_addbitmapdir"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_addbitmapdir()</span></code></a> ajoute <em>directory</em> dans cette liste. En utilisant cette méthode, les fichiers images d'une application peuvent également être localisés en utilisant la méthode <a class="reference internal" href="#tkinter.tix.tixCommand.tix_getimage" title="tkinter.tix.tixCommand.tix_getimage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_getimage()</span></code></a> ou <a class="reference internal" href="#tkinter.tix.tixCommand.tix_getbitmap" title="tkinter.tix.tixCommand.tix_getbitmap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_getbitmap()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.tix.tixCommand.tix_filedialog">
+<span class="sig-prename descclassname"><span class="pre">tixCommand.</span></span><span class="sig-name descname"><span class="pre">tix_filedialog</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">dlgclass</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.tix.tixCommand.tix_filedialog" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la boîte de dialogue de sélection de fichier qui peut être partagée entre différents appels de cette application. Cette méthode crée un widget de dialogue de sélection de fichier lors de son premier appel. Cette boîte de dialogue est renvoyée par tous les appels ultérieurs à <a class="reference internal" href="#tkinter.tix.tixCommand.tix_filedialog" title="tkinter.tix.tixCommand.tix_filedialog"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_filedialog()</span></code></a>. Un paramètre facultatif <em>dlgclass</em> peut être passé sous forme de chaîne pour spécifier le type de widget de dialogue de sélection de fichier souhaité. Les options possibles sont <code class="docutils literal notranslate"><span class="pre">tix</span></code>, <code class="docutils literal notranslate"><span class="pre">FileSelectDialog</span></code> ou <code class="docutils literal notranslate"><span class="pre">tixExFileSelectDialog</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.tix.tixCommand.tix_getimage">
+<span class="sig-prename descclassname"><span class="pre">tixCommand.</span></span><span class="sig-name descname"><span class="pre">tix_getimage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.tix.tixCommand.tix_getimage" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Localise un fichier image du nom <code class="file docutils literal notranslate"><span class="pre">name.xpm</span></code>, <code class="file docutils literal notranslate"><span class="pre">name.xbm</span></code> ou <code class="file docutils literal notranslate"><span class="pre">name.ppm</span></code> dans l'un des répertoires bitmap (voir la méthode <a class="reference internal" href="#tkinter.tix.tixCommand.tix_addbitmapdir" title="tkinter.tix.tixCommand.tix_addbitmapdir"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_addbitmapdir()</span></code></a> ci-dessus). S'il existe plusieurs fichiers portant le même nom (mais avec des extensions différentes), le type d'image est choisi en fonction de la profondeur de l'affichage X : les images <em>xbm</em> sont choisies sur les écrans monochromes et les images couleurs sont choisies sur les écrans couleurs. En utilisant <a class="reference internal" href="#tkinter.tix.tixCommand.tix_getimage" title="tkinter.tix.tixCommand.tix_getimage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_getimage()</span></code></a>, vous pouvez éviter de coder en dur les noms de chemin des fichiers image dans votre application. En cas de succès, cette méthode renvoie le nom de l'image nouvellement créée, qui peut être utilisée pour configurer l'option <code class="docutils literal notranslate"><span class="pre">image</span></code> des widgets <em>Tk</em> et <em>Tix</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.tix.tixCommand.tix_option_get">
+<span class="sig-prename descclassname"><span class="pre">tixCommand.</span></span><span class="sig-name descname"><span class="pre">tix_option_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.tix.tixCommand.tix_option_get" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Obtient les options maintenues par le mécanisme de schéma <em>Tix</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.tix.tixCommand.tix_resetoptions">
+<span class="sig-prename descclassname"><span class="pre">tixCommand.</span></span><span class="sig-name descname"><span class="pre">tix_resetoptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">newScheme</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newFontSet</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">newScmPrio</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.tix.tixCommand.tix_resetoptions" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Réinitialise le schéma et le jeu de polices de l'application <em>Tix</em> sur <em>newScheme</em> et <em>newFontSet</em>, respectivement. Cela n'affecte que les widgets créés après cet appel. Par conséquent, il est préférable d'appeler la méthode <em>resetoptions</em> avant la création de tout widget dans une application <em>Tix</em>.</p>
+<p>Le paramètre facultatif <em>newScmPrio</em> peut être donné pour réinitialiser le niveau de priorité des options <em>Tk</em> définies par les schémas <em>Tix</em>.</p>
+<p>En raison de la façon dont <em>Tk</em> gère la base de données d'options X, après l'importation et l'initialisation de <em>Tix</em>, il n'est pas possible de réinitialiser les schémas de couleurs et les jeux de polices à l'aide de la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_config()</span></code>. À la place, la méthode <a class="reference internal" href="#tkinter.tix.tixCommand.tix_resetoptions" title="tkinter.tix.tixCommand.tix_resetoptions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tix_resetoptions()</span></code></a> doit être utilisée.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code> — Widgets d'extension pour <em>Tk</em></a><ul>
+<li><a class="reference internal" href="#using-tix">Utilisation de <em>Tix</em></a></li>
+<li><a class="reference internal" href="#tix-widgets">Widgets <em>Tix</em></a><ul>
+<li><a class="reference internal" href="#basic-widgets">Widgets de base</a></li>
+<li><a class="reference internal" href="#file-selectors">Sélecteurs de fichiers</a></li>
+<li><a class="reference internal" href="#hierarchical-listbox"><em>ListBox</em> hiérarchique</a></li>
+<li><a class="reference internal" href="#tabular-listbox"><em>ListBox</em> tabulaire</a></li>
+<li><a class="reference internal" href="#manager-widgets">Gestionnaire de widgets</a></li>
+<li><a class="reference internal" href="#image-types">Types d'images</a></li>
+<li><a class="reference internal" href="#miscellaneous-widgets">Widgets divers</a></li>
+<li><a class="reference internal" href="#form-geometry-manager">Gestionnaire de forme de formulaire</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tix-commands">Commandes <em>Tix</em></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="tkinter.ttk.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Widgets sur le thème <em>Tk</em></a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="idle.html"
+                          title="Chapitre suivant"><em>IDLE</em></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/tkinter.tix.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="idle.html" title="IDLE"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="tkinter.ttk.html" title="tkinter.ttk — Widgets sur le thème Tk"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="tk.html" >Interfaces Utilisateur Graphiques avec Tk</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code> — Widgets d'extension pour <em>Tk</em></a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

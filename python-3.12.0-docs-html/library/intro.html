@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="Introduction" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/intro.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="La « Bibliothèque Python » contient divers composants dans différentes catégories. Elle contient des types de données qui seraient normalement considérés comme « fondamentaux » au langage, tel que ..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="La « Bibliothèque Python » contient divers composants dans différentes catégories. Elle contient des types de données qui seraient normalement considérés comme « fondamentaux » au langage, tel que ..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>Introduction &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Fonctions natives" href="functions.html" />
+    <link rel="prev" title="La bibliothèque standard" href="index.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/intro.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#notes-on-availability">Notes sur la disponibilité</a><ul>
+<li><a class="reference internal" href="#webassembly-platforms">Plateformes WebAssembly</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="index.html"
+                          title="Chapitre précédent">La bibliothèque standard</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="functions.html"
+                          title="Chapitre suivant">Fonctions natives</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/intro.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="functions.html" title="Fonctions natives"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="La bibliothèque standard"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">La bibliothèque standard</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Introduction</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="introduction">
+<span id="library-intro"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Lien permanent vers ce titre">¶</a></h1>
+<p>La « Bibliothèque Python » contient divers composants dans différentes catégories.</p>
+<p>Elle contient des types de données qui seraient normalement considérés comme « fondamentaux » au langage, tel que les nombres et les listes. Pour ces types, le cœur du langage en définit les écritures littérales et impose quelques contraintes sémantiques, sans les définir exhaustivement. (Cependant le cœur du langage impose quelques propriétés comme l'orthographe des attributs ou les caractéristiques des opérateurs.)</p>
+<p>La bibliothèque contient aussi des fonctions et des exceptions natives, pouvant être utilisées par tout code Python sans <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a>. Certaines sont définies par le noyau de Python, bien qu'elles ne soient pas toutes essentielles.</p>
+<p>La grande majorité de la bibliothèque consiste cependant en une collection de modules. Cette collection peut être parcourue de différentes manières. Certains modules sont rédigés en C et inclus dans l'interpréteur Python, d'autres sont écrits en Python et leur source est importée. Certains modules fournissent des interfaces extrêmement spécifiques à Python, tel que l'affichage d'une pile d'appels, d'autres fournissent des interfaces spécifiques à un système d'exploitation, comme l'accès à du matériel spécifique. D'autres fournissent des interfaces spécifiques à un domaine d'application, comme le <em>World Wide Web</em>. Certains modules sont disponibles dans toutes les versions et implémentations de Python, d'autres ne sont disponibles que si le système sous-jacent les gère ou en a besoin. Enfin, d'autres ne sont disponibles que si Python à été compilé avec une certaine option.</p>
+<p>Cette documentation organise les modules « de l'intérieur vers l'extérieur », documentant en premier les fonctions natives, les types de données et exceptions, puis les modules, groupés par chapitre, par thématiques.</p>
+<p>Ça signifie que si vous commencez à lire cette documentation du début, et sautez au chapitre suivant lorsqu'elle vous ennuie, vous aurez un aperçu global des modules et domaines couverts par cette bibliothèque. Bien sûr vous n'avez pas à la lire comme un roman, vous pouvez simplement survoler la table des matières (au début), ou chercher une fonction, un module, ou un mot dans l'index (à la fin). Et si vous appréciez apprendre sur des sujets au hasard, choisissez une page au hasard (avec le module <a class="reference internal" href="random.html#module-random" title="random: Generate pseudo-random numbers with various common distributions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code></a>) et lisez un chapitre ou deux. Peu importe l'ordre que vous adopterez, commencez par le chapitre <a class="reference internal" href="functions.html#built-in-funcs"><span class="std std-ref">Fonctions natives</span></a>, car les autres chapitres présument que vous en avez une bonne connaissance.</p>
+<p>Que le spectacle commence !</p>
+<section id="notes-on-availability">
+<span id="availability"></span><h2>Notes sur la disponibilité<a class="headerlink" href="#notes-on-availability" title="Lien permanent vers ce titre">¶</a></h2>
+<ul class="simple">
+<li><p>Une note « Disponibilité : Unix » signifie que cette fonction est communément implémentée dans les systèmes Unix. Une telle note ne prétend pas l'existence de la fonction sur un système d'exploitation particulier.</p></li>
+<li><p>Si ce n'est pas mentionné séparément, toutes les fonctions se réclamant « Disponibilité : Unix » sont gérées sur macOS, qui est basé sur Unix.</p></li>
+<li><p>Si une note de disponibilité contient à la fois une version minimale du noyau et une version minimale de la <em>libc</em>, les deux conditions doivent être remplies. Par exemple, une fonctionnalité avec la note <em>Disponibilité : Linux &gt;= 3.17 avec glibc &gt;= 2.27</em> nécessite à la fois Linux 3.17 ou plus récent et glibc 2.27 ou plus récent.</p></li>
+</ul>
+<section id="webassembly-platforms">
+<span id="wasm-availability"></span><h3>Plateformes WebAssembly<a class="headerlink" href="#webassembly-platforms" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les plates-formes <a class="reference external" href="https://webassembly.org/">WebAssembly</a> <code class="docutils literal notranslate"><span class="pre">wasm32-emscripten</span></code> (<a class="reference external" href="https://emscripten.org/">Emscripten</a>) et <code class="docutils literal notranslate"><span class="pre">wasm32-wasi</span></code> (<a class="reference external" href="https://wasi.dev/">WASI</a>) fournissent un sous-ensemble des API POSIX. Les environnements d'exécution WebAssembly et les navigateurs sont dans des bacs à sable et ont un accès limité à l'hôte et aux ressources externes. Tout module de bibliothèque standard Python qui utilise des processus, des threads, le réseau, des signaux ou d'autres formes de communication inter-processus (IPC) n'est pas disponible ou peut ne pas fonctionner comme sur d'autres systèmes de type Unix. Les entrées-sorties de fichiers, le système de fichiers et les fonctions liées aux autorisations Unix sont également restreintes. <em>Emscripten</em> ne permet pas d'effectuer des entrées-sorties bloquantes. D'autres opérations bloquantes comme <a class="reference internal" href="time.html#time.sleep" title="time.sleep"><code class="xref py py-func docutils literal notranslate"><span class="pre">sleep()</span></code></a> bloquent la boucle d'événements du navigateur.</p>
+<p>Les propriétés et le comportement de Python sur les plates-formes WebAssembly dépendent de la version du SDK <a class="reference external" href="https://emscripten.org/">Emscripten</a> ou <a class="reference external" href="https://wasi.dev/">WASI</a>, des programmes exécutables WASM (navigateur, NodeJS, <a class="reference external" href="https://wasmtime.dev/">wasmtime</a>) et de la configuration de compilation de Python. WebAssembly, Emscripten et WASI sont des normes en évolution ; certaines fonctionnalités telles que la gestion du réseau pourraient être prises en charge à l'avenir.</p>
+<p>Pour exécuter du Python dans le navigateur, les utilisateurs doivent envisager <a class="reference external" href="https://pyodide.org/">Pyodide</a> ou <a class="reference external" href="https://pyscript.net/">PyScript</a>. <em>PyScript</em> est construit sur <em>Pyodide</em>, qui est lui-même construit sur CPython et <em>Emscripten</em>. <em>Pyodide</em> donne accès aux API JavaScript et DOM des navigateurs ainsi qu'à des capacités réseau limitées avec les API <code class="docutils literal notranslate"><span class="pre">XMLHttpRequest</span></code> et <code class="docutils literal notranslate"><span class="pre">Fetch</span></code> de JavaScript.</p>
+<ul class="simple">
+<li><p>Les API liées aux processus ne sont pas disponibles ou échouent toujours avec une erreur. Cela inclut les API qui génèrent de nouveaux processus (<a class="reference internal" href="os.html#os.fork" title="os.fork"><code class="xref py py-func docutils literal notranslate"><span class="pre">fork()</span></code></a>, <a class="reference internal" href="os.html#os.execve" title="os.execve"><code class="xref py py-func docutils literal notranslate"><span class="pre">execve()</span></code></a>), attendent des processus (<a class="reference internal" href="os.html#os.waitpid" title="os.waitpid"><code class="xref py py-func docutils literal notranslate"><span class="pre">waitpid()</span></code></a>), envoient des signaux (<a class="reference internal" href="os.html#os.kill" title="os.kill"><code class="xref py py-func docutils literal notranslate"><span class="pre">kill()</span></code></a>), ou interagissent d'une autre manière avec les processus. Le module <a class="reference internal" href="subprocess.html#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> peut être importé mais ne fonctionne pas.</p></li>
+<li><p>Le module <a class="reference internal" href="socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code></a> est disponible, mais est limité et n'a pas le même comportement que sur les autres plates-formes. Sur <em>Emscripten</em>, les connecteurs réseau sont toujours non bloquants et nécessitent du code JavaScript et du code supplémentaire sur le serveur pour faire mandataire TCP via <em>WebSockets</em> ; voir <a class="reference external" href="https://emscripten.org/docs/porting/networking.html">Emscripten Networking</a> pour plus d'informations. La pré-version 1 de <em>WASI</em> n'autorise que les connecteurs réseau utilisant un descripteur de fichier déjà existant.</p></li>
+<li><p>Certaines fonctions sont des émulations embryonnaires qui ne font rien et renvoient toujours des valeurs codées en dur.</p></li>
+<li><p>Les fonctions liées aux descripteurs de fichiers, aux autorisations de fichiers, aux propriétaires des fichiers et aux liens sont limitées et ne prennent pas en charge certaines opérations. Par exemple, WASI n'autorise pas les liens symboliques avec des noms de fichiers absolus.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#notes-on-availability">Notes sur la disponibilité</a><ul>
+<li><a class="reference internal" href="#webassembly-platforms">Plateformes WebAssembly</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="index.html"
+                          title="Chapitre précédent">La bibliothèque standard</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="functions.html"
+                          title="Chapitre suivant">Fonctions natives</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/intro.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="functions.html" title="Fonctions natives"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="La bibliothèque standard"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Introduction</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

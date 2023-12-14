@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="Installation et utilisation de Python" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/using/index.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Cette partie de la documentation est consacrée aux informations générales au sujet de l'installation de l'environnement Python sur différentes plateformes, l'invocation de l'interpréteur et des cho..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Cette partie de la documentation est consacrée aux informations générales au sujet de l'installation de l'environnement Python sur différentes plateformes, l'invocation de l'interpréteur et des cho..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>Installation et utilisation de Python &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="1. Ligne de commande et environnement" href="cmdline.html" />
+    <link rel="prev" title="16. Annexe" href="../tutorial/appendix.html" />
+    <link rel="canonical" href="https://docs.python.org/3/using/index.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="../tutorial/appendix.html"
+                          title="Chapitre précédent"><span class="section-number">16. </span>Annexe</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="cmdline.html"
+                          title="Chapitre suivant"><span class="section-number">1. </span>Ligne de commande et environnement</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/using/index.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cmdline.html" title="1. Ligne de commande et environnement"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="../tutorial/appendix.html" title="16. Annexe"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+        <li class="nav-item nav-item-this"><a href="">Installation et utilisation de Python</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="python-setup-and-usage">
+<span id="using-index"></span><h1>Installation et utilisation de Python<a class="headerlink" href="#python-setup-and-usage" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Cette partie de la documentation est consacrée aux informations générales au sujet de l'installation de l'environnement Python sur différentes plateformes, l'invocation de l'interpréteur et des choses qui facilitent le travail avec Python.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cmdline.html">1. Ligne de commande et environnement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmdline.html#command-line">1.1. Ligne de commande</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cmdline.html#interface-options">1.1.1. Options de l'interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmdline.html#generic-options">1.1.2. Options génériques</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmdline.html#miscellaneous-options">1.1.3. Options diverses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmdline.html#options-you-shouldn-t-use">1.1.4. Options à ne pas utiliser</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmdline.html#environment-variables">1.2. Variables d'environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cmdline.html#debug-mode-variables">1.2.1. Variables en mode débogage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unix.html">2. Utilisation de Python sur les plateformes Unix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="unix.html#getting-and-installing-the-latest-version-of-python">2.1. Récupérer et installer la dernière version de Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="unix.html#on-linux">2.1.1. Sur Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unix.html#on-freebsd-and-openbsd">2.1.2. Sur FreeBSD et OpenBSD</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html#building-python">2.2. Compiler Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html#python-related-paths-and-files">2.3. Fichiers et chemins liés à Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html#miscellaneous">2.4. Divers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html#custom-openssl">2.5. Version personnalisée d'OpenSSL</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configure.html">3. Configurer Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configure.html#build-requirements">3.1. Build Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure.html#generated-files">3.2. Generated files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure.html#configure-options">3.3. Options de configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#general-options">3.3.1. Options générales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#webassembly-options">3.3.2. Options de WebAssembly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#install-options">3.3.3. Options d'installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#performance-options">3.3.4. Options de performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#python-debug-build">3.3.5. Compilation de Python en mode débogage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#debug-options">3.3.6. Debug options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#linker-options">3.3.7. Linker options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#libraries-options">3.3.8. Libraries options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#security-options">3.3.9. Security Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#macos-options">3.3.10. macOS Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#cross-compiling-options">3.3.11. Cross Compiling Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configure.html#python-build-system">3.4. Python Build System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#main-files-of-the-build-system">3.4.1. Main files of the build system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#main-build-steps">3.4.2. Main build steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#main-makefile-targets">3.4.3. Main Makefile targets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#c-extensions">3.4.4. C extensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configure.html#compiler-and-linker-flags">3.5. Compiler and linker flags</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#preprocessor-flags">3.5.1. Preprocessor flags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#compiler-flags">3.5.2. Compiler flags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configure.html#linker-flags">3.5.3. Linker flags</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="windows.html">4. Utilisation de Python sur Windows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#the-full-installer">4.1. L'installateur complet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#installation-steps">4.1.1. Étapes d'installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#removing-the-max-path-limitation">4.1.2. Suppression de la limitation <code class="docutils literal notranslate"><span class="pre">MAX_PATH</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#installing-without-ui">4.1.3. Installation sans l'interface utilisateur</a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#installing-without-downloading">4.1.4. Installation sans téléchargement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#modifying-an-install">4.1.5. Modification d'une installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#the-microsoft-store-package">4.2. Le paquet Microsoft Store</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#known-issues">4.2.1. Problèmes connus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="windows.html#redirection-of-local-data-registry-and-temporary-paths">4.2.1.1. Redirection des données locales, du registre et des chemins temporaires</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#the-nuget-org-packages">4.3. Les paquets <em>nuget.org</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#the-embeddable-package">4.4. Le paquet intégrable</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#python-application">4.4.1. Application Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#embedding-python">4.4.2. Embarquer Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#alternative-bundles">4.5. Paquets alternatifs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#configuring-python">4.6. Configurer Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#excursus-setting-environment-variables">4.6.1. Digression : définition des variables d'environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#finding-the-python-executable">4.6.2. Trouver l'exécutable Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#utf-8-mode">4.7. Mode UTF-8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#python-launcher-for-windows">4.8. Lanceur Python pour Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#getting-started">4.8.1. Pour commencer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="windows.html#from-the-command-line">4.8.1.1. Depuis la ligne de commande</a></li>
+<li class="toctree-l4"><a class="reference internal" href="windows.html#virtual-environments">4.8.1.2. Environnements virtuels</a></li>
+<li class="toctree-l4"><a class="reference internal" href="windows.html#from-a-script">4.8.1.3. À partir d'un script</a></li>
+<li class="toctree-l4"><a class="reference internal" href="windows.html#from-file-associations">4.8.1.4. À partir d'associations de fichiers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#shebang-lines">4.8.2. Lignes Shebang</a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#arguments-in-shebang-lines">4.8.3. Arguments dans les lignes <em>shebang</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#customization">4.8.4. Personnalisation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="windows.html#customization-via-ini-files">4.8.4.1. Personnalisation via des fichiers INI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="windows.html#customizing-default-python-versions">4.8.4.2. Personnalisation des versions Python par défaut</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#diagnostics">4.8.5. Diagnostics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#dry-run">4.8.6. Exécution à vide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#install-on-demand">4.8.7. Installation à la demande</a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#return-codes">4.8.8. Codes de retour</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#finding-modules">4.9. Recherche de modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#additional-modules">4.10. Modules supplémentaires</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#pywin32">4.10.1. PyWin32</a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html#cx-freeze">4.10.2. cx_Freeze</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#compiling-python-on-windows">4.11. Compiler Python sous Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html#other-platforms">4.12. Autres plateformes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mac.html">5. Utilisation de Python sur un Mac</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mac.html#getting-and-installing-macpython">5.1. Obtenir et installer MacPython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#how-to-run-a-python-script">5.1.1. Comment exécuter un script Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#running-scripts-with-a-gui">5.1.2. Lancer des scripts avec une interface graphique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mac.html#configuration">5.1.3. Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html#the-ide">5.2. L'<em>IDE</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html#installing-additional-python-packages">5.3. Installation de paquets Python additionnels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html#gui-programming-on-the-mac">5.4. Programmation d'interface graphique sur le Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html#distributing-python-applications-on-the-mac">5.5. Distribuer des Applications Python sur le Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mac.html#other-resources">5.6. Autres ressources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="editors.html">6. Éditeurs et IDEs</a></li>
+</ul>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="../tutorial/appendix.html"
+                          title="Chapitre précédent"><span class="section-number">16. </span>Annexe</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="cmdline.html"
+                          title="Chapitre suivant"><span class="section-number">1. </span>Ligne de commande et environnement</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/using/index.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cmdline.html" title="1. Ligne de commande et environnement"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="../tutorial/appendix.html" title="16. Annexe"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+        <li class="nav-item nav-item-this"><a href="">Installation et utilisation de Python</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

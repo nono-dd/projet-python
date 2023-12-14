@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="tkinter.dnd – Prise en charge du glisser-déposer" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/tkinter.dnd.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/tkinter/dnd.py Le module tkinter.dnd offre une prise en charge du glisser-déposer d'objets au sein d'une même application, dans la même fenêtre ou entre les fenêtres. Pour activer..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/tkinter/dnd.py Le module tkinter.dnd offre une prise en charge du glisser-déposer d'objets au sein d'une même application, dans la même fenêtre ou entre les fenêtres. Pour activer..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>tkinter.dnd – Prise en charge du glisser-déposer &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="tkinter.ttk — Widgets sur le thème Tk" href="tkinter.ttk.html" />
+    <link rel="prev" title="tkinter.scrolledtext — Gadget texte avec barre de défilement" href="tkinter.scrolledtext.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/tkinter.dnd.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="tkinter.scrolledtext.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Gadget texte avec barre de défilement</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="tkinter.ttk.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Widgets sur le thème <em>Tk</em></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/tkinter.dnd.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tkinter.ttk.html" title="tkinter.ttk — Widgets sur le thème Tk"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="tkinter.scrolledtext.html" title="tkinter.scrolledtext — Gadget texte avec barre de défilement"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="tk.html" accesskey="U">Interfaces Utilisateur Graphiques avec Tk</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> – Prise en charge du glisser-déposer</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-tkinter.dnd">
+<span id="tkinter-dnd-drag-and-drop-support"></span><h1><a class="reference internal" href="#module-tkinter.dnd" title="tkinter.dnd: Tkinter drag-and-drop interface (Tk)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code></a> – Prise en charge du glisser-déposer<a class="headerlink" href="#module-tkinter.dnd" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/tkinter/dnd.py">Lib/tkinter/dnd.py</a></p>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Ceci est expérimental et devrait être obsolète lorsqu'il sera remplacé par le <em>Tk DND</em>.</p>
+</div>
+<p>Le module <a class="reference internal" href="#module-tkinter.dnd" title="tkinter.dnd: Tkinter drag-and-drop interface (Tk)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code></a> offre une prise en charge du glisser-déposer d'objets au sein d'une même application, dans la même fenêtre ou entre les fenêtres. Pour activer le glissement d'un objet, vous devez créer une liaison d'événements pour celui-ci qui démarre le processus de glisser-déposer. En règle générale, vous liez un événement <em>ButtonPress</em> à une fonction de rappel que vous écrivez (voir <a class="reference internal" href="tkinter.html#bindings-and-events"><span class="std std-ref">Liaisons et événements</span></a>). La fonction doit appeler <a class="reference internal" href="#tkinter.dnd.dnd_start" title="tkinter.dnd.dnd_start"><code class="xref py py-func docutils literal notranslate"><span class="pre">dnd_start()</span></code></a>, où <em>source</em> est l'objet à faire glisser et <em>event</em> est l'événement qui a invoqué l'appel (l'argument de votre fonction de rappel).</p>
+<p>La sélection d'un objet cible se produit comme suit :</p>
+<ol class="arabic simple">
+<li><p>Recherche descendante de la zone sous la souris pour le widget cible</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>Le widget cible doit avoir un attribut appelable <em>dnd_accept</em></p></li>
+<li><p>Si <em>dnd_accept</em> n'est pas présent ou renvoie <code class="docutils literal notranslate"><span class="pre">None</span></code>, la recherche se déplace vers le widget parent</p></li>
+<li><p>Si aucun widget cible n'est trouvé, alors l'objet cible est <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>Appel à <code class="docutils literal notranslate"><span class="pre">&lt;old_target&gt;.dnd_leave(source,</span> <span class="pre">event)</span></code></p></li>
+<li><p>Appel à <code class="docutils literal notranslate"><span class="pre">&lt;new_target&gt;.dnd_enter(source,</span> <span class="pre">event)</span></code></p></li>
+<li><p>Appel à <code class="docutils literal notranslate"><span class="pre">&lt;target&gt;.dnd_commit(source,</span> <span class="pre">event)</span></code> pour notifier le déposer.</p></li>
+<li><p>Appel à <code class="docutils literal notranslate"><span class="pre">&lt;source&gt;.dnd_end(target,</span> <span class="pre">event)</span></code> pour signaler la fin du glisser-déposer</p></li>
+</ol>
+<dl class="py class">
+<dt class="sig sig-object py" id="tkinter.dnd.DndHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tkinter.dnd.</span></span><span class="sig-name descname"><span class="pre">DndHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.dnd.DndHandler" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La classe <em>DndHandler</em> gère les événements de glisser-déposer qui suivent les événements <em>Motion</em> et <em>ButtonRelease</em> à la racine du widget d'événement.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.dnd.DndHandler.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.dnd.DndHandler.cancel" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Annule le processus de glisser-déposer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.dnd.DndHandler.finish">
+<span class="sig-name descname"><span class="pre">finish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.dnd.DndHandler.finish" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Exécute les fonctions de fin de glisser-déposer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.dnd.DndHandler.on_motion">
+<span class="sig-name descname"><span class="pre">on_motion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.dnd.DndHandler.on_motion" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Inspecte la zone sous la souris pour les objets cibles pendant que le glissement est effectué.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tkinter.dnd.DndHandler.on_release">
+<span class="sig-name descname"><span class="pre">on_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.dnd.DndHandler.on_release" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Signale la fin de la traînée lorsque le modèle de relâchement est déclenché.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tkinter.dnd.dnd_start">
+<span class="sig-prename descclassname"><span class="pre">tkinter.dnd.</span></span><span class="sig-name descname"><span class="pre">dnd_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tkinter.dnd.dnd_start" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction de fabrique pour le processus de glisser-déposer.</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<p><a class="reference internal" href="tkinter.html#bindings-and-events"><span class="std std-ref">Liaisons et événements</span></a></p>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="tkinter.scrolledtext.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Gadget texte avec barre de défilement</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="tkinter.ttk.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Widgets sur le thème <em>Tk</em></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/tkinter.dnd.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tkinter.ttk.html" title="tkinter.ttk — Widgets sur le thème Tk"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="tkinter.scrolledtext.html" title="tkinter.scrolledtext — Gadget texte avec barre de défilement"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="tk.html" >Interfaces Utilisateur Graphiques avec Tk</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> – Prise en charge du glisser-déposer</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

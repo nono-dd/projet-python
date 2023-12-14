@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="syslog --- Routines de bibliothèque syslog Unix" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/syslog.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Ce module fournit une interface aux routines de la bibliothèque syslog Unix. Consultez les pages du manuel Unix pour plus de détails sur syslog. Ce module interagit avec l'ensemble des routines du ..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Ce module fournit une interface aux routines de la bibliothèque syslog Unix. Consultez les pages du manuel Unix pour plus de détails sur syslog. Ce module interagit avec l'ensemble des routines du ..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>syslog --- Routines de bibliothèque syslog Unix &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Modules command-line interface (CLI)" href="cmdline.html" />
+    <link rel="prev" title="resource --- Resource usage information" href="resource.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/syslog.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> --- Routines de bibliothèque <em>syslog</em> Unix</a><ul>
+<li><a class="reference internal" href="#examples">Exemples</a><ul>
+<li><a class="reference internal" href="#simple-example">Exemple simple</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="resource.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> --- Resource usage information</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="cmdline.html"
+                          title="Chapitre suivant">Modules command-line interface (CLI)</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/syslog.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cmdline.html" title="Modules command-line interface (CLI)"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="resource.html" title="resource --- Resource usage information"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="unix.html" accesskey="U">Services spécifiques à Unix</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> --- Routines de bibliothèque <em>syslog</em> Unix</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-syslog">
+<span id="syslog-unix-syslog-library-routines"></span><h1><a class="reference internal" href="#module-syslog" title="syslog: An interface to the Unix syslog library routines. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code></a> --- Routines de bibliothèque <em>syslog</em> Unix<a class="headerlink" href="#module-syslog" title="Lien permanent vers ce titre">¶</a></h1>
+<hr class="docutils" />
+<p>Ce module fournit une interface aux routines de la bibliothèque <code class="docutils literal notranslate"><span class="pre">syslog</span></code> Unix. Consultez les pages du manuel Unix pour plus de détails sur <code class="docutils literal notranslate"><span class="pre">syslog</span></code>.</p>
+<p>Ce module interagit avec l'ensemble des routines du journaliseur système <code class="docutils literal notranslate"><span class="pre">syslog</span></code>.  Une bibliothèque écrite exclusivement en Python est également disponible pour parler à un serveur <em>syslog</em> dans le module <a class="reference internal" href="logging.handlers.html#module-logging.handlers" title="logging.handlers: Handlers for the logging module."><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code></a> sous le nom <code class="xref py py-class docutils literal notranslate"><span class="pre">SysLogHandler</span></code>.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not Emscripten, not WASI.</p>
+<p>This module does not work or is not available on WebAssembly platforms
+<code class="docutils literal notranslate"><span class="pre">wasm32-emscripten</span></code> and <code class="docutils literal notranslate"><span class="pre">wasm32-wasi</span></code>. See
+<a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">Plateformes WebAssembly</span></a> for more information.</p>
+</div>
+<p>Le module définit les fonctions suivantes :</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="syslog.syslog">
+<span class="sig-prename descclassname"><span class="pre">syslog.</span></span><span class="sig-name descname"><span class="pre">syslog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#syslog.syslog" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">syslog.</span></span><span class="sig-name descname"><span class="pre">syslog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">priority</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Envoie la chaîne de caractères <em>message</em> au journaliseur système. Un retour à la ligne est ajouté à la fin du message si nécessaire. Chaque message est marqué avec une priorité constituée d'une <em>fonction</em> et d'un <em>niveau</em>. L'argument optionnel <em>priority</em>, qui par défaut est <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_INFO</span></code>, définit la priorité du message. Si la fonction n'est pas encodée dans <em>priority</em> en utilisant un OU logique (<code class="docutils literal notranslate"><span class="pre">LOG_INFO</span> <span class="pre">|</span> <span class="pre">LOG_USER</span></code>), la valeur donnée lors de l'appel à <a class="reference internal" href="#syslog.openlog" title="syslog.openlog"><code class="xref py py-func docutils literal notranslate"><span class="pre">openlog()</span></code></a> est utilisée.</p>
+<p>If <a class="reference internal" href="#syslog.openlog" title="syslog.openlog"><code class="xref py py-func docutils literal notranslate"><span class="pre">openlog()</span></code></a> has not been called prior to the call to <a class="reference internal" href="#module-syslog" title="syslog: An interface to the Unix syslog library routines. (Unix)"><code class="xref py py-func docutils literal notranslate"><span class="pre">syslog()</span></code></a>,
+<a class="reference internal" href="#syslog.openlog" title="syslog.openlog"><code class="xref py py-func docutils literal notranslate"><span class="pre">openlog()</span></code></a> will be called with no arguments.</p>
+<p class="audit-hook">Lève un <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">évènement d'audit</span></a> <code class="docutils literal notranslate"><span class="pre">syslog.syslog</span></code> avec les arguments <code class="docutils literal notranslate"><span class="pre">priority</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.2: </span>In previous versions, <a class="reference internal" href="#syslog.openlog" title="syslog.openlog"><code class="xref py py-func docutils literal notranslate"><span class="pre">openlog()</span></code></a> would not be called automatically if
+it wasn't called prior to the call to <a class="reference internal" href="#module-syslog" title="syslog: An interface to the Unix syslog library routines. (Unix)"><code class="xref py py-func docutils literal notranslate"><span class="pre">syslog()</span></code></a>, deferring to the syslog
+implementation to call <code class="docutils literal notranslate"><span class="pre">openlog()</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span>This function is restricted in subinterpreters.
+(Only code that runs in multiple interpreters is affected and
+the restriction is not relevant for most users.)
+<a class="reference internal" href="#syslog.openlog" title="syslog.openlog"><code class="xref py py-func docutils literal notranslate"><span class="pre">openlog()</span></code></a> must be called in the main interpreter before <a class="reference internal" href="#module-syslog" title="syslog: An interface to the Unix syslog library routines. (Unix)"><code class="xref py py-func docutils literal notranslate"><span class="pre">syslog()</span></code></a> may be used
+in a subinterpreter.  Otherwise it will raise <a class="reference internal" href="exceptions.html#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="syslog.openlog">
+<span class="sig-prename descclassname"><span class="pre">syslog.</span></span><span class="sig-name descname"><span class="pre">openlog</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">ident</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">logoption</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">facility</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#syslog.openlog" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Les options de journalisation utilisées lors des appels à <a class="reference internal" href="#module-syslog" title="syslog: An interface to the Unix syslog library routines. (Unix)"><code class="xref py py-func docutils literal notranslate"><span class="pre">syslog()</span></code></a> peuvent être définies en appelant <a class="reference internal" href="#syslog.openlog" title="syslog.openlog"><code class="xref py py-func docutils literal notranslate"><span class="pre">openlog()</span></code></a>.  <a class="reference internal" href="#module-syslog" title="syslog: An interface to the Unix syslog library routines. (Unix)"><code class="xref py py-func docutils literal notranslate"><span class="pre">syslog()</span></code></a> appellera <a class="reference internal" href="#syslog.openlog" title="syslog.openlog"><code class="xref py py-func docutils literal notranslate"><span class="pre">openlog()</span></code></a> sans argument si le journal n'est pas déjà ouvert.</p>
+<p>L'argument nommé optionnel <em>ident</em> est une chaîne de caractères qui est ajoutée au début de chaque message. Par défaut, le dernier élément du chemin définit dans <code class="docutils literal notranslate"><span class="pre">sys.argv[0]</span></code> est utilisé.  L'argument nommé optionnel <em>logoption</em> est un champ de bits (défini à 0 par défaut) -- Voir ci-dessous pour les combinaisons possibles.  L'argument nommé optionnel <em>facility</em> définit la fonction à utiliser pour les messages qui n'en définissent pas. Par défaut, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_USER</span></code> est utilisée.</p>
+<p class="audit-hook">Lève un <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">évènement d'audit</span></a> <code class="docutils literal notranslate"><span class="pre">syslog.openlog</span></code> avec les arguments <code class="docutils literal notranslate"><span class="pre">ident</span></code>, <code class="docutils literal notranslate"><span class="pre">logoption</span></code>, <code class="docutils literal notranslate"><span class="pre">facility</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.2: </span>In previous versions, keyword arguments were not allowed, and <em>ident</em> was
+required.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span>This function is restricted in subinterpreters.
+(Only code that runs in multiple interpreters is affected and
+the restriction is not relevant for most users.)
+This may only be called in the main interpreter.
+It will raise <a class="reference internal" href="exceptions.html#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> if called in a subinterpreter.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="syslog.closelog">
+<span class="sig-prename descclassname"><span class="pre">syslog.</span></span><span class="sig-name descname"><span class="pre">closelog</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#syslog.closelog" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Réinitialise la configuration du module <em>syslog</em> et appelle la bibliothèque système <code class="docutils literal notranslate"><span class="pre">closelog()</span></code>.</p>
+<p>Cet appel permet au module de se comporter comme lors de son import initial.  Par exemple, <a class="reference internal" href="#syslog.openlog" title="syslog.openlog"><code class="xref py py-func docutils literal notranslate"><span class="pre">openlog()</span></code></a> sera appelée lors du premier appel à <a class="reference internal" href="#module-syslog" title="syslog: An interface to the Unix syslog library routines. (Unix)"><code class="xref py py-func docutils literal notranslate"><span class="pre">syslog()</span></code></a> (sauf si <a class="reference internal" href="#syslog.openlog" title="syslog.openlog"><code class="xref py py-func docutils literal notranslate"><span class="pre">openlog()</span></code></a> a déjà été appelée). Quant à <em>ident</em> et aux paramètres de <a class="reference internal" href="#syslog.openlog" title="syslog.openlog"><code class="xref py py-func docutils literal notranslate"><span class="pre">openlog()</span></code></a>, ceux-ci seront réinitialisés à leur valeur par défaut.</p>
+<p class="audit-hook">Lève un <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">évènement d'audit</span></a> <code class="docutils literal notranslate"><span class="pre">syslog.closelog</span></code> sans argument.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span>This function is restricted in subinterpreters.
+(Only code that runs in multiple interpreters is affected and
+the restriction is not relevant for most users.)
+This may only be called in the main interpreter.
+It will raise <a class="reference internal" href="exceptions.html#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> if called in a subinterpreter.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="syslog.setlogmask">
+<span class="sig-prename descclassname"><span class="pre">syslog.</span></span><span class="sig-name descname"><span class="pre">setlogmask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maskpri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#syslog.setlogmask" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit le masque de priorité à la valeur <em>maskpri</em> et retourne la précédente valeur du masque.  Les appels à <a class="reference internal" href="#module-syslog" title="syslog: An interface to the Unix syslog library routines. (Unix)"><code class="xref py py-func docutils literal notranslate"><span class="pre">syslog()</span></code></a> avec un niveau de priorité non présent dans <em>maskpri</em> seront ignorés.  La fonction <code class="docutils literal notranslate"><span class="pre">LOG_MASK(pri)</span></code> calcule le masque pour la priorité <em>pri</em>.  La fonction <code class="docutils literal notranslate"><span class="pre">LOG_UPTO(pri)</span></code> calcule le masque pour toutes les priorités jusqu'à <em>pri</em> (inclus).</p>
+<p class="audit-hook">Lève un <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">évènement d'audit</span></a> <code class="docutils literal notranslate"><span class="pre">syslog.setlogmask</span></code> avec l'argument <code class="docutils literal notranslate"><span class="pre">maskpri</span></code>.</p>
+</dd></dl>
+
+<p>Le module définit les constantes suivantes :</p>
+<dl class="simple">
+<dt>Niveau de priorités (décroissant) :</dt><dd><p><code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_EMERG</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_ALERT</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_CRIT</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_ERR</span></code>,
+<code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_WARNING</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_NOTICE</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_INFO</span></code>,
+<code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_DEBUG</span></code>.</p>
+</dd>
+<dt>Fonctions :</dt><dd><p><code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_KERN</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_USER</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_MAIL</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_DAEMON</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_AUTH</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_LPR</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_NEWS</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_UUCP</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_CRON</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_SYSLOG</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_LOCAL0</span></code> à <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_LOCAL7</span></code> et, si défini dans <code class="docutils literal notranslate"><span class="pre">&lt;syslog.h&gt;</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_AUTHPRIV</span></code>.</p>
+</dd>
+<dt>Options de journalisation :</dt><dd><p><code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_PID</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_CONS</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_NDELAY</span></code> et, si défini dans <code class="docutils literal notranslate"><span class="pre">&lt;syslog.h&gt;</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_ODELAY</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_NOWAIT</span></code> et <code class="xref py py-const docutils literal notranslate"><span class="pre">LOG_PERROR</span></code>.</p>
+</dd>
+</dl>
+<section id="examples">
+<h2>Exemples<a class="headerlink" href="#examples" title="Lien permanent vers ce titre">¶</a></h2>
+<section id="simple-example">
+<h3>Exemple simple<a class="headerlink" href="#simple-example" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Un simple jeu d'exemples :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">syslog</span>
+
+<span class="n">syslog</span><span class="o">.</span><span class="n">syslog</span><span class="p">(</span><span class="s1">&#39;Processing started&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">error</span><span class="p">:</span>
+    <span class="n">syslog</span><span class="o">.</span><span class="n">syslog</span><span class="p">(</span><span class="n">syslog</span><span class="o">.</span><span class="n">LOG_ERR</span><span class="p">,</span> <span class="s1">&#39;Processing started&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Un exemple montrant comment définir certaines options de journalisation. Ces options ajoutent l'identifiant du processus (<em>PID</em>) dans les messages journalisés et écrivent ces messages à l'aide de la fonction utilisée pour la journalisation des systèmes de messagerie :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">syslog</span><span class="o">.</span><span class="n">openlog</span><span class="p">(</span><span class="n">logoption</span><span class="o">=</span><span class="n">syslog</span><span class="o">.</span><span class="n">LOG_PID</span><span class="p">,</span> <span class="n">facility</span><span class="o">=</span><span class="n">syslog</span><span class="o">.</span><span class="n">LOG_MAIL</span><span class="p">)</span>
+<span class="n">syslog</span><span class="o">.</span><span class="n">syslog</span><span class="p">(</span><span class="s1">&#39;E-mail processing initiated...&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> --- Routines de bibliothèque <em>syslog</em> Unix</a><ul>
+<li><a class="reference internal" href="#examples">Exemples</a><ul>
+<li><a class="reference internal" href="#simple-example">Exemple simple</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="resource.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> --- Resource usage information</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="cmdline.html"
+                          title="Chapitre suivant">Modules command-line interface (CLI)</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/syslog.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cmdline.html" title="Modules command-line interface (CLI)"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="resource.html" title="resource --- Resource usage information"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="unix.html" >Services spécifiques à Unix</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> --- Routines de bibliothèque <em>syslog</em> Unix</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

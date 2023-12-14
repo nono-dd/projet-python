@@ -1,0 +1,1013 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="Tutoriel sur la journalisation" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/howto/logging.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Auteur, Vinay Sajip <vinay_sajip at red-dove dot com>,. This page contains tutorial information. For links to reference information and a logging cookbook, please see Other resources. Les bases de ..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Auteur, Vinay Sajip <vinay_sajip at red-dove dot com>,. This page contains tutorial information. For links to reference information and a logging cookbook, please see Other resources. Les bases de ..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>Tutoriel sur la journalisation &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Recettes pour la journalisation" href="logging-cookbook.html" />
+    <link rel="prev" title="Guide pratique : programmation fonctionnelle" href="functional.html" />
+    <link rel="canonical" href="https://docs.python.org/3/howto/logging.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Tutoriel sur la journalisation</a><ul>
+<li><a class="reference internal" href="#basic-logging-tutorial">Les bases de l'utilisation du module <code class="docutils literal notranslate"><span class="pre">logging</span></code></a><ul>
+<li><a class="reference internal" href="#when-to-use-logging">Quand utiliser <code class="docutils literal notranslate"><span class="pre">logging</span></code></a></li>
+<li><a class="reference internal" href="#a-simple-example">Un exemple simple</a></li>
+<li><a class="reference internal" href="#logging-to-a-file">Enregistrer les évènements dans un fichier</a></li>
+<li><a class="reference internal" href="#logging-from-multiple-modules">Employer <em>logging</em> à partir de différents modules</a></li>
+<li><a class="reference internal" href="#logging-variable-data">Journalisation de données variables</a></li>
+<li><a class="reference internal" href="#changing-the-format-of-displayed-messages">Modifier le format du message affiché</a></li>
+<li><a class="reference internal" href="#displaying-the-date-time-in-messages">Afficher l'horodatage dans les messages</a></li>
+<li><a class="reference internal" href="#next-steps">Étapes suivantes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-logging-tutorial">Usage avancé de Logging</a><ul>
+<li><a class="reference internal" href="#logging-flow">Flux du processus de journalisation</a></li>
+<li><a class="reference internal" href="#loggers">Loggers</a></li>
+<li><a class="reference internal" href="#handlers">Handlers</a></li>
+<li><a class="reference internal" href="#formatters">Formatters</a></li>
+<li><a class="reference internal" href="#configuring-logging">Configuration de <code class="docutils literal notranslate"><span class="pre">logging</span></code></a></li>
+<li><a class="reference internal" href="#what-happens-if-no-configuration-is-provided">Comportement par défaut (si aucune configuration n'est fournie)</a></li>
+<li><a class="reference internal" href="#configuring-logging-for-a-library">Configuration de la journalisation pour une bibliothèque</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logging-levels">Niveaux de journalisation</a><ul>
+<li><a class="reference internal" href="#custom-levels">Niveaux personnalisés</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#useful-handlers">Gestionnaires utiles</a></li>
+<li><a class="reference internal" href="#exceptions-raised-during-logging">Exceptions levées par la journalisation</a></li>
+<li><a class="reference internal" href="#using-arbitrary-objects-as-messages">Utilisation d'objets arbitraires comme messages</a></li>
+<li><a class="reference internal" href="#optimization">Optimisation</a></li>
+<li><a class="reference internal" href="#other-resources">Other resources</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="functional.html"
+                          title="Chapitre précédent">Guide pratique : programmation fonctionnelle</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="logging-cookbook.html"
+                          title="Chapitre suivant">Recettes pour la journalisation</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/howto/logging.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="logging-cookbook.html" title="Recettes pour la journalisation"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="functional.html" title="Guide pratique : programmation fonctionnelle"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Les HOWTOs de Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Tutoriel sur la journalisation</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="logging-howto">
+<h1>Tutoriel sur la journalisation<a class="headerlink" href="#logging-howto" title="Lien permanent vers ce titre">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Auteur</dt>
+<dd class="field-odd"><p>Vinay Sajip &lt;vinay_sajip at red-dove dot com&gt;</p>
+</dd>
+</dl>
+<p id="logging-basic-tutorial">This page contains tutorial information. For links to reference information and a
+logging cookbook, please see <a class="reference internal" href="#tutorial-ref-links"><span class="std std-ref">Other resources</span></a>.</p>
+<section id="basic-logging-tutorial">
+<h2>Les bases de l'utilisation du module <code class="docutils literal notranslate"><span class="pre">logging</span></code><a class="headerlink" href="#basic-logging-tutorial" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La journalisation (<em>logging</em> en anglais) est une façon de suivre les événements qui ont lieu durant le fonctionnement d'un logiciel. Le développeur du logiciel ajoute des appels à l'outil de journalisation dans son code pour indiquer que certains événements ont eu lieu. Un événement est décrit par un message descriptif, qui peut éventuellement contenir des données variables (c'est-à-dire qui peuvent être différentes pour chaque occurrence de l'événement). Un événement a aussi une importance que le développeur lui attribue ; cette importance peut aussi être appelée <em>niveau</em> ou <em>sévérité</em>.</p>
+<section id="when-to-use-logging">
+<h3>Quand utiliser <code class="docutils literal notranslate"><span class="pre">logging</span></code><a class="headerlink" href="#when-to-use-logging" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le module <em>logging</em> fournit un ensemble de fonctions de commodités pour une utilisation simple du module. Ce sont les fonctions <a class="reference internal" href="../library/logging.html#logging.debug" title="logging.debug"><code class="xref py py-func docutils literal notranslate"><span class="pre">debug()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.info" title="logging.info"><code class="xref py py-func docutils literal notranslate"><span class="pre">info()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.warning" title="logging.warning"><code class="xref py py-func docutils literal notranslate"><span class="pre">warning()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.error" title="logging.error"><code class="xref py py-func docutils literal notranslate"><span class="pre">error()</span></code></a> et <a class="reference internal" href="../library/logging.html#logging.critical" title="logging.critical"><code class="xref py py-func docutils literal notranslate"><span class="pre">critical()</span></code></a>. Pour déterminer quand employer la journalisation, voyez la table ci-dessous, qui vous indique, pour chaque tâche parmi les plus communes, l'outil approprié.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 49%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tâche que vous souhaitez mener</p></th>
+<th class="head"><p>Le meilleur outil pour cette tâche</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Affiche la sortie console d'un script en ligne de commande ou d'un programme lors de son utilisation ordinaire</p></td>
+<td><p><a class="reference internal" href="../library/functions.html#print" title="print"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Rapporter des évènements qui ont lieu au cours du fonctionnement normal d'un programme (par exemple pour suivre un statut ou examiner des dysfonctionnements)</p></td>
+<td><p><a class="reference internal" href="../library/logging.html#logging.info" title="logging.info"><code class="xref py py-func docutils literal notranslate"><span class="pre">logging.info()</span></code></a> (ou <a class="reference internal" href="../library/logging.html#logging.debug" title="logging.debug"><code class="xref py py-func docutils literal notranslate"><span class="pre">logging.debug()</span></code></a> pour une sortie très détaillée à visée diagnostique)</p></td>
+</tr>
+<tr class="row-even"><td><p>Émettre un avertissement (<em>warning</em> en anglais) en relation avec un évènement particulier au cours du fonctionnement d’un programme</p></td>
+<td><p><a class="reference internal" href="../library/warnings.html#warnings.warn" title="warnings.warn"><code class="xref py py-func docutils literal notranslate"><span class="pre">warnings.warn()</span></code></a> dans le code de la bibliothèque si le problème est évitable et l'application cliente doit être modifiée pour éliminer cet avertissement</p>
+<p><a class="reference internal" href="../library/logging.html#logging.warning" title="logging.warning"><code class="xref py py-func docutils literal notranslate"><span class="pre">logging.warning()</span></code></a> si l'application cliente ne peut rien faire pour corriger la situation mais l'évènement devrait quand même être noté</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Rapporter une erreur lors d'un évènement particulier en cours d'exécution</p></td>
+<td><p>Lever une exception</p></td>
+</tr>
+<tr class="row-even"><td><p>Rapporter la suppression d'une erreur sans lever d'exception (par exemple pour la gestion d'erreur d'un processus de long terme sur un serveur)</p></td>
+<td><p><a class="reference internal" href="../library/logging.html#logging.error" title="logging.error"><code class="xref py py-func docutils literal notranslate"><span class="pre">logging.error()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.exception" title="logging.exception"><code class="xref py py-func docutils literal notranslate"><span class="pre">logging.exception()</span></code></a> ou <a class="reference internal" href="../library/logging.html#logging.critical" title="logging.critical"><code class="xref py py-func docutils literal notranslate"><span class="pre">logging.critical()</span></code></a>, au mieux, selon l'erreur spécifique et le domaine d'application</p></td>
+</tr>
+</tbody>
+</table>
+<p>Les fonctions de journalisation sont nommées d'après le niveau ou la sévérité des évènements qu'elles suivent. Les niveaux standards et leurs applications sont décrits ci-dessous (par ordre croissant de sévérité) :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Niveau</p></th>
+<th class="head"><p>Quand il est utilisé</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DEBUG</span></code></p></td>
+<td><p>Information détaillée, intéressante seulement lorsqu'on diagnostique un problème.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">INFO</span></code></p></td>
+<td><p>Confirmation que tout fonctionne comme prévu.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">WARNING</span></code></p></td>
+<td><p>L'indication que quelque chose d'inattendu a eu lieu, ou de la possibilité d'un problème dans un futur proche (par exemple « espace disque faible »). Le logiciel fonctionne encore normalement.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR</span></code></p></td>
+<td><p>Du fait d'un problème plus sérieux, le logiciel n'a pas été capable de réaliser une tâche.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CRITICAL</span></code></p></td>
+<td><p>Une erreur sérieuse, indiquant que le programme lui-même pourrait être incapable de continuer à fonctionner.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Le niveau par défaut est <code class="docutils literal notranslate"><span class="pre">WARNING</span></code>, ce qui signifie que seuls les évènements de ce niveau et au-dessus sont suivis, sauf si le paquet <em>logging</em> est configuré pour faire autrement.</p>
+<p>Les évènements suivis peuvent être gérés de différentes façons. La manière la plus simple est de les afficher dans la console. Une autre méthode commune est de les écrire dans un fichier.</p>
+</section>
+<section id="a-simple-example">
+<span id="howto-minimal-example"></span><h3>Un exemple simple<a class="headerlink" href="#a-simple-example" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Un exemple très simple est :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Watch out!&#39;</span><span class="p">)</span>  <span class="c1"># will print a message to the console</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;I told you so&#39;</span><span class="p">)</span>  <span class="c1"># will not print anything</span>
+</pre></div>
+</div>
+<p>Si vous entrez ces lignes dans un script que vous exécutez, vous verrez :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>WARNING:root:Watch out!
+</pre></div>
+</div>
+<p>affiché dans la console. Le message <code class="docutils literal notranslate"><span class="pre">INFO</span></code> n'apparaît pas parce que le niveau par défaut est <code class="docutils literal notranslate"><span class="pre">WARNING</span></code>. Le message affiché inclut l'indication du niveau et la description de l'évènement fournie dans l'appel à <em>logging</em>, ici « Watch out! ». Ne vous préoccupez pas de la partie « <em>root</em> » pour le moment : nous détaillerons ce point plus bas. La sortie elle-même peut être formatée de multiples manières si besoin. Les options de formatage seront aussi expliquées plus bas.</p>
+</section>
+<section id="logging-to-a-file">
+<h3>Enregistrer les évènements dans un fichier<a class="headerlink" href="#logging-to-a-file" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Il est très commun d'enregistrer les évènements dans un fichier, c'est donc ce que nous allons regarder maintenant. Il faut essayer ce qui suit avec un interpréteur Python nouvellement démarré, ne poursuivez pas la session commencée ci-dessus :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example.log&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;This message should go to the log file&#39;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;So should this&#39;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;And this, too&#39;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;And non-ASCII stuff, too, like Øresund and Malmö&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.9: </span>L'argument <em>encoding</em> a été rajouté. Dans les versions précédentes de Python, ou si non spécifié, l'encodage utilisé est la valeur par défaut utilisée par <a class="reference internal" href="../library/functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>. Bien que non montré dans l'exemple ci-dessus, un argument <strong>errors</strong> peut aussi être passé, qui détermine comment les erreurs d'encodage sont gérées. Pour voir les valeurs disponibles et par défaut, consultez la documentation de <a class="reference internal" href="../library/functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>.</p>
+</div>
+<p>Maintenant, si nous ouvrons le fichier et lisons ce qui s'y trouve, nous trouvons les messages de journalisation :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DEBUG:root:This message should go to the log file
+INFO:root:So should this
+WARNING:root:And this, too
+ERROR:root:And non-ASCII stuff, too, like Øresund and Malmö
+</pre></div>
+</div>
+<p>Cet exemple montre aussi comment on peut régler le niveau de journalisation qui sert de seuil pour le suivi. Dans ce cas, comme nous avons réglé le seuil à <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code>, tous les messages ont été écrits.</p>
+<p>Si vous souhaitez régler le niveau de journalisation à partir d'une option de la ligne de commande comme :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>--log=INFO
+</pre></div>
+</div>
+<p>et que vous passez ensuite la valeur du paramètre donné à l'option <code class="docutils literal notranslate"><span class="pre">--log</span></code> dans une variable <em>loglevel</em>, vous pouvez utiliser :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">getattr</span><span class="p">(</span><span class="n">logging</span><span class="p">,</span> <span class="n">loglevel</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>de manière à obtenir la valeur à passer à <a class="reference internal" href="../library/logging.html#logging.basicConfig" title="logging.basicConfig"><code class="xref py py-func docutils literal notranslate"><span class="pre">basicConfig()</span></code></a> à travers l'argument <em>level</em>. Vous pouvez vérifier que l'utilisateur n'a fait aucune erreur pour la valeur de ce paramètre, comme dans l'exemple ci-dessous :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># assuming loglevel is bound to the string value obtained from the</span>
+<span class="c1"># command line argument. Convert to upper case to allow the user to</span>
+<span class="c1"># specify --log=DEBUG or --log=debug</span>
+<span class="n">numeric_level</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">logging</span><span class="p">,</span> <span class="n">loglevel</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">numeric_level</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid log level: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">loglevel</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">numeric_level</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>L'appel à <a class="reference internal" href="../library/logging.html#logging.basicConfig" title="logging.basicConfig"><code class="xref py py-func docutils literal notranslate"><span class="pre">basicConfig()</span></code></a> doit être fait <em>avant</em> tout appel à <a class="reference internal" href="../library/logging.html#logging.debug" title="logging.debug"><code class="xref py py-func docutils literal notranslate"><span class="pre">debug()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.info" title="logging.info"><code class="xref py py-func docutils literal notranslate"><span class="pre">info()</span></code></a>, etc. Sinon, ces fonctions appelleront <a class="reference internal" href="../library/logging.html#logging.basicConfig" title="logging.basicConfig"><code class="xref py py-func docutils literal notranslate"><span class="pre">basicConfig()</span></code></a> pour vous avec les options par défaut. Comme il s'agit d'un outil de configuration simple et unique, seul le premier appel fera quelque chose : les appels suivants ne feront rien.</p>
+<p>Si vous exécutez le script plusieurs fois, les messages des exécutions successives sont ajoutés au fichier <em>example.log</em>. Si vous voulez que chaque exécution reprenne un fichier vierge, sans conserver les messages des exécutions précédentes, vous pouvez spécifier l'argument <em>filemode</em>, en changeant l'appel à l'exemple précédent par :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;example.log&#39;</span><span class="p">,</span> <span class="n">filemode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La sortie est identique à la précédente, mais le texte n'est plus ajouté au fichier de log, donc les messages des exécutions précédentes sont perdus.</p>
+</section>
+<section id="logging-from-multiple-modules">
+<h3>Employer <em>logging</em> à partir de différents modules<a class="headerlink" href="#logging-from-multiple-modules" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Si votre programme est composé de plusieurs modules, voici une façon d'organiser l'outil de journalisation :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># myapp.py</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">mylib</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;myapp.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Started&#39;</span><span class="p">)</span>
+    <span class="n">mylib</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Finished&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># mylib.py</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">def</span> <span class="nf">do_something</span><span class="p">():</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Doing something&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Si vous exécutez <em>myapp.py</em>, vous verrez ceci dans <em>myapp.log</em> :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>INFO:root:Started
+INFO:root:Doing something
+INFO:root:Finished
+</pre></div>
+</div>
+<p>ce qui est normalement ce à quoi vous vous attendiez. Vous pouvez généraliser cela à plusieurs modules, en employant le motif de <em>mylib.py</em>. Remarquez qu'avec cette méthode simple, vous ne pourrez pas savoir, en lisant le fichier de log, <em>d'où</em> viennent les messages dans votre application, sauf dans la description de l'évènement. Si vous voulez suivre la localisation des messages, référez-vous à la documentation avancée <a class="reference internal" href="#logging-advanced-tutorial"><span class="std std-ref">Usage avancé de Logging</span></a>.</p>
+</section>
+<section id="logging-variable-data">
+<h3>Journalisation de données variables<a class="headerlink" href="#logging-variable-data" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pour enregistrer des données variables, utilisez une chaîne formatée dans le message de description de l'évènement et ajoutez les données variables comme argument. Par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> before you </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;Look&#39;</span><span class="p">,</span> <span class="s1">&#39;leap!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>affiche :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>WARNING:root:Look before you leap!
+</pre></div>
+</div>
+<p>Comme vous pouvez le voir, l'inclusion des données variables dans le message de description de l'évènement emploie le vieux style de formatage avec %. C'est pour assurer la rétrocompatibilité : le module <code class="docutils literal notranslate"><span class="pre">logging</span></code> est antérieur aux nouvelles options de formatage comme <a class="reference internal" href="../library/stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.format()</span></code></a> ou <a class="reference internal" href="../library/string.html#string.Template" title="string.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">string.Template</span></code></a>. Ces nouvelles options de formatage <em>sont</em> gérées, mais leur exploration sort du cadre de ce tutoriel, voyez <a class="reference internal" href="logging-cookbook.html#formatting-styles"><span class="std std-ref">Using particular formatting styles throughout your application</span></a> pour plus d'information.</p>
+</section>
+<section id="changing-the-format-of-displayed-messages">
+<h3>Modifier le format du message affiché<a class="headerlink" href="#changing-the-format-of-displayed-messages" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pour changer le format utilisé pour afficher le message, vous devez préciser le format que vous souhaitez employer :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(levelname)s</span><span class="s1">:</span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;This message should appear on the console&#39;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;So should this&#39;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;And this, too&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>ce qui affiche :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DEBUG:This message should appear on the console
+INFO:So should this
+WARNING:And this, too
+</pre></div>
+</div>
+<p>Notez que le <code class="docutils literal notranslate"><span class="pre">root</span></code> qui apparaissait dans les exemples précédents a disparu. Pour voir l'ensemble des éléments qui peuvent apparaître dans la chaîne de format, référez-vous à la documentation pour <a class="reference internal" href="../library/logging.html#logrecord-attributes"><span class="std std-ref">LogRecord attributes</span></a>. Pour une utilisation simple, vous avez seulement besoin du <em>levelname</em> (la sévérité), du <em>message</em> (la description de l'évènement, avec les données variables) et peut-être du moment auquel l'évènement a eu lieu. Nous décrivons ces points dans la prochaine section.</p>
+</section>
+<section id="displaying-the-date-time-in-messages">
+<h3>Afficher l'horodatage dans les messages<a class="headerlink" href="#displaying-the-date-time-in-messages" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pour afficher la date ou le temps d'un évènement, ajoutez <code class="docutils literal notranslate"><span class="pre">'%(asctime)'</span></code> dans votre chaîne de formatage :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;is when this event was logged.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>ce qui affichera quelque chose comme :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2010-12-12 11:41:42,612 is when this event was logged.
+</pre></div>
+</div>
+<p>Le format par défaut de l'horodatage (comme ci-dessus) est donné par la norme ISO8601 ou <span class="target" id="index-2"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc3339.html"><strong>RFC 3339</strong></a>. Pour plus de contrôle sur le formatage de l'horodatage, vous pouvez fournir à <code class="docutils literal notranslate"><span class="pre">basicConfig</span></code> un argument <em>datefmt</em>, comme dans l'exemple suivant :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y %I:%M:%S %p&#39;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;is when this event was logged.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>ce qui affichera quelque chose comme :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>12/12/2010 11:46:36 AM is when this event was logged.
+</pre></div>
+</div>
+<p>Le format de <em>datefmt</em> est le même que celui de <a class="reference internal" href="../library/time.html#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.strftime()</span></code></a>.</p>
+</section>
+<section id="next-steps">
+<h3>Étapes suivantes<a class="headerlink" href="#next-steps" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Nous concluons ainsi le tutoriel basique. Il devrait suffire à vous mettre le pied à l'étrier pour utiliser <code class="docutils literal notranslate"><span class="pre">logging</span></code>. Le module <code class="docutils literal notranslate"><span class="pre">logging</span></code> a beaucoup d'autre cordes à son arc, mais pour en profiter au maximum, vous devez prendre le temps de lire les sections suivantes. Si vous êtes prêt, servez-vous votre boisson préférée et poursuivons.</p>
+<p>If your logging needs are simple, then use the above examples to incorporate
+logging into your own scripts, and if you run into problems or don't
+understand something, please post a question on the comp.lang.python Usenet
+group (available at <a class="reference external" href="https://groups.google.com/g/comp.lang.python">https://groups.google.com/g/comp.lang.python</a>) and you
+should receive help before too long.</p>
+<p>Vous êtes encore là ? Vous pouvez lire les prochaines sections, qui donnent un peu plus de détails que l'introduction ci-dessus. Après ça, vous pouvez jeter un œil à <a class="reference internal" href="logging-cookbook.html#logging-cookbook"><span class="std std-ref">Recettes pour la journalisation</span></a>.</p>
+</section>
+</section>
+<section id="advanced-logging-tutorial">
+<span id="logging-advanced-tutorial"></span><h2>Usage avancé de Logging<a class="headerlink" href="#advanced-logging-tutorial" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La bibliothèque de journalisation adopte une approche modulaire et offre différentes catégories de composants : <em>loggers</em>, <em>handlers</em>, <em>filters</em> et <em>formatters</em>.</p>
+<ul class="simple">
+<li><p>Les enregistreurs (<em>loggers</em> en anglais) exposent l'interface que le code de l'application utilise directement.</p></li>
+<li><p>Les gestionnaires (<em>handlers</em>) envoient les entrées de journal (créés par les <em>loggers</em>) vers les destinations voulues.</p></li>
+<li><p>Les filtres (<em>filters</em>) fournissent un moyen de choisir finement quelles entrées de journal doivent être sorties.</p></li>
+<li><p>Les formateurs (<em>formatters</em>) spécifient la structure de l'entrée de journal dans la sortie finale.</p></li>
+</ul>
+<p>L'information relative à un événement est passée entre <em>loggers</em>, <em>handlers</em> et <em>formatters</em> dans une instance de la classe <a class="reference internal" href="../library/logging.html#logging.LogRecord" title="logging.LogRecord"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogRecord</span></code></a>.</p>
+<p>La journalisation est réalisée en appelant les méthodes d'instance de la classe <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a> (que l'on appelle ci-dessous <em class="dfn">loggers</em>). Chaque instance a un nom et les instances sont organisées conceptuellement comme des hiérarchies dans l'espace de nommage, en utilisant un point comme séparateur. Par exemple, un <em>logger</em> appelé <code class="docutils literal notranslate"><span class="pre">scan</span></code> est le parent des <em>loggers</em> <code class="docutils literal notranslate"><span class="pre">scan.text</span></code>, <code class="docutils literal notranslate"><span class="pre">scan.html</span></code> et <code class="docutils literal notranslate"><span class="pre">scan.pdf</span></code>. Les noms des <em>loggers</em> peuvent être ce que vous voulez et indiquent le sous-domaine d'une application depuis lequel le message enregistré a été émis.</p>
+<p>Une bonne convention lorsqu'on nomme les <em>loggers</em> est d'utiliser un <em>logger</em> au niveau du module, dans chaque module qui emploie <code class="docutils literal notranslate"><span class="pre">logging</span></code>, nommé de la façon suivante :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Cela signifie que le nom d'un <em>logger</em> se rapporte à la hiérarchie du paquet et des modules, et il est évident de voir où un événement a été enregistré simplement en regardant le nom du <em>logger</em>.</p>
+<p>La racine de la hiérarchie des enregistreurs est appelée le <em>root logger</em>. C'est l'enregistreur utilisé par les fonctions <a class="reference internal" href="../library/logging.html#logging.debug" title="logging.debug"><code class="xref py py-func docutils literal notranslate"><span class="pre">debug()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.info" title="logging.info"><code class="xref py py-func docutils literal notranslate"><span class="pre">info()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.warning" title="logging.warning"><code class="xref py py-func docutils literal notranslate"><span class="pre">warning()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.error" title="logging.error"><code class="xref py py-func docutils literal notranslate"><span class="pre">error()</span></code></a> et <a class="reference internal" href="../library/logging.html#logging.critical" title="logging.critical"><code class="xref py py-func docutils literal notranslate"><span class="pre">critical()</span></code></a>, qui appelle en fait les méthodes du même nom de l'objet <em>root logger</em>. Les fonctions et les méthodes ont la même signature. Le nom de l'enregistreur racine est affiché comme « <code class="docutils literal notranslate"><span class="pre">'root'</span></code> » dans la sortie.</p>
+<p>Il est bien sûr possible d'enregistrer des messages pour des destinations différentes. Ce paquet permet d'écrire des entrées de journal dans des fichiers, des ressources HTTP GET/POST, par courriel via SMTP, des connecteurs (<em>socket</em> en anglais) génériques, des files d'attente, ou des mécanismes d'enregistrement spécifiques au système d'exploitation, comme <em>syslog</em> ou le journal d'événements de Windows NT. Les destinations sont servies par des classes <em class="dfn">handler</em>. Vous pouvez créer votre propre classe de destination si vous avez des besoins spéciaux qui ne sont couverts par aucune classe <em>handler</em> prédéfinie.</p>
+<p>Par défaut, aucune destination n'est prédéfinie pour les messages de journalisation. Vous pouvez définir une destination (comme la console ou un fichier) en utilisant <a class="reference internal" href="../library/logging.html#logging.basicConfig" title="logging.basicConfig"><code class="xref py py-func docutils literal notranslate"><span class="pre">basicConfig()</span></code></a> comme dans les exemples donnés dans le tutoriel. Si vous appelez les fonctions <a class="reference internal" href="../library/logging.html#logging.debug" title="logging.debug"><code class="xref py py-func docutils literal notranslate"><span class="pre">debug()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.info" title="logging.info"><code class="xref py py-func docutils literal notranslate"><span class="pre">info()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.warning" title="logging.warning"><code class="xref py py-func docutils literal notranslate"><span class="pre">warning()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.error" title="logging.error"><code class="xref py py-func docutils literal notranslate"><span class="pre">error()</span></code></a> et <a class="reference internal" href="../library/logging.html#logging.critical" title="logging.critical"><code class="xref py py-func docutils literal notranslate"><span class="pre">critical()</span></code></a>, celles-ci vérifient si une destination a été définie ; si ce n'est pas le cas, la destination est assignée à la console (<code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code>) avec un format par défaut pour le message affiché, avant d'être déléguée au <em>logger</em> racine, qui sort le message.</p>
+<p>Le format par défaut des messages est défini par <a class="reference internal" href="../library/logging.html#logging.basicConfig" title="logging.basicConfig"><code class="xref py py-func docutils literal notranslate"><span class="pre">basicConfig()</span></code></a> comme suit :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>severity:logger name:message
+</pre></div>
+</div>
+<p>Vous pouvez modifier ce comportement en passant une chaîne de formatage à <a class="reference internal" href="../library/logging.html#logging.basicConfig" title="logging.basicConfig"><code class="xref py py-func docutils literal notranslate"><span class="pre">basicConfig()</span></code></a> par l'argument nommé <em>format</em>. Consultez <a class="reference internal" href="../library/logging.html#formatter-objects"><span class="std std-ref">Formateurs</span></a> pour toutes les options de construction de cette chaîne de formatage.</p>
+<section id="logging-flow">
+<h3>Flux du processus de journalisation<a class="headerlink" href="#logging-flow" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le flux des informations associées à un évènement dans les <em>loggers</em> et les <em>handlers</em> est illustré dans le diagramme suivant.</p>
+<img alt="../_images/logging_flow.png" class="invert-in-dark-mode" src="../_images/logging_flow.png" />
+</section>
+<section id="loggers">
+<h3>Loggers<a class="headerlink" href="#loggers" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les objets de classe <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a> ont un rôle triple. Premièrement, ils exposent plusieurs méthodes au code de l'application, de manière à ce qu'elle puisse enregistrer des messages en cours d'exécution. Deuxièmement, les objets <em>logger</em> déterminent sur quel message agir selon leur sévérité (à partir des filtres par défaut) ou selon les objets <em>filter</em> associés. Troisièmement, les objets <em>logger</em> transmettent les messages pertinents à tous les <em>handlers</em> concernés.</p>
+<p>Les méthodes des objets <em>logger</em> les plus utilisées appartiennent à deux catégories : la configuration et l'envoi de messages.</p>
+<p>Voici les méthodes de configuration les plus communes :</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../library/logging.html#logging.Logger.setLevel" title="logging.Logger.setLevel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.setLevel()</span></code></a> spécifie le plus bas niveau de sévérité qu'un <em>logger</em> traitera. Ainsi, <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> est le niveau de sévérité défini par défaut le plus bas et <code class="docutils literal notranslate"><span class="pre">CRITICAL</span></code> est le plus haut. Par exemple, si le niveau de sévérité est <code class="docutils literal notranslate"><span class="pre">INFO</span></code>, le <em>logger</em> ne traite que les messages de niveau <code class="docutils literal notranslate"><span class="pre">INFO</span></code>, <code class="docutils literal notranslate"><span class="pre">WARNING</span></code>, <code class="docutils literal notranslate"><span class="pre">ERROR</span></code> et <code class="docutils literal notranslate"><span class="pre">CRITICAL</span></code> ; il ignore les messages de niveau DEBUG.</p></li>
+<li><p><a class="reference internal" href="../library/logging.html#logging.Logger.addHandler" title="logging.Logger.addHandler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.addHandler()</span></code></a> et <a class="reference internal" href="../library/logging.html#logging.Logger.removeHandler" title="logging.Logger.removeHandler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.removeHandler()</span></code></a> ajoutent ou enlèvent des objets <em>handlers</em> au <em>logger</em>. Les objets <em>handlers</em> sont expliqués plus en détail dans <a class="reference internal" href="#handler-basic"><span class="std std-ref">Handlers</span></a>.</p></li>
+<li><p><a class="reference internal" href="../library/logging.html#logging.Logger.addFilter" title="logging.Logger.addFilter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.addFilter()</span></code></a> et <a class="reference internal" href="../library/logging.html#logging.Logger.removeFilter" title="logging.Logger.removeFilter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.removeFilter()</span></code></a> ajoutent ou enlèvent des objets <em>filter</em> au <em>logger</em>. Les objets <em>filters</em> sont expliqués plus en détail dans <a class="reference internal" href="../library/logging.html#filter"><span class="std std-ref">Filtres</span></a>.</p></li>
+</ul>
+<p>Comme nous l'expliquons aux deux derniers paragraphes de cette section, vous n'avez pas besoin de faire appel à ces méthodes à chaque fois que vous créez un <em>logger</em>.</p>
+<p>Une fois que l'objet <em>logger</em> est correctement configuré, les méthodes suivantes permettent de créer un message :</p>
+<ul class="simple">
+<li><p>Les méthodes <a class="reference internal" href="../library/logging.html#logging.Logger.debug" title="logging.Logger.debug"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.debug()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.Logger.info" title="logging.Logger.info"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.info()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.Logger.warning" title="logging.Logger.warning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.warning()</span></code></a>, <a class="reference internal" href="../library/logging.html#logging.Logger.error" title="logging.Logger.error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.error()</span></code></a> et <a class="reference internal" href="../library/logging.html#logging.Logger.critical" title="logging.Logger.critical"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.critical()</span></code></a> créent des entrées de journal avec un message et un niveau correspondant à leur nom. Le message est en fait une chaîne de caractères qui peut contenir la syntaxe standard de substitution de chaînes de caractères : <code class="docutils literal notranslate"><span class="pre">%s</span></code>, <code class="docutils literal notranslate"><span class="pre">%d</span></code>, <code class="docutils literal notranslate"><span class="pre">%f</span></code>, etc. L'argument suivant est une liste des objets correspondant aux champs à substituer dans le message. En ce qui concerne <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>, les méthodes de <code class="docutils literal notranslate"><span class="pre">logging</span></code> ne tiennent compte que du mot clef <code class="docutils literal notranslate"><span class="pre">exc_info</span></code> et l'utilisent pour déterminer s'il faut enregistrer les informations associées à une exception.</p></li>
+<li><p><a class="reference internal" href="../library/logging.html#logging.Logger.exception" title="logging.Logger.exception"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.exception()</span></code></a> crée un message similaire à <a class="reference internal" href="../library/logging.html#logging.Logger.error" title="logging.Logger.error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.error()</span></code></a>. La différence est que <a class="reference internal" href="../library/logging.html#logging.Logger.exception" title="logging.Logger.exception"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.exception()</span></code></a> ajoute la trace de la pile d'exécution au message. On ne peut appeler cette méthode qu'à l'intérieur d'un bloc de gestion d'exception.</p></li>
+<li><p><a class="reference internal" href="../library/logging.html#logging.Logger.log" title="logging.Logger.log"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Logger.log()</span></code></a> prend le niveau de sévérité comme argument explicite. C'est un peu plus verbeux pour enregistrer des messages que d'utiliser les méthodes plus pratiques décrites si dessus, mais c'est ce qui permet d'enregistrer des messages pour des niveaux de sévérité définis par l'utilisateur.</p></li>
+</ul>
+<p><a class="reference internal" href="../library/logging.html#logging.getLogger" title="logging.getLogger"><code class="xref py py-func docutils literal notranslate"><span class="pre">getLogger()</span></code></a> renvoie une référence à un objet <em>logger</em> du nom spécifié si celui-ci est donné en argument. Dans le cas contraire, c'est l'enregistreur racine. Les noms sont des structures hiérarchiques séparées par des points. Des appels répétés à <a class="reference internal" href="../library/logging.html#logging.getLogger" title="logging.getLogger"><code class="xref py py-func docutils literal notranslate"><span class="pre">getLogger()</span></code></a> avec le même nom renvoient une référence au même objet <em>logger</em>. Les <em>loggers</em> qui sont plus bas dans cette liste hiérarchique sont des enfants des <em>loggers</em> plus haut dans la liste. Par exemple, si un enregistreur a le nom <code class="docutils literal notranslate"><span class="pre">foo</span></code>, les enregistreurs avec les noms <code class="docutils literal notranslate"><span class="pre">foo.bar</span></code>, <code class="docutils literal notranslate"><span class="pre">foo.bar.baz</span></code> et <code class="docutils literal notranslate"><span class="pre">foo.bam</span></code> sont tous des descendants de <code class="docutils literal notranslate"><span class="pre">foo</span></code>.</p>
+<p>On associe aux <em>loggers</em> un concept de <em>niveau effectif</em>. Si aucun niveau n'est explicitement défini pour un <em>logger</em>, c'est le niveau du parent qui est utilisé comme niveau effectif. Si le parent n'a pas de niveau défini, c'est celui de <em>son</em> parent qui est considéré, et ainsi de suite ; on examine tous les ancêtres jusqu'à ce qu'un niveau explicite soit trouvé. Le <em>logger root</em> a toujours un niveau explicite (<code class="docutils literal notranslate"><span class="pre">WARNING</span></code> par défaut). Quand le <em>logger</em> traite un événement, c'est ce niveau effectif qui est utilisé pour déterminer si cet événement est transmis à ses <em>handlers</em>.</p>
+<p>Les <em>loggers</em> fils font remonter leurs messages aux <em>handlers</em> associés à leurs <em>loggers</em> parents. De ce fait, il n'est pas nécessaire de définir et configurer des <em>handlers</em> pour tous les <em>loggers</em> employés par une application. Il suffit de configurer les <em>handlers</em> pour un <em>logger</em> de haut niveau et de créer des <em>loggers</em> fils quand c'est nécessaire (on peut cependant empêcher la propagation aux ancêtres des messages en donnant la valeur <code class="docutils literal notranslate"><span class="pre">False</span></code> à l'attribut <em>propagate</em> d'un <em>logger</em>).</p>
+</section>
+<section id="handlers">
+<span id="handler-basic"></span><h3>Handlers<a class="headerlink" href="#handlers" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les objets de type <a class="reference internal" href="../library/logging.html#logging.Handler" title="logging.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></a> sont responsables de la distribution des messages (selon leur niveau de sévérité) vers les destinations spécifiées pour ce <em>handler</em>. Les objets <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a> peuvent ajouter des objets <em>handler</em> à eux-mêmes en appelant <a class="reference internal" href="../library/logging.html#logging.Logger.addHandler" title="logging.Logger.addHandler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">addHandler()</span></code></a>. Pour donner un exemple, une application peut envoyer tous les messages dans un fichier journal, tous les messages de niveau <code class="docutils literal notranslate"><span class="pre">ERROR</span></code> ou supérieur vers la sortie standard, et tous les messages de niveau <code class="docutils literal notranslate"><span class="pre">CRITICAL</span></code> vers une adresse de courriel. Dans ce scénario, nous avons besoin de trois <em>handlers</em>, responsable chacun d'envoyer des messages d'une sévérité donnée vers une destination donnée.</p>
+<p>La bibliothèque standard inclut déjà un bon nombre de types de gestionnaires (voir <a class="reference internal" href="#useful-handlers"><span class="std std-ref">Gestionnaires utiles</span></a>) ; le tutoriel utilise surtout <a class="reference internal" href="../library/logging.handlers.html#logging.StreamHandler" title="logging.StreamHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamHandler</span></code></a> et <a class="reference internal" href="../library/logging.handlers.html#logging.FileHandler" title="logging.FileHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileHandler</span></code></a> dans ses exemples.</p>
+<p>Peu de méthodes des objets <em>handlers</em> sont intéressantes pour les développeurs. Les seules méthodes intéressantes lorsqu'on utilise les objets <em>handlers</em> natifs (c'est-à-dire si l'on ne crée pas de <em>handler</em> personnalisé) sont les méthodes de configuration suivantes :</p>
+<ul class="simple">
+<li><p>La méthode <a class="reference internal" href="../library/logging.html#logging.Handler.setLevel" title="logging.Handler.setLevel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setLevel()</span></code></a>, comme celle des objets <em>logger</em> permet de spécifier le plus bas niveau de sévérité qui sera distribué à la destination appropriée. Pourquoi y a-t-il deux méthodes <code class="xref py py-func docutils literal notranslate"><span class="pre">setLevel()</span></code> ? Le niveau défini dans le <em>logger</em> détermine quelle sévérité doit avoir un message pour être transmis à ses <em>handlers</em>. Le niveau mis pour chaque <em>handler</em> détermine quels messages seront envoyés aux destinations.</p></li>
+<li><p><a class="reference internal" href="../library/logging.html#logging.Handler.setFormatter" title="logging.Handler.setFormatter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setFormatter()</span></code></a> sélectionne l'objet <code class="docutils literal notranslate"><span class="pre">Formatter</span></code> utilisé par ce <code class="docutils literal notranslate"><span class="pre">handler</span></code>.</p></li>
+<li><p><a class="reference internal" href="../library/logging.html#logging.Handler.addFilter" title="logging.Handler.addFilter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">addFilter()</span></code></a> et <a class="reference internal" href="../library/logging.html#logging.Handler.removeFilter" title="logging.Handler.removeFilter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">removeFilter()</span></code></a> configurent et respectivement dé-configurent des objets <em>filter</em> sur les <em>handlers</em>.</p></li>
+</ul>
+<p>Le code d'une application ne devrait ni instancier, ni utiliser d'instances de la classe <a class="reference internal" href="../library/logging.html#logging.Handler" title="logging.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></a>. La classe <a class="reference internal" href="../library/logging.html#logging.Handler" title="logging.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></a> est plutôt une classe mère qui définit l'interface que tous les gestionnaires doivent avoir et établit les comportements par défaut que les classes filles peuvent employer (ou redéfinir).</p>
+</section>
+<section id="formatters">
+<h3>Formatters<a class="headerlink" href="#formatters" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les objets <em>formatter</em> configurent l'ordre final, la structure et le contenu du message. Contrairement à la classe mère <a class="reference internal" href="../library/logging.html#logging.Handler" title="logging.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Handler</span></code></a>, le code d'une application peut instancier un objet de classe <em>formatter</em>, même si vous pouvez toujours sous-classer <em>formatter</em> si vous avez besoin d'un comportement spécial dans votre application. Le constructeur a trois arguments optionnels : une chaîne de formatage du message, une chaîne de formatage de la date et un indicateur de style.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="logging.logging.Formatter.__init__">
+<span class="sig-prename descclassname"><span class="pre">logging.Formatter.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logging.logging.Formatter.__init__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<p>S'il n'y a pas de chaîne de formatage, la chaîne brute est utilisée par défaut. S'il n'y a pas de chaîne de formatage de date, le format de date par défaut est :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%Y-%m-%d %H:%M:%S
+</pre></div>
+</div>
+<p>avec les millisecondes ajoutées à la fin. <code class="docutils literal notranslate"><span class="pre">style</span></code> est l'un des suivants : <code class="docutils literal notranslate"><span class="pre">'%'</span></code>, <code class="docutils literal notranslate"><span class="pre">'{'</span></code>, ou <code class="docutils literal notranslate"><span class="pre">'$'</span></code>. Si l'un de ces styles n'est pas spécifié, alors <code class="docutils literal notranslate"><span class="pre">'%'</span></code> sera utilisé.</p>
+<p>Si l'argument <code class="docutils literal notranslate"><span class="pre">style</span></code> est <code class="docutils literal notranslate"><span class="pre">'%'</span></code>, la chaîne de formatage utilise <code class="docutils literal notranslate"><span class="pre">%(&lt;clef</span> <span class="pre">de</span> <span class="pre">dictionnaire&gt;)s</span></code> comme style de substitution de chaîne de caractères. Les clefs possibles sont documentées dans <a class="reference internal" href="../library/logging.html#logrecord-attributes"><span class="std std-ref">LogRecord attributes</span></a>. Si le style est <code class="docutils literal notranslate"><span class="pre">'{'</span></code>, le message de la chaîne de formatage est compatible avec <a class="reference internal" href="../library/stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.format()</span></code></a> (en employant des arguments nommés). Enfin si le style est <code class="docutils literal notranslate"><span class="pre">'$'</span></code> alors la chaîne de formatage du message doit être conforme à ce qui est attendu de <a class="reference internal" href="../library/string.html#string.Template.substitute" title="string.Template.substitute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">string.Template.substitute()</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.2: </span>Ajout du paramètre <code class="docutils literal notranslate"><span class="pre">style</span></code>.</p>
+</div>
+<p>La chaîne de formatage de message suivante enregistrera le temps dans un format lisible par les humains, la sévérité du message et son contenu, dans cet ordre :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<p>Les <em>formatters</em> emploient une fonction configurable par l'utilisateur pour convertir le temps de création d'une entrée de journal en un <em>n</em>-uplet. Par défaut, <a class="reference internal" href="../library/time.html#time.localtime" title="time.localtime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.localtime()</span></code></a> est employé ; pour changer cela pour une instance particulière de <em>formatter</em>, assignez une fonction avec la même signature que <a class="reference internal" href="../library/time.html#time.localtime" title="time.localtime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.localtime()</span></code></a> ou <a class="reference internal" href="../library/time.html#time.gmtime" title="time.gmtime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.gmtime()</span></code></a> à l'attribut <code class="docutils literal notranslate"><span class="pre">converter</span></code> de cette instance. Pour changer cela pour tous les <em>formatters</em>, par exemple si vous voulez que tous votre horodatage soit affiché en GMT, changez l'attribut <code class="docutils literal notranslate"><span class="pre">converter</span></code> de la classe <code class="docutils literal notranslate"><span class="pre">Formatter</span></code> en <code class="docutils literal notranslate"><span class="pre">time.gmtime</span></code>.</p>
+</section>
+<section id="configuring-logging">
+<h3>Configuration de <code class="docutils literal notranslate"><span class="pre">logging</span></code><a class="headerlink" href="#configuring-logging" title="Lien permanent vers ce titre">¶</a></h3>
+<p>On peut configurer <code class="docutils literal notranslate"><span class="pre">logging</span></code> de trois façons :</p>
+<ol class="arabic simple">
+<li><p>Créer des <em>loggers</em>, <em>handlers</em> et <em>formatters</em> explicitement en utilisant du code Python qui appelle les méthodes de configuration listées ci-dessus.</p></li>
+<li><p>Créer un fichier de configuration de <code class="docutils literal notranslate"><span class="pre">logging</span></code> et le lire en employant la fonction <a class="reference internal" href="../library/logging.config.html#logging.config.fileConfig" title="logging.config.fileConfig"><code class="xref py py-func docutils literal notranslate"><span class="pre">fileConfig()</span></code></a>.</p></li>
+<li><p>Créer un dictionnaire d'informations de configuration et le passer à la fonction <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal notranslate"><span class="pre">dictConfig()</span></code></a>.</p></li>
+</ol>
+<p>Pour la documentation de référence de ces deux dernières options, voyez <a class="reference internal" href="../library/logging.config.html#logging-config-api"><span class="std std-ref">Configuration functions</span></a>. L'exemple suivant configure un <em>logger</em> très simple, un <em>handler</em> employant la console, et un <em>formatter</em> simple en utilisant du code Python :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># create logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;simple_example&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="c1"># create console handler and set level to debug</span>
+<span class="n">ch</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="c1"># create formatter</span>
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># add formatter to ch</span>
+<span class="n">ch</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+
+<span class="c1"># add ch to logger</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+
+<span class="c1"># &#39;application&#39; code</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;debug message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;info message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;warn message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;error message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s1">&#39;critical message&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>L'exécution de ce module via la ligne de commande produit la sortie suivante :</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>simple_logging_module.py
+<span class="go">2005-03-19 15:10:26,618 - simple_example - DEBUG - debug message</span>
+<span class="go">2005-03-19 15:10:26,620 - simple_example - INFO - info message</span>
+<span class="go">2005-03-19 15:10:26,695 - simple_example - WARNING - warn message</span>
+<span class="go">2005-03-19 15:10:26,697 - simple_example - ERROR - error message</span>
+<span class="go">2005-03-19 15:10:26,773 - simple_example - CRITICAL - critical message</span>
+</pre></div>
+</div>
+<p>Le module Python suivant crée un <em>logger</em>, un <em>handler</em> et un <em>formatter</em> identiques à ceux de l'exemple détaillé au-dessus, au nom des objets près :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.config</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">fileConfig</span><span class="p">(</span><span class="s1">&#39;logging.conf&#39;</span><span class="p">)</span>
+
+<span class="c1"># create logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;simpleExample&#39;</span><span class="p">)</span>
+
+<span class="c1"># &#39;application&#39; code</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;debug message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;info message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;warn message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;error message&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s1">&#39;critical message&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Voici le fichier <em>logging.conf</em> :</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[loggers]</span>
+<span class="na">keys</span><span class="o">=</span><span class="s">root,simpleExample</span>
+
+<span class="k">[handlers]</span>
+<span class="na">keys</span><span class="o">=</span><span class="s">consoleHandler</span>
+
+<span class="k">[formatters]</span>
+<span class="na">keys</span><span class="o">=</span><span class="s">simpleFormatter</span>
+
+<span class="k">[logger_root]</span>
+<span class="na">level</span><span class="o">=</span><span class="s">DEBUG</span>
+<span class="na">handlers</span><span class="o">=</span><span class="s">consoleHandler</span>
+
+<span class="k">[logger_simpleExample]</span>
+<span class="na">level</span><span class="o">=</span><span class="s">DEBUG</span>
+<span class="na">handlers</span><span class="o">=</span><span class="s">consoleHandler</span>
+<span class="na">qualname</span><span class="o">=</span><span class="s">simpleExample</span>
+<span class="na">propagate</span><span class="o">=</span><span class="s">0</span>
+
+<span class="k">[handler_consoleHandler]</span>
+<span class="na">class</span><span class="o">=</span><span class="s">StreamHandler</span>
+<span class="na">level</span><span class="o">=</span><span class="s">DEBUG</span>
+<span class="na">formatter</span><span class="o">=</span><span class="s">simpleFormatter</span>
+<span class="na">args</span><span class="o">=</span><span class="s">(sys.stdout,)</span>
+
+<span class="k">[formatter_simpleFormatter]</span>
+<span class="na">format</span><span class="o">=</span><span class="s">%(asctime)s - %(name)s - %(levelname)s - %(message)s</span>
+</pre></div>
+</div>
+<p>La sortie est presque identique à celle de l'exemple qui n'est pas basé sur un fichier de configuration :</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>simple_logging_config.py
+<span class="go">2005-03-19 15:38:55,977 - simpleExample - DEBUG - debug message</span>
+<span class="go">2005-03-19 15:38:55,979 - simpleExample - INFO - info message</span>
+<span class="go">2005-03-19 15:38:56,054 - simpleExample - WARNING - warn message</span>
+<span class="go">2005-03-19 15:38:56,055 - simpleExample - ERROR - error message</span>
+<span class="go">2005-03-19 15:38:56,130 - simpleExample - CRITICAL - critical message</span>
+</pre></div>
+</div>
+<p>Vous pouvez constater les avantages de l'approche par fichier de configuration par rapport à celle du code Python, principalement la séparation de la configuration et du code, et la possibilité pour une personne qui ne code pas de modifier facilement les propriétés de journalisation.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>La fonction <a class="reference internal" href="../library/logging.config.html#logging.config.fileConfig" title="logging.config.fileConfig"><code class="xref py py-func docutils literal notranslate"><span class="pre">fileConfig()</span></code></a> accepte un paramètre par défaut <code class="docutils literal notranslate"><span class="pre">disable_existing_loggers</span></code>, qui vaut <code class="docutils literal notranslate"><span class="pre">True</span></code> par défaut pour des raisons de compatibilité ascendante. Ce n'est pas forcément ce que vous souhaitez : en effet, tous les <em>loggers</em> créés avant l'appel à <a class="reference internal" href="../library/logging.config.html#logging.config.fileConfig" title="logging.config.fileConfig"><code class="xref py py-func docutils literal notranslate"><span class="pre">fileConfig()</span></code></a> seront désactivés sauf si eux-mêmes (ou l'un de leurs parents) sont explicitement nommés dans le fichier de configuration. Veuillez vous reporter à la documentation pour plus de détails, et donner la valeur <code class="docutils literal notranslate"><span class="pre">False</span></code> à ce paramètre si vous le souhaitez.</p>
+<p>Le dictionnaire passé à <a class="reference internal" href="../library/logging.config.html#logging.config.dictConfig" title="logging.config.dictConfig"><code class="xref py py-func docutils literal notranslate"><span class="pre">dictConfig()</span></code></a> peut aussi spécifier une valeur Booléenne pour la clef <code class="docutils literal notranslate"><span class="pre">disable_existing_loggers</span></code>. Si cette valeur n'est pas donnée, elle est interprétée comme vraie par défaut. Cela conduit au comportement de désactivation des <em>loggers</em> décrit ci-dessus, qui n'est pas forcément celui que vous souhaitez ; dans ce cas, donnez explicitement la valeur <code class="docutils literal notranslate"><span class="pre">False</span></code> à cette clef.</p>
+</div>
+<p>Notez que les noms de classe référencés dans le fichier de configuration doivent être relatifs au module <code class="docutils literal notranslate"><span class="pre">logging</span></code>, ou des valeurs absolues qui peuvent être résolues à travers les mécanismes d'importation habituels. Ainsi, on peut soit utiliser <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.WatchedFileHandler" title="logging.handlers.WatchedFileHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">WatchedFileHandler</span></code></a> (relativement au module <code class="docutils literal notranslate"><span class="pre">logging</span></code>) ou <code class="docutils literal notranslate"><span class="pre">mypackage.mymodule.MyHandler</span></code> (pour une classe définie dans le paquet <code class="docutils literal notranslate"><span class="pre">mypackage</span></code> et le module <code class="docutils literal notranslate"><span class="pre">mymodule</span></code>, si <code class="docutils literal notranslate"><span class="pre">mypackage</span></code> est disponible dans les chemins d'importation de Python).</p>
+<p>Dans Python 3.2, un nouveau moyen de configuration de la journalisation a été introduit, à l'aide de dictionnaires pour contenir les informations de configuration. Cela fournit un sur-ensemble de la fonctionnalité décrite ci-dessus basée sur un fichier de configuration et c’est la méthode recommandée pour les nouvelles applications et les déploiements. Étant donné qu'un dictionnaire Python est utilisé pour contenir des informations de configuration et que vous pouvez remplir ce dictionnaire à l'aide de différents moyens, vous avez plus d'options pour la configuration. Par exemple, vous pouvez utiliser un fichier de configuration au format JSON ou, si vous avez accès à la fonctionnalité de traitement YAML, un fichier au format YAML, pour remplir le dictionnaire de configuration. Ou bien sûr, vous pouvez construire le dictionnaire dans le code Python, le recevoir sous forme de <em>pickle</em> sur un connecteur, ou utiliser n'importe quelle approche suivant la logique de votre application.</p>
+<p>Voici un exemple définissant la même configuration que ci-dessus, au format YAML  pour le dictionnaire correspondant à cette nouvelle approche :</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nt">formatters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">simple</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;%(asctime)s</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">%(name)s</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">%(levelname)s</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">%(message)s&#39;</span>
+<span class="nt">handlers</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">console</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logging.StreamHandler</span>
+<span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG</span>
+<span class="w">    </span><span class="nt">formatter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">simple</span>
+<span class="w">    </span><span class="nt">stream</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ext://sys.stdout</span>
+<span class="nt">loggers</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">simpleExample</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG</span>
+<span class="w">    </span><span class="nt">handlers</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">console</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">propagate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no</span>
+<span class="nt">root</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG</span>
+<span class="w">  </span><span class="nt">handlers</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">console</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>Pour plus d'informations sur la journalisation à l'aide d'un dictionnaire, consultez <a class="reference internal" href="../library/logging.config.html#logging-config-api"><span class="std std-ref">Configuration functions</span></a>.</p>
+</section>
+<section id="what-happens-if-no-configuration-is-provided">
+<h3>Comportement par défaut (si aucune configuration n'est fournie)<a class="headerlink" href="#what-happens-if-no-configuration-is-provided" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Si aucune configuration de journalisation n'est fournie, il est possible d'avoir une situation où un événement doit faire l'objet d'une journalisation, mais où aucun gestionnaire ne peut être trouvé pour tracer l'événement. Le comportement du paquet <code class="docutils literal notranslate"><span class="pre">logging</span></code> dans ces circonstances dépend de la version Python.</p>
+<p>Pour les versions de Python antérieures à 3.2, le comportement est le suivant :</p>
+<ul class="simple">
+<li><p>Si <em>logging.raiseExceptions</em> vaut <code class="docutils literal notranslate"><span class="pre">False</span></code> (mode production), l’événement est silencieusement abandonné.</p></li>
+<li><p>Si <em>logging.raiseExceptions</em> vaut <code class="docutils literal notranslate"><span class="pre">True</span></code> (mode de développement), un message <em>No handlers could be found for logger X.Y.Z</em> est écrit sur la sortie standard une fois.</p></li>
+</ul>
+<p>Dans Python 3.2 et ultérieur, le comportement est le suivant :</p>
+<ul class="simple">
+<li><p>L'événement est sorti à l'aide d'un « gestionnaire de dernier recours », stocké dans <code class="docutils literal notranslate"><span class="pre">logging.lastResort</span></code>. Ce gestionnaire interne n'est associé à aucun enregistreur et agit comme un <a class="reference internal" href="../library/logging.handlers.html#logging.StreamHandler" title="logging.StreamHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamHandler</span></code></a> qui écrit le message de description de l'événement vers la valeur actuelle de <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code> (par conséquent, en respectant les redirections qui peuvent être en vigueur). Aucun formatage n'est fait sur le message – juste le message de description de l'événement nu est affiché. Le niveau du gestionnaire est défini sur <code class="docutils literal notranslate"><span class="pre">WARNING</span></code>, de sorte que tous les événements de cette sévérité et plus seront écrits.</p></li>
+</ul>
+<p>Pour obtenir un comportement antérieur à 3.2, <code class="docutils literal notranslate"><span class="pre">logging.lastResort</span></code> peut être mis à <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</section>
+<section id="configuring-logging-for-a-library">
+<span id="library-config"></span><h3>Configuration de la journalisation pour une bibliothèque<a class="headerlink" href="#configuring-logging-for-a-library" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Lors du développement d'une bibliothèque qui utilise la journalisation, vous devez prendre soin de documenter la façon dont la bibliothèque utilise la journalisation (par exemple, les noms des enregistreurs utilisés). Consacrez aussi un peu de temps à la configuration de la journalisation. Si l'application utilisant votre bibliothèque n'utilise pas la journalisation et que le code de la bibliothèque effectue des appels de journalisation, alors (comme décrit dans la section précédente), les événements de gravité <code class="docutils literal notranslate"><span class="pre">WARNING</span></code> et au-dessus seront écrits sur <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code>. Cela est considéré comme le meilleur comportement par défaut.</p>
+<p>Si, pour une raison quelconque, vous ne voulez <em>pas</em> que ces messages soient affichés en l'absence de toute configuration de journalisation, vous pouvez attacher un gestionnaire <em>ne-fait-rien</em> à l'enregistreur de niveau supérieur de votre bibliothèque. Cela évite qu’un message ne soit écrit, puisqu’un gestionnaire sera toujours trouvé pour les événements de la bibliothèque, il ne produit tout simplement pas de sortie. Si celui qui utilise la bibliothèque configure la journalisation pour son application, il est vraisemblable que la configuration ajoutera certains gestionnaires et, si les niveaux sont convenablement configurés, alors la journalisation des appels effectués dans le code de bibliothèque enverra la sortie à ces gestionnaires, comme d'habitude.</p>
+<p>Un gestionnaire <em>ne-fait-rien</em> est inclus dans le paquet de journalisation : <a class="reference internal" href="../library/logging.handlers.html#logging.NullHandler" title="logging.NullHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">NullHandler</span></code></a> (depuis Python 3.1). Une instance de ce gestionnaire peut être ajoutée à l'enregistreur de niveau supérieur de l'espace de nommage de journalisation utilisé par la bibliothèque (<em>si</em> vous souhaitez empêcher la copie de la journalisation de votre bibliothèque dans <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code> en l'absence de configuration de journalisation). Si toute la journalisation par une bibliothèque <em>foo</em> est effectuée en utilisant des enregistreurs avec des noms correspondant à <em>foo.x</em>, <em>foo.x.y</em>, etc., alors le code :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">NullHandler</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>doit avoir l'effet désiré. Si une organisation produit un certain nombre de bibliothèques, le nom de l'enregistreur spécifié peut être <code class="docutils literal notranslate"><span class="pre">orgname.foo</span></code> plutôt que simplement <code class="docutils literal notranslate"><span class="pre">foo</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Il est fortement conseillé de <em>ne pas journaliser vers l'enregistreur racine</em> dans votre bibliothèque. À la place, utilisez un enregistreur avec un nom unique et facilement identifiable, tel que <code class="docutils literal notranslate"><span class="pre">__name__</span></code> pour le paquet ou le module de niveau supérieur de votre bibliothèque. La journalisation dans l'enregistreur racine rend difficile voire impossible pour le développeur de l'application de configurer la verbosité de journalisation ou les gestionnaires de votre bibliothèque comme il le souhaite.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Il est vivement conseillé de ne <em>pas ajouter de gestionnaires autres que</em> <a class="reference internal" href="../library/logging.handlers.html#logging.NullHandler" title="logging.NullHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">NullHandler</span></code></a> <em>aux enregistreurs de votre bibliothèque</em>. Cela est dû au fait que la configuration des gestionnaires est la prérogative du développeur d'applications qui utilise votre bibliothèque. Le développeur d'applications connaît le public cible et les gestionnaires les plus appropriés pour ses applications : si vous ajoutez des gestionnaires « sous le manteau », vous pourriez bien interférer avec les tests unitaires et la journalisation qui convient à ses exigences.</p>
+</div>
+</section>
+</section>
+<section id="logging-levels">
+<h2>Niveaux de journalisation<a class="headerlink" href="#logging-levels" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les valeurs numériques des niveaux de journalisation sont données dans le tableau suivant. Celles-ci n'ont d'intérêt que si vous voulez définir vos propres niveaux, avec des valeurs spécifiques par rapport aux niveaux prédéfinis. Si vous définissez un niveau avec la même valeur numérique, il écrase la valeur prédéfinie ; le nom prédéfini est perdu.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 48%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Niveau</p></th>
+<th class="head"><p>Valeur numérique</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CRITICAL</span></code></p></td>
+<td><p>50</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR</span></code></p></td>
+<td><p>40</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">WARNING</span></code></p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">INFO</span></code></p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DEBUG</span></code></p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NOTSET</span></code></p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p>Les niveaux peuvent également être associés à des enregistreurs, étant définis soit par le développeur, soit par le chargement d'une configuration de journalisation enregistrée. Lorsqu'une méthode de journalisation est appelée sur un enregistreur, l'enregistreur compare son propre niveau avec le niveau associé à l'appel de méthode. Si le niveau de l'enregistreur est supérieur à l'appel de méthode, aucun message de journalisation n'est réellement généré. C'est le mécanisme de base contrôlant la verbosité de la sortie de journalisation.</p>
+<p>Les messages de journalisation sont codés en tant qu'instances de <a class="reference internal" href="../library/logging.html#logging.LogRecord" title="logging.LogRecord"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogRecord</span></code></a>. Lorsqu'un enregistreur décide de réellement enregistrer un événement, une instance de <a class="reference internal" href="../library/logging.html#logging.LogRecord" title="logging.LogRecord"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogRecord</span></code></a> est créée à partir du message de journalisation.</p>
+<p>Les messages de journalisation sont soumis à un mécanisme d'expédition via l'utilisation de <em class="dfn">handlers</em>, qui sont des instances de sous-classes de la classe <a class="reference internal" href="../library/logging.html#logging.Handler" title="logging.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></a>. Les gestionnaires sont chargés de s'assurer qu'un message journalisé (sous la forme d'un <a class="reference internal" href="../library/logging.html#logging.LogRecord" title="logging.LogRecord"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogRecord</span></code></a>) atterrit dans un emplacement particulier (ou un ensemble d'emplacements) qui est utile pour le public cible pour ce message (tels que les utilisateurs finaux, le personnel chargé de l'assistance aux utilisateurs, les administrateurs système ou les développeurs). Des instances de <a class="reference internal" href="../library/logging.html#logging.LogRecord" title="logging.LogRecord"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogRecord</span></code></a> adaptées à leur destination finale sont passées aux gestionnaires destinées à des destinations particulières. Chaque enregistreur peut avoir zéro, un ou plusieurs gestionnaires associés à celui-ci (via la méthode <a class="reference internal" href="../library/logging.html#logging.Logger.addHandler" title="logging.Logger.addHandler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">addHandler()</span></code></a> de <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a>). En plus de tous les gestionnaires directement associés à un enregistreur, <em>tous les gestionnaires associés à tous les ancêtres de l'enregistreur</em> sont appelés pour envoyer le message (à moins que l'indicateur <em>propager</em> pour un enregistreur soit défini sur la valeur <code class="docutils literal notranslate"><span class="pre">False</span></code>, auquel cas le passage au gestionnaire ancêtre s'arrête).</p>
+<p>Tout comme pour les enregistreurs, les gestionnaires peuvent avoir des niveaux associés. Le niveau d'un gestionnaire agit comme un filtre de la même manière que le niveau d'un enregistreur. Si un gestionnaire décide de réellement distribuer un événement, la méthode <a class="reference internal" href="../library/logging.html#logging.Handler.emit" title="logging.Handler.emit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">emit()</span></code></a> est utilisée pour envoyer le message à sa destination. La plupart des sous-classes définies par l'utilisateur de <a class="reference internal" href="../library/logging.html#logging.Handler" title="logging.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></a> devront remplacer ce <a class="reference internal" href="../library/logging.html#logging.Handler.emit" title="logging.Handler.emit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">emit()</span></code></a>.</p>
+<section id="custom-levels">
+<span id="id1"></span><h3>Niveaux personnalisés<a class="headerlink" href="#custom-levels" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La définition de vos propres niveaux est possible, mais ne devrait pas être nécessaire, car les niveaux existants ont été choisis par expérience. Cependant, si vous êtes convaincu que vous avez besoin de niveaux personnalisés, prenez grand soin à leur réalisation et il est pratiquement certain que c’est <em>une très mauvaise idée de définir des niveaux personnalisés si vous développez une bibliothèque</em>. Car si plusieurs auteurs de bibliothèque définissent tous leurs propres niveaux personnalisés, il y a une chance que la sortie de journalisation de ces multiples bibliothèques utilisées ensemble sera difficile pour le développeur à utiliser pour contrôler et/ou interpréter, car une valeur numérique donnée peut signifier des choses différentes pour différentes bibliothèques.</p>
+</section>
+</section>
+<section id="useful-handlers">
+<span id="id2"></span><h2>Gestionnaires utiles<a class="headerlink" href="#useful-handlers" title="Lien permanent vers ce titre">¶</a></h2>
+<p>En plus de la classe mère <a class="reference internal" href="../library/logging.html#logging.Handler" title="logging.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></a>, de nombreuses sous-classes utiles sont fournies :</p>
+<ol class="arabic simple">
+<li><p>Les instances <a class="reference internal" href="../library/logging.handlers.html#logging.StreamHandler" title="logging.StreamHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamHandler</span></code></a> envoient des messages aux flux (objets de type fichier).</p></li>
+<li><p>Les instances <a class="reference internal" href="../library/logging.handlers.html#logging.FileHandler" title="logging.FileHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileHandler</span></code></a> envoient des messages à des fichiers sur le disque.</p></li>
+<li><p><a class="reference internal" href="../library/logging.handlers.html#logging.handlers.BaseRotatingHandler" title="logging.handlers.BaseRotatingHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRotatingHandler</span></code></a> est la classe mère pour les gestionnaires qui assurent la rotation des fichiers de journalisation à partir d’un certain point. Elle n'est pas destinée à être instanciée directement. Utilisez plutôt <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.RotatingFileHandler" title="logging.handlers.RotatingFileHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">RotatingFileHandler</span></code></a> ou <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.TimedRotatingFileHandler" title="logging.handlers.TimedRotatingFileHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimedRotatingFileHandler</span></code></a>.</p></li>
+<li><p>Les instances <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.RotatingFileHandler" title="logging.handlers.RotatingFileHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">RotatingFileHandler</span></code></a> envoient des messages à des fichiers sur le disque, avec la prise en charge des tailles maximales de fichiers de journalisation et de la rotation des fichiers de journalisation.</p></li>
+<li><p>Les instances de <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.TimedRotatingFileHandler" title="logging.handlers.TimedRotatingFileHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimedRotatingFileHandler</span></code></a> envoient des messages aux fichiers de disque, en permutant le fichier journal à intervalles réguliers.</p></li>
+<li><p>Les instances de <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.SocketHandler" title="logging.handlers.SocketHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocketHandler</span></code></a> envoient des messages aux connecteurs TCP/IP. Depuis 3.4, les connecteurs UNIX sont également pris en charge.</p></li>
+<li><p>Les instances de <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.DatagramHandler" title="logging.handlers.DatagramHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatagramHandler</span></code></a> envoient des messages aux connecteurs UDP. Depuis 3.4, les connecteurs UNIX sont également pris en charge.</p></li>
+<li><p>Les instances de <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.SMTPHandler" title="logging.handlers.SMTPHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">SMTPHandler</span></code></a> envoient des messages à une adresse e-mail désignée.</p></li>
+<li><p>Les instances de <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.SysLogHandler" title="logging.handlers.SysLogHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">SysLogHandler</span></code></a> envoient des messages à un <em>daemon</em> <em>syslog</em> UNIX, éventuellement sur un ordinateur distant.</p></li>
+<li><p>Les instances de <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.NTEventLogHandler" title="logging.handlers.NTEventLogHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">NTEventLogHandler</span></code></a> envoient des messages à un journal des événements Windows NT/2000/XP.</p></li>
+<li><p>Les instances de <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.MemoryHandler" title="logging.handlers.MemoryHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryHandler</span></code></a> envoient des messages à un tampon en mémoire, qui est vidé chaque fois que des critères spécifiques sont remplis.</p></li>
+<li><p>Les instances de <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.HTTPHandler" title="logging.handlers.HTTPHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">HTTPHandler</span></code></a> envoient des messages à un serveur HTTP à l'aide de la sémantique <code class="docutils literal notranslate"><span class="pre">GET</span></code> ou <code class="docutils literal notranslate"><span class="pre">POST</span></code>.</p></li>
+<li><p>Les instances de <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.WatchedFileHandler" title="logging.handlers.WatchedFileHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">WatchedFileHandler</span></code></a> surveillent le fichier sur lequel elles se connectent. Si le fichier change, il est fermé et rouvert à l'aide du nom de fichier. Ce gestionnaire n'est utile que sur les systèmes de type UNIX ; Windows ne prend pas en charge le mécanisme sous-jacent utilisé.</p></li>
+<li><p>Les instances de <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.QueueHandler" title="logging.handlers.QueueHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueueHandler</span></code></a> envoient des messages à une file d'attente, telles que celles implémentées dans les modules <a class="reference internal" href="../library/queue.html#module-queue" title="queue: A synchronized queue class."><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code></a> ou <a class="reference internal" href="../library/multiprocessing.html#module-multiprocessing" title="multiprocessing: Process-based parallelism."><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="../library/logging.handlers.html#logging.NullHandler" title="logging.NullHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">NullHandler</span></code></a> instances do nothing with error messages. They are used
+by library developers who want to use logging, but want to avoid the 'No
+handlers could be found for logger <em>XXX</em>' message which can be displayed if
+the library user has not configured logging. See <a class="reference internal" href="#library-config"><span class="std std-ref">Configuration de la journalisation pour une bibliothèque</span></a> for
+more information.</p></li>
+</ol>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.1: </span>La classe <a class="reference internal" href="../library/logging.handlers.html#logging.NullHandler" title="logging.NullHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">NullHandler</span></code></a>.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.2: </span>La classe <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.QueueHandler" title="logging.handlers.QueueHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueueHandler</span></code></a>.</p>
+</div>
+<p>Les classes <a class="reference internal" href="../library/logging.handlers.html#logging.NullHandler" title="logging.NullHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">NullHandler</span></code></a>, <a class="reference internal" href="../library/logging.handlers.html#logging.StreamHandler" title="logging.StreamHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamHandler</span></code></a> et <a class="reference internal" href="../library/logging.handlers.html#logging.FileHandler" title="logging.FileHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileHandler</span></code></a> sont définies dans le module de journalisation de base. Les autres gestionnaires sont définis dans un sous-module, <a class="reference internal" href="../library/logging.handlers.html#module-logging.handlers" title="logging.handlers: Handlers for the logging module."><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code></a> (il existe également un autre sous-module, <a class="reference internal" href="../library/logging.config.html#module-logging.config" title="logging.config: Configuration of the logging module."><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code></a>, pour la fonctionnalité de configuration).</p>
+<p>Les messages journalisés sont mis en forme pour la présentation via des instances de la classe <a class="reference internal" href="../library/logging.html#logging.Formatter" title="logging.Formatter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatter</span></code></a>. Ils sont initialisés avec une chaîne de format appropriée pour une utilisation avec l'opérateur % et un dictionnaire.</p>
+<p>Pour formater plusieurs messages dans un lot, des instances de <code class="xref py py-class docutils literal notranslate"><span class="pre">BufferingFormatter</span></code> peuvent être utilisées. En plus de la chaîne de format (qui est appliquée à chaque message dans le lot), il existe des dispositions pour les chaînes de format d'en-tête et de fin.</p>
+<p>Lorsque le filtrage basé sur le niveau de l'enregistreur et/ou le niveau du gestionnaire ne suffit pas, les instances de <a class="reference internal" href="../library/logging.html#logging.Filter" title="logging.Filter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Filter</span></code></a> peuvent être ajoutées aux deux instances de <a class="reference internal" href="../library/logging.html#logging.Logger" title="logging.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a> et <a class="reference internal" href="../library/logging.html#logging.Handler" title="logging.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></a> (par le biais de leur méthode <a class="reference internal" href="../library/logging.html#logging.Handler.addFilter" title="logging.Handler.addFilter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">addFilter()</span></code></a>). Avant de décider de traiter un message plus loin, les enregistreurs et les gestionnaires consultent tous leurs filtres pour obtenir l'autorisation. Si un filtre renvoie une valeur <code class="docutils literal notranslate"><span class="pre">False</span></code>, le traitement du message est arrêté.</p>
+<p>La fonctionnalité de base <a class="reference internal" href="../library/logging.html#logging.Filter" title="logging.Filter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Filter</span></code></a> permet de filtrer par nom de <em>logger</em> spécifique. Si cette fonctionnalité est utilisée, les messages envoyés à l'enregistreur nommé et à ses enfants sont autorisés via le filtre et tous les autres sont abandonnés.</p>
+</section>
+<section id="exceptions-raised-during-logging">
+<span id="logging-exceptions"></span><h2>Exceptions levées par la journalisation<a class="headerlink" href="#exceptions-raised-during-logging" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le paquet de journalisation est conçu pour ne pas faire apparaître les exceptions qui se produisent lors de la journalisation en production. Il s'agit de sorte que les erreurs qui se produisent lors de la gestion des événements de journalisation (telles qu'une mauvaise configuration de la journalisation, une erreur réseau ou d'autres erreurs similaires) ne provoquent pas l'arrêt de l'application utilisant la journalisation.</p>
+<p>Les exceptions <a class="reference internal" href="../library/exceptions.html#SystemExit" title="SystemExit"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemExit</span></code></a> et <a class="reference internal" href="../library/exceptions.html#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a> ne sont jamais passées sous silence. Les autres exceptions qui se produisent pendant la méthode <a class="reference internal" href="../library/logging.html#logging.Handler.emit" title="logging.Handler.emit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">emit()</span></code></a> d'une sous-classe <a class="reference internal" href="../library/logging.html#logging.Handler" title="logging.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></a> sont passées à sa méthode <a class="reference internal" href="../library/logging.html#logging.Handler.handleError" title="logging.Handler.handleError"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handleError()</span></code></a>.</p>
+<p>L'implémentation par défaut de <a class="reference internal" href="../library/logging.html#logging.Handler.handleError" title="logging.Handler.handleError"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handleError()</span></code></a> dans la classe <a class="reference internal" href="../library/logging.html#logging.Handler" title="logging.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></a> vérifie si une variable au niveau du module, <code class="xref py py-data docutils literal notranslate"><span class="pre">raiseExceptions</span></code>, est définie. Si cette valeur est définie, la trace de la pile d'appels est affichée sur <a class="reference internal" href="../library/sys.html#sys.stderr" title="sys.stderr"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stderr</span></code></a>. Si elle n'est pas définie, l'exception est passée sous silence.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>La valeur par défaut de <code class="xref py py-data docutils literal notranslate"><span class="pre">raiseExceptions</span></code> est <code class="docutils literal notranslate"><span class="pre">True</span></code>. C'est parce que pendant le développement, vous voulez généralement être notifié de toutes les exceptions qui se produisent. Il est conseillé de définir <code class="xref py py-data docutils literal notranslate"><span class="pre">raiseExceptions</span></code> à <code class="docutils literal notranslate"><span class="pre">False</span></code> pour une utilisation en production.</p>
+</div>
+</section>
+<section id="using-arbitrary-objects-as-messages">
+<span id="arbitrary-object-messages"></span><h2>Utilisation d'objets arbitraires comme messages<a class="headerlink" href="#using-arbitrary-objects-as-messages" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans les sections et exemples précédents, il a été supposé que le message passé lors de la journalisation de l'événement est une chaîne. Cependant, ce n'est pas la seule possibilité. Vous pouvez passer un objet arbitraire en tant que message et sa méthode <a class="reference internal" href="../reference/datamodel.html#object.__str__" title="object.__str__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__str__()</span></code></a> est appelée lorsque le système de journalisation doit le convertir en une représentation sous forme de chaîne. En fait, si vous le souhaitez, vous pouvez complètement éviter de calculer une représentation sous forme de chaîne. Par exemple, les gestionnaires <a class="reference internal" href="../library/logging.handlers.html#logging.handlers.SocketHandler" title="logging.handlers.SocketHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocketHandler</span></code></a> émettent un événement en lui appliquant <em>pickle</em> et en l'envoyant sur le réseau.</p>
+</section>
+<section id="optimization">
+<h2>Optimisation<a class="headerlink" href="#optimization" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La mise en forme des arguments de message est différée jusqu'à ce qu'elle ne puisse pas être évitée. Toutefois, le calcul des arguments passés à la méthode de journalisation peut également être coûteux et vous voudrez peut-être éviter de le faire si l'enregistreur va simplement jeter votre événement. Pour décider de ce qu'il faut faire, vous pouvez appeler la méthode <a class="reference internal" href="../library/logging.html#logging.Logger.isEnabledFor" title="logging.Logger.isEnabledFor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isEnabledFor()</span></code></a> qui prend en argument le niveau et renvoie <code class="docutils literal notranslate"><span class="pre">True</span></code> si un événement est créé par l'enregistreur pour ce niveau d'appel. Vous pouvez écrire un code qui ressemble à ça :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">logger</span><span class="o">.</span><span class="n">isEnabledFor</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Message with </span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">expensive_func1</span><span class="p">(),</span>
+                                        <span class="n">expensive_func2</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>de sorte que si le seuil du journaliseur est défini au-dessus de <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code>, les appels à <code class="xref py py-func docutils literal notranslate"><span class="pre">expensive_func1()</span></code> et <code class="xref py py-func docutils literal notranslate"><span class="pre">expensive_func2()</span></code> ne sont jamais faits.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Dans certains cas, <a class="reference internal" href="../library/logging.html#logging.Logger.isEnabledFor" title="logging.Logger.isEnabledFor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isEnabledFor()</span></code></a> peut être plus coûteux que vous le souhaitez (par exemple pour les enregistreurs profondément imbriqués où un niveau explicite n'est défini que dans la hiérarchie des enregistreurs). Dans de tels cas (ou si vous souhaitez éviter d'appeler une méthode dans des boucles optimisées), vous pouvez mettre en cache le résultat d'un appel à <a class="reference internal" href="../library/logging.html#logging.Logger.isEnabledFor" title="logging.Logger.isEnabledFor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isEnabledFor()</span></code></a> dans une variable locale ou d'instance, et l'utiliser au lieu d'appeler la méthode à chaque fois. Une telle valeur mise en cache ne doit être recalculée que lorsque la configuration de journalisation change dynamiquement pendant l'exécution de l'application (ce qui est rarement le cas).</p>
+</div>
+<p>Il existe d'autres optimisations qui peuvent être faites pour des applications spécifiques qui nécessitent un contrôle plus précis sur les informations de journalisation collectées. Voici une liste de choses que vous pouvez faire pour éviter le traitement pendant la journalisation dont vous n'avez pas besoin :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 51%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Ce que vous ne voulez pas collecter</p></th>
+<th class="head"><p>Comment éviter de le collecter</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Informations sur l'endroit où les appels ont été faits.</p></td>
+<td><p>Définissez <code class="docutils literal notranslate"><span class="pre">logging._srcfile</span></code> à <code class="docutils literal notranslate"><span class="pre">None</span></code>. Cela évite d'appeler <a class="reference internal" href="../library/sys.html#sys._getframe" title="sys._getframe"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys._getframe()</span></code></a>, qui peut aider à accélérer votre code dans des environnements comme PyPy (qui ne peut pas accélérer le code qui utilise <a class="reference internal" href="../library/sys.html#sys._getframe" title="sys._getframe"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys._getframe()</span></code></a>).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Informations de <em>threading</em>.</p></td>
+<td><p>Mettez <code class="docutils literal notranslate"><span class="pre">logging.logThreads</span></code> à <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Identifiant du processus courant (résultat de <a class="reference internal" href="../library/os.html#os.getpid" title="os.getpid"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.getpid()</span></code></a>)</p></td>
+<td><p>Mettez <code class="docutils literal notranslate"><span class="pre">logging.logProcesses</span></code> à <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Nom du processus actuel, si vous vous servez de <code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code> pour gérer plusieurs processus à la fois</p></td>
+<td><p>Mettez <code class="docutils literal notranslate"><span class="pre">logging.logMultiProcessing</span></code> à <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Current <a class="reference internal" href="../library/asyncio-task.html#asyncio.Task" title="asyncio.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></a> name when using
+<code class="docutils literal notranslate"><span class="pre">asyncio</span></code>.</p></td>
+<td><p>Set <code class="docutils literal notranslate"><span class="pre">logging.logAsyncioTasks</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Notez également que le module de journalisation principale inclut uniquement les gestionnaires de base. Si vous n'importez pas <a class="reference internal" href="../library/logging.handlers.html#module-logging.handlers" title="logging.handlers: Handlers for the logging module."><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code></a> et <a class="reference internal" href="../library/logging.config.html#module-logging.config" title="logging.config: Configuration of the logging module."><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code></a>, ils ne prendront pas de mémoire.</p>
+</section>
+<section id="other-resources">
+<span id="tutorial-ref-links"></span><h2>Other resources<a class="headerlink" href="#other-resources" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt>Module <a class="reference internal" href="../library/logging.html#module-logging" title="logging: Flexible event logging system for applications."><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a></dt><dd><p>Référence d'API pour le module de journalisation.</p>
+</dd>
+<dt>Module <a class="reference internal" href="../library/logging.config.html#module-logging.config" title="logging.config: Configuration of the logging module."><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code></a></dt><dd><p>API de configuration pour le module de journalisation.</p>
+</dd>
+<dt>Module <a class="reference internal" href="../library/logging.handlers.html#module-logging.handlers" title="logging.handlers: Handlers for the logging module."><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code></a></dt><dd><p>Gestionnaires utiles inclus avec le module de journalisation.</p>
+</dd>
+</dl>
+<p><a class="reference internal" href="logging-cookbook.html#logging-cookbook"><span class="std std-ref">A logging cookbook</span></a></p>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Tutoriel sur la journalisation</a><ul>
+<li><a class="reference internal" href="#basic-logging-tutorial">Les bases de l'utilisation du module <code class="docutils literal notranslate"><span class="pre">logging</span></code></a><ul>
+<li><a class="reference internal" href="#when-to-use-logging">Quand utiliser <code class="docutils literal notranslate"><span class="pre">logging</span></code></a></li>
+<li><a class="reference internal" href="#a-simple-example">Un exemple simple</a></li>
+<li><a class="reference internal" href="#logging-to-a-file">Enregistrer les évènements dans un fichier</a></li>
+<li><a class="reference internal" href="#logging-from-multiple-modules">Employer <em>logging</em> à partir de différents modules</a></li>
+<li><a class="reference internal" href="#logging-variable-data">Journalisation de données variables</a></li>
+<li><a class="reference internal" href="#changing-the-format-of-displayed-messages">Modifier le format du message affiché</a></li>
+<li><a class="reference internal" href="#displaying-the-date-time-in-messages">Afficher l'horodatage dans les messages</a></li>
+<li><a class="reference internal" href="#next-steps">Étapes suivantes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-logging-tutorial">Usage avancé de Logging</a><ul>
+<li><a class="reference internal" href="#logging-flow">Flux du processus de journalisation</a></li>
+<li><a class="reference internal" href="#loggers">Loggers</a></li>
+<li><a class="reference internal" href="#handlers">Handlers</a></li>
+<li><a class="reference internal" href="#formatters">Formatters</a></li>
+<li><a class="reference internal" href="#configuring-logging">Configuration de <code class="docutils literal notranslate"><span class="pre">logging</span></code></a></li>
+<li><a class="reference internal" href="#what-happens-if-no-configuration-is-provided">Comportement par défaut (si aucune configuration n'est fournie)</a></li>
+<li><a class="reference internal" href="#configuring-logging-for-a-library">Configuration de la journalisation pour une bibliothèque</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logging-levels">Niveaux de journalisation</a><ul>
+<li><a class="reference internal" href="#custom-levels">Niveaux personnalisés</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#useful-handlers">Gestionnaires utiles</a></li>
+<li><a class="reference internal" href="#exceptions-raised-during-logging">Exceptions levées par la journalisation</a></li>
+<li><a class="reference internal" href="#using-arbitrary-objects-as-messages">Utilisation d'objets arbitraires comme messages</a></li>
+<li><a class="reference internal" href="#optimization">Optimisation</a></li>
+<li><a class="reference internal" href="#other-resources">Other resources</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="functional.html"
+                          title="Chapitre précédent">Guide pratique : programmation fonctionnelle</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="logging-cookbook.html"
+                          title="Chapitre suivant">Recettes pour la journalisation</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/howto/logging.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="logging-cookbook.html" title="Recettes pour la journalisation"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="functional.html" title="Guide pratique : programmation fonctionnelle"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Les HOWTOs de Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Tutoriel sur la journalisation</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

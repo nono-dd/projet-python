@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="Services génériques du système d'exploitation" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/allos.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Les modules documentés dans ce chapitre fournissent des interfaces vers des fonctionnalités communes à la grande majorité des systèmes d'exploitation, telles que les fichiers et l'horloge. Bien que..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Les modules documentés dans ce chapitre fournissent des interfaces vers des fonctionnalités communes à la grande majorité des systèmes d'exploitation, telles que les fichiers et l'horloge. Bien que..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>Services génériques du système d&#39;exploitation &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="os — Diverses interfaces pour le système d&#39;exploitation" href="os.html" />
+    <link rel="prev" title="secrets — Générer des nombres aléatoires de façon sécurisée pour la gestion des secrets" href="secrets.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/allos.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="secrets.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Générer des nombres aléatoires de façon sécurisée pour la gestion des secrets</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="os.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Diverses interfaces pour le système d'exploitation</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/allos.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="os.html" title="os — Diverses interfaces pour le système d&#39;exploitation"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="secrets.html" title="secrets — Générer des nombres aléatoires de façon sécurisée pour la gestion des secrets"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">La bibliothèque standard</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Services génériques du système d'exploitation</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="generic-operating-system-services">
+<span id="allos"></span><h1>Services génériques du système d'exploitation<a class="headerlink" href="#generic-operating-system-services" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Les modules documentés dans ce chapitre fournissent des interfaces vers des fonctionnalités communes à la grande majorité des systèmes d'exploitation, telles que les fichiers et l'horloge.  Bien que ces interfaces soient classiquement calquées sur les interfaces Unix ou C, elles sont aussi disponibles sur la plupart des autres systèmes. En voici un aperçu :</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="os.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Diverses interfaces pour le système d'exploitation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="os.html#file-names-command-line-arguments-and-environment-variables">Noms de fichiers, arguments en ligne de commande, et variables d'environnement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os.html#python-utf-8-mode">Python UTF-8 Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os.html#process-parameters">Paramètres de processus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os.html#file-object-creation">Création de fichiers objets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os.html#file-descriptor-operations">Opérations sur les descripteurs de fichiers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="os.html#querying-the-size-of-a-terminal">Demander la taille d'un terminal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="os.html#inheritance-of-file-descriptors">Héritage de descripteurs de fichiers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="os.html#files-and-directories">Fichiers et répertoires</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="os.html#linux-extended-attributes">Attributs étendus pour Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="os.html#process-management">Gestion des processus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os.html#interface-to-the-scheduler">Interface pour l'ordonnanceur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os.html#miscellaneous-system-information">Diverses informations sur le système</a></li>
+<li class="toctree-l2"><a class="reference internal" href="os.html#random-numbers">Nombres aléatoires</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> --- Core tools for working with streams</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="io.html#overview">Aperçu</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="io.html#text-i-o">Text I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#binary-i-o">Binary I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#raw-i-o">Raw I/O</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#text-encoding">Text Encoding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="io.html#opt-in-encodingwarning">Opt-in EncodingWarning</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#high-level-module-interface">High-level Module Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#class-hierarchy">Class hierarchy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="io.html#i-o-base-classes">I/O Base Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#raw-file-i-o">Raw File I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#buffered-streams">Buffered Streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#id1">Text I/O</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#performance">Performances</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="io.html#id2">Binary I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#id3">Text I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#multi-threading">Fils d'exécution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html#reentrancy">Reentrancy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Accès au temps et conversions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="time.html#functions">Fonctions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time.html#clock-id-constants">Constantes d’identification d’horloge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time.html#timezone-constants">Constantes de fuseau horaire</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> -- Analyseur d'arguments, d'options, et de sous-commandes de ligne de commande</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="argparse.html#core-functionality">Fonctionnalité principale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="argparse.html#quick-links-for-add-argument">Référence pour <code class="docutils literal notranslate"><span class="pre">add_argument()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="argparse.html#example">Exemple</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#creating-a-parser">Créer un analyseur (<em>parser</em> en anglais)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#adding-arguments">Ajouter des arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#parsing-arguments">Analyse des arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="argparse.html#argumentparser-objects">Objets <code class="docutils literal notranslate"><span class="pre">ArgumentParser</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#prog">Le paramètre <em>prog</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#usage">Le paramètre <em>usage</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#description">Le paramètre <em>description</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#epilog">Le paramètre <em>epilog</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#parents">Le paramètre <em>parents</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#formatter-class">Le paramètre <em>formatter_class</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#prefix-chars">Le paramètre <em>prefix_chars</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#fromfile-prefix-chars">Le paramètre <em>fromfile_prefix_chars</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#argument-default">Le paramètre <em>argument_default</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#allow-abbrev">Le paramètre <em>allow_abbrev</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#conflict-handler">Le paramètre <em>conflict_handler</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#add-help">Le paramètre <em>add_help</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#exit-on-error">Le paramètre <em>exit_on_error</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="argparse.html#the-add-argument-method">La méthode <em>add_argument()</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#name-or-flags">Le paramètre <em>name_or_flags</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#action">Le paramètre <em>action</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#nargs">Le paramètre <em>nargs</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#const">Le paramètre <em>const</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#default">Le paramètre <em>default</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#type">Le paramètre <em>type</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#choices">Le paramètre <em>choices</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#required">Le paramètre <em>required</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#help">Le paramètre <em>help</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#metavar">Le paramètre <em>metavar</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#dest">Le paramètre <em>dest</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#action-classes">Classes Action</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="argparse.html#the-parse-args-method">La méthode <em>parse_args()</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#option-value-syntax">Syntaxe de la valeur des options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#invalid-arguments">Arguments invalides</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#arguments-containing">Arguments contenant <code class="docutils literal notranslate"><span class="pre">-</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#argument-abbreviations-prefix-matching">Arguments abrégés (par comparaison de leurs préfixes)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#beyond-sys-argv">Au-delà de <code class="docutils literal notranslate"><span class="pre">sys.argv</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#the-namespace-object">L'objet <code class="docutils literal notranslate"><span class="pre">Namespace</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="argparse.html#other-utilities">Autres outils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#sub-commands">Sous commandes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#filetype-objects">Objets <code class="docutils literal notranslate"><span class="pre">FileType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#argument-groups">Groupes d'arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#mutual-exclusion">Exclusion mutuelle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#parser-defaults">Valeurs par défaut de l'analyseur</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#printing-help">Afficher l'aide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#partial-parsing">Analyse partielle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#customizing-file-parsing">Personnaliser le <em>parsing</em> de fichiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#exiting-methods">Méthodes d'interruptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html#intermixed-parsing">Analyse entremêlée</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="argparse.html#upgrading-optparse-code">Mettre à jour du code <code class="docutils literal notranslate"><span class="pre">optparse</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="argparse.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> – Analyseur de style C pour les options de ligne de commande</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Fonctionnalités de journalisation pour Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#logger-objects">Enregistreurs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#logging-levels">Niveaux de journalisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#handler-objects">Gestionnaires</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#formatter-objects">Formateurs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#filter-objects">Filtres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#logrecord-objects">Objets LogRecord</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#logrecord-attributes">LogRecord attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#loggeradapter-objects">LoggerAdapter Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#thread-safety">Thread Safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#module-level-functions">Fonctions de niveau module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#module-level-attributes">Module-Level Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#integration-with-the-warnings-module">Integration with the warnings module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> --- Logging configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="logging.config.html#configuration-functions">Configuration functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.config.html#security-considerations">Security considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.config.html#configuration-dictionary-schema">Configuration dictionary schema</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html#dictionary-schema-details">Dictionary Schema Details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html#incremental-configuration">Incremental Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html#object-connections">Object connections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html#user-defined-objects">User-defined objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html#handler-configuration-order">Handler configuration order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html#access-to-external-objects">Access to external objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html#access-to-internal-objects">Access to internal objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html#import-resolution-and-custom-importers">Import resolution and custom importers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html#configuring-queuehandler-and-queuelistener">Configuring QueueHandler and QueueListener</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="logging.config.html#configuration-file-format">Configuration file format</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Gestionnaires de journalisation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#streamhandler">Gestionnaire à flux — <em>StreamHandler</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#filehandler">Gestionnaire à fichier — <em>FileHandler</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#nullhandler">Gestionnaire à puits sans fond — <em>NullHandler</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#watchedfilehandler">Gestionnaire à fichier avec surveillance — <em>WatchedFileHandler</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#baserotatinghandler">Base des gestionnaires à roulement — <em>BaseRotatingHandler</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#rotatingfilehandler">Gestionnaire à roulement de fichiers — <em>RotatingFileHandler</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#timedrotatingfilehandler">Gestionnaire à roulement de fichiers périodique — <em>TimedRotatingFileHandler</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#sockethandler">Gestionnaire à connecteur — <em>SocketHandler</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#datagramhandler">DatagramHandler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#sysloghandler">SysLogHandler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#nteventloghandler">NTEventLogHandler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#smtphandler">SMTPHandler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#memoryhandler">MemoryHandler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#httphandler">HTTPHandler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#queuehandler">QueueHandler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.handlers.html#queuelistener">QueueListener</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getpass.html">Saisie de mot de passe portable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="curses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> --- Terminal handling for character-cell displays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="curses.html#functions">Fonctions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curses.html#window-objects">Window Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curses.html#constants">Constantes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="curses.html#module-curses.textpad"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.textpad</span></code> --- Text input widget for curses programs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="curses.html#textbox-objects">Textbox objects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="curses.ascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> --- Utilities for ASCII characters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="curses.panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> --- A panel stack extension for curses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="curses.panel.html#functions">Fonctions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curses.panel.html#panel-objects">Panel Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="platform.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> — Accès aux données sous-jacentes de la plateforme</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="platform.html#cross-platform">Multiplateformes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="platform.html#java-platform">Plateforme Java</a></li>
+<li class="toctree-l2"><a class="reference internal" href="platform.html#windows-platform">Plateforme Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="platform.html#macos-platform">macOS Platform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="platform.html#unix-platforms">Plateformes Unix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="platform.html#linux-platforms">Linux Platforms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="errno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — Symboles du système <em>errno</em> standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — Bibliothèque Python d'appels à des fonctions externes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ctypes.html#ctypes-tutorial">Didacticiel de <em>ctypes</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#loading-dynamic-link-libraries">Chargement des DLL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#accessing-functions-from-loaded-dlls">Accès aux fonctions des DLL chargées</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#calling-functions">Appel de fonctions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#fundamental-data-types">Types de données de base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#calling-functions-continued">Appel de fonctions, suite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#calling-variadic-functions">Calling variadic functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#calling-functions-with-your-own-custom-data-types">Appel de fonctions avec des types de données personnalisés</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#specifying-the-required-argument-types-function-prototypes">Définition du type des arguments nécessaires (prototypes de fonction)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#return-types">Types de sortie</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#passing-pointers-or-passing-parameters-by-reference">Passage de pointeurs (passage de paramètres par référence)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#structures-and-unions">Structures et unions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#structure-union-alignment-and-byte-order">Alignement et boutisme des structures et des unions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#bit-fields-in-structures-and-unions">Champs de bits dans les structures et les unions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#arrays">Tableaux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#pointers">Pointeurs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#type-conversions">Conversions de type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#incomplete-types">Types incomplets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#callback-functions">Fonctions de rappel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#accessing-values-exported-from-dlls">Accès aux variables exportées depuis une DLL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#surprises">Pièges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#variable-sized-data-types">Types de données à taille flottante</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ctypes.html#ctypes-reference">Référence du module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#finding-shared-libraries">Recherche de bibliothèques partagées</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#loading-shared-libraries">Chargement des bibliothèques partagées</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#foreign-functions">Fonctions externes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#function-prototypes">Prototypes de fonction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#utility-functions">Fonctions utilitaires</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#data-types">Types de données</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#ctypes-fundamental-data-types-2">Types de données de base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#structured-data-types">Types de données dérivés de Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html#arrays-and-pointers">Tableaux et pointeurs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="secrets.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Générer des nombres aléatoires de façon sécurisée pour la gestion des secrets</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="os.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Diverses interfaces pour le système d'exploitation</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/allos.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="os.html" title="os — Diverses interfaces pour le système d&#39;exploitation"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="secrets.html" title="secrets — Générer des nombres aléatoires de façon sécurisée pour la gestion des secrets"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Services génériques du système d'exploitation</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

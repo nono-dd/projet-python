@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="4. Construire des extensions C et C++" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/extending/building.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Une extension C pour CPython est une bibliothèque partagée (Un.so sur Linux, un.pyd sur Windows), qui expose une fonction d'initialisation. To be importable, the shared library must be available on..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Une extension C pour CPython est une bibliothèque partagée (Un.so sur Linux, un.pyd sur Windows), qui expose une fonction d'initialisation. To be importable, the shared library must be available on..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>4. Construire des extensions C et C++ &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="5. Construire des extensions C et C++ sur Windows" href="windows.html" />
+    <link rel="prev" title="3. Définir les types d&#39;extension : divers sujets" href="newtypes.html" />
+    <link rel="canonical" href="https://docs.python.org/3/extending/building.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">4. Construire des extensions C et C++</a><ul>
+<li><a class="reference internal" href="#building-c-and-c-extensions-with-setuptools">4.1. Building C and C++ Extensions with setuptools</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="newtypes.html"
+                          title="Chapitre précédent"><span class="section-number">3. </span>Définir les types d'extension : divers sujets</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="windows.html"
+                          title="Chapitre suivant"><span class="section-number">5. </span>Construire des extensions C et C++ sur Windows</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/extending/building.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="windows.html" title="5. Construire des extensions C et C++ sur Windows"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="newtypes.html" title="3. Définir les types d&#39;extension : divers sujets"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Extension et intégration de l'interpréteur Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>Construire des extensions C et C++</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="building-c-and-c-extensions">
+<span id="building"></span><h1><span class="section-number">4. </span>Construire des extensions C et C++<a class="headerlink" href="#building-c-and-c-extensions" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Une extension C pour CPython est une bibliothèque partagée (Un <code class="docutils literal notranslate"><span class="pre">.so</span></code> sur Linux, un <code class="docutils literal notranslate"><span class="pre">.pyd</span></code> sur Windows), qui expose une <em>fonction d'initialisation</em>.</p>
+<p>To be importable, the shared library must be available on <span class="target" id="index-0"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONPATH"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONPATH</span></code></a>,
+and must be named after the module name, with an appropriate extension.
+When using setuptools, the correct filename is generated automatically.</p>
+<p>La fonction d'initialisation doit avoir le prototype :</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.PyInit_modulename">
+<a class="reference internal" href="../c-api/structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyInit_modulename</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyInit_modulename" title="Lien permanent vers cette définition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>It returns either a fully initialized module, or a <a class="reference internal" href="../c-api/module.html#c.PyModuleDef" title="PyModuleDef"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyModuleDef</span></code></a>
+instance. See <a class="reference internal" href="../c-api/module.html#initializing-modules"><span class="std std-ref">Initializing C modules</span></a> for details.</p>
+<p>Pour les modules dont les noms sont entièrement en ASCII, la fonction doit être nommée <code class="docutils literal notranslate"><span class="pre">PyInit_&lt;modulename&gt;</span></code>, dont <code class="docutils literal notranslate"><span class="pre">&lt;modulename&gt;</span></code> est remplacé par le nom du module. En utilisant <a class="reference internal" href="../c-api/module.html#multi-phase-initialization"><span class="std std-ref">Multi-phase initialization</span></a>, il est possible d'utiliser des noms de modules comptant des caractères non ASCII. Dans ce cas, le nom de la fonction d'initialisation est <code class="docutils literal notranslate"><span class="pre">PyInitU_&lt;modulename&gt;</span></code>, où <code class="docutils literal notranslate"><span class="pre">modulename</span></code> est encodé avec l'encodage <em>punyencode</em> de Python, dont les tirets sont remplacés par des tirets-bas. En Python ça donne :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">initfunc_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">UnicodeEncodeError</span><span class="p">:</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;U_&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;punycode&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">b</span><span class="s1">&#39;PyInit&#39;</span> <span class="o">+</span> <span class="n">suffix</span>
+</pre></div>
+</div>
+<p>Il est possible d'exporter plusieurs modules depuis une seule bibliothèque partagée en définissant plusieurs fonctions d'initialisation. Cependant pour les importer, un lien symbolique doit être créé pour chacun, ou un <em>importer</em> personnalisé, puisque par défaut seule la fonction correspondant au nom du fichier est cherchée. Voir le chapitre <em>&quot;Multiple modules in one library&quot;</em> dans la <span class="target" id="index-3"></span><a class="pep reference external" href="https://peps.python.org/pep-0489/"><strong>PEP 489</strong></a> pour plus d'informations.</p>
+<section id="building-c-and-c-extensions-with-setuptools">
+<span id="setuptools-index"></span><span id="install-index"></span><h2><span class="section-number">4.1. </span>Building C and C++ Extensions with setuptools<a class="headerlink" href="#building-c-and-c-extensions-with-setuptools" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Python 3.12 and newer no longer come with distutils. Please refer to the
+<code class="docutils literal notranslate"><span class="pre">setuptools</span></code> documentation at
+<a class="reference external" href="https://setuptools.readthedocs.io/en/latest/setuptools.html">https://setuptools.readthedocs.io/en/latest/setuptools.html</a>
+to learn more about how build and distribute C/C++ extensions with setuptools.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">4. Construire des extensions C et C++</a><ul>
+<li><a class="reference internal" href="#building-c-and-c-extensions-with-setuptools">4.1. Building C and C++ Extensions with setuptools</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="newtypes.html"
+                          title="Chapitre précédent"><span class="section-number">3. </span>Définir les types d'extension : divers sujets</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="windows.html"
+                          title="Chapitre suivant"><span class="section-number">5. </span>Construire des extensions C et C++ sur Windows</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/extending/building.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="windows.html" title="5. Construire des extensions C et C++ sur Windows"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="newtypes.html" title="3. Définir les types d&#39;extension : divers sujets"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Extension et intégration de l'interpréteur Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>Construire des extensions C et C++</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

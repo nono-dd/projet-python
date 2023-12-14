@@ -1,0 +1,1423 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="Guide pour l'utilisation des descripteurs" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/howto/descriptor.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Auteur, Raymond Hettinger,, Contact,<python at rcn dot com>,. Sommaire: Guide pour l'utilisation des descripteurs- Introduction- Un exemple simple : un descripteur qui renvoie une constante, Recher..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Auteur, Raymond Hettinger,, Contact,<python at rcn dot com>,. Sommaire: Guide pour l'utilisation des descripteurs- Introduction- Un exemple simple : un descripteur qui renvoie une constante, Recher..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>Guide pour l&#39;utilisation des descripteurs &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Guide sur l&#39;utilisation d&#39;Enum" href="enum.html" />
+    <link rel="prev" title="Programmation Curses avec Python" href="curses.html" />
+    <link rel="canonical" href="https://docs.python.org/3/howto/descriptor.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Guide pour l'utilisation des descripteurs</a><ul>
+<li><a class="reference internal" href="#primer">Introduction</a><ul>
+<li><a class="reference internal" href="#simple-example-a-descriptor-that-returns-a-constant">Un exemple simple : un descripteur qui renvoie une constante</a></li>
+<li><a class="reference internal" href="#dynamic-lookups">Recherches dynamiques</a></li>
+<li><a class="reference internal" href="#managed-attributes">Attributs gérés</a></li>
+<li><a class="reference internal" href="#customized-names">Noms personnalisés</a></li>
+<li><a class="reference internal" href="#closing-thoughts">Réflexions finales</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#complete-practical-example">Exemple complet pratique</a><ul>
+<li><a class="reference internal" href="#validator-class">Classe « validateur »</a></li>
+<li><a class="reference internal" href="#custom-validators">Validateurs personnalisés</a></li>
+<li><a class="reference internal" href="#practical-application">Application pratique</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#technical-tutorial">Tutoriel technique</a><ul>
+<li><a class="reference internal" href="#abstract">Résumé</a></li>
+<li><a class="reference internal" href="#definition-and-introduction">Définition et introduction</a></li>
+<li><a class="reference internal" href="#descriptor-protocol">Protocole descripteur</a></li>
+<li><a class="reference internal" href="#overview-of-descriptor-invocation">Présentation de l'appel de descripteur</a></li>
+<li><a class="reference internal" href="#invocation-from-an-instance">Appel depuis une instance</a></li>
+<li><a class="reference internal" href="#invocation-from-a-class">Appel depuis une classe</a></li>
+<li><a class="reference internal" href="#invocation-from-super">Appel depuis super</a></li>
+<li><a class="reference internal" href="#summary-of-invocation-logic">Résumé de la logique d'appel</a></li>
+<li><a class="reference internal" href="#automatic-name-notification">Notification automatique des noms</a></li>
+<li><a class="reference internal" href="#orm-example">Exemple d'ORM</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pure-python-equivalents">Équivalents en Python pur</a><ul>
+<li><a class="reference internal" href="#properties">Propriétés</a></li>
+<li><a class="reference internal" href="#functions-and-methods">Fonctions et méthodes</a></li>
+<li><a class="reference internal" href="#kinds-of-methods">Types de méthodes</a></li>
+<li><a class="reference internal" href="#static-methods">Méthodes statiques</a></li>
+<li><a class="reference internal" href="#class-methods">Méthodes de classe</a></li>
+<li><a class="reference internal" href="#member-objects-and-slots">Objets membres et <em>__slots__</em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="curses.html"
+                          title="Chapitre précédent">Programmation <em>Curses</em> avec Python</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="enum.html"
+                          title="Chapitre suivant">Guide sur l'utilisation d'<em>Enum</em></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/howto/descriptor.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="enum.html" title="Guide sur l&#39;utilisation d&#39;Enum"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="curses.html" title="Programmation Curses avec Python"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Les HOWTOs de Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Guide pour l'utilisation des descripteurs</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="descriptor-howto-guide">
+<span id="descriptorhowto"></span><h1><a class="toc-backref" href="#id1">Guide pour l'utilisation des descripteurs</a><a class="headerlink" href="#descriptor-howto-guide" title="Lien permanent vers ce titre">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Auteur</dt>
+<dd class="field-odd"><p>Raymond Hettinger</p>
+</dd>
+<dt class="field-even">Contact</dt>
+<dd class="field-even"><p>&lt;python at rcn dot com&gt;</p>
+</dd>
+</dl>
+<div class="contents topic" id="sommaire">
+<p class="topic-title">Sommaire</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#descriptor-howto-guide" id="id1">Guide pour l'utilisation des descripteurs</a></p>
+<ul>
+<li><p><a class="reference internal" href="#primer" id="id2">Introduction</a></p>
+<ul>
+<li><p><a class="reference internal" href="#simple-example-a-descriptor-that-returns-a-constant" id="id3">Un exemple simple : un descripteur qui renvoie une constante</a></p></li>
+<li><p><a class="reference internal" href="#dynamic-lookups" id="id4">Recherches dynamiques</a></p></li>
+<li><p><a class="reference internal" href="#managed-attributes" id="id5">Attributs gérés</a></p></li>
+<li><p><a class="reference internal" href="#customized-names" id="id6">Noms personnalisés</a></p></li>
+<li><p><a class="reference internal" href="#closing-thoughts" id="id7">Réflexions finales</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#complete-practical-example" id="id8">Exemple complet pratique</a></p>
+<ul>
+<li><p><a class="reference internal" href="#validator-class" id="id9">Classe « validateur »</a></p></li>
+<li><p><a class="reference internal" href="#custom-validators" id="id10">Validateurs personnalisés</a></p></li>
+<li><p><a class="reference internal" href="#practical-application" id="id11">Application pratique</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#technical-tutorial" id="id12">Tutoriel technique</a></p>
+<ul>
+<li><p><a class="reference internal" href="#abstract" id="id13">Résumé</a></p></li>
+<li><p><a class="reference internal" href="#definition-and-introduction" id="id14">Définition et introduction</a></p></li>
+<li><p><a class="reference internal" href="#descriptor-protocol" id="id15">Protocole descripteur</a></p></li>
+<li><p><a class="reference internal" href="#overview-of-descriptor-invocation" id="id16">Présentation de l'appel de descripteur</a></p></li>
+<li><p><a class="reference internal" href="#invocation-from-an-instance" id="id17">Appel depuis une instance</a></p></li>
+<li><p><a class="reference internal" href="#invocation-from-a-class" id="id18">Appel depuis une classe</a></p></li>
+<li><p><a class="reference internal" href="#invocation-from-super" id="id19">Appel depuis super</a></p></li>
+<li><p><a class="reference internal" href="#summary-of-invocation-logic" id="id20">Résumé de la logique d'appel</a></p></li>
+<li><p><a class="reference internal" href="#automatic-name-notification" id="id21">Notification automatique des noms</a></p></li>
+<li><p><a class="reference internal" href="#orm-example" id="id22">Exemple d'ORM</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#pure-python-equivalents" id="id23">Équivalents en Python pur</a></p>
+<ul>
+<li><p><a class="reference internal" href="#properties" id="id24">Propriétés</a></p></li>
+<li><p><a class="reference internal" href="#functions-and-methods" id="id25">Fonctions et méthodes</a></p></li>
+<li><p><a class="reference internal" href="#kinds-of-methods" id="id26">Types de méthodes</a></p></li>
+<li><p><a class="reference internal" href="#static-methods" id="id27">Méthodes statiques</a></p></li>
+<li><p><a class="reference internal" href="#class-methods" id="id28">Méthodes de classe</a></p></li>
+<li><p><a class="reference internal" href="#member-objects-and-slots" id="id29">Objets membres et <em>__slots__</em></a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Les <a class="reference internal" href="../glossary.html#term-descriptor"><span class="xref std std-term">descripteurs</span></a> permettent de personnaliser la recherche, le stockage et la suppression des attributs des objets.</p>
+<p>Ce guide comporte quatre parties principales :</p>
+<ol class="arabic simple">
+<li><p>l'« introduction » donne un premier aperçu, en partant d'exemples simples, puis en ajoutant une fonctionnalité à la fois. Commencez par là si vous débutez avec les descripteurs ;</p></li>
+<li><p>la deuxième partie montre un exemple de descripteur complet et pratique. Si vous connaissez déjà les bases, commencez par là ;</p></li>
+<li><p>la troisième partie fournit un didacticiel plus technique qui décrit de manière détaillée comment fonctionnent les descripteurs. La plupart des gens n'ont pas besoin de ce niveau de détail ;</p></li>
+<li><p>la dernière partie contient des équivalents en pur Python des descripteurs natifs écrits en C. Lisez ceci si vous êtes curieux de savoir comment les fonctions se transforment en méthodes liées ou si vous voulez connaître l'implémentation d'outils courants comme <a class="reference internal" href="../library/functions.html#classmethod" title="classmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">classmethod()</span></code></a>, <a class="reference internal" href="../library/functions.html#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">staticmethod()</span></code></a>, <a class="reference internal" href="../library/functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a> et <a class="reference internal" href="../glossary.html#term-__slots__"><span class="xref std std-term">__slots__</span></a>.</p></li>
+</ol>
+<section id="primer">
+<h2><a class="toc-backref" href="#id2">Introduction</a><a class="headerlink" href="#primer" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans cette introduction, nous commençons par l'exemple le plus simple possible, puis nous ajoutons de nouvelles fonctionnalités une par une.</p>
+<section id="simple-example-a-descriptor-that-returns-a-constant">
+<h3><a class="toc-backref" href="#id3">Un exemple simple : un descripteur qui renvoie une constante</a><a class="headerlink" href="#simple-example-a-descriptor-that-returns-a-constant" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La classe <code class="xref py py-class docutils literal notranslate"><span class="pre">Ten</span></code> est un descripteur dont la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code> renvoie toujours la constante <code class="docutils literal notranslate"><span class="pre">10</span></code> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Ten</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>Pour utiliser le descripteur, il doit être stocké en tant que variable de classe dans une autre classe :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>                       <span class="c1"># Regular class attribute</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">Ten</span><span class="p">()</span>                   <span class="c1"># Descriptor instance</span>
+</pre></div>
+</div>
+<p>Une session interactive montre la différence entre la recherche d'attribut normale et la recherche <em>via</em> un descripteur :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>                     <span class="c1"># Make an instance of class A</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">x</span>                         <span class="c1"># Normal attribute lookup</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">y</span>                         <span class="c1"># Descriptor lookup</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<p>Dans la recherche d'attribut <code class="docutils literal notranslate"><span class="pre">a.x</span></code>, l'opérateur « point » trouve <code class="docutils literal notranslate"><span class="pre">'x':</span> <span class="pre">5</span></code> dans le dictionnaire de classe. Dans la recherche <code class="docutils literal notranslate"><span class="pre">a.y</span></code>, l'opérateur « point » trouve une instance de descripteur, reconnue par sa méthode <code class="docutils literal notranslate"><span class="pre">__get__</span></code>. L'appel de cette méthode renvoie <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+<p>Notez que la valeur <code class="docutils literal notranslate"><span class="pre">10</span></code> n'est stockée ni dans le dictionnaire de classe ni dans le dictionnaire d'instance. Non, la valeur <code class="docutils literal notranslate"><span class="pre">10</span></code> est calculée à la demande.</p>
+<p>Cet exemple montre comment fonctionne un descripteur simple, mais il n'est pas très utile. Pour récupérer des constantes, une recherche d'attribut normale est préférable.</p>
+<p>Dans la section suivante, nous allons créer quelque chose de plus utile, une recherche dynamique.</p>
+</section>
+<section id="dynamic-lookups">
+<h3><a class="toc-backref" href="#id4">Recherches dynamiques</a><a class="headerlink" href="#dynamic-lookups" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les descripteurs intéressants exécutent généralement des calculs au lieu de renvoyer des constantes :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">class</span> <span class="nc">DirectorySize</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">dirname</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">Directory</span><span class="p">:</span>
+
+    <span class="n">size</span> <span class="o">=</span> <span class="n">DirectorySize</span><span class="p">()</span>              <span class="c1"># Descriptor instance</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dirname</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dirname</span> <span class="o">=</span> <span class="n">dirname</span>          <span class="c1"># Regular instance attribute</span>
+</pre></div>
+</div>
+<p>Une session interactive montre que la recherche est dynamique — elle calcule des réponses différentes, mises à jour à chaque fois :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Directory</span><span class="p">(</span><span class="s1">&#39;songs&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Directory</span><span class="p">(</span><span class="s1">&#39;games&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">size</span>                              <span class="c1"># The songs directory has twenty files</span>
+<span class="go">20</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">size</span>                              <span class="c1"># The games directory has three files</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;games/chess&#39;</span><span class="p">)</span>            <span class="c1"># Delete a game</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">size</span>                              <span class="c1"># File count is automatically updated</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>En plus de montrer comment les descripteurs peuvent exécuter des calculs, cet exemple révèle également le but des paramètres de <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code>. Le paramètre <em>self</em> est <em>size</em>, une instance de <em>DirectorySize</em>. Le paramètre <em>obj</em> est soit <em>g</em> soit <em>s</em>, une instance de <em>Directory</em>. C'est le paramètre <em>obj</em> qui permet à la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code> de connaître le répertoire cible. Le paramètre <em>objtype</em> est la classe <em>Directory</em>.</p>
+</section>
+<section id="managed-attributes">
+<h3><a class="toc-backref" href="#id5">Attributs gérés</a><a class="headerlink" href="#managed-attributes" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Une utilisation courante des descripteurs est la gestion de l'accès aux données d'instances. Le descripteur est affecté à un attribut public dans le dictionnaire de classe tandis que les données réelles sont stockées en tant qu'attribut privé dans le dictionnaire d'instance. Les méthodes <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code> et <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set__()</span></code> du descripteur sont déclenchées lors de l'accès à l'attribut public.</p>
+<p>Dans l'exemple qui suit, <em>age</em> est l'attribut public et <em>_age</em> est l'attribut privé. Lors de l'accès à l'attribut public, le descripteur journalise la recherche ou la mise à jour :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">LoggedAgeAccess</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">_age</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Accessing </span><span class="si">%r</span><span class="s1"> giving </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Updating </span><span class="si">%r</span><span class="s1"> to </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+
+    <span class="n">age</span> <span class="o">=</span> <span class="n">LoggedAgeAccess</span><span class="p">()</span>             <span class="c1"># Descriptor instance</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>                <span class="c1"># Regular instance attribute</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>                  <span class="c1"># Calls __set__()</span>
+
+    <span class="k">def</span> <span class="nf">birthday</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">+=</span> <span class="mi">1</span>                   <span class="c1"># Calls both __get__() and __set__()</span>
+</pre></div>
+</div>
+<p>Une session interactive montre que tous les accès à l'attribut géré <em>age</em> sont consignés, mais que rien n'est journalisé pour l'attribut normal <em>name</em> :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mary</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Mary M&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>         <span class="c1"># The initial age update is logged</span>
+<span class="go">INFO:root:Updating &#39;age&#39; to 30</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dave</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;David D&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+<span class="go">INFO:root:Updating &#39;age&#39; to 40</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span><span class="n">mary</span><span class="p">)</span>                          <span class="c1"># The actual data is in a private attribute</span>
+<span class="go">{&#39;name&#39;: &#39;Mary M&#39;, &#39;_age&#39;: 30}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span><span class="n">dave</span><span class="p">)</span>
+<span class="go">{&#39;name&#39;: &#39;David D&#39;, &#39;_age&#39;: 40}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mary</span><span class="o">.</span><span class="n">age</span>                            <span class="c1"># Access the data and log the lookup</span>
+<span class="go">INFO:root:Accessing &#39;age&#39; giving 30</span>
+<span class="go">30</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mary</span><span class="o">.</span><span class="n">birthday</span><span class="p">()</span>                     <span class="c1"># Updates are logged as well</span>
+<span class="go">INFO:root:Accessing &#39;age&#39; giving 30</span>
+<span class="go">INFO:root:Updating &#39;age&#39; to 31</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dave</span><span class="o">.</span><span class="n">name</span>                           <span class="c1"># Regular attribute lookup isn&#39;t logged</span>
+<span class="go">&#39;David D&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dave</span><span class="o">.</span><span class="n">age</span>                            <span class="c1"># Only the managed attribute is logged</span>
+<span class="go">INFO:root:Accessing &#39;age&#39; giving 40</span>
+<span class="go">40</span>
+</pre></div>
+</div>
+<p>Un problème majeur avec cet exemple est que le nom privé <em>_age</em> est écrit en dur dans la classe <em>LoggedAgeAccess</em>. Cela signifie que chaque instance ne peut avoir qu'un seul attribut journalisé et que son nom est immuable. Dans l'exemple suivant, nous allons résoudre ce problème.</p>
+</section>
+<section id="customized-names">
+<h3><a class="toc-backref" href="#id6">Noms personnalisés</a><a class="headerlink" href="#customized-names" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Lorsqu'une classe utilise des descripteurs, elle peut informer chaque descripteur du nom de variable utilisé.</p>
+<p>Dans cet exemple, la classe <code class="xref py py-class docutils literal notranslate"><span class="pre">Person</span></code> a deux instances de descripteurs, <em>name</em> et <em>age</em>. Lorsque la classe <code class="xref py py-class docutils literal notranslate"><span class="pre">Person</span></code> est définie, <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set_name__()</span></code> est appelée automatiquement dans <em>LoggedAccess</em> afin que les noms de champs puissent être enregistrés, en donnant à chaque descripteur ses propres <em>public_name</em> et <em>private_name</em> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">LoggedAccess</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__set_name__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">public_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">private_name</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">private_name</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Accessing </span><span class="si">%r</span><span class="s1"> giving </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">public_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Updating </span><span class="si">%r</span><span class="s1"> to </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">public_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">private_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">LoggedAccess</span><span class="p">()</span>                <span class="c1"># First descriptor instance</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">LoggedAccess</span><span class="p">()</span>                 <span class="c1"># Second descriptor instance</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>                 <span class="c1"># Calls the first descriptor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>                   <span class="c1"># Calls the second descriptor</span>
+
+    <span class="k">def</span> <span class="nf">birthday</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Une session interactive montre que la classe <code class="xref py py-class docutils literal notranslate"><span class="pre">Person</span></code> a appelé <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set_name__()</span></code> pour que les noms des champs soient enregistrés. Ici, nous appelons <a class="reference internal" href="../library/functions.html#vars" title="vars"><code class="xref py py-func docutils literal notranslate"><span class="pre">vars()</span></code></a> pour rechercher le descripteur sans le déclencher :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">Person</span><span class="p">)[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+<span class="go">{&#39;public_name&#39;: &#39;name&#39;, &#39;private_name&#39;: &#39;_name&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">Person</span><span class="p">)[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+<span class="go">{&#39;public_name&#39;: &#39;age&#39;, &#39;private_name&#39;: &#39;_age&#39;}</span>
+</pre></div>
+</div>
+<p>La nouvelle classe enregistre désormais l'accès à la fois à <em>name</em> et <em>age</em> :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pete</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Peter P&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">INFO:root:Updating &#39;name&#39; to &#39;Peter P&#39;</span>
+<span class="go">INFO:root:Updating &#39;age&#39; to 10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kate</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Catherine C&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="go">INFO:root:Updating &#39;name&#39; to &#39;Catherine C&#39;</span>
+<span class="go">INFO:root:Updating &#39;age&#39; to 20</span>
+</pre></div>
+</div>
+<p>Les deux instances de <em>Person</em> ne contiennent que les noms privés :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span><span class="n">pete</span><span class="p">)</span>
+<span class="go">{&#39;_name&#39;: &#39;Peter P&#39;, &#39;_age&#39;: 10}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span><span class="n">kate</span><span class="p">)</span>
+<span class="go">{&#39;_name&#39;: &#39;Catherine C&#39;, &#39;_age&#39;: 20}</span>
+</pre></div>
+</div>
+</section>
+<section id="closing-thoughts">
+<h3><a class="toc-backref" href="#id7">Réflexions finales</a><a class="headerlink" href="#closing-thoughts" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Nous appelons  <a class="reference internal" href="../glossary.html#term-descriptor"><span class="xref std std-term">descripteur</span></a> tout objet qui définit <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set__()</span></code> ou <code class="xref py py-meth docutils literal notranslate"><span class="pre">__delete__()</span></code>.</p>
+<p>Facultativement, les descripteurs peuvent avoir une méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set_name__()</span></code>. Elle n'est utile que dans les cas où un descripteur doit connaître soit la classe dans laquelle il a été créé, soit le nom de la variable de classe à laquelle il a été affecté (cette méthode, si elle est présente, est appelée même si la classe n'est pas un descripteur).</p>
+<p>Les descripteurs sont invoqués par l'opérateur « point » lors de la recherche d'attribut. Si on accède indirectement au descripteur avec <code class="docutils literal notranslate"><span class="pre">vars(some_class)[descriptor_name]</span></code>, l'instance du descripteur est renvoyée sans l'invoquer.</p>
+<p>Les descripteurs ne fonctionnent que lorsqu'ils sont utilisés comme variables de classe. Lorsqu'ils sont placés dans des instances, ils n'ont aucun effet.</p>
+<p>La principale raison d'être des descripteurs est de fournir un point d'entrée permettant aux objets stockés dans des variables de classe de contrôler ce qui se passe lors de la recherche d'attributs.</p>
+<p>Traditionnellement, la classe appelante contrôle ce qui se passe pendant la recherche. Les descripteurs inversent cette relation et permettent aux données recherchées d'avoir leur mot à dire.</p>
+<p>Les descripteurs sont utilisés partout dans le langage. C'est ainsi que les fonctions se transforment en méthodes liées. Les outils courants tels que <a class="reference internal" href="../library/functions.html#classmethod" title="classmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">classmethod()</span></code></a>, <a class="reference internal" href="../library/functions.html#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">staticmethod()</span></code></a>, <a class="reference internal" href="../library/functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a> et <a class="reference internal" href="../library/functools.html#functools.cached_property" title="functools.cached_property"><code class="xref py py-func docutils literal notranslate"><span class="pre">functools.cached_property()</span></code></a> sont tous implémentés en tant que descripteurs.</p>
+</section>
+</section>
+<section id="complete-practical-example">
+<h2><a class="toc-backref" href="#id8">Exemple complet pratique</a><a class="headerlink" href="#complete-practical-example" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans cet exemple, nous créons un outil pratique et puissant pour localiser les bogues de corruption de données notoirement difficiles à trouver.</p>
+<section id="validator-class">
+<h3><a class="toc-backref" href="#id9">Classe « validateur »</a><a class="headerlink" href="#validator-class" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Un validateur est un descripteur pour l'accès aux attributs gérés. Avant de stocker des données, il vérifie que la nouvelle valeur respecte différentes restrictions de type et de plage. Si ces restrictions ne sont pas respectées, il lève une exception pour empêcher la corruption des données à la source.</p>
+<p>Cette classe <code class="xref py py-class docutils literal notranslate"><span class="pre">Validator</span></code> est à la fois une <a class="reference internal" href="../glossary.html#term-abstract-base-class"><span class="xref std std-term">classe mère abstraite</span></a> et un descripteur d'attributs gérés :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="k">class</span> <span class="nc">Validator</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__set_name__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">private_name</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">private_name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">private_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Les validateurs personnalisés doivent hériter de <code class="xref py py-class docutils literal notranslate"><span class="pre">Validator</span></code> et doivent fournir une méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">validate()</span></code> pour tester diverses restrictions adaptées aux besoins.</p>
+</section>
+<section id="custom-validators">
+<h3><a class="toc-backref" href="#id10">Validateurs personnalisés</a><a class="headerlink" href="#custom-validators" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Voici trois utilitaires concrets de validation de données :</p>
+<ol class="arabic simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OneOf</span></code> vérifie qu'une valeur fait partie d'un ensemble limité de valeurs ;</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Number</span></code> vérifie qu'une valeur est soit un <a class="reference internal" href="../library/functions.html#int" title="int"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> soit un <a class="reference internal" href="../library/functions.html#float" title="float"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>. Facultativement, il vérifie qu'une valeur se situe entre un minimum ou un maximum donnés ;</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">String</span></code> vérifie qu'une valeur est une <a class="reference internal" href="../library/stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaîne</span> <span class="pre">de</span> <span class="pre">caractères</span></code></a>. Éventuellement, il valide les longueurs minimale ou maximale données. Il peut également valider un <a class="reference external" href="https://fr.wikipedia.org/wiki/Pr%C3%A9dicat_(logique_math%C3%A9matique)">prédicat</a> défini par l'utilisateur.</p></li>
+</ol>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">OneOf</span><span class="p">(</span><span class="n">Validator</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">options</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Expected </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s1"> to be one of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Number</span><span class="p">(</span><span class="n">Validator</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minvalue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxvalue</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minvalue</span> <span class="o">=</span> <span class="n">minvalue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxvalue</span> <span class="o">=</span> <span class="n">maxvalue</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Expected </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s1"> to be an int or float&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">minvalue</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minvalue</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Expected </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s1"> to be at least </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">minvalue</span><span class="si">!r}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxvalue</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxvalue</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Expected </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s1"> to be no more than </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">maxvalue</span><span class="si">!r}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">String</span><span class="p">(</span><span class="n">Validator</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">predicate</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minsize</span> <span class="o">=</span> <span class="n">minsize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxsize</span> <span class="o">=</span> <span class="n">maxsize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">predicate</span> <span class="o">=</span> <span class="n">predicate</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Expected </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s1"> to be an str&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">minsize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minsize</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Expected </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s1"> to be no smaller than </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">minsize</span><span class="si">!r}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxsize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxsize</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Expected </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s1"> to be no bigger than </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">maxsize</span><span class="si">!r}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">predicate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">predicate</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Expected </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">predicate</span><span class="si">}</span><span class="s1"> to be true for </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="practical-application">
+<h3><a class="toc-backref" href="#id11">Application pratique</a><a class="headerlink" href="#practical-application" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Voici comment les validateurs de données peuvent être utilisés par une classe réelle :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Component</span><span class="p">:</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">predicate</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">isupper</span><span class="p">)</span>
+    <span class="n">kind</span> <span class="o">=</span> <span class="n">OneOf</span><span class="p">(</span><span class="s1">&#39;wood&#39;</span><span class="p">,</span> <span class="s1">&#39;metal&#39;</span><span class="p">,</span> <span class="s1">&#39;plastic&#39;</span><span class="p">)</span>
+    <span class="n">quantity</span> <span class="o">=</span> <span class="n">Number</span><span class="p">(</span><span class="n">minvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">quantity</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="o">=</span> <span class="n">kind</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">quantity</span>
+</pre></div>
+</div>
+<p>Les descripteurs empêchent la création d'instances non valides :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Component</span><span class="p">(</span><span class="s1">&#39;Widget&#39;</span><span class="p">,</span> <span class="s1">&#39;metal&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>      <span class="c1"># Blocked: &#39;Widget&#39; is not all uppercase</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">ValueError</span>: <span class="n">Expected &lt;method &#39;isupper&#39; of &#39;str&#39; objects&gt; to be true for &#39;Widget&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Component</span><span class="p">(</span><span class="s1">&#39;WIDGET&#39;</span><span class="p">,</span> <span class="s1">&#39;metle&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>      <span class="c1"># Blocked: &#39;metle&#39; is misspelled</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">ValueError</span>: <span class="n">Expected &#39;metle&#39; to be one of {&#39;metal&#39;, &#39;plastic&#39;, &#39;wood&#39;}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Component</span><span class="p">(</span><span class="s1">&#39;WIDGET&#39;</span><span class="p">,</span> <span class="s1">&#39;metal&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>     <span class="c1"># Blocked: -5 is negative</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">ValueError</span>: <span class="n">Expected -5 to be at least 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Component</span><span class="p">(</span><span class="s1">&#39;WIDGET&#39;</span><span class="p">,</span> <span class="s1">&#39;metal&#39;</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">)</span>    <span class="c1"># Blocked: &#39;V&#39; isn&#39;t a number</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">TypeError</span>: <span class="n">Expected &#39;V&#39; to be an int or float</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Component</span><span class="p">(</span><span class="s1">&#39;WIDGET&#39;</span><span class="p">,</span> <span class="s1">&#39;metal&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># Allowed:  The inputs are valid</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="technical-tutorial">
+<h2><a class="toc-backref" href="#id12">Tutoriel technique</a><a class="headerlink" href="#technical-tutorial" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Ce qui suit est un tutoriel plus technique relatif aux mécanismes et détails de fonctionnement des descripteurs.</p>
+<section id="abstract">
+<h3><a class="toc-backref" href="#id13">Résumé</a><a class="headerlink" href="#abstract" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Ce tutoriel définit des descripteurs, résume le protocole et montre comment les descripteurs sont appelés. Il fournit un exemple montrant comment fonctionnent les correspondances relationnelles entre objets.</p>
+<p>L'apprentissage des descripteurs permet non seulement d'accéder à un ensemble d'outils plus vaste, mais aussi de mieux comprendre le fonctionnement de Python.</p>
+</section>
+<section id="definition-and-introduction">
+<h3><a class="toc-backref" href="#id14">Définition et introduction</a><a class="headerlink" href="#definition-and-introduction" title="Lien permanent vers ce titre">¶</a></h3>
+<p>En général, un descripteur est la valeur d'un attribut qui possède une des méthodes définies dans le « protocole descripteur ».  Ces méthodes sont : <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set__()</span></code> et <code class="xref py py-meth docutils literal notranslate"><span class="pre">__delete__()</span></code>. Si l'une de ces méthodes est définie pour un attribut, il s'agit d'un <a class="reference internal" href="../glossary.html#term-descriptor"><span class="xref std std-term">descripteur</span></a>.</p>
+<p>Le comportement par défaut pour l'accès aux attributs consiste à obtenir, définir ou supprimer l'attribut dans le dictionnaire d'un objet. Par exemple, pour chercher <code class="docutils literal notranslate"><span class="pre">a.x</span></code> Python commence par chercher <code class="docutils literal notranslate"><span class="pre">a.__dict__['x']</span></code>, puis <code class="docutils literal notranslate"><span class="pre">type(a).__dict__['x']</span></code>, et continue la recherche en utilisant la MRO (l'ordre de résolution des méthodes) de <code class="docutils literal notranslate"><span class="pre">type(a)</span></code>. Si la valeur recherchée est un objet définissant l'une des méthodes de descripteur, Python remplace le comportement par défaut par un appel à la méthode du descripteur. Le moment où cela se produit dans la chaîne de recherche dépend des méthodes définies par le descripteur.</p>
+<p>Les descripteurs sont un protocole puissant et à usage général. Ils constituent le mécanisme qui met en œuvre les propriétés, les méthodes, les méthodes statiques, les méthodes de classes et <a class="reference internal" href="../library/functions.html#super" title="super"><code class="xref py py-func docutils literal notranslate"><span class="pre">super()</span></code></a>. Ils sont utilisés dans tout Python lui-même. Les descripteurs simplifient le code C sous-jacent et offrent un ensemble flexible de nouveaux outils pour les programmes Python quotidiens.</p>
+</section>
+<section id="descriptor-protocol">
+<h3><a class="toc-backref" href="#id15">Protocole descripteur</a><a class="headerlink" href="#descriptor-protocol" title="Lien permanent vers ce titre">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">descr.__get__(self,</span> <span class="pre">obj,</span> <span class="pre">type=None)</span> <span class="pre">-&gt;</span> <span class="pre">valeur</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">descr.__set__(self,</span> <span class="pre">obj,</span> <span class="pre">valeur)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">descr.__delete__(self,</span> <span class="pre">obj)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+<p>C'est tout ce qu'il y a à faire. Définissez n'importe laquelle de ces méthodes et un objet est considéré comme un descripteur ; il peut alors remplacer le comportement par défaut lorsqu'il est recherché en tant qu'attribut.</p>
+<p>Si un objet définit <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set__()</span></code> ou <code class="xref py py-meth docutils literal notranslate"><span class="pre">__delete__()</span></code>, il est considéré comme un descripteur de données. Les descripteurs qui ne définissent que <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code> sont appelés descripteurs hors-données (ils sont généralement utilisés pour des méthodes mais d'autres utilisations sont possibles).</p>
+<p>Les descripteurs de données et les descripteurs hors-données diffèrent dans la façon dont les changements de comportement sont calculés en ce qui concerne les entrées du dictionnaire d'une instance. Si le dictionnaire d'une instance comporte une entrée portant le même nom qu'un descripteur de données, le descripteur de données est prioritaire. Si le dictionnaire d'une instance comporte une entrée portant le même nom qu'un descripteur hors-données, l'entrée du dictionnaire a la priorité.</p>
+<p>Pour créer un descripteur de données en lecture seule, définissez à la fois <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code> et <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set__()</span></code> avec <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set__()</span></code> levant une erreur <a class="reference internal" href="../library/exceptions.html#AttributeError" title="AttributeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code></a> quand elle est appelée. Définir la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set__()</span></code> ne faisant que lever cette exception est suffisant pour en faire un descripteur de données.</p>
+</section>
+<section id="overview-of-descriptor-invocation">
+<h3><a class="toc-backref" href="#id16">Présentation de l'appel de descripteur</a><a class="headerlink" href="#overview-of-descriptor-invocation" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Un descripteur peut être appelé directement par <code class="docutils literal notranslate"><span class="pre">desc.__get__(obj)</span></code> ou <code class="docutils literal notranslate"><span class="pre">desc.__get__(None,</span> <span class="pre">cls)</span></code>.</p>
+<p>Mais il est plus courant qu'un descripteur soit invoqué automatiquement à partir d'un accès à un attribut.</p>
+<p>L'expression <code class="docutils literal notranslate"><span class="pre">obj.x</span></code> recherche l'attribut <code class="docutils literal notranslate"><span class="pre">x</span></code> dans les espaces de noms pour <code class="docutils literal notranslate"><span class="pre">obj</span></code>. Si la recherche trouve un descripteur en dehors de l'instance <code class="docutils literal notranslate"><span class="pre">__dict__</span></code>, sa méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code> est appelée selon les règles de priorité listées ci-dessous.</p>
+<p>Les détails de l'appel varient selon que <code class="docutils literal notranslate"><span class="pre">obj</span></code> est un objet, une classe ou une instance de <em>super</em>.</p>
+</section>
+<section id="invocation-from-an-instance">
+<h3><a class="toc-backref" href="#id17">Appel depuis une instance</a><a class="headerlink" href="#invocation-from-an-instance" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La recherche d'instance consiste à parcourir la liste d'espaces de noms en donnant aux descripteurs de données la priorité la plus élevée, suivis des variables d'instance, puis des descripteurs hors-données, puis des variables de classe, et enfin <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattr__()</span></code> s'il est fourni.</p>
+<p>Si un descripteur est trouvé pour <code class="docutils literal notranslate"><span class="pre">a.x</span></code>, alors il est appelé par <code class="docutils literal notranslate"><span class="pre">desc.__get__(a,</span> <span class="pre">type(a))</span></code>.</p>
+<p>La logique d'une recherche « après un point » se trouve dans <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">object.__getattribute__()</span></code></a>. Voici un équivalent en Python pur :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_name_in_mro</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="p">):</span>
+    <span class="s2">&quot;Emulate _PyType_Lookup() in Objects/typeobject.c&quot;</span>
+    <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="n">base</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="n">base</span><span class="p">)[</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">default</span>
+
+<span class="k">def</span> <span class="nf">object_getattribute</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="s2">&quot;Emulate PyObject_GenericGetAttr() in Objects/object.c&quot;</span>
+    <span class="n">null</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
+    <span class="n">objtype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="n">cls_var</span> <span class="o">=</span> <span class="n">find_name_in_mro</span><span class="p">(</span><span class="n">objtype</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">null</span><span class="p">)</span>
+    <span class="n">descr_get</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">cls_var</span><span class="p">),</span> <span class="s1">&#39;__get__&#39;</span><span class="p">,</span> <span class="n">null</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">descr_get</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">null</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">cls_var</span><span class="p">),</span> <span class="s1">&#39;__set__&#39;</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">cls_var</span><span class="p">),</span> <span class="s1">&#39;__delete__&#39;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">descr_get</span><span class="p">(</span><span class="n">cls_var</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="p">)</span>     <span class="c1"># data descriptor</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__dict__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="n">obj</span><span class="p">)[</span><span class="n">name</span><span class="p">]</span>                          <span class="c1"># instance variable</span>
+    <span class="k">if</span> <span class="n">descr_get</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">null</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">descr_get</span><span class="p">(</span><span class="n">cls_var</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="p">)</span>         <span class="c1"># non-data descriptor</span>
+    <span class="k">if</span> <span class="n">cls_var</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">null</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">cls_var</span>                                  <span class="c1"># class variable</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notez qu'il n'y a pas d'appel vers <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattr__()</span></code> dans le code de <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattribute__()</span></code>. C'est pourquoi appeler <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattribute__()</span></code> directement ou avec <code class="docutils literal notranslate"><span class="pre">super().__getattribute__</span></code> contourne entièrement <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattr__()</span></code>.</p>
+<p>Au lieu, c'est l'opérateur « point » et la fonction <a class="reference internal" href="../library/functions.html#getattr" title="getattr"><code class="xref py py-func docutils literal notranslate"><span class="pre">getattr()</span></code></a> qui sont responsables de l'appel de <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattr__()</span></code> chaque fois que <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattribute__()</span></code> déclenche une <a class="reference internal" href="../library/exceptions.html#AttributeError" title="AttributeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code></a>. Cette logique est présentée encapsulée dans une fonction utilitaire :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getattr_hook</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="s2">&quot;Emulate slot_tp_getattr_hook() in Objects/typeobject.c&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="s1">&#39;__getattr__&#39;</span><span class="p">):</span>
+            <span class="k">raise</span>
+    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>             <span class="c1"># __getattr__</span>
+</pre></div>
+</div>
+</section>
+<section id="invocation-from-a-class">
+<h3><a class="toc-backref" href="#id18">Appel depuis une classe</a><a class="headerlink" href="#invocation-from-a-class" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La logique pour une recherche « après un point » telle que <code class="docutils literal notranslate"><span class="pre">A.x</span></code> se trouve dans <code class="xref py py-meth docutils literal notranslate"><span class="pre">type.__getattribute__()</span></code>. Les étapes sont similaires à celles de <a class="reference internal" href="../reference/datamodel.html#object.__getattribute__" title="object.__getattribute__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">object.__getattribute__()</span></code></a> mais la recherche dans le dictionnaire d'instance est remplacée par une recherche suivant l'<a class="reference internal" href="../glossary.html#term-method-resolution-order"><span class="xref std std-term">ordre de résolution des méthodes</span></a> de la classe.</p>
+<p>Si un descripteur est trouvé, il est appelé par <code class="docutils literal notranslate"><span class="pre">desc.__get__(None,</span> <span class="pre">A)</span></code>.</p>
+<p>The full C implementation can be found in <code class="xref c c-func docutils literal notranslate"><span class="pre">type_getattro()</span></code> and
+<code class="xref c c-func docutils literal notranslate"><span class="pre">_PyType_Lookup()</span></code> in <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Objects/typeobject.c">Objects/typeobject.c</a>.</p>
+</section>
+<section id="invocation-from-super">
+<h3><a class="toc-backref" href="#id19">Appel depuis super</a><a class="headerlink" href="#invocation-from-super" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La logique de la recherche « après un point » de super se trouve dans la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattribute__()</span></code> de l'objet renvoyé par <a class="reference internal" href="../library/functions.html#super" title="super"><code class="xref py py-class docutils literal notranslate"><span class="pre">super()</span></code></a>.</p>
+<p>La recherche d'attribut <code class="docutils literal notranslate"><span class="pre">super(A,</span> <span class="pre">obj).m</span></code> recherche dans <code class="docutils literal notranslate"><span class="pre">obj.__class__.__mro__</span></code> la classe <code class="docutils literal notranslate"><span class="pre">B</span></code> qui suit immédiatement A, et renvoie <code class="docutils literal notranslate"><span class="pre">B.__dict__['m'].__get__(obj,</span> <span class="pre">A)</span></code>. Si ce n'est pas un descripteur, <code class="docutils literal notranslate"><span class="pre">m</span></code> est renvoyé inchangé.</p>
+<p>The full C implementation can be found in <code class="xref c c-func docutils literal notranslate"><span class="pre">super_getattro()</span></code> in
+<a class="reference external" href="https://github.com/python/cpython/tree/3.12/Objects/typeobject.c">Objects/typeobject.c</a>.  A pure Python equivalent can be found in
+<a class="reference external" href="https://www.python.org/download/releases/2.2.3/descrintro/#cooperation">Guido's Tutorial</a>.</p>
+</section>
+<section id="summary-of-invocation-logic">
+<h3><a class="toc-backref" href="#id20">Résumé de la logique d'appel</a><a class="headerlink" href="#summary-of-invocation-logic" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le fonctionnement des descripteurs se trouve dans les méthodes <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattribute__()</span></code> de <a class="reference internal" href="../library/functions.html#object" title="object"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a>, <a class="reference internal" href="../library/functions.html#type" title="type"><code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></a> et <a class="reference internal" href="../library/functions.html#super" title="super"><code class="xref py py-func docutils literal notranslate"><span class="pre">super()</span></code></a>.</p>
+<p>Les points importants à retenir sont :</p>
+<ul class="simple">
+<li><p>les descripteurs sont appelés par la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattribute__()</span></code> ;</p></li>
+<li><p>les classes héritent ce mécanisme de <a class="reference internal" href="../library/functions.html#object" title="object"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a>, <a class="reference internal" href="../library/functions.html#type" title="type"><code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></a> ou <a class="reference internal" href="../library/functions.html#super" title="super"><code class="xref py py-func docutils literal notranslate"><span class="pre">super()</span></code></a> ;</p></li>
+<li><p>redéfinir <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattribute____()</span></code> empêche les appels automatiques de descripteur car toute la logique des descripteurs est dans cette méthode ;</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">objet.__getattribute__()</span></code> et <code class="xref py py-meth docutils literal notranslate"><span class="pre">type.__getattribute__()</span></code> font différents appels à <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code>. La première inclut l'instance et peut inclure la classe. La seconde met <code class="docutils literal notranslate"><span class="pre">None</span></code> pour l'instance et inclut toujours la classe ;</p></li>
+<li><p>les descripteurs de données sont toujours prioritaires sur les dictionnaires d'instances.</p></li>
+<li><p>les descripteurs hors-données peuvent céder la priorité aux dictionnaires d'instance.</p></li>
+</ul>
+</section>
+<section id="automatic-name-notification">
+<h3><a class="toc-backref" href="#id21">Notification automatique des noms</a><a class="headerlink" href="#automatic-name-notification" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Il est parfois souhaitable qu'un descripteur sache à quel nom de variable de classe il a été affecté. Lorsqu'une nouvelle classe est créée, la métaclasse <a class="reference internal" href="../library/functions.html#type" title="type"><code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></a> parcourt le dictionnaire de la nouvelle classe. Si l'une des entrées est un descripteur et si elle définit <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set_name__()</span></code>, cette méthode est appelée avec deux arguments : <em>owner</em> (propriétaire) est la classe où le descripteur est utilisé, et <em>name</em> est la variable de classe à laquelle le descripteur a été assigné.</p>
+<p>The implementation details are in <code class="xref c c-func docutils literal notranslate"><span class="pre">type_new()</span></code> and
+<code class="xref c c-func docutils literal notranslate"><span class="pre">set_names()</span></code> in <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Objects/typeobject.c">Objects/typeobject.c</a>.</p>
+<p>Comme la logique de mise à jour est dans <code class="xref py py-meth docutils literal notranslate"><span class="pre">type.__new__()</span></code>, les notifications n'ont lieu qu'au moment de la création de la classe. Si des descripteurs sont ajoutés à la classe par la suite, <code class="xref py py-meth docutils literal notranslate"><span class="pre">__set_name__()</span></code> doit être appelée manuellement.</p>
+</section>
+<section id="orm-example">
+<h3><a class="toc-backref" href="#id22">Exemple d'ORM</a><a class="headerlink" href="#orm-example" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le code suivant est une ossature simplifiée montrant comment les descripteurs de données peuvent être utilisés pour implémenter une <a class="reference external" href="https://fr.wikipedia.org/wiki/Mapping_objet-relationnel">correspondance objet-relationnel</a>.</p>
+<p>L'idée essentielle est que les données sont stockées dans une base de données externe. Les instances Python ne contiennent que les clés des tables de la base de données. Les descripteurs s'occupent des recherches et des mises à jour :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Field</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__set_name__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;SELECT </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1"> FROM </span><span class="si">{</span><span class="n">owner</span><span class="o">.</span><span class="n">table</span><span class="si">}</span><span class="s1"> WHERE </span><span class="si">{</span><span class="n">owner</span><span class="o">.</span><span class="n">key</span><span class="si">}</span><span class="s1">=?;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;UPDATE </span><span class="si">{</span><span class="n">owner</span><span class="o">.</span><span class="n">table</span><span class="si">}</span><span class="s1"> SET </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">=? WHERE </span><span class="si">{</span><span class="n">owner</span><span class="o">.</span><span class="n">key</span><span class="si">}</span><span class="s1">=?;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">,</span> <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">key</span><span class="p">])</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">,</span> <span class="p">[</span><span class="n">value</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">key</span><span class="p">])</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Nous pouvons utiliser la classe <code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code> pour définir des <a class="reference external" href="https://en.wikipedia.org/wiki/Database_model">modèles</a> qui décrivent le schéma de chaque table d'une base de données :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Movie</span><span class="p">:</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="s1">&#39;Movies&#39;</span>                    <span class="c1"># Table name</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;title&#39;</span>                       <span class="c1"># Primary key</span>
+    <span class="n">director</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+
+<span class="k">class</span> <span class="nc">Song</span><span class="p">:</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="s1">&#39;Music&#39;</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;title&#39;</span>
+    <span class="n">artist</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">genre</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+</pre></div>
+</div>
+<p>Pour utiliser les modèles, connectons-nous d'abord à la base de données :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;entertainment.db&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Une session interactive montre comment les données sont extraites de la base de données et comment elles peuvent être mises à jour :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Movie</span><span class="p">(</span><span class="s1">&#39;Star Wars&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">director</span>
+<span class="go">&#39;George Lucas&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jaws</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">(</span><span class="s1">&#39;Jaws&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s1">&#39;Released in </span><span class="si">{</span><span class="n">jaws</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s1"> by </span><span class="si">{</span><span class="n">jaws</span><span class="o">.</span><span class="n">director</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="go">&#39;Released in 1975 by Steven Spielberg&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Song</span><span class="p">(</span><span class="s1">&#39;Country Roads&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">artist</span>
+<span class="go">&#39;John Denver&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Movie</span><span class="p">(</span><span class="s1">&#39;Star Wars&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">director</span> <span class="o">=</span> <span class="s1">&#39;J.J. Abrams&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Movie</span><span class="p">(</span><span class="s1">&#39;Star Wars&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">director</span>
+<span class="go">&#39;J.J. Abrams&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="pure-python-equivalents">
+<h2><a class="toc-backref" href="#id23">Équivalents en Python pur</a><a class="headerlink" href="#pure-python-equivalents" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le protocole descripteur est simple et offre des possibilités très intéressantes. Plusieurs cas d'utilisation sont si courants qu'ils ont été regroupés dans des outils intégrés. Les propriétés, les méthodes liées, les méthodes statiques et les méthodes de classe sont toutes basées sur le protocole descripteur.</p>
+<section id="properties">
+<h3><a class="toc-backref" href="#id24">Propriétés</a><a class="headerlink" href="#properties" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Appeler <a class="reference internal" href="../library/functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a> construit de façon succincte un descripteur de données qui déclenche un appel de fonction lors de l'accès à un attribut. Sa signature est :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">property</span><span class="p">(</span><span class="n">fget</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fdel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">property</span>
+</pre></div>
+</div>
+<p>La documentation montre une utilisation caractéristique pour définir un attribut géré <code class="docutils literal notranslate"><span class="pre">x</span></code> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">getx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span>
+    <span class="k">def</span> <span class="nf">setx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">def</span> <span class="nf">delx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">getx</span><span class="p">,</span> <span class="n">setx</span><span class="p">,</span> <span class="n">delx</span><span class="p">,</span> <span class="s2">&quot;I&#39;m the &#39;x&#39; property.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pour voir comment <a class="reference internal" href="../library/functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a> est implémentée dans le protocole du descripteur, voici un équivalent en Python pur :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Property</span><span class="p">:</span>
+    <span class="s2">&quot;Emulate PyProperty_Type() in Objects/descrobject.c&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fget</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fdel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fget</span> <span class="o">=</span> <span class="n">fget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fset</span> <span class="o">=</span> <span class="n">fset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fdel</span> <span class="o">=</span> <span class="n">fdel</span>
+        <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">doc</span> <span class="o">=</span> <span class="n">fget</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">doc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__set_name__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fget</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;property &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">&#39; has no getter&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fget</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;property &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">&#39; has no setter&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__delete__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fdel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;property &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">&#39; has no deleter&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fdel</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fget</span><span class="p">):</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fget</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fdel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+        <span class="n">prop</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+        <span class="k">return</span> <span class="n">prop</span>
+
+    <span class="k">def</span> <span class="nf">setter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fset</span><span class="p">):</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">fget</span><span class="p">,</span> <span class="n">fset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fdel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+        <span class="n">prop</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+        <span class="k">return</span> <span class="n">prop</span>
+
+    <span class="k">def</span> <span class="nf">deleter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fdel</span><span class="p">):</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">fget</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">,</span> <span class="n">fdel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+        <span class="n">prop</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+        <span class="k">return</span> <span class="n">prop</span>
+</pre></div>
+</div>
+<p>La fonction native <a class="reference internal" href="../library/functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a> aide chaque fois qu'une interface utilisateur a accordé l'accès à un attribut et que des modifications ultérieures nécessitent l'intervention d'une méthode.</p>
+<p>Par exemple, une classe de tableur peut donner accès à une valeur de cellule via <code class="docutils literal notranslate"><span class="pre">Cell('b10').value</span></code>. Les améliorations ultérieures du programme exigent que la cellule soit recalculée à chaque accès ; cependant, le programmeur ne veut pas impacter le code client existant accédant directement à l'attribut. La solution consiste à envelopper l'accès à l'attribut <em>value</em> dans un descripteur de données :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Cell</span><span class="p">:</span>
+    <span class="o">...</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;Recalculate the cell before returning value&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recalc</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+</pre></div>
+</div>
+<p>Soit la <a class="reference internal" href="../library/functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a> native, soit notre équivalent <code class="xref py py-func docutils literal notranslate"><span class="pre">Property()</span></code> fonctionnent dans cet exemple.</p>
+</section>
+<section id="functions-and-methods">
+<h3><a class="toc-backref" href="#id25">Fonctions et méthodes</a><a class="headerlink" href="#functions-and-methods" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les fonctionnalités orientées objet de Python sont construites sur un environnement basé sur des fonctions. À l'aide de descripteurs hors-données, les deux sont fusionnés de façon transparente.</p>
+<p>Les fonctions placées dans les dictionnaires des classes sont transformées en méthodes au moment de l'appel. Les méthodes ne diffèrent des fonctions ordinaires que par le fait que le premier argument est réservé à l'instance de l'objet.  Par convention Python, la référence de l'instance est appelée <em>self</em>, bien qu'il soit possible de l'appeler <em>this</em> ou tout autre nom de variable.</p>
+<p>Les méthodes peuvent être créées manuellement avec <a class="reference internal" href="../library/types.html#types.MethodType" title="types.MethodType"><code class="xref py py-class docutils literal notranslate"><span class="pre">types.MethodType</span></code></a>, qui équivaut à peu près à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MethodType</span><span class="p">:</span>
+    <span class="s2">&quot;Emulate PyMethod_Type in Objects/classobject.c&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__func__</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__self__</span> <span class="o">=</span> <span class="n">obj</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__func__</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__self__</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pour prendre en charge la création automatique des méthodes, les fonctions incluent la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code> pour lier les méthodes pendant l'accès aux attributs.  Cela signifie que toutes les fonctions sont des descripteurs hors-données qui renvoient des méthodes liées au cours d'une recherche d'attribut d'une instance. Cela fonctionne ainsi :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Function</span><span class="p">:</span>
+    <span class="o">...</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="s2">&quot;Simulate func_descr_get() in Objects/funcobject.c&quot;</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="n">MethodType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>L'exécution de la classe suivante dans l'interpréteur montre comment le descripteur de fonction se comporte en pratique :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">D</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+         <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>La fonction possède un attribut <code class="docutils literal notranslate"><span class="pre">__qualname__</span></code> (<a class="reference internal" href="../glossary.html#term-qualified-name"><span class="xref std std-term">nom qualifié</span></a>) pour prendre en charge l'introspection :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="vm">__qualname__</span>
+<span class="go">&#39;D.f&#39;</span>
+</pre></div>
+</div>
+<p>L'accès à la fonction <em>via</em> le dictionnaire de classe n'invoque pas <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code>. À la place, il renvoie simplement l'objet de fonction sous-jacent :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">]</span>
+<span class="go">&lt;function D.f at 0x00C45070&gt;</span>
+</pre></div>
+</div>
+<p>La recherche d'attribut depuis une classe appelle <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code>, qui renvoie simplement la fonction sous-jacente inchangée :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="o">.</span><span class="n">f</span>
+<span class="go">&lt;function D.f at 0x00C45070&gt;</span>
+</pre></div>
+</div>
+<p>Le comportement intéressant se produit lors d'une recherche d'attribut à partir d'une instance. La recherche d'attribut appelle <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code> qui renvoie un objet « méthode liée » :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">D</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">f</span>
+<span class="go">&lt;bound method D.f of &lt;__main__.D object at 0x00B18C90&gt;&gt;</span>
+</pre></div>
+</div>
+<p>En interne, la méthode liée stocke la fonction sous-jacente et l'instance liée :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="vm">__func__</span>
+<span class="go">&lt;function D.f at 0x00C45070&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="vm">__self__</span>
+<span class="go">&lt;__main__.D object at 0x1012e1f98&gt;</span>
+</pre></div>
+</div>
+<p>Si vous vous êtes déjà demandé d'où vient <em>self</em> dans les méthodes ordinaires ou d'où vient <em>cls</em> dans les méthodes de classe, c'est ça !</p>
+</section>
+<section id="kinds-of-methods">
+<h3><a class="toc-backref" href="#id26">Types de méthodes</a><a class="headerlink" href="#kinds-of-methods" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les descripteurs hors-données constituent un moyen simple pour modifier le modèle usuel de transformation des fonctions en méthodes.</p>
+<p>Pour résumer, les fonctions ont une méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__get__()</span></code> pour qu'elles puissent être converties en méthodes lorsqu'on y accède comme attributs. Le descripteur hors-données transforme un appel <code class="docutils literal notranslate"><span class="pre">obj.f(*args)</span></code> en <code class="docutils literal notranslate"><span class="pre">f(obj,</span> <span class="pre">*args)</span></code>. L'appel <code class="docutils literal notranslate"><span class="pre">cls.f(*args)</span></code> devient <code class="docutils literal notranslate"><span class="pre">f(*args)</span></code>.</p>
+<p>Ce tableau résume le lien classique (<em>binding</em>) et ses deux variantes les plus utiles :</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 39%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Transformation</p></th>
+<th class="head"><p>Appelée depuis un objet</p></th>
+<th class="head"><p>Appelée depuis une classe</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>fonction</p></td>
+<td><p>f(obj, *args)</p></td>
+<td><p>f(*args)</p></td>
+</tr>
+<tr class="row-odd"><td><p>méthode statique</p></td>
+<td><p>f(*args)</p></td>
+<td><p>f(*args)</p></td>
+</tr>
+<tr class="row-even"><td><p>méthode de classe</p></td>
+<td><p>f(type(obj), *args)</p></td>
+<td><p>f(cls, *args)</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</section>
+<section id="static-methods">
+<h3><a class="toc-backref" href="#id27">Méthodes statiques</a><a class="headerlink" href="#static-methods" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les méthodes statiques renvoient la fonction sous-jacente sans modification. Appeler <code class="docutils literal notranslate"><span class="pre">c.f</span></code> ou <code class="docutils literal notranslate"><span class="pre">C.f</span></code> est l'équivalent d'une recherche directe dans <code class="docutils literal notranslate"><span class="pre">objet.__getattribute__(c,</span> <span class="pre">&quot;f&quot;)</span></code> ou <code class="docutils literal notranslate"><span class="pre">objet.__getattribute__(C,</span> <span class="pre">&quot;f&quot;)</span></code>. Par conséquent, l'accès à la fonction devient identique que ce soit à partir d'un objet ou d'une classe.</p>
+<p>Les bonnes candidates pour être méthode statique sont des méthodes qui ne font pas référence à la variable <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p>
+<p>Par exemple, un paquet traitant de statistiques peut inclure une classe qui est un conteneur pour des données expérimentales.  La classe fournit les méthodes normales pour calculer la moyenne, la médiane et d'autres statistiques descriptives qui dépendent des données. Cependant, il peut y avoir des fonctions utiles qui sont conceptuellement liées mais qui ne dépendent pas des données. Par exemple, la fonction d'erreur <code class="docutils literal notranslate"><span class="pre">erf(x)</span></code> est souvent utile lorsqu'on travaille en statistique mais elle ne dépend pas directement d'un ensemble de données particulier. Elle peut être appelée à partir d'un objet ou de la classe :  <code class="docutils literal notranslate"><span class="pre">s.erf(1.5)</span> <span class="pre">--&gt;</span> <span class="pre">.9332</span></code> ou <code class="docutils literal notranslate"><span class="pre">Sample.erf(1.5)</span> <span class="pre">--&gt;</span> <span class="pre">.9332</span></code>.</p>
+<p>Puisque les méthodes statiques renvoient la fonction sous-jacente sans changement, les exemples d’appels sont d'une grande banalité :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">E</span><span class="p">:</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">E</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">30</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">E</span><span class="p">()</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">30</span>
+</pre></div>
+</div>
+<p>En utilisant le protocole de descripteur hors-données, une version Python pure de <a class="reference internal" href="../library/functions.html#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">staticmethod()</span></code></a> ressemblerait à ceci :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+
+<span class="k">class</span> <span class="nc">StaticMethod</span><span class="p">:</span>
+    <span class="s2">&quot;Emulate PyStaticMethod_Type() in Objects/funcobject.c&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">f</span>
+        <span class="n">functools</span><span class="o">.</span><span class="n">update_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../library/functools.html#functools.update_wrapper" title="functools.update_wrapper"><code class="xref py py-func docutils literal notranslate"><span class="pre">functools.update_wrapper()</span></code></a> call adds a <code class="docutils literal notranslate"><span class="pre">__wrapped__</span></code> attribute
+that refers to the underlying function.  Also it carries forward
+the attributes necessary to make the wrapper look like the wrapped
+function: <code class="docutils literal notranslate"><span class="pre">__name__</span></code>, <code class="docutils literal notranslate"><span class="pre">__qualname__</span></code>, <code class="docutils literal notranslate"><span class="pre">__doc__</span></code>, and <code class="docutils literal notranslate"><span class="pre">__annotations__</span></code>.</p>
+</section>
+<section id="class-methods">
+<h3><a class="toc-backref" href="#id28">Méthodes de classe</a><a class="headerlink" href="#class-methods" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Contrairement aux méthodes statiques, les méthodes de classe ajoutent la référence de classe en tête de la liste d'arguments, avant d'appeler la fonction. C'est le même format que l'appelant soit un objet ou une classe :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">:</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">x</span>
+</pre></div>
+</div>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">(&#39;F&#39;, 3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">F</span><span class="p">()</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">(&#39;F&#39;, 3)</span>
+</pre></div>
+</div>
+<p>Ce comportement est utile lorsque la fonction n'a besoin que d'une référence de classe et ne se soucie pas des données propres à une instance particulière. Une des utilisations des méthodes de classe est de créer des constructeurs de classe personnalisés. Par exemple, la méthode de classe <a class="reference internal" href="../library/stdtypes.html#dict.fromkeys" title="dict.fromkeys"><code class="xref py py-func docutils literal notranslate"><span class="pre">dict.fromkeys()</span></code></a> crée un nouveau dictionnaire à partir d'une liste de clés.  L'équivalent Python pur est :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Dict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">fromkeys</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="s2">&quot;Emulate dict_fromkeys() in Objects/dictobject.c&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>Maintenant un nouveau dictionnaire de clés uniques peut être construit comme ceci :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">Dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="s1">&#39;abracadabra&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Dict</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span>
+<span class="go">{&#39;a&#39;: None, &#39;b&#39;: None, &#39;r&#39;: None, &#39;c&#39;: None, &#39;d&#39;: None}</span>
+</pre></div>
+</div>
+<p>En utilisant le protocole de descripteur hors-données, une version Python pure de <a class="reference internal" href="../library/functions.html#classmethod" title="classmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">classmethod()</span></code></a> ressemblerait à ceci :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+
+<span class="k">class</span> <span class="nc">ClassMethod</span><span class="p">:</span>
+    <span class="s2">&quot;Emulate PyClassMethod_Type() in Objects/funcobject.c&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">f</span>
+        <span class="n">functools</span><span class="o">.</span><span class="n">update_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">),</span> <span class="s1">&#39;__get__&#39;</span><span class="p">):</span>
+            <span class="c1"># This code path was added in Python 3.9</span>
+            <span class="c1"># and was deprecated in Python 3.11.</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">MethodType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La portion de code pour <code class="docutils literal notranslate"><span class="pre">hasattr(type(self.f),</span> <span class="pre">'__get__')</span></code> a été ajoutée dans Python 3.9 et permet à <a class="reference internal" href="../library/functions.html#classmethod" title="classmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">classmethod()</span></code></a> de prendre en charge les décorateurs chaînés. Par exemple, un décorateur « méthode de classe » peut être chaîné à un décorateur « propriété ». Dans Python 3.11, cette fonctionnalité est devenue obsolète.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">G</span><span class="p">:</span>
+    <span class="nd">@classmethod</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">__doc__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;A doc for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="vm">__doc__</span>
+<span class="go">&quot;A doc for &#39;G&#39;&quot;</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../library/functools.html#functools.update_wrapper" title="functools.update_wrapper"><code class="xref py py-func docutils literal notranslate"><span class="pre">functools.update_wrapper()</span></code></a> call in <code class="docutils literal notranslate"><span class="pre">ClassMethod</span></code> adds a
+<code class="docutils literal notranslate"><span class="pre">__wrapped__</span></code> attribute that refers to the underlying function.  Also
+it carries forward the attributes necessary to make the wrapper look
+like the wrapped function: <code class="docutils literal notranslate"><span class="pre">__name__</span></code>, <code class="docutils literal notranslate"><span class="pre">__qualname__</span></code>, <code class="docutils literal notranslate"><span class="pre">__doc__</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">__annotations__</span></code>.</p>
+</section>
+<section id="member-objects-and-slots">
+<h3><a class="toc-backref" href="#id29">Objets membres et <em>__slots__</em></a><a class="headerlink" href="#member-objects-and-slots" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Lorsqu'une classe définit <code class="docutils literal notranslate"><span class="pre">__slots__</span></code>, Python remplace le dictionnaire d'instance par un tableau de longueur fixe de créneaux prédéfinis. D'un point de vue utilisateur, cela :</p>
+<p>1/ permet une détection immédiate des bogues dus à des affectations d'attributs mal orthographiés. Seuls les noms d'attribut spécifiés dans <code class="docutils literal notranslate"><span class="pre">__slots__</span></code> sont autorisés :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vehicle</span><span class="p">:</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id_number&#39;</span><span class="p">,</span> <span class="s1">&#39;make&#39;</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auto</span> <span class="o">=</span> <span class="n">Vehicle</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">auto</span><span class="o">.</span><span class="n">id_nubmer</span> <span class="o">=</span> <span class="s1">&#39;VYE483814LQEX&#39;</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">AttributeError</span>: <span class="n">&#39;Vehicle&#39; object has no attribute &#39;id_nubmer&#39;</span>
+</pre></div>
+</div>
+<p>2/ aide à créer des objets immuables où les descripteurs gèrent l'accès aux attributs privés stockés dans <code class="docutils literal notranslate"><span class="pre">__slots__</span></code> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Immutable</span><span class="p">:</span>
+
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;_dept&#39;</span><span class="p">,</span> <span class="s1">&#39;_name&#39;</span><span class="p">)</span>          <span class="c1"># Replace the instance dictionary</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dept</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dept</span> <span class="o">=</span> <span class="n">dept</span>                   <span class="c1"># Store to private attribute</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>                   <span class="c1"># Store to private attribute</span>
+
+    <span class="nd">@property</span>                               <span class="c1"># Read-only descriptor</span>
+    <span class="k">def</span> <span class="nf">dept</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dept</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                         <span class="c1"># Read-only descriptor</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+</pre></div>
+</div>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mark</span> <span class="o">=</span> <span class="n">Immutable</span><span class="p">(</span><span class="s1">&#39;Botany&#39;</span><span class="p">,</span> <span class="s1">&#39;Mark Watney&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mark</span><span class="o">.</span><span class="n">dept</span>
+<span class="go">&#39;Botany&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mark</span><span class="o">.</span><span class="n">dept</span> <span class="o">=</span> <span class="s1">&#39;Space Pirate&#39;</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">AttributeError</span>: <span class="n">property &#39;dept&#39; of &#39;Immutable&#39; object has no setter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mark</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s1">&#39;Mars&#39;</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">AttributeError</span>: <span class="n">&#39;Immutable&#39; object has no attribute &#39;location&#39;</span>
+</pre></div>
+</div>
+<p>3/ économise de la mémoire. Sur une version Linux 64 bits, une instance avec deux attributs prend 48 octets avec <code class="docutils literal notranslate"><span class="pre">__slots__</span></code> et 152 octets sans. Ce patron de conception <a class="reference external" href="https://fr.wikipedia.org/wiki/Poids-mouche_(patron_de_conception)">poids mouche</a> n'a probablement d'importance que si un grand nombre d'instances doivent être créées ;</p>
+<p>4/ améliore la vitesse. La lecture des variables d'instance est 35 % plus rapide avec <code class="docutils literal notranslate"><span class="pre">__slots__</span></code> (mesure effectuée avec Python 3.10 sur un processeur Apple M1) ;</p>
+<p>5/ bloque les outils comme <a class="reference internal" href="../library/functools.html#functools.cached_property" title="functools.cached_property"><code class="xref py py-func docutils literal notranslate"><span class="pre">functools.cached_property()</span></code></a> qui nécessitent un dictionnaire d'instance pour fonctionner correctement :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
+
+<span class="k">class</span> <span class="nc">CP</span><span class="p">:</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">()</span>                          <span class="c1"># Eliminates the instance dict</span>
+
+    <span class="nd">@cached_property</span>                        <span class="c1"># Requires an instance dict</span>
+    <span class="k">def</span> <span class="nf">pi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">((</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span><span class="o">**</span><span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">n</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
+                       <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100_000</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CP</span><span class="p">()</span><span class="o">.</span><span class="n">pi</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">  </span><span class="c">...</span>
+<span class="gr">TypeError</span>: <span class="n">No &#39;__dict__&#39; attribute on &#39;CP&#39; instance to cache &#39;pi&#39; property.</span>
+</pre></div>
+</div>
+<p>Il n'est pas possible de créer une version Python pure exacte de <code class="docutils literal notranslate"><span class="pre">__slots__</span></code> car il faut un accès direct aux structures C et un contrôle sur l'allocation de la mémoire des objets. Cependant, nous pouvons construire une simulation presque fidèle où la structure C réelle pour les <em>slots</em> est émulée par une liste privée <code class="docutils literal notranslate"><span class="pre">_slotvalues</span></code>. Les lectures et écritures dans cette structure privée sont gérées par des descripteurs de membres :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">null</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Member</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="s1">&#39;Emulate PyMemberDef in Include/structmember.h&#39;</span>
+        <span class="c1"># Also see descr_new() in Objects/descrobject.c</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clsname</span> <span class="o">=</span> <span class="n">clsname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="n">offset</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="s1">&#39;Emulate member_get() in Objects/descrobject.c&#39;</span>
+        <span class="c1"># Also see PyMember_GetOne() in Python/structmember.c</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">_slotvalues</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">null</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="s1">&#39;Emulate member_set() in Objects/descrobject.c&#39;</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_slotvalues</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__delete__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="s1">&#39;Emulate member_delete() in Objects/descrobject.c&#39;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">_slotvalues</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">null</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_slotvalues</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="n">null</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s1">&#39;Emulate member_repr() in Objects/descrobject.c&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&lt;Member </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s1"> of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">clsname</span><span class="si">!r}</span><span class="s1">&gt;&#39;</span>
+</pre></div>
+</div>
+<p>La méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">type.__new__()</span></code> s'occupe d'ajouter des objets membres aux variables de classe :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Type</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="s1">&#39;Simulate how the type metaclass adds member objects for slots&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="n">mcls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s1">&#39;Emulate type_new() in Objects/typeobject.c&#39;</span>
+        <span class="c1"># type_new() calls PyTypeReady() which calls add_methods()</span>
+        <span class="n">slot_names</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;slot_names&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">for</span> <span class="n">offset</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">slot_names</span><span class="p">):</span>
+            <span class="n">mapping</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Member</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">mcls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La méthode <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">object.__new__()</span></code></a> s'occupe de créer des instances qui ont des <em>slots</em> au lieu d'un dictionnaire d'instances. Voici une simulation approximative en Python pur :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Object</span><span class="p">:</span>
+    <span class="s1">&#39;Simulate how object.__new__() allocates memory for __slots__&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s1">&#39;Emulate object_new() in Objects/typeobject.c&#39;</span>
+        <span class="n">inst</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;slot_names&#39;</span><span class="p">):</span>
+            <span class="n">empty_slots</span> <span class="o">=</span> <span class="p">[</span><span class="n">null</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">slot_names</span><span class="p">)</span>
+            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="s1">&#39;_slotvalues&#39;</span><span class="p">,</span> <span class="n">empty_slots</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">inst</span>
+
+    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="s1">&#39;Emulate _PyObject_GenericSetAttrWithDict() Objects/object.c&#39;</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;slot_names&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">slot_names</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s1"> object has no attribute </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="s1">&#39;Emulate _PyObject_GenericSetAttrWithDict() Objects/object.c&#39;</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;slot_names&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">slot_names</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s1"> object has no attribute </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__delattr__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pour utiliser la simulation dans une classe réelle, héritez simplement de <code class="xref py py-class docutils literal notranslate"><span class="pre">Object</span></code> et définissez la <a class="reference internal" href="../glossary.html#term-metaclass"><span class="xref std std-term">métaclasse</span></a> à <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">H</span><span class="p">(</span><span class="n">Object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">Type</span><span class="p">):</span>
+    <span class="s1">&#39;Instance variables stored in slots&#39;</span>
+
+    <span class="n">slot_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>À ce stade, la métaclasse a chargé des objets membres pour <em>x</em> et <em>y</em> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">H</span><span class="p">)))</span>
+<span class="go">{&#39;__module__&#39;: &#39;__main__&#39;,</span>
+<span class="go"> &#39;__doc__&#39;: &#39;Instance variables stored in slots&#39;,</span>
+<span class="go"> &#39;slot_names&#39;: [&#39;x&#39;, &#39;y&#39;],</span>
+<span class="go"> &#39;__init__&#39;: &lt;function H.__init__ at 0x7fb5d302f9d0&gt;,</span>
+<span class="go"> &#39;x&#39;: &lt;Member &#39;x&#39; of &#39;H&#39;&gt;,</span>
+<span class="go"> &#39;y&#39;: &lt;Member &#39;y&#39; of &#39;H&#39;&gt;}</span>
+</pre></div>
+</div>
+<p>Lorsque les instances sont créées, elles ont une liste <code class="docutils literal notranslate"><span class="pre">slot_values</span></code> où les attributs sont stockés :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<span class="go">{&#39;_slotvalues&#39;: [10, 20]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">55</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<span class="go">{&#39;_slotvalues&#39;: [55, 20]}</span>
+</pre></div>
+</div>
+<p>Les attributs mal orthographiés ou non attribués lèvent une exception :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">xz</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">AttributeError</span>: <span class="n">&#39;H&#39; object has no attribute &#39;xz&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Guide pour l'utilisation des descripteurs</a><ul>
+<li><a class="reference internal" href="#primer">Introduction</a><ul>
+<li><a class="reference internal" href="#simple-example-a-descriptor-that-returns-a-constant">Un exemple simple : un descripteur qui renvoie une constante</a></li>
+<li><a class="reference internal" href="#dynamic-lookups">Recherches dynamiques</a></li>
+<li><a class="reference internal" href="#managed-attributes">Attributs gérés</a></li>
+<li><a class="reference internal" href="#customized-names">Noms personnalisés</a></li>
+<li><a class="reference internal" href="#closing-thoughts">Réflexions finales</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#complete-practical-example">Exemple complet pratique</a><ul>
+<li><a class="reference internal" href="#validator-class">Classe « validateur »</a></li>
+<li><a class="reference internal" href="#custom-validators">Validateurs personnalisés</a></li>
+<li><a class="reference internal" href="#practical-application">Application pratique</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#technical-tutorial">Tutoriel technique</a><ul>
+<li><a class="reference internal" href="#abstract">Résumé</a></li>
+<li><a class="reference internal" href="#definition-and-introduction">Définition et introduction</a></li>
+<li><a class="reference internal" href="#descriptor-protocol">Protocole descripteur</a></li>
+<li><a class="reference internal" href="#overview-of-descriptor-invocation">Présentation de l'appel de descripteur</a></li>
+<li><a class="reference internal" href="#invocation-from-an-instance">Appel depuis une instance</a></li>
+<li><a class="reference internal" href="#invocation-from-a-class">Appel depuis une classe</a></li>
+<li><a class="reference internal" href="#invocation-from-super">Appel depuis super</a></li>
+<li><a class="reference internal" href="#summary-of-invocation-logic">Résumé de la logique d'appel</a></li>
+<li><a class="reference internal" href="#automatic-name-notification">Notification automatique des noms</a></li>
+<li><a class="reference internal" href="#orm-example">Exemple d'ORM</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pure-python-equivalents">Équivalents en Python pur</a><ul>
+<li><a class="reference internal" href="#properties">Propriétés</a></li>
+<li><a class="reference internal" href="#functions-and-methods">Fonctions et méthodes</a></li>
+<li><a class="reference internal" href="#kinds-of-methods">Types de méthodes</a></li>
+<li><a class="reference internal" href="#static-methods">Méthodes statiques</a></li>
+<li><a class="reference internal" href="#class-methods">Méthodes de classe</a></li>
+<li><a class="reference internal" href="#member-objects-and-slots">Objets membres et <em>__slots__</em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="curses.html"
+                          title="Chapitre précédent">Programmation <em>Curses</em> avec Python</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="enum.html"
+                          title="Chapitre suivant">Guide sur l'utilisation d'<em>Enum</em></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/howto/descriptor.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="enum.html" title="Guide sur l&#39;utilisation d&#39;Enum"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="curses.html" title="Programmation Curses avec Python"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Les HOWTOs de Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Guide pour l'utilisation des descripteurs</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

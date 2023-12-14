@@ -1,0 +1,535 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="FAQ extension/intégration" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/faq/extending.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Sommaire: FAQ extension/intégration- Puis-je créer mes propres fonctions en C ?, Puis-je créer mes propres fonctions en C++ ?, Écrire directement en C est difficile ; existe-t-il des alternatives ?..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Sommaire: FAQ extension/intégration- Puis-je créer mes propres fonctions en C ?, Puis-je créer mes propres fonctions en C++ ?, Écrire directement en C est difficile ; existe-t-il des alternatives ?..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>FAQ extension/intégration &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="FAQ : Python et Windows" href="windows.html" />
+    <link rel="prev" title="FAQ sur la bibliothèque et les extensions" href="library.html" />
+    <link rel="canonical" href="https://docs.python.org/3/faq/extending.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">FAQ extension/intégration</a><ul>
+<li><a class="reference internal" href="#can-i-create-my-own-functions-in-c">Puis-je créer mes propres fonctions en C ?</a></li>
+<li><a class="reference internal" href="#id1">Puis-je créer mes propres fonctions en C++ ?</a></li>
+<li><a class="reference internal" href="#writing-c-is-hard-are-there-any-alternatives">Écrire directement en C est difficile ; existe-t-il des alternatives ?</a></li>
+<li><a class="reference internal" href="#how-can-i-execute-arbitrary-python-statements-from-c">Comment puis-je exécuter des instructions quelconques Python à partir de C ?</a></li>
+<li><a class="reference internal" href="#how-can-i-evaluate-an-arbitrary-python-expression-from-c">Comment puis-je évaluer une expression quelconque de Python à partir de C ?</a></li>
+<li><a class="reference internal" href="#how-do-i-extract-c-values-from-a-python-object">Comment puis-je extraire des donnés en C d'un objet Python ?</a></li>
+<li><a class="reference internal" href="#how-do-i-use-py-buildvalue-to-create-a-tuple-of-arbitrary-length">Comment utiliser Py_BuildValue() pour créer un <em>n</em>-uplet de longueur définie ?</a></li>
+<li><a class="reference internal" href="#how-do-i-call-an-object-s-method-from-c">Comment puis-je appeler la méthode d'un objet à partir de C ?</a></li>
+<li><a class="reference internal" href="#how-do-i-catch-the-output-from-pyerr-print-or-anything-that-prints-to-stdout-stderr">Comment puis-je récupérer la sortie de <code class="docutils literal notranslate"><span class="pre">PyErr_Print()</span></code> (ou tout ce qui s'affiche sur <em>stdout</em>/<em>stderr</em>) ?</a></li>
+<li><a class="reference internal" href="#how-do-i-access-a-module-written-in-python-from-c">Comment accéder à un module écrit en Python à partir de C ?</a></li>
+<li><a class="reference internal" href="#how-do-i-interface-to-c-objects-from-python">Comment s'interfacer avec les objets C++ depuis Python ?</a></li>
+<li><a class="reference internal" href="#i-added-a-module-using-the-setup-file-and-the-make-fails-why">J'ai ajouté un module en utilisant le fichier <em>Setup</em> et la compilation échoue ; pourquoi ?</a></li>
+<li><a class="reference internal" href="#how-do-i-debug-an-extension">Comment déboguer une extension ?</a></li>
+<li><a class="reference internal" href="#i-want-to-compile-a-python-module-on-my-linux-system-but-some-files-are-missing-why">Je veux compiler un module Python sur mon système Linux, mais il manque certains fichiers. Pourquoi ?</a></li>
+<li><a class="reference internal" href="#how-do-i-tell-incomplete-input-from-invalid-input">Comment distinguer une « entrée incomplète » (<em>incomplete input</em>) d'une « entrée invalide » (<em>invalid input</em>) ?</a></li>
+<li><a class="reference internal" href="#how-do-i-find-undefined-g-symbols-builtin-new-or-pure-virtual">Comment puis-je trouver les symboles g++ indéfinis <code class="docutils literal notranslate"><span class="pre">__builtin_new</span></code> ou <code class="docutils literal notranslate"><span class="pre">__pure_virtual</span></code> ?</a></li>
+<li><a class="reference internal" href="#can-i-create-an-object-class-with-some-methods-implemented-in-c-and-others-in-python-e-g-through-inheritance">Puis-je créer une classe d'objets avec certaines méthodes implémentées en C et d'autres en Python (p. ex. en utilisant l'héritage) ?</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="library.html"
+                          title="Chapitre précédent">FAQ sur la bibliothèque et les extensions</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="windows.html"
+                          title="Chapitre suivant">FAQ : Python et Windows</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/faq/extending.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="windows.html" title="FAQ : Python et Windows"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="library.html" title="FAQ sur la bibliothèque et les extensions"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Questions fréquemment posées sur Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">FAQ extension/intégration</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="extending-embedding-faq">
+<h1><a class="toc-backref" href="#id2">FAQ extension/intégration</a><a class="headerlink" href="#extending-embedding-faq" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="contents topic" id="sommaire">
+<p class="topic-title">Sommaire</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#extending-embedding-faq" id="id2">FAQ extension/intégration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#can-i-create-my-own-functions-in-c" id="id3">Puis-je créer mes propres fonctions en C ?</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id4">Puis-je créer mes propres fonctions en C++ ?</a></p></li>
+<li><p><a class="reference internal" href="#writing-c-is-hard-are-there-any-alternatives" id="id5">Écrire directement en C est difficile ; existe-t-il des alternatives ?</a></p></li>
+<li><p><a class="reference internal" href="#how-can-i-execute-arbitrary-python-statements-from-c" id="id6">Comment puis-je exécuter des instructions quelconques Python à partir de C ?</a></p></li>
+<li><p><a class="reference internal" href="#how-can-i-evaluate-an-arbitrary-python-expression-from-c" id="id7">Comment puis-je évaluer une expression quelconque de Python à partir de C ?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-extract-c-values-from-a-python-object" id="id8">Comment puis-je extraire des donnés en C d'un objet Python ?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-use-py-buildvalue-to-create-a-tuple-of-arbitrary-length" id="id9">Comment utiliser Py_BuildValue() pour créer un <em>n</em>-uplet de longueur définie ?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-call-an-object-s-method-from-c" id="id10">Comment puis-je appeler la méthode d'un objet à partir de C ?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-catch-the-output-from-pyerr-print-or-anything-that-prints-to-stdout-stderr" id="id11">Comment puis-je récupérer la sortie de <code class="docutils literal notranslate"><span class="pre">PyErr_Print()</span></code> (ou tout ce qui s'affiche sur <em>stdout</em>/<em>stderr</em>) ?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-access-a-module-written-in-python-from-c" id="id12">Comment accéder à un module écrit en Python à partir de C ?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-interface-to-c-objects-from-python" id="id13">Comment s'interfacer avec les objets C++ depuis Python ?</a></p></li>
+<li><p><a class="reference internal" href="#i-added-a-module-using-the-setup-file-and-the-make-fails-why" id="id14">J'ai ajouté un module en utilisant le fichier <em>Setup</em> et la compilation échoue ; pourquoi ?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-debug-an-extension" id="id15">Comment déboguer une extension ?</a></p></li>
+<li><p><a class="reference internal" href="#i-want-to-compile-a-python-module-on-my-linux-system-but-some-files-are-missing-why" id="id16">Je veux compiler un module Python sur mon système Linux, mais il manque certains fichiers. Pourquoi ?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-tell-incomplete-input-from-invalid-input" id="id17">Comment distinguer une « entrée incomplète » (<em>incomplete input</em>) d'une « entrée invalide » (<em>invalid input</em>) ?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-find-undefined-g-symbols-builtin-new-or-pure-virtual" id="id18">Comment puis-je trouver les symboles g++ indéfinis <code class="docutils literal notranslate"><span class="pre">__builtin_new</span></code> ou <code class="docutils literal notranslate"><span class="pre">__pure_virtual</span></code> ?</a></p></li>
+<li><p><a class="reference internal" href="#can-i-create-an-object-class-with-some-methods-implemented-in-c-and-others-in-python-e-g-through-inheritance" id="id19">Puis-je créer une classe d'objets avec certaines méthodes implémentées en C et d'autres en Python (p. ex. en utilisant l'héritage) ?</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="can-i-create-my-own-functions-in-c">
+<h2><a class="toc-backref" href="#id3">Puis-je créer mes propres fonctions en C ?</a><a class="headerlink" href="#can-i-create-my-own-functions-in-c" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Oui, vous pouvez créer des modules intégrés contenant des fonctions, des variables, des exceptions et même de nouveaux types en C. Ceci est expliqué dans le document <a class="reference internal" href="../extending/index.html#extending-index"><span class="std std-ref">Extension et intégration de l'interpréteur Python</span></a>.</p>
+<p>La plupart des livres Python intermédiaires ou avancés couvrent également ce sujet.</p>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id4">Puis-je créer mes propres fonctions en C++ ?</a><a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Oui, en utilisant les fonctionnalités de compatibilité C existantes en C++.  Placez <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code> autour des fichiers Python inclus et mettez  <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code> avant chaque fonction qui va être appelée par l'interpréteur Python.  Les objets  C++ globaux ou statiques avec les constructeurs ne sont probablement pas une bonne idée.</p>
+</section>
+<section id="writing-c-is-hard-are-there-any-alternatives">
+<span id="c-wrapper-software"></span><h2><a class="toc-backref" href="#id5">Écrire directement en C est difficile ; existe-t-il des alternatives ?</a><a class="headerlink" href="#writing-c-is-hard-are-there-any-alternatives" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Il y a un certain nombre de solutions existantes qui vous permettent d'écrire vos propres extensions C, selon ce que vous essayez de faire.</p>
+<p><a class="reference external" href="https://cython.org">Cython</a> and its relative <a class="reference external" href="https://www.csse.canterbury.ac.nz/greg.ewing/python/Pyrex/">Pyrex</a> are compilers
+that accept a slightly modified form of Python and generate the corresponding
+C code.  Cython and Pyrex make it possible to write an extension without having
+to learn Python's C API.</p>
+<p>If you need to interface to some C or C++ library for which no Python extension
+currently exists, you can try wrapping the library's data types and functions
+with a tool such as <a class="reference external" href="https://www.swig.org">SWIG</a>.  <a class="reference external" href="https://riverbankcomputing.com/software/sip/intro">SIP</a>, <a class="reference external" href="https://cxx.sourceforge.net/">CXX</a> <a class="reference external" href="https://www.boost.org/libs/python/doc/index.html">Boost</a>, or <a class="reference external" href="https://github.com/scipy/weave">Weave</a> are also
+alternatives for wrapping C++ libraries.</p>
+</section>
+<section id="how-can-i-execute-arbitrary-python-statements-from-c">
+<h2><a class="toc-backref" href="#id6">Comment puis-je exécuter des instructions quelconques Python à partir de C ?</a><a class="headerlink" href="#how-can-i-execute-arbitrary-python-statements-from-c" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La fonction de plus haut niveau pour ce faire est <code class="xref c c-func docutils literal notranslate"><span class="pre">PyRun_SimpleStringString()</span></code> qui prend une chaîne pour seul argument afin de l'exécuter dans le contexte du module <code class="docutils literal notranslate"><span class="pre">__main__</span></code> et renvoie <code class="docutils literal notranslate"><span class="pre">0</span></code> en cas de succès et <code class="docutils literal notranslate"><span class="pre">-1</span></code> quand une exception se produit (incluant <a class="reference internal" href="../library/exceptions.html#SyntaxError" title="SyntaxError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxError</span></code></a>). Pour une meilleure maîtrise, utilisez <a class="reference internal" href="../c-api/veryhigh.html#c.PyRun_String" title="PyRun_String"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyRun_String()</span></code></a> ; voir le code source pour <a class="reference internal" href="../c-api/veryhigh.html#c.PyRun_SimpleString" title="PyRun_SimpleString"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyRun_SimpleString()</span></code></a> dans <code class="docutils literal notranslate"><span class="pre">Python/pythonrun.c</span></code>.</p>
+</section>
+<section id="how-can-i-evaluate-an-arbitrary-python-expression-from-c">
+<h2><a class="toc-backref" href="#id7">Comment puis-je évaluer une expression quelconque de Python à partir de C ?</a><a class="headerlink" href="#how-can-i-evaluate-an-arbitrary-python-expression-from-c" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Appelez la fonction <a class="reference internal" href="../c-api/veryhigh.html#c.PyRun_String" title="PyRun_String"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyRun_String()</span></code></a> de la question précédente avec le symbole de départ <a class="reference internal" href="../c-api/veryhigh.html#c.Py_eval_input" title="Py_eval_input"><code class="xref c c-data docutils literal notranslate"><span class="pre">Py_eval_input</span></code></a> ; il analyse une expression, l'évalue et renvoie sa valeur.</p>
+</section>
+<section id="how-do-i-extract-c-values-from-a-python-object">
+<h2><a class="toc-backref" href="#id8">Comment puis-je extraire des donnés en C d'un objet Python ?</a><a class="headerlink" href="#how-do-i-extract-c-values-from-a-python-object" title="Lien permanent vers ce titre">¶</a></h2>
+<p>That depends on the object's type.  If it's a tuple, <a class="reference internal" href="../c-api/tuple.html#c.PyTuple_Size" title="PyTuple_Size"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyTuple_Size()</span></code></a>
+returns its length and <a class="reference internal" href="../c-api/tuple.html#c.PyTuple_GetItem" title="PyTuple_GetItem"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyTuple_GetItem()</span></code></a> returns the item at a specified
+index.  Lists have similar functions, <a class="reference internal" href="../c-api/list.html#c.PyList_Size" title="PyList_Size"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyList_Size()</span></code></a> and
+<a class="reference internal" href="../c-api/list.html#c.PyList_GetItem" title="PyList_GetItem"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyList_GetItem()</span></code></a>.</p>
+<p>For bytes, <a class="reference internal" href="../c-api/bytes.html#c.PyBytes_Size" title="PyBytes_Size"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyBytes_Size()</span></code></a> returns its length and
+<a class="reference internal" href="../c-api/bytes.html#c.PyBytes_AsStringAndSize" title="PyBytes_AsStringAndSize"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyBytes_AsStringAndSize()</span></code></a> provides a pointer to its value and its
+length.  Note that Python bytes objects may contain null bytes so C's
+<code class="xref c c-func docutils literal notranslate"><span class="pre">strlen()</span></code> should not be used.</p>
+<p>Pour tester le type d'un objet, assurez-vous d'abord qu'il ne soit pas <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, puis utilisez <a class="reference internal" href="../c-api/bytes.html#c.PyBytes_Check" title="PyBytes_Check"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyBytes_Check()</span></code></a>, <a class="reference internal" href="../c-api/tuple.html#c.PyTuple_Check" title="PyTuple_Check"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyTuple_Check()</span></code></a>, <a class="reference internal" href="../c-api/list.html#c.PyList_Check" title="PyList_Check"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyList_Check()</span></code></a>, etc.</p>
+<p>Il y a aussi une API de haut niveau pour les objets Python qui est fournie par l'interface dite « abstraite » — voir <code class="docutils literal notranslate"><span class="pre">Include/abstract.h</span></code> pour plus de détails. Elle permet l'interfaçage avec tout type de séquence Python en utilisant des appels tels que <a class="reference internal" href="../c-api/sequence.html#c.PySequence_Length" title="PySequence_Length"><code class="xref c c-func docutils literal notranslate"><span class="pre">PySequence_Length()</span></code></a>, <a class="reference internal" href="../c-api/sequence.html#c.PySequence_GetItem" title="PySequence_GetItem"><code class="xref c c-func docutils literal notranslate"><span class="pre">PySequence_GetItem()</span></code></a>, etc. ainsi que de nombreux autres protocoles utiles tels que les nombres (<a class="reference internal" href="../c-api/number.html#c.PyNumber_Index" title="PyNumber_Index"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyNumber_Index()</span></code></a> et autres) et les correspondances dans les APIs PyMapping.</p>
+</section>
+<section id="how-do-i-use-py-buildvalue-to-create-a-tuple-of-arbitrary-length">
+<h2><a class="toc-backref" href="#id9">Comment utiliser Py_BuildValue() pour créer un <em>n</em>-uplet de longueur définie ?</a><a class="headerlink" href="#how-do-i-use-py-buildvalue-to-create-a-tuple-of-arbitrary-length" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Vous ne pouvez pas. Utilisez <a class="reference internal" href="../c-api/tuple.html#c.PyTuple_Pack" title="PyTuple_Pack"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyTuple_Pack()</span></code></a> à la place.</p>
+</section>
+<section id="how-do-i-call-an-object-s-method-from-c">
+<h2><a class="toc-backref" href="#id10">Comment puis-je appeler la méthode d'un objet à partir de C ?</a><a class="headerlink" href="#how-do-i-call-an-object-s-method-from-c" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La fonction <a class="reference internal" href="../c-api/call.html#c.PyObject_CallMethod" title="PyObject_CallMethod"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyObject_CallMethod()</span></code></a> peut être utilisée pour appeler la méthode d'un objet. Les paramètres sont l'objet, le nom de la méthode à appeler, une chaîne de caractères comme celle utilisée pour <a class="reference internal" href="../c-api/arg.html#c.Py_BuildValue" title="Py_BuildValue"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_BuildValue()</span></code></a> et les valeurs des arguments :</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span>
+<span class="nf">PyObject_CallMethod</span><span class="p">(</span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">object</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">method_name</span><span class="p">,</span>
+<span class="w">                    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">arg_format</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
+</pre></div>
+</div>
+<p>Cela fonctionne pour tous les objets qui ont des méthodes — qu'elles soient intégrées ou définies par l'utilisateur. Vous êtes responsable de « <a class="reference internal" href="../c-api/refcounting.html#c.Py_DECREF" title="Py_DECREF"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_DECREF()</span></code></a><em>er</em> » la valeur de retour à la fin.</p>
+<p>Pour appeler, p. ex., la méthode <em>seek</em> d'un objet <em>file</em> avec les arguments 10, 0 (en supposant que le pointeur de l'objet fichier est <em>f</em>) :</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_CallMethod</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;seek&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(ii)&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">res</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">...</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="n">occurred</span><span class="w"> </span><span class="p">...</span>
+<span class="p">}</span>
+<span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Notez que <a class="reference internal" href="../c-api/call.html#c.PyObject_CallObject" title="PyObject_CallObject"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyObject_CallObject()</span></code></a> veut <em>toujours</em> un <em>n</em>-uplet comme liste d'arguments. Aussi, pour appeler une fonction sans arguments, utilisez &quot;()&quot; pour être conforme au type et, pour appeler une fonction avec un paramètre, entourez-le de parenthèses, p. ex. &quot;(i)&quot;.</p>
+</section>
+<section id="how-do-i-catch-the-output-from-pyerr-print-or-anything-that-prints-to-stdout-stderr">
+<h2><a class="toc-backref" href="#id11">Comment puis-je récupérer la sortie de <code class="docutils literal notranslate"><span class="pre">PyErr_Print()</span></code> (ou tout ce qui s'affiche sur <em>stdout</em>/<em>stderr</em>) ?</a><a class="headerlink" href="#how-do-i-catch-the-output-from-pyerr-print-or-anything-that-prints-to-stdout-stderr" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans le code Python, définissez un objet qui possède la méthode <code class="docutils literal notranslate"><span class="pre">write()</span></code>. Affectez cet objet à <a class="reference internal" href="../library/sys.html#sys.stdout" title="sys.stdout"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stdout</span></code></a> et <a class="reference internal" href="../library/sys.html#sys.stderr" title="sys.stderr"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stderr</span></code></a>. Appelez <em>print_error</em> ou faites simplement en sorte que le mécanisme standard de remontée des erreurs fonctionne. Ensuite, la sortie sera dirigée vers l'endroit où votre méthode <code class="docutils literal notranslate"><span class="pre">write()</span></code> écrit.</p>
+<p>La façon la plus simple consiste à utiliser la classe <a class="reference internal" href="../library/io.html#io.StringIO" title="io.StringIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.StringIO</span></code></a> :</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">io</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello world!&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+<span class="go">foo</span>
+<span class="go">hello world!</span>
+</pre></div>
+</div>
+<p>Le code d'un objet à la fonctionnalité similaire ressemblerait à ceci :</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">io</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">StdoutCatcher</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">TextIOBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stuff</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stuff</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">StdoutCatcher</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello world!&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+<span class="go">foo</span>
+<span class="go">hello world!</span>
+</pre></div>
+</div>
+</section>
+<section id="how-do-i-access-a-module-written-in-python-from-c">
+<h2><a class="toc-backref" href="#id12">Comment accéder à un module écrit en Python à partir de C ?</a><a class="headerlink" href="#how-do-i-access-a-module-written-in-python-from-c" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Vous pouvez obtenir un pointeur sur l'objet module comme suit :</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyImport_ImportModule</span><span class="p">(</span><span class="s">&quot;&lt;modulename&gt;&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Si le module n'a pas encore été importé (c.-à-d. qu'il n'est pas encore présent dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>), cela initialise le module ; sinon il renvoie simplement la valeur de <code class="docutils literal notranslate"><span class="pre">sys.modules[&quot;&lt;modulename&gt;&quot;]</span></code>. Notez qu'il n'inscrit le module dans aucun espace de nommage — il s'assure seulement qu'il a été initialisé et qu'il est stocké dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>.</p>
+<p>Vous pouvez alors accéder aux attributs du module (c.-à-d. à tout nom défini dans le module) comme suit :</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">attr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_GetAttrString</span><span class="p">(</span><span class="n">module</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&lt;attrname&gt;&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Appeler <a class="reference internal" href="../c-api/object.html#c.PyObject_SetAttrString" title="PyObject_SetAttrString"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyObject_SetAttrString()</span></code></a> pour assigner des valeurs aux variables du module fonctionne également.</p>
+</section>
+<section id="how-do-i-interface-to-c-objects-from-python">
+<h2><a class="toc-backref" href="#id13">Comment s'interfacer avec les objets C++ depuis Python ?</a><a class="headerlink" href="#how-do-i-interface-to-c-objects-from-python" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Selon vos besoins, de nombreuses approches sont possibles. Pour le faire manuellement, commencez par lire <a class="reference internal" href="../extending/index.html#extending-index"><span class="std std-ref">le document &quot;Extension et intégration&quot;</span></a>. Sachez que pour le système d'exécution Python, il n'y a pas beaucoup de différence entre C et C++ — donc la méthode pour construire un nouveau type Python à partir d'une structure C (pointeur) fonctionne également avec des objets en C++.</p>
+<p>Pour les bibliothèques C++, voir <a class="reference internal" href="#c-wrapper-software"><span class="std std-ref">Écrire directement en C est difficile ; existe-t-il des alternatives ?</span></a>.</p>
+</section>
+<section id="i-added-a-module-using-the-setup-file-and-the-make-fails-why">
+<h2><a class="toc-backref" href="#id14">J'ai ajouté un module en utilisant le fichier <em>Setup</em> et la compilation échoue ; pourquoi ?</a><a class="headerlink" href="#i-added-a-module-using-the-setup-file-and-the-make-fails-why" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le fichier <em>Setup</em> doit se terminer par une ligne vide, s'il n'y a pas de ligne vide, le processus de compilation échoue (ce problème peut se régler en bidouillant un script shell, et ce bogue est si mineur qu'il ne mérite pas qu'on s'y attarde).</p>
+</section>
+<section id="how-do-i-debug-an-extension">
+<h2><a class="toc-backref" href="#id15">Comment déboguer une extension ?</a><a class="headerlink" href="#how-do-i-debug-an-extension" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Lorsque vous utilisez GDB avec des extensions chargées dynamiquement, vous ne pouvez pas placer de point d'arrêt dans votre extension tant que celle-ci n'est pas chargée.</p>
+<p>Dans votre fichier <code class="docutils literal notranslate"><span class="pre">.gdbinit</span></code> (ou manuellement), ajoutez la commande :</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>br _PyImport_LoadDynamicModule
+</pre></div>
+</div>
+<p>Ensuite, lorsque vous exécutez GDB :</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gdb<span class="w"> </span>/local/bin/python
+<span class="go">gdb) run myscript.py</span>
+<span class="go">gdb) continue # repeat until your extension is loaded</span>
+<span class="go">gdb) finish   # so that your extension is loaded</span>
+<span class="go">gdb) br myfunction.c:50</span>
+<span class="go">gdb) continue</span>
+</pre></div>
+</div>
+</section>
+<section id="i-want-to-compile-a-python-module-on-my-linux-system-but-some-files-are-missing-why">
+<h2><a class="toc-backref" href="#id16">Je veux compiler un module Python sur mon système Linux, mais il manque certains fichiers. Pourquoi ?</a><a class="headerlink" href="#i-want-to-compile-a-python-module-on-my-linux-system-but-some-files-are-missing-why" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La plupart des versions pré-compilées de Python n'incluent pas le répertoire <code class="file docutils literal notranslate"><span class="pre">/usr/lib/python2.</span><em><span class="pre">x</span></em><span class="pre">/config/</span></code>, qui contient les différents fichiers nécessaires à la compilation des extensions Python.</p>
+<p>Pour Red Hat, installez le RPM <em>python-devel</em> pour obtenir les fichiers nécessaires.</p>
+<p>Pour Debian, exécutez <code class="docutils literal notranslate"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-dev</span></code>.</p>
+</section>
+<section id="how-do-i-tell-incomplete-input-from-invalid-input">
+<h2><a class="toc-backref" href="#id17">Comment distinguer une « entrée incomplète » (<em>incomplete input</em>) d'une « entrée invalide » (<em>invalid input</em>) ?</a><a class="headerlink" href="#how-do-i-tell-incomplete-input-from-invalid-input" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Parfois vous souhaitez émuler le comportement de l'interpréteur interactif Python, quand il vous donne une invite de continuation lorsque l'entrée est incomplète (par exemple, vous avez tapé le début d'une instruction &quot;if&quot; ou vous n'avez pas fermé vos parenthèses ou triple guillemets) mais il vous renvoie immédiatement une erreur syntaxique quand la saisie est incorrecte.</p>
+<p>En Python, vous pouvez utiliser le module <a class="reference internal" href="../library/codeop.html#module-codeop" title="codeop: Compile (possibly incomplete) Python code."><code class="xref py py-mod docutils literal notranslate"><span class="pre">codeop</span></code></a>, qui se rapproche assez du comportement de l'analyseur. Par exemple, IDLE l'utilise.</p>
+<p>La façon la plus simple de le faire en C est d'appeler <a class="reference internal" href="../c-api/veryhigh.html#c.PyRun_InteractiveLoop" title="PyRun_InteractiveLoop"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyRun_InteractiveLoop()</span></code></a> (peut-être dans un autre fil d'exécution) et laisser l'interpréteur Python gérer l'entrée pour vous. Vous pouvez également définir <a class="reference internal" href="../c-api/veryhigh.html#c.PyOS_ReadlineFunctionPointer" title="PyOS_ReadlineFunctionPointer"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyOS_ReadlineFunctionPointer()</span></code></a> pour pointer vers votre fonction d'entrée personnalisée. Voir <code class="docutils literal notranslate"><span class="pre">Modules/readline.c</span></code> et <code class="docutils literal notranslate"><span class="pre">Parser/myreadline.c</span></code> pour plus de conseils.</p>
+</section>
+<section id="how-do-i-find-undefined-g-symbols-builtin-new-or-pure-virtual">
+<h2><a class="toc-backref" href="#id18">Comment puis-je trouver les symboles g++ indéfinis <code class="docutils literal notranslate"><span class="pre">__builtin_new</span></code> ou <code class="docutils literal notranslate"><span class="pre">__pure_virtual</span></code> ?</a><a class="headerlink" href="#how-do-i-find-undefined-g-symbols-builtin-new-or-pure-virtual" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Pour charger dynamiquement les modules d'extension g++, vous devez recompiler Python, effectuer l'édition de liens en utilisant g++ (modifiez <em>LINKCC</em> dans le <em>Python Modules Makefile</em>), et effectuer l'édition de liens de votre module d'extension avec g++ (par exemple, <code class="docutils literal notranslate"><span class="pre">g++</span> <span class="pre">-shared</span> <span class="pre">-o</span> <span class="pre">mymodule.so</span> <span class="pre">mymodule.o</span></code>).</p>
+</section>
+<section id="can-i-create-an-object-class-with-some-methods-implemented-in-c-and-others-in-python-e-g-through-inheritance">
+<h2><a class="toc-backref" href="#id19">Puis-je créer une classe d'objets avec certaines méthodes implémentées en C et d'autres en Python (p. ex. en utilisant l'héritage) ?</a><a class="headerlink" href="#can-i-create-an-object-class-with-some-methods-implemented-in-c-and-others-in-python-e-g-through-inheritance" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Oui, vous pouvez hériter de classes intégrées telles que <a class="reference internal" href="../library/functions.html#int" title="int"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference internal" href="../library/stdtypes.html#list" title="list"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>, <a class="reference internal" href="../library/stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, etc.</p>
+<p>The Boost Python Library (BPL, <a class="reference external" href="https://www.boost.org/libs/python/doc/index.html">https://www.boost.org/libs/python/doc/index.html</a>)
+provides a way of doing this from C++ (i.e. you can inherit from an extension
+class written in C++ using the BPL).</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">FAQ extension/intégration</a><ul>
+<li><a class="reference internal" href="#can-i-create-my-own-functions-in-c">Puis-je créer mes propres fonctions en C ?</a></li>
+<li><a class="reference internal" href="#id1">Puis-je créer mes propres fonctions en C++ ?</a></li>
+<li><a class="reference internal" href="#writing-c-is-hard-are-there-any-alternatives">Écrire directement en C est difficile ; existe-t-il des alternatives ?</a></li>
+<li><a class="reference internal" href="#how-can-i-execute-arbitrary-python-statements-from-c">Comment puis-je exécuter des instructions quelconques Python à partir de C ?</a></li>
+<li><a class="reference internal" href="#how-can-i-evaluate-an-arbitrary-python-expression-from-c">Comment puis-je évaluer une expression quelconque de Python à partir de C ?</a></li>
+<li><a class="reference internal" href="#how-do-i-extract-c-values-from-a-python-object">Comment puis-je extraire des donnés en C d'un objet Python ?</a></li>
+<li><a class="reference internal" href="#how-do-i-use-py-buildvalue-to-create-a-tuple-of-arbitrary-length">Comment utiliser Py_BuildValue() pour créer un <em>n</em>-uplet de longueur définie ?</a></li>
+<li><a class="reference internal" href="#how-do-i-call-an-object-s-method-from-c">Comment puis-je appeler la méthode d'un objet à partir de C ?</a></li>
+<li><a class="reference internal" href="#how-do-i-catch-the-output-from-pyerr-print-or-anything-that-prints-to-stdout-stderr">Comment puis-je récupérer la sortie de <code class="docutils literal notranslate"><span class="pre">PyErr_Print()</span></code> (ou tout ce qui s'affiche sur <em>stdout</em>/<em>stderr</em>) ?</a></li>
+<li><a class="reference internal" href="#how-do-i-access-a-module-written-in-python-from-c">Comment accéder à un module écrit en Python à partir de C ?</a></li>
+<li><a class="reference internal" href="#how-do-i-interface-to-c-objects-from-python">Comment s'interfacer avec les objets C++ depuis Python ?</a></li>
+<li><a class="reference internal" href="#i-added-a-module-using-the-setup-file-and-the-make-fails-why">J'ai ajouté un module en utilisant le fichier <em>Setup</em> et la compilation échoue ; pourquoi ?</a></li>
+<li><a class="reference internal" href="#how-do-i-debug-an-extension">Comment déboguer une extension ?</a></li>
+<li><a class="reference internal" href="#i-want-to-compile-a-python-module-on-my-linux-system-but-some-files-are-missing-why">Je veux compiler un module Python sur mon système Linux, mais il manque certains fichiers. Pourquoi ?</a></li>
+<li><a class="reference internal" href="#how-do-i-tell-incomplete-input-from-invalid-input">Comment distinguer une « entrée incomplète » (<em>incomplete input</em>) d'une « entrée invalide » (<em>invalid input</em>) ?</a></li>
+<li><a class="reference internal" href="#how-do-i-find-undefined-g-symbols-builtin-new-or-pure-virtual">Comment puis-je trouver les symboles g++ indéfinis <code class="docutils literal notranslate"><span class="pre">__builtin_new</span></code> ou <code class="docutils literal notranslate"><span class="pre">__pure_virtual</span></code> ?</a></li>
+<li><a class="reference internal" href="#can-i-create-an-object-class-with-some-methods-implemented-in-c-and-others-in-python-e-g-through-inheritance">Puis-je créer une classe d'objets avec certaines méthodes implémentées en C et d'autres en Python (p. ex. en utilisant l'héritage) ?</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="library.html"
+                          title="Chapitre précédent">FAQ sur la bibliothèque et les extensions</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="windows.html"
+                          title="Chapitre suivant">FAQ : Python et Windows</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/faq/extending.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="windows.html" title="FAQ : Python et Windows"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="library.html" title="FAQ sur la bibliothèque et les extensions"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Questions fréquemment posées sur Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">FAQ extension/intégration</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

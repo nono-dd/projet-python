@@ -1,0 +1,1195 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="pickle — Sérialisation d'objets Python" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/pickle.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/pickle.py Le module pickle implémente des protocoles binaires de sérialisation et dé-sérialisation d'objets Python. La sérialisation est le procédé par lequel une hiérarchie d'obj..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/pickle.py Le module pickle implémente des protocoles binaires de sérialisation et dé-sérialisation d'objets Python. La sérialisation est le procédé par lequel une hiérarchie d'obj..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>pickle — Sérialisation d&#39;objets Python &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="copyreg — Enregistre les fonctions support de pickle" href="copyreg.html" />
+    <link rel="prev" title="Persistance des données" href="persistence.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/pickle.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Sérialisation d'objets Python</a><ul>
+<li><a class="reference internal" href="#relationship-to-other-python-modules">Relations aux autres modules Python</a><ul>
+<li><a class="reference internal" href="#comparison-with-marshal">Comparaison avec <code class="docutils literal notranslate"><span class="pre">marshal</span></code></a></li>
+<li><a class="reference internal" href="#comparison-with-json">Comparaison avec <code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-stream-format">Format du flux de données</a></li>
+<li><a class="reference internal" href="#module-interface">Interface du module</a></li>
+<li><a class="reference internal" href="#what-can-be-pickled-and-unpickled">Quels objets sont sérialisables ?</a></li>
+<li><a class="reference internal" href="#pickling-class-instances">Sérialisation des instances d'une classe</a><ul>
+<li><a class="reference internal" href="#persistence-of-external-objects">Persistance d'objets externes</a></li>
+<li><a class="reference internal" href="#dispatch-tables">Tables de distribution</a></li>
+<li><a class="reference internal" href="#handling-stateful-objects">Traitement des objets à état</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#custom-reduction-for-types-functions-and-other-objects">Réduction personnalisée pour les types, fonctions et autres objets</a></li>
+<li><a class="reference internal" href="#out-of-band-buffers">Tampons hors-bande</a><ul>
+<li><a class="reference internal" href="#provider-api">API des producteurs</a></li>
+<li><a class="reference internal" href="#consumer-api">API des consommateurs</a></li>
+<li><a class="reference internal" href="#example">Exemple</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#restricting-globals">Restriction des noms dans l'espace de nommage global</a></li>
+<li><a class="reference internal" href="#performance">Performances</a></li>
+<li><a class="reference internal" href="#examples">Exemples</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="persistence.html"
+                          title="Chapitre précédent">Persistance des données</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="copyreg.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Enregistre les fonctions support de <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/pickle.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="copyreg.html" title="copyreg — Enregistre les fonctions support de pickle"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="persistence.html" title="Persistance des données"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="persistence.html" accesskey="U">Persistance des données</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Sérialisation d'objets Python</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-pickle">
+<span id="pickle-python-object-serialization"></span><h1><a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> — Sérialisation d'objets Python<a class="headerlink" href="#module-pickle" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/pickle.py">Lib/pickle.py</a></p>
+<hr class="docutils" id="index-0" />
+<p>Le module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> implémente des protocoles binaires de sérialisation et dé-sérialisation d'objets Python. La sérialisation est le procédé par lequel une hiérarchie d'objets Python est convertie en flux d'octets. La désérialisation est l'opération inverse, par laquelle un flux d'octets (à partir d'un <a class="reference internal" href="../glossary.html#term-binary-file"><span class="xref std std-term">binary file</span></a> ou <a class="reference internal" href="../glossary.html#term-bytes-like-object"><span class="xref std std-term">bytes-like object</span></a>) est converti en hiérarchie d'objets. Sérialisation (et <em>désérialisation</em>) sont aussi connus sous les termes de <em>pickling</em>, de &quot;<em>marshalling</em>&quot; <a class="footnote-reference brackets" href="#id7" id="id1">1</a> ou encore de &quot;<em>flattening</em>&quot;.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Le module <code class="docutils literal notranslate"><span class="pre">pickle</span></code> <strong>n'est pas sécurisé</strong>. Ne désérialisez des objets qu'à partir de sources fiables.</p>
+<p>Il est possible de produire des données binaires qui <strong>exécutent du code arbitraire lors de leur désérialisation</strong>. Ne désérialisez jamais des données provenant d'une source non fiable, ou qui pourraient avoir été modifiées.</p>
+<p>Pensez au module <a class="reference internal" href="hmac.html#module-hmac" title="hmac: Keyed-Hashing for Message Authentication (HMAC) implementation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code></a> pour signer des données afin de s'assurer qu'elles n'ont pas été modifiées.</p>
+<p>Des formats de sérialisation plus sûrs, comme <a class="reference internal" href="json.html#module-json" title="json: Encode and decode the JSON format."><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a>, peuvent se révéler plus adaptés si vous travaillez sur des données qui ne sont pas fiables. Voir <a class="reference internal" href="#comparison-with-json"><span class="std std-ref">Comparaison avec json</span></a>.</p>
+</div>
+<section id="relationship-to-other-python-modules">
+<h2>Relations aux autres modules Python<a class="headerlink" href="#relationship-to-other-python-modules" title="Lien permanent vers ce titre">¶</a></h2>
+<section id="comparison-with-marshal">
+<h3>Comparaison avec <code class="docutils literal notranslate"><span class="pre">marshal</span></code><a class="headerlink" href="#comparison-with-marshal" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Python possède un module de bas niveau en sérialisation appelé <a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code></a>, mais en général il est préférable d'utiliser <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> pour sérialiser des objets Python. <a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code></a> existe principalement pour gérer les fichiers Python en <code class="file docutils literal notranslate"><span class="pre">.pyc</span></code>.</p>
+<p>Le module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> diffère du module <a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code></a> sur plusieurs aspects :</p>
+<ul>
+<li><p>Le module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> garde la trace des objets qu'il a déjà sérialisés, pour faire en sorte que les prochaines références à cet objet ne soient pas sérialisées à nouveau. <a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code></a> ne le fait pas.</p>
+<p>Ça a des implications sur les objets partagés et les objets récursifs. Les objets récursifs sont des objets qui contiennent des références à eux-mêmes. Ceux-ci ne sont pas gérées par marshal : lui donner un objet récursif va le faire planter. Un objet est partagé lorsque que plusieurs références pointent dessus, depuis différents endroits dans la hiérarchie sérialisée. Le module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> repère ces partages et ne stocke ces objets qu'une seule fois. Les objets partagés restent ainsi partagés, ce qui peut être très important pour les objets muables.</p>
+</li>
+<li><p><a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code></a> ne peut être utilisé pour la sérialisation et l'instanciation de classes définies par les utilisateurs. <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> peut sauvegarder et restaurer les instances de classes de manière transparente. Cependant la définition de classe doit être importable et lancée dans le même module et de la même manière que lors de son importation.</p></li>
+<li><p>Aucune garantie n'est offerte sur la portabilité du format <a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code></a> entre différentes versions de Python. Sa fonction première étant la gestion des fichiers <code class="file docutils literal notranslate"><span class="pre">.pyc</span></code>, les développeurs se réservent le droit de changer le format de sérialisation de manière non-rétrocompatible si besoin était. Il est garanti que le format <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> restera compatible avec les versions futures de Python, pourvu que vous choisissiez un protocole de sérialisation adapté. De plus, il masque les différences entre les types Python 2 et Python 3, pour le cas où il s'agit de désérialiser en Python 3 des données sérialisées en Python 2.</p></li>
+</ul>
+</section>
+<section id="comparison-with-json">
+<span id="id2"></span><h3>Comparaison avec <code class="docutils literal notranslate"><span class="pre">json</span></code><a class="headerlink" href="#comparison-with-json" title="Lien permanent vers ce titre">¶</a></h3>
+<p>There are fundamental differences between the pickle protocols and
+<a class="reference external" href="https://json.org">JSON (JavaScript Object Notation)</a>:</p>
+<ul class="simple">
+<li><p><em>pickle</em> est un format binaire, tandis que JSON est un format textuel (constitué de caractères Unicode et généralement encodé en UTF-8) ;</p></li>
+<li><p>JSON peut être lu par une personne, contrairement à <em>pickle</em> ;</p></li>
+<li><p>JSON offre l'interopérabilité avec de nombreux outils en dehors de l'écosystème Python, alors que <em>pickle</em> est propre à Python ;</p></li>
+<li><p>Par défaut, JSON n'est capable de sérialiser qu'un nombre limité de types natifs Python, et ne prend pas en charge les classes définies par l'utilisateur. Le format <em>pickle</em> peut représenter une multitude de types d'objets, dont beaucoup automatiquement, grâce à une utilisation fine des possibilités d'introspection de Python ; on peut traiter les cas les plus complexes en implémentant des <a class="reference internal" href="#pickle-inst"><span class="std std-ref">méthodes de sérialisation propres à une classe</span></a> ;</p></li>
+<li><p>Contrairement à <em>pickle</em>, la désérialisation de données JSON n'ouvre pas en soi une vulnérabilité à l'exécution de code arbitraire.</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<p>Le module <a class="reference internal" href="json.html#module-json" title="json: Encode and decode the JSON format."><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> de la bibliothèque standard permet la sérialisation et désérialisation au format JSON.</p>
+</div>
+</section>
+</section>
+<section id="data-stream-format">
+<span id="pickle-protocols"></span><h2>Format du flux de données<a class="headerlink" href="#data-stream-format" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-1">Le format de données employé par <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> est propre à Python, avec l'avantage qu'aucune restriction n'est imposée par des standards externes comme JSON ou XDR (qui ne peuvent pas représenter le partage de références). Cependant, cela signifie que des programmes écrits en d'autres langages que Python peuvent échouer à reconstituer les objets sérialisés.</p>
+<p>Le format binaire <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> est, par défaut, une représentation assez compacte des objets. Il est possible de <a class="reference internal" href="archiving.html"><span class="doc">compresser</span></a> efficacement les données sérialisées.</p>
+<p>Le module <a class="reference internal" href="pickletools.html#module-pickletools" title="pickletools: Contains extensive comments about the pickle protocols and pickle-machine opcodes, as well as some useful functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code></a> contient des outils servant à analyser les flux de données générés par <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a>. Le code source de <a class="reference internal" href="pickletools.html#module-pickletools" title="pickletools: Contains extensive comments about the pickle protocols and pickle-machine opcodes, as well as some useful functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code></a> contient des commentaires détaillés sur les <em>opcodes</em> employés par les protocoles <em>pickle</em>.</p>
+<p>Il existe actuellement 6 protocoles différents pour la sérialisation. Les protocoles portant les numéros les plus grands sont les derniers ajoutés, et nécessitent en conséquence des versions de Python plus récentes.</p>
+<ul class="simple">
+<li><p>Le protocole 0 est le format originel, humainement lisible. Il est rétrocompatible avec les versions les plus anciennes de Python.</p></li>
+<li><p>Le protocole 1 est un ancien format binaire, aussi compatible avec les versions anciennes.</p></li>
+<li><p>Protocol version 2 was introduced in Python 2.3.  It provides much more
+efficient pickling of <a class="reference internal" href="../glossary.html#term-new-style-class"><span class="xref std std-term">new-style classes</span></a>.  Refer to <span class="target" id="index-2"></span><a class="pep reference external" href="https://peps.python.org/pep-0307/"><strong>PEP 307</strong></a> for
+information about improvements brought by protocol 2.</p></li>
+<li><p>Le protocole 3 a été introduit en Python 3.0. Il gère les objets <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>, et ne permet pas la désérialisation par Python 2.x. Il fut le protocole par défaut de Python 3.0 à Python 3.7.</p></li>
+<li><p>Le protocole 4 est apparu en Python 3.4. Il prend en charge les objets de très grande taille ainsi que la sérialisation d'une plus grande variété d'objets, et optimise le format. Il est le protocole par défaut depuis Python 3.8. Voir la <span class="target" id="index-13"></span><a class="pep reference external" href="https://peps.python.org/pep-3154/"><strong>PEP 3154</strong></a> pour plus d'informations sur les améliorations apportées par le protocole 4.</p></li>
+<li><p>Le protocole 5 a été ajouté en Python 3.8 afin de permettre le transfert des données en marge de la sérialisation elle-même. Il a également accéléré les opérations sur les données à sérialiser. Reportez-vous à la <span class="target" id="index-14"></span><a class="pep reference external" href="https://peps.python.org/pep-0574/"><strong>PEP 574</strong></a> pour les détails relatifs aux améliorations apportées par le protocole 5.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>La sérialisation est un problème plus simple que la persistance des données en général. Le module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> lit et écrit des objets fichiers-compatibles, mais ne s'occupe pas du problème de donner un nom à des objets persistants, ni de gérer l'accès par différents processus en parallèle à ces objets. <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> se contente de transformer des objets complexes en flux d'octets, et lire ces flux d'octets par la suite pour reconstruire des objets avec la même structure. Si l'on peut bien sûr écrire les flux d'octets dans un fichier, rien n'empêche de les transférer à travers un réseau, ou bien de les stocker dans une base de données. Voir le module <a class="reference internal" href="shelve.html#module-shelve" title="shelve: Python object persistence."><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code></a> pour une interface simple qui sérialise et désérialise les objets dans des bases de données de style DBM.</p>
+</div>
+</section>
+<section id="module-interface">
+<h2>Interface du module<a class="headerlink" href="#module-interface" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Pour sérialiser un objet, contenant éventuellement d'autres objets, appelez tout simplement la fonction <a class="reference internal" href="#pickle.dumps" title="pickle.dumps"><code class="xref py py-func docutils literal notranslate"><span class="pre">dumps()</span></code></a>. La fonction <a class="reference internal" href="#pickle.loads" title="pickle.loads"><code class="xref py py-func docutils literal notranslate"><span class="pre">loads()</span></code></a>, quant à elle, désérialise un flux de données. Pour un contrôle plus fin des opérations de sérialisation ou désérialisation, créez un objet <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a> ou <a class="reference internal" href="#pickle.Unpickler" title="pickle.Unpickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unpickler</span></code></a>.</p>
+<p>Le module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> définit les constantes suivantes :</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="pickle.HIGHEST_PROTOCOL">
+<span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">HIGHEST_PROTOCOL</span></span><a class="headerlink" href="#pickle.HIGHEST_PROTOCOL" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Entier qui donne la version du <a class="reference internal" href="#pickle-protocols"><span class="std std-ref">protocole</span></a> le plus récent qui soit disponible. Ce nombre peut être passé comme paramètre <em>protocol</em> aux fonctions <a class="reference internal" href="#pickle.dump" title="pickle.dump"><code class="xref py py-func docutils literal notranslate"><span class="pre">dump()</span></code></a> et <a class="reference internal" href="#pickle.dumps" title="pickle.dumps"><code class="xref py py-func docutils literal notranslate"><span class="pre">dumps()</span></code></a> ainsi qu'au constructeur de la classe <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pickle.DEFAULT_PROTOCOL">
+<span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_PROTOCOL</span></span><a class="headerlink" href="#pickle.DEFAULT_PROTOCOL" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Entier qui donne la version du <a class="reference internal" href="#pickle-protocols"><span class="std std-ref">protocole</span></a> employé par défaut pour la sérialisation. Il peut être moindre que <a class="reference internal" href="#pickle.HIGHEST_PROTOCOL" title="pickle.HIGHEST_PROTOCOL"><code class="xref py py-data docutils literal notranslate"><span class="pre">HIGHEST_PROTOCOL</span></code></a>. La valeur actuelle est 4, sachant que le protocole correspondant a été introduit en Python 3.4 et n'est pas compatible avec les versions antérieures.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.0: </span>Le protocole par défaut est devenu le protocole 3.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>Le protocole par défaut est devenu le protocole 4.</p>
+</div>
+</dd></dl>
+
+<p>Le module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> contient quelques fonctions pour faciliter la sérialisation :</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pickle.dump">
+<span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix_imports</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.dump" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Écrit la représentation sérialisée de l'objet <em>obj</em> dans l'<a class="reference internal" href="../glossary.html#term-file-object"><span class="xref std std-term">objet fichier-compatible</span></a> <em>file</em>, qui doit être ouvert. Ceci est l'équivalent de <code class="docutils literal notranslate"><span class="pre">Pickle(file,</span> <span class="pre">protocol).dump(obj)</span></code>.</p>
+<p>Les arguments <em>file</em>, <em>protocol</em>, <em>fix_imports</em> et <em>buffer_callback</em> sont identiques à ceux du constructeur de la classe <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>ajout de l'argument <em>buffer_callback</em>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pickle.dumps">
+<span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">dumps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix_imports</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.dumps" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la représentation sérialisée de <em>obj</em> sous forme de <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>, au lieu de l'écrire dans un fichier.</p>
+<p>Les arguments <em>protocol</em>, <em>fix_imports</em> et <em>buffer_callback</em> sont identiques à ceux du constructeur de la classe <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>ajout de l'argument <em>buffer_callback</em>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pickle.load">
+<span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix_imports</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ASCII'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strict'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.load" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Charge la représentation sérialisée d'un objet depuis l'<a class="reference internal" href="../glossary.html#term-file-object"><span class="xref std std-term">objet fichier-compatible</span></a> ouvert <em>file</em>, et renvoie l'objet reconstitué obtenu. Ceci est l'équivalent de <code class="docutils literal notranslate"><span class="pre">Unpickler(file).load()</span></code>.</p>
+<p>La version du protocole utilisée pour la sérialisation est détectée automatiquement, d'où l'absence d'un argument. Les octets situés après la représentation sérialisée de l'objet sont ignorés.</p>
+<p>Les arguments <em>file</em>, <em>fix_imports</em>, <em>encoding</em>, <em>errors</em>, <em>strict</em> et <em>buffers</em> sont identiques à ceux du constructeur de la classe <a class="reference internal" href="#pickle.Unpickler" title="pickle.Unpickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unpickler</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>Ajout de l'argument <em>buffers</em>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pickle.loads">
+<span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">loads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix_imports</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ASCII'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strict'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.loads" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l'objet reconstitué à partir de la représentation sérialisée <em>data</em>, qui doit être fournie sous la forme d'un <a class="reference internal" href="../glossary.html#term-bytes-like-object"><span class="xref std std-term">bytes-like object</span></a>.</p>
+<p>La version du protocole utilisée pour la sérialisation est détectée automatiquement, d'où l'absence d'un argument. Les octets situés après la représentation sérialisée de l'objet sont ignorés.</p>
+<p>Arguments <em>fix_imports</em>, <em>encoding</em>, <em>errors</em>, <em>strict</em> and <em>buffers</em>
+have the same meaning as in the <a class="reference internal" href="#pickle.Unpickler" title="pickle.Unpickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unpickler</span></code></a> constructor.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>Ajout de l'argument <em>buffers</em>.</p>
+</div>
+</dd></dl>
+
+<p>Le module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> définit trois types d'exceptions :</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="pickle.PickleError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">PickleError</span></span><a class="headerlink" href="#pickle.PickleError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère commune aux autres exceptions de sérialisation. Elle hérite de <a class="reference internal" href="exceptions.html#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="pickle.PicklingError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">PicklingError</span></span><a class="headerlink" href="#pickle.PicklingError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Exception levée lorsqu'un objet impossible à sérialiser est rencontré par un <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a>. Elle hérite de <a class="reference internal" href="#pickle.PickleError" title="pickle.PickleError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">PickleError</span></code></a>.</p>
+<p>Lisez <a class="reference internal" href="#pickle-picklable"><span class="std std-ref">Quels objets sont sérialisables ?</span></a> pour en savoir plus sur les types d'objets qui peuvent être sérialisés.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="pickle.UnpicklingError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">UnpicklingError</span></span><a class="headerlink" href="#pickle.UnpicklingError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Exception levée lorsqu'un flux binaire ne peut pas être désérialisé, par exemple s'il est corrompu ou en cas de violation de la sécurité. Elle hérite de <a class="reference internal" href="#pickle.PickleError" title="pickle.PickleError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">PickleError</span></code></a>.</p>
+<p>Veuillez noter que d'autres exceptions peuvent être levées durant la désérialisation, comme <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>, <code class="docutils literal notranslate"><span class="pre">EOFError</span></code>, <code class="docutils literal notranslate"><span class="pre">ImportError</span></code> et <code class="docutils literal notranslate"><span class="pre">IndexError</span></code> (liste non-exhaustive).</p>
+</dd></dl>
+
+<p>Le module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> exporte trois classes : <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a>, <a class="reference internal" href="#pickle.Unpickler" title="pickle.Unpickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unpickler</span></code></a> et <a class="reference internal" href="#pickle.PickleBuffer" title="pickle.PickleBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleBuffer</span></code></a> :</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pickle.Pickler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">Pickler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix_imports</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.Pickler" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe d'objets qui implémentent la sérialisation vers un flux binaire.</p>
+<p>L'argument optionnel <em>protocol</em> détermine la version du protocole de sérialisation à employer, entre 0 et <a class="reference internal" href="#pickle.HIGHEST_PROTOCOL" title="pickle.HIGHEST_PROTOCOL"><code class="xref py py-data docutils literal notranslate"><span class="pre">HIGHEST_PROTOCOL</span></code></a>. La valeur par défaut est celle de <a class="reference internal" href="#pickle.DEFAULT_PROTOCOL" title="pickle.DEFAULT_PROTOCOL"><code class="xref py py-data docutils literal notranslate"><span class="pre">DEFAULT_PROTOCOL</span></code></a>. Avec un nombre strictement négatif, c'est <a class="reference internal" href="#pickle.HIGHEST_PROTOCOL" title="pickle.HIGHEST_PROTOCOL"><code class="xref py py-data docutils literal notranslate"><span class="pre">HIGHEST_PROTOCOL</span></code></a> qui est utilisé.</p>
+<p>L'argument <em>file</em> peut être un fichier sur disque ouvert en mode binaire pour l'écriture, une instance de la classe <a class="reference internal" href="io.html#io.BytesIO" title="io.BytesIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BytesIO</span></code></a>, ou plus généralement un objet quelconque qui possède une méthode <code class="docutils literal notranslate"><span class="pre">write()</span></code> acceptant d'être appelée sur un argument unique de type <code class="docutils literal notranslate"><span class="pre">bytes</span></code>.</p>
+<p>Si <em>fix_imports</em> est vrai et <em>protocol</em> est inférieur ou égal à 2, les noms des modules sont reliés par <em>pickle</em> aux anciens noms qui avaient cours en Python 2, afin que le flux sérialisé soit lisible aussi bien par Python 2 que Python 3.</p>
+<p>Si <em>buffer_callback</em> vaut <code class="docutils literal notranslate"><span class="pre">None</span></code> (comme par défaut), les vues de tampon sont sérialisées dans <em>file</em> avec le reste du flux.</p>
+<p>Dans le cas où le <em>buffer_callback</em> n'est pas <code class="docutils literal notranslate"><span class="pre">None</span></code>, il doit pouvoir être appelé un nombre quelconque de fois avec une vue d'un tampon. S'il renvoie une valeur évaluée comme fausse (telle que <code class="docutils literal notranslate"><span class="pre">None</span></code>), le tampon est considéré en marge de la sérialisation (ou « <a class="reference internal" href="#pickle-oob"><span class="std std-ref">hors-bande</span></a> »), sinon il est sérialisé dans le flux binaire.</p>
+<p>Une erreur se produit si <em>buffer_callback</em> vaut autre chose que <code class="docutils literal notranslate"><span class="pre">None</span></code> et <em>protocol</em> est 4 ou inférieur, ou <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>ajout de l'argument <em>buffer_callback</em>.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pickle.Pickler.dump">
+<span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.Pickler.dump" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Écrit la représentation sérialisée de l'objet <em>obj</em> dans le fichier ouvert passé au constructeur.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pickle.Pickler.persistent_id">
+<span class="sig-name descname"><span class="pre">persistent_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.Pickler.persistent_id" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ne fait rien par défaut. Cette méthode est destinée à être implémentée par une classe fille.</p>
+<p>Si <a class="reference internal" href="#pickle.Pickler.persistent_id" title="pickle.Pickler.persistent_id"><code class="xref py py-meth docutils literal notranslate"><span class="pre">persistent_id()</span></code></a> renvoie <code class="docutils literal notranslate"><span class="pre">None</span></code>, <em>obj</em> est sérialisé normalement. Toute autre valeur est reprise par le <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a> comme ID persistant pour <em>obj</em>. Le sens de cet ID persistant doit être défini par <a class="reference internal" href="#pickle.Unpickler.persistent_load" title="pickle.Unpickler.persistent_load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Unpickler.persistent_load()</span></code></a>. Veuillez noter que la valeur renvoyée par <a class="reference internal" href="#pickle.Pickler.persistent_id" title="pickle.Pickler.persistent_id"><code class="xref py py-meth docutils literal notranslate"><span class="pre">persistent_id()</span></code></a> ne peut pas porter elle-même d'ID persistant.</p>
+<p>La section <a class="reference internal" href="#pickle-persistent"><span class="std std-ref">Persistance d'objets externes</span></a> donne des détails et exemples.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pickle.Pickler.dispatch_table">
+<span class="sig-name descname"><span class="pre">dispatch_table</span></span><a class="headerlink" href="#pickle.Pickler.dispatch_table" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La table de distribution d'un sérialiseur est un tableau associatif dont les clés sont des classes et les valeurs, des fonctions de réduction. La manière la plus directe de déclarer une fonction de réduction est la fonction <a class="reference internal" href="copyreg.html#copyreg.pickle" title="copyreg.pickle"><code class="xref py py-func docutils literal notranslate"><span class="pre">copyreg.pickle()</span></code></a>. Une fonction de réduction prend un unique argument, qui doit être de la classe en question, et obéit à la même interface qu'une méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__reduce__()</span></code>.</p>
+<p>Lorsqu'un sérialiseur ne possède pas l'attribut <a class="reference internal" href="#pickle.Pickler.dispatch_table" title="pickle.Pickler.dispatch_table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dispatch_table</span></code></a>, comme c'est le cas par défaut, il utilise le tableau global du module <a class="reference internal" href="copyreg.html#module-copyreg" title="copyreg: Register pickle support functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code></a>. Afin de personnaliser l'opération de sérialisation pour un sérialiseur particulier, on peut affecter à son attribut <a class="reference internal" href="#pickle.Pickler.dispatch_table" title="pickle.Pickler.dispatch_table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dispatch_table</span></code></a> un objet compatible avec les dictionnaires. Une autre possibilité est de définir l'attribut <a class="reference internal" href="#pickle.Pickler.dispatch_table" title="pickle.Pickler.dispatch_table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dispatch_table</span></code></a> dans une classe fille de <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a>. Sa valeur sera alors utilisée pour toutes les instances de cette classe fille.</p>
+<p>Voir <a class="reference internal" href="#pickle-dispatch"><span class="std std-ref">Tables de distribution</span></a> pour des exemples d'utilisation.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pickle.Pickler.reducer_override">
+<span class="sig-name descname"><span class="pre">reducer_override</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.Pickler.reducer_override" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Réducteur spécial, qui peut se définir dans une classe fille de <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a>. Cette méthode doit se conformer à l'interface des méthodes <code class="xref py py-meth docutils literal notranslate"><span class="pre">__reduce__()</span></code>. Elle prend en général le pas sur les réducteurs contenus dans l'attribut <a class="reference internal" href="#pickle.Pickler.dispatch_table" title="pickle.Pickler.dispatch_table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dispatch_table</span></code></a>. Cependant, elle peut choisir de renvoyer <code class="docutils literal notranslate"><span class="pre">NotImplemented</span></code> pour que <a class="reference internal" href="#pickle.Pickler.dispatch_table" title="pickle.Pickler.dispatch_table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dispatch_table</span></code></a> soit utilisé à la place.</p>
+<p>Voir <a class="reference internal" href="#reducer-override"><span class="std std-ref">Réduction personnalisée pour les types, fonctions et autres objets</span></a> pour un exemple détaillé.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pickle.Pickler.fast">
+<span class="sig-name descname"><span class="pre">fast</span></span><a class="headerlink" href="#pickle.Pickler.fast" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cet attribut est obsolète. Une valeur vraie (« mode rapide ») désactive la mémorisation des objets au fur et à mesure de leur sérialisation, qui permet habituellement de représenter les doublons par une unique référence. Cette option accélère la sérialisation en évitant des <em>opcodes</em> PUT superflus. Elle ne doit pas être utilisée sur un objet contenant une référence à lui-même, car le <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a> entre alors dans une récursion infinie.</p>
+<p>Utilisez plutôt <a class="reference internal" href="pickletools.html#pickletools.optimize" title="pickletools.optimize"><code class="xref py py-func docutils literal notranslate"><span class="pre">pickletools.optimize()</span></code></a> pour obtenir des données sérialisées plus compactes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pickle.Unpickler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">Unpickler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix_imports</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ASCII'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strict'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.Unpickler" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Les objets de cette classe sont des désérialiseurs, qui lisent un flux de données pour le convertir en objet.</p>
+<p>Il n'y a nul besoin d'argument <em>protocol</em>. La version du protocole avec lequel sont encodées les données est déterminée automatiquement.</p>
+<p>L'argument <em>file</em> doit posséder trois méthodes qui proviennent de l'interface de <a class="reference internal" href="io.html#io.BufferedIOBase" title="io.BufferedIOBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BufferedIOBase</span></code></a>. Ce sont : <code class="docutils literal notranslate"><span class="pre">read()</span></code>, prenant un entier, <code class="docutils literal notranslate"><span class="pre">readinto()</span></code>, prenant un tampon, et <code class="docutils literal notranslate"><span class="pre">readline()</span></code>, sans arguments. <em>file</em> peut donc être aussi bien un fichier sur disque ouvert en mode lecture binaire qu'un objet <a class="reference internal" href="io.html#io.BytesIO" title="io.BytesIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BytesIO</span></code></a>, ou un objet quelconque vérifiant ces critères.</p>
+<p>Les paramètres facultatifs <em>fix_imports</em>, <em>encoding</em> et <em>errors</em> sont dédiés à la compatibilité de la désérialisation avec les flux binaires générés par Python 2. Si <em>fix_imports</em> est vrai, <em>pickle</em> tente de modifier les anciens noms des modules que l'on trouve en Python 2, pour les remplacer par ceux en usage en Python 3. Les paramètres <em>encoding</em> et <em>errors</em> contrôlent la façon de décoder les chaînes de caractères 8 bits. Leurs valeurs par défaut respectives sont <code class="docutils literal notranslate"><span class="pre">'ASCII'</span></code> et <code class="docutils literal notranslate"><span class="pre">'strict'</span></code>. <em>encoding</em> peut être mis à <code class="docutils literal notranslate"><span class="pre">'bytes'</span></code> pour lire des chaînes d'octets en tant que <em>bytes</em>. Il doit être mis à <code class="docutils literal notranslate"><span class="pre">'latin1'</span></code> pour désérialiser des tableaux NumPy ou des instances de <a class="reference internal" href="datetime.html#datetime.datetime" title="datetime.datetime"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></a>, <a class="reference internal" href="datetime.html#datetime.date" title="datetime.date"><code class="xref py py-class docutils literal notranslate"><span class="pre">date</span></code></a> et <a class="reference internal" href="datetime.html#datetime.time" title="datetime.time"><code class="xref py py-class docutils literal notranslate"><span class="pre">time</span></code></a> sérialisées par Python 2.</p>
+<p>Si <em>buffers</em> vaut None (comme par défaut), toutes les données nécessaires à la désérialisation doivent être contenues dans le flux binaire. Ceci signifie que l'argument <em>buffer_callback</em> valait None lors de la construction du <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a> (ou dans l'appel à <a class="reference internal" href="#pickle.dump" title="pickle.dump"><code class="xref py py-func docutils literal notranslate"><span class="pre">dump()</span></code></a> ou <a class="reference internal" href="#pickle.dumps" title="pickle.dumps"><code class="xref py py-func docutils literal notranslate"><span class="pre">dumps()</span></code></a>).</p>
+<p>If <em>buffers</em> is not None, it should be an iterable of buffer-enabled
+objects that is consumed each time the pickle stream references
+an <a class="reference internal" href="#pickle-oob"><span class="std std-ref">out-of-band</span></a> buffer view.  Such buffers have been
+given in order to the <em>buffer_callback</em> of a Pickler object.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>Ajout de l'argument <em>buffers</em>.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pickle.Unpickler.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pickle.Unpickler.load" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Lit la représentation sérialisée d'un objet depuis le fichier ouvert passé au constructeur, et reconstitue l'objet qui y est stocké, avec tous les objets qu'il contient. Les octets situés au-delà de la fin de la représentation binaire sont ignorés.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pickle.Unpickler.persistent_load">
+<span class="sig-name descname"><span class="pre">persistent_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.Unpickler.persistent_load" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Par défaut, cette méthode lève une exception <a class="reference internal" href="#pickle.UnpicklingError" title="pickle.UnpicklingError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UnpicklingError</span></code></a>.</p>
+<p>Si elle est définie autrement dans une sous-classe, <a class="reference internal" href="#pickle.Unpickler.persistent_load" title="pickle.Unpickler.persistent_load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">persistent_load()</span></code></a> doit renvoyer l'objet correspondant à l'ID persistant <em>pid</em>. Si celui-ci est invalide, elle doit lever une exception <a class="reference internal" href="#pickle.UnpicklingError" title="pickle.UnpicklingError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UnpicklingError</span></code></a>.</p>
+<p>La section <a class="reference internal" href="#pickle-persistent"><span class="std std-ref">Persistance d'objets externes</span></a> donne des détails et exemples.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pickle.Unpickler.find_class">
+<span class="sig-name descname"><span class="pre">find_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.Unpickler.find_class" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Importe <em>module</em> si besoin, et renvoie l'objet du nom <em>name</em> qu'il contient. <em>module</em> et <em>name</em> sont des chaînes de caractères (classe <a class="reference internal" href="stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>). Contrairement à ce que son nom laisse penser, <a class="reference internal" href="#pickle.Unpickler.find_class" title="pickle.Unpickler.find_class"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_class()</span></code></a> est également appelée pour trouver les fonctions.</p>
+<p>Les classes filles peuvent redéfinir cette méthode pour restreindre la désérialisation à certains types d'objets ou à d'autres conditions, notamment en vue de réduire les risques de sécurité. Voir <a class="reference internal" href="#pickle-restrict"><span class="std std-ref">Restriction des noms dans l'espace de nommage global</span></a> pour plus de détails.</p>
+<p class="audit-hook">Lève un <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">événement d'audit</span></a> <code class="docutils literal notranslate"><span class="pre">pickle.find_class</span></code> avec les arguments <code class="docutils literal notranslate"><span class="pre">module</span></code> et <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pickle.PickleBuffer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pickle.</span></span><span class="sig-name descname"><span class="pre">PickleBuffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pickle.PickleBuffer" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Encapsule un objet tampon contenant des données sérialisables. <em>buffer</em> doit être un objet prenant en charge le <a class="reference internal" href="../c-api/buffer.html#bufferobjects"><span class="std std-ref">protocole tampon</span></a>, comme un <a class="reference internal" href="../glossary.html#term-bytes-like-object"><span class="xref std std-term">objet octet-compatible</span></a> ou un tableau n-dimensionnel.</p>
+<p>Les objets <a class="reference internal" href="#pickle.PickleBuffer" title="pickle.PickleBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleBuffer</span></code></a> savent gérer le protocole tampon. Il est donc possible de les passer à d'autres API qui attendent un tampon, comme <a class="reference internal" href="stdtypes.html#memoryview" title="memoryview"><code class="xref py py-class docutils literal notranslate"><span class="pre">memoryview</span></code></a>.</p>
+<p>Les objets <a class="reference internal" href="#pickle.PickleBuffer" title="pickle.PickleBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleBuffer</span></code></a> ne peuvent être sérialisés qu'avec le protocole 5 ou supérieur. Ils sont susceptibles d'être sérialisés <a class="reference internal" href="#pickle-oob"><span class="std std-ref">hors-bande</span></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.8.</span></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pickle.PickleBuffer.raw">
+<span class="sig-name descname"><span class="pre">raw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pickle.PickleBuffer.raw" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une <a class="reference internal" href="stdtypes.html#memoryview" title="memoryview"><code class="xref py py-class docutils literal notranslate"><span class="pre">memoryview</span></code></a> de l'espace mémoire sous-jacent à ce tampon. La <em>memoryview</em> renvoyée est unidimensionnelle et C-contiguë. Elle a le format <code class="docutils literal notranslate"><span class="pre">B</span></code> (octets sans signe). <a class="reference internal" href="exceptions.html#BufferError" title="BufferError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BufferError</span></code></a> est levée si le tampon n'est ni C-contigu, ni Fortran-contigu.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pickle.PickleBuffer.release">
+<span class="sig-name descname"><span class="pre">release</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pickle.PickleBuffer.release" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Release the underlying buffer exposed by the PickleBuffer object.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="what-can-be-pickled-and-unpickled">
+<span id="pickle-picklable"></span><h2>Quels objets sont sérialisables ?<a class="headerlink" href="#what-can-be-pickled-and-unpickled" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les objets des types suivants peuvent être sérialisés :</p>
+<ul class="simple">
+<li><p>built-in constants (<code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">Ellipsis</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">NotImplemented</span></code>);</p></li>
+<li><p>integers, floating-point numbers, complex numbers;</p></li>
+<li><p>strings, bytes, bytearrays;</p></li>
+<li><p>tuples, lists, sets, and dictionaries containing only picklable objects;</p></li>
+<li><p>functions (built-in and user-defined) accessible from the top level of a
+module (using <a class="reference internal" href="../reference/compound_stmts.html#def"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">def</span></code></a>, not <a class="reference internal" href="../reference/expressions.html#lambda"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">lambda</span></code></a>);</p></li>
+<li><p>classes accessible from the top level of a module;</p></li>
+<li><p>instances of such classes whose the result of calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code>
+is picklable  (see section <a class="reference internal" href="#pickle-inst"><span class="std std-ref">Sérialisation des instances d'une classe</span></a> for details).</p></li>
+</ul>
+<p>Si vous essayez de sérialiser un objet qui ne peut pas l'être, une exception de type <a class="reference internal" href="#pickle.PicklingError" title="pickle.PicklingError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">PicklingError</span></code></a> est levée. Lorsque cela se produit, il est possible qu'un certain nombre d'octets aient déjà été écrits dans le fichier ou flux. La sérialisation d'une structure de donnée avec de nombreux niveaux d'imbrication peut lever une exception <a class="reference internal" href="exceptions.html#RecursionError" title="RecursionError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RecursionError</span></code></a>. Pour augmenter la limite (avec précaution), voir <a class="reference internal" href="sys.html#sys.setrecursionlimit" title="sys.setrecursionlimit"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.setrecursionlimit()</span></code></a>.</p>
+<p>Note that functions (built-in and user-defined) are pickled by fully
+<a class="reference internal" href="../glossary.html#term-qualified-name"><span class="xref std std-term">qualified name</span></a>, not by value. <a class="footnote-reference brackets" href="#id8" id="id3">2</a>  This means that only the function name is
+pickled, along with the name of the containing module and classes.  Neither
+the function's code, nor any of its function attributes are pickled.  Thus the
+defining module must be importable in the unpickling environment, and the module
+must contain the named object, otherwise an exception will be raised. <a class="footnote-reference brackets" href="#id9" id="id4">3</a></p>
+<p>Similarly, classes are pickled by fully qualified name, so the same restrictions in
+the unpickling environment apply.  Note that none of the class's code or data is
+pickled, so in the following example the class attribute <code class="docutils literal notranslate"><span class="pre">attr</span></code> is not
+restored in the unpickling environment:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;A class attribute&#39;</span>
+
+<span class="n">picklestring</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">Foo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>These restrictions are why picklable functions and classes must be defined at
+the top level of a module.</p>
+<p>De même, lorsque les instances d'une certaine classe sont sérialisées, seuls les attributs de l'instance sont inclus, mais pas le code de leur classe ni les données qu'elle pourrait contenir. Ceci est intentionnel : vous pouvez corriger des bogues dans une classe ou ajouter des méthodes, et désérialiser malgré tout des objets instanciés avec une version plus ancienne de la classe. Si vous stockez des objets destinés être conservés pendant longtemps, et que leur classe est susceptible de connaître de nombreuses évolutions, il peut s'avérer utile d'associer aux objets un numéro de version afin que des conversions puissent être implémentées dans la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code> de la classe.</p>
+</section>
+<section id="pickling-class-instances">
+<span id="pickle-inst"></span><h2>Sérialisation des instances d'une classe<a class="headerlink" href="#pickling-class-instances" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans cette section sont décrits les mécanismes généraux qui s'offrent à vous pour définir, personnaliser et contrôler la manière dont les instances d'une classe sont sérialisées et désérialisées.</p>
+<p>Dans la plupart des cas, il n'y a besoin de rien pour que les instances d'une classe puissent être sérialisées. Par défaut, <em>pickle</em> accède à la classe et aux attributs de l'instance par introspection. Lorsqu'une instance est désérialisée, sa méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__init__()</span></code> n'est normalement <em>pas</em> appelée. Une nouvelle instance est créée sans être initialisée, et ses attributs sont simplement restaurés à partir des valeurs conservées. En d'autres termes, les opérations sont celles qu'effectue le code suivant :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">attributes</span><span class="p">):</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">obj</span>
+</pre></div>
+</div>
+<p>Les classes peuvent personnaliser le comportement par défaut en définissant des méthodes spéciales :</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="object.__getnewargs_ex__">
+<span class="sig-prename descclassname"><span class="pre">object.</span></span><span class="sig-name descname"><span class="pre">__getnewargs_ex__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#object.__getnewargs_ex__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Dans les protocoles 2 et suivants, les classes peuvent personnaliser les valeurs passées à la méthode <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__new__()</span></code></a> lors de la désérialisation. Elles le font en définissant une méthode <a class="reference internal" href="#object.__getnewargs_ex__" title="object.__getnewargs_ex__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getnewargs_ex__()</span></code></a> qui renvoie un couple <code class="docutils literal notranslate"><span class="pre">(args,</span> <span class="pre">kwargs)</span></code>, où <em>args</em> est un <em>n</em>-uplet des arguments positionnels et <em>kwargs</em> un dictionnaire des arguments nommés qui seront passés à <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__new__()</span></code></a> — autrement dit, l'appel sera <code class="docutils literal notranslate"><span class="pre">classe.__new__(*args,</span> <span class="pre">**kwargs)</span></code>.</p>
+<p>Définissez cette méthode seulement si la méthode <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__new__()</span></code></a> de votre classe demande des arguments nommés. Dans le cas contraire, mieux vaut définir <a class="reference internal" href="#object.__getnewargs__" title="object.__getnewargs__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getnewargs__()</span></code></a> pour préserver la compatibilité avec les protocoles anciens.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span><a class="reference internal" href="#object.__getnewargs_ex__" title="object.__getnewargs_ex__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getnewargs_ex__()</span></code></a> est désormais appelée dans les protocoles 2 et 3.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="object.__getnewargs__">
+<span class="sig-prename descclassname"><span class="pre">object.</span></span><span class="sig-name descname"><span class="pre">__getnewargs__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#object.__getnewargs__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Comme <a class="reference internal" href="#object.__getnewargs_ex__" title="object.__getnewargs_ex__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getnewargs_ex__()</span></code></a>, mais ne permet que les arguments positionnels. Cette méthode doit renvoyer le <em>n</em>-uplet <code class="docutils literal notranslate"><span class="pre">args</span></code> des arguments passés à <a class="reference internal" href="../reference/datamodel.html#object.__new__" title="object.__new__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__new__()</span></code></a> lors de la désérialisation : l'appel sera <code class="docutils literal notranslate"><span class="pre">classe.__new__(*args)</span></code>.</p>
+<p>Si <a class="reference internal" href="#object.__getnewargs_ex__" title="object.__getnewargs_ex__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getnewargs_ex__()</span></code></a> est définie, elle prend la priorité et <a class="reference internal" href="#object.__getnewargs__" title="object.__getnewargs__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getnewargs__()</span></code></a> n'est jamais appelée.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>Auparavant, <a class="reference internal" href="#object.__getnewargs__" title="object.__getnewargs__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getnewargs__()</span></code></a> était appelée au lieu de <a class="reference internal" href="#object.__getnewargs_ex__" title="object.__getnewargs_ex__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getnewargs_ex__()</span></code></a> dans les protocoles 2 et 3.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="object.__getstate__">
+<span class="sig-prename descclassname"><span class="pre">object.</span></span><span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#object.__getstate__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classes can further influence how their instances are pickled by overriding
+the method <a class="reference internal" href="#object.__getstate__" title="object.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a>.  It is called and the returned object
+is pickled as the contents for the instance, instead of a default state.
+There are several cases:</p>
+<ul class="simple">
+<li><p>For a class that has no instance <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__dict__</span></code></a> and no
+<a class="reference internal" href="../reference/datamodel.html#object.__slots__" title="object.__slots__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__slots__</span></code></a>, the default state is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p>For a class that has an instance <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__dict__</span></code></a> and no
+<a class="reference internal" href="../reference/datamodel.html#object.__slots__" title="object.__slots__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__slots__</span></code></a>, the default state is <code class="docutils literal notranslate"><span class="pre">self.__dict__</span></code>.</p></li>
+<li><p>For a class that has an instance <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__dict__</span></code></a> and
+<a class="reference internal" href="../reference/datamodel.html#object.__slots__" title="object.__slots__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__slots__</span></code></a>, the default state is a tuple consisting of two
+dictionaries:  <code class="docutils literal notranslate"><span class="pre">self.__dict__</span></code>, and a dictionary mapping slot
+names to slot values.  Only slots that have a value are
+included in the latter.</p></li>
+<li><p>For a class that has <a class="reference internal" href="../reference/datamodel.html#object.__slots__" title="object.__slots__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__slots__</span></code></a> and no instance
+<a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__dict__</span></code></a>, the default state is a tuple whose first item
+is <code class="docutils literal notranslate"><span class="pre">None</span></code> and whose second item is a dictionary mapping slot names
+to slot values described in the previous bullet.</p></li>
+</ul>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.11: </span>Added the default implementation of the <code class="docutils literal notranslate"><span class="pre">__getstate__()</span></code> method in the
+<a class="reference internal" href="functions.html#object" title="object"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> class.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="object.__setstate__">
+<span class="sig-prename descclassname"><span class="pre">object.</span></span><span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#object.__setstate__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Lors de la désérialisation, l'état de l'instance est passé à la méthode <a class="reference internal" href="#object.__setstate__" title="object.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a>, si elle est définie (l'objet <em>state</em> n'a pas besoin d'être un dictionnaire). Si elle ne l'est pas, les attributs de l'objet sont tirés de l'état, qui dans ce cas doit être obligatoirement un dictionnaire.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Si <a class="reference internal" href="#object.__getstate__" title="object.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> renvoie une valeur fausse, <a class="reference internal" href="#object.__setstate__" title="object.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> ne sera pas appelée à la désérialisation.</p>
+</div>
+</dd></dl>
+
+<p>Voir <a class="reference internal" href="#pickle-state"><span class="std std-ref">Traitement des objets à état</span></a> pour plus d'informations sur <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code> et <code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Lors de la désérialisation, des méthodes comme <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattr__()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getattribute__()</span></code> et <code class="xref py py-meth docutils literal notranslate"><span class="pre">__setattr__()</span></code> sont susceptibles d'être appelées sur l'instance. Si ces méthodes reposent sur des invariants internes à l'objet, leur classe doit les initialiser dans la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__new__()</span></code>, puisque la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__init__()</span></code> n'est pas appelée.</p>
+</div>
+<p id="index-5">Comme nous le verrons, <em>pickle</em> ne fait pas directement appel aux méthodes ci-dessus. En réalité, elles font partie du protocole de copie, qui implémente la méthode spéciale <code class="xref py py-meth docutils literal notranslate"><span class="pre">__reduce__()</span></code>. Ce protocole constitue une interface unifiée pour l'accès aux données nécessaires à la sérialisation comme à la copie <a class="footnote-reference brackets" href="#id10" id="id5">4</a>.</p>
+<p>Bien que la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__reduce__()</span></code> ouvre davantage de possibilités, elle conduit plus facilement à des erreurs. C'est pourquoi les auteurs de classes sont encouragés à utiliser lorsque c'est possible l'interface de plus haut niveau avec <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getnewargs_ex__()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code> et <code class="xref py py-meth docutils literal notranslate"><span class="pre">__state__()</span></code>. Cependant, il existe des cas où l'on ne peut pas se passer de <code class="xref py py-meth docutils literal notranslate"><span class="pre">__reduce__()</span></code>, ou bien elle permet une sérialisation plus efficace.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="object.__reduce__">
+<span class="sig-prename descclassname"><span class="pre">object.</span></span><span class="sig-name descname"><span class="pre">__reduce__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#object.__reduce__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Voici l'interface de la méthode <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__reduce__()</span></code></a>. Elle ne prend aucun argument et renvoie soit une chaîne de caractères, soit (c'est conseillé) un <em>n</em>-uplet. On appelle souvent l'objet renvoyé « valeur de réduction ».</p>
+<p>If a string is returned, the string should be interpreted as the name of a
+global variable.  It should be the object's local name relative to its
+module; the pickle module searches the module namespace to determine the
+object's module.  This behaviour is typically useful for singletons.</p>
+<p>Si c'est un <em>n</em>-uplet qui est renvoyé, ses éléments sont interprétés dans l'ordre comme suit. Les deux premiers éléments sont obligatoires, les quatre suivants sont facultatifs et peuvent être simplement omis, ou bien mis à <code class="docutils literal notranslate"><span class="pre">None</span></code>. Les éléments sont, dans l'ordre :</p>
+<ul>
+<li><p>Un objet appelable qui sera appelé pour créer l'objet initial.</p></li>
+<li><p>Un <em>n</em>-uplet d'arguments passés à cet objet appelable. Donnez un <em>n</em>-uplet vide si l'objet appelable n'accepte pas d'arguments.</p></li>
+<li><p>L'état de l'objet, qui sera passé à la méthode <a class="reference internal" href="#object.__setstate__" title="object.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> comme vu précédemment. Si la méthode n'existe pas, cet élément doit être un dictionnaire, et ses éléments compléteront l'attribut <a class="reference internal" href="stdtypes.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__dict__</span></code></a>.</p></li>
+<li><p>Un itérateur (non pas une séquence). Les éléments qu'il fournit sont ajoutés à l'objet un par un avec la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">append()</span></code>, ou bien plusieurs à la fois avec la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">extend()</span></code>. Ceci est principalement utile aux les classes héritant de <code class="docutils literal notranslate"><span class="pre">list</span></code>, mais peut aussi servir sur d'autres classes, la seule contrainte étant qu'elles implémentent <code class="xref py py-meth docutils literal notranslate"><span class="pre">append()</span></code> et <code class="xref py py-meth docutils literal notranslate"><span class="pre">extend()</span></code> avec les bonnes signatures (l'une ou l'autre de ces méthodes est utilisée selon la version du protocole <em>pickle</em> et le nombre d'éléments à ajouter, c'est pourquoi elles doivent être définies toutes les deux).</p></li>
+<li><p>Un itérateur (non pas une séquence). Les éléments qu'il fournit doivent être des couples <code class="docutils literal notranslate"><span class="pre">(clé,</span> <span class="pre">valeur)</span></code>. Ils sont ajoutés dans l'objet par affectation aux clés : <code class="docutils literal notranslate"><span class="pre">objet[clé]</span> <span class="pre">=</span> <span class="pre">valeur</span></code>. Ceci est principalement utile aux classes héritant de <code class="docutils literal notranslate"><span class="pre">dict</span></code>, mais peut servir à d'autres classes à la seule condition qu'elles implémentent la méthode <a class="reference internal" href="../reference/datamodel.html#object.__setitem__" title="object.__setitem__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setitem__()</span></code></a>.</p></li>
+<li><p>Un objet appelable qui puisse recevoir en arguments l'objet et son état. Ceci permet de redéfinir le processus de reconstruction des attributs pour un objet en particulier, outrepassant la méthode <a class="reference internal" href="#object.__setstate__" title="object.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a>. Si cet objet appelable est fourni, <a class="reference internal" href="#object.__setstate__" title="object.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> n'est pas appelée.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.8: </span>ajout du sixième élément.</p>
+</div>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="object.__reduce_ex__">
+<span class="sig-prename descclassname"><span class="pre">object.</span></span><span class="sig-name descname"><span class="pre">__reduce_ex__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">protocol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#object.__reduce_ex__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Il est également possible de définir une méthode <a class="reference internal" href="#object.__reduce_ex__" title="object.__reduce_ex__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__reduce_ex__()</span></code></a>. La seule différence est qu'elle prend la version du protocole en argument. Si elle est définie, elle prend le pas sur <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__reduce__()</span></code></a>. De plus, <a class="reference internal" href="#object.__reduce__" title="object.__reduce__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__reduce__()</span></code></a> devient automatiquement un alias pour sa version étendue. Cette méthode est principalement destinée à renvoyer des valeurs de réduction compatibles avec les versions anciennes de Python.</p>
+</dd></dl>
+
+<section id="persistence-of-external-objects">
+<span id="pickle-persistent"></span><h3>Persistance d'objets externes<a class="headerlink" href="#persistence-of-external-objects" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-6">Pour les besoins de la persistance, <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> permet des références à des objets en dehors du flux sérialisé. Ils sont identifiés par un ID persistant. Le protocole 0 requiert que cet ID soit une chaîne de caractères alphanumériques <a class="footnote-reference brackets" href="#id11" id="id6">5</a>. Les suivants autorisent un objet quelconque.</p>
+<p><a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> délègue la résolution des ID à des méthodes définies par l'utilisateur sur les objets sérialiseurs et désérialiseurs, à savoir <a class="reference internal" href="#pickle.Pickler.persistent_id" title="pickle.Pickler.persistent_id"><code class="xref py py-meth docutils literal notranslate"><span class="pre">persistent_id()</span></code></a> et <a class="reference internal" href="#pickle.Unpickler.persistent_load" title="pickle.Unpickler.persistent_load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">persistent_load()</span></code></a>.</p>
+<p>Pour affecter à des objets leurs ID persistants provenant d'une source externe, le sérialiseur doit posséder une méthode <a class="reference internal" href="#pickle.Pickler.persistent_id" title="pickle.Pickler.persistent_id"><code class="xref py py-meth docutils literal notranslate"><span class="pre">persistent_id()</span></code></a> qui prend un objet et renvoie soit <code class="docutils literal notranslate"><span class="pre">None</span></code>, soit son ID. Si cette méthode renvoie <code class="docutils literal notranslate"><span class="pre">None</span></code>, l'objet est sérialisé de la manière habituelle. Si un ID est renvoyé, sous forme de chaîne de caractères, c'est cette chaîne qui est sérialisée et elle est marquée de manière spéciale pour être reconnue comme un ID persistant.</p>
+<p>Pour désérialiser des objets identifiés par un ID externe, un désérialiseur doit posséder une méthode <a class="reference internal" href="#pickle.Unpickler.persistent_load" title="pickle.Unpickler.persistent_load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">persistent_load()</span></code></a> qui prend un ID et renvoie l'objet qu'il désigne.</p>
+<p>Voici un exemple complet qui montre comment sérialiser des objets externes en leur affectant des ID persistants.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple example presenting how persistent ID can be used to pickle</span>
+<span class="c1"># external objects by reference.</span>
+
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+
+<span class="c1"># Simple class representing a record in our database.</span>
+<span class="n">MemoRecord</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;MemoRecord&quot;</span><span class="p">,</span> <span class="s2">&quot;key, task&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">DBPickler</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">Pickler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">persistent_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="c1"># Instead of pickling MemoRecord as a regular class instance, we emit a</span>
+        <span class="c1"># persistent ID.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">MemoRecord</span><span class="p">):</span>
+            <span class="c1"># Here, our persistent ID is simply a tuple, containing a tag and a</span>
+            <span class="c1"># key, which refers to a specific record in the database.</span>
+            <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;MemoRecord&quot;</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># If obj does not have a persistent ID, return None. This means obj</span>
+            <span class="c1"># needs to be pickled as usual.</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">class</span> <span class="nc">DBUnpickler</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">Unpickler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span>
+
+    <span class="k">def</span> <span class="nf">persistent_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pid</span><span class="p">):</span>
+        <span class="c1"># This method is invoked whenever a persistent ID is encountered.</span>
+        <span class="c1"># Here, pid is the tuple returned by DBPickler.</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">type_tag</span><span class="p">,</span> <span class="n">key_id</span> <span class="o">=</span> <span class="n">pid</span>
+        <span class="k">if</span> <span class="n">type_tag</span> <span class="o">==</span> <span class="s2">&quot;MemoRecord&quot;</span><span class="p">:</span>
+            <span class="c1"># Fetch the referenced record from the database and return it.</span>
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM memos WHERE key=?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key_id</span><span class="p">),))</span>
+            <span class="n">key</span><span class="p">,</span> <span class="n">task</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">MemoRecord</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Always raises an error if you cannot return the correct object.</span>
+            <span class="c1"># Otherwise, the unpickler will think None is the object referenced</span>
+            <span class="c1"># by the persistent ID.</span>
+            <span class="k">raise</span> <span class="n">pickle</span><span class="o">.</span><span class="n">UnpicklingError</span><span class="p">(</span><span class="s2">&quot;unsupported persistent object&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">io</span>
+    <span class="kn">import</span> <span class="nn">pprint</span>
+
+    <span class="c1"># Initialize and populate our database.</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;:memory:&quot;</span><span class="p">)</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;CREATE TABLE memos(key INTEGER PRIMARY KEY, task TEXT)&quot;</span><span class="p">)</span>
+    <span class="n">tasks</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s1">&#39;give food to fish&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;prepare group meeting&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fight with a zebra&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;INSERT INTO memos VALUES(NULL, ?)&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">task</span><span class="p">,))</span>
+
+    <span class="c1"># Fetch the records to be pickled.</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM memos&quot;</span><span class="p">)</span>
+    <span class="n">memos</span> <span class="o">=</span> <span class="p">[</span><span class="n">MemoRecord</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">]</span>
+    <span class="c1"># Save the records using our custom DBPickler.</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">DBPickler</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">memos</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pickled records:&quot;</span><span class="p">)</span>
+    <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">memos</span><span class="p">)</span>
+
+    <span class="c1"># Update a record, just for good measure.</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;UPDATE memos SET task=&#39;learn italian&#39; WHERE key=1&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Load the records from the pickle data stream.</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">memos</span> <span class="o">=</span> <span class="n">DBUnpickler</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unpickled records:&quot;</span><span class="p">)</span>
+    <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">memos</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="dispatch-tables">
+<span id="pickle-dispatch"></span><h3>Tables de distribution<a class="headerlink" href="#dispatch-tables" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pour personnaliser la sérialisation d'une classe à un endroit particulier sans affecter le reste du code, on peut créer un sérialiseur avec une table de distribution spécifique.</p>
+<p>La table de distribution gérée par le module <a class="reference internal" href="copyreg.html#module-copyreg" title="copyreg: Register pickle support functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code></a> est disponible sous le nom <code class="xref py py-data docutils literal notranslate"><span class="pre">copyreg.dispatch_table</span></code>. On peut donc utiliser une copie modifiée de <code class="xref py py-data docutils literal notranslate"><span class="pre">copyreg.dispatch_table</span></code> comme table spécifique à un sérialiseur.</p>
+<p>Par exemple, le code</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">Pickler</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">dispatch_table</span> <span class="o">=</span> <span class="n">copyreg</span><span class="o">.</span><span class="n">dispatch_table</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">dispatch_table</span><span class="p">[</span><span class="n">SomeClass</span><span class="p">]</span> <span class="o">=</span> <span class="n">reduce_SomeClass</span>
+</pre></div>
+</div>
+<p>crée une instance de la classe <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">pickle.Pickler</span></code></a> avec une table de distribution propre qui traite la classe <code class="docutils literal notranslate"><span class="pre">SomeClass</span></code> de manière spécifique. Le code</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyPickler</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">Pickler</span><span class="p">):</span>
+    <span class="n">dispatch_table</span> <span class="o">=</span> <span class="n">copyreg</span><span class="o">.</span><span class="n">dispatch_table</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dispatch_table</span><span class="p">[</span><span class="n">SomeClass</span><span class="p">]</span> <span class="o">=</span> <span class="n">reduce_SomeClass</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">MyPickler</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>does the same but all instances of <code class="docutils literal notranslate"><span class="pre">MyPickler</span></code> will by default
+share the private dispatch table.  On the other hand, the code</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">copyreg</span><span class="o">.</span><span class="n">pickle</span><span class="p">(</span><span class="n">SomeClass</span><span class="p">,</span> <span class="n">reduce_SomeClass</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">Pickler</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>modifies the global dispatch table shared by all users of the <a class="reference internal" href="copyreg.html#module-copyreg" title="copyreg: Register pickle support functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code></a> module.</p>
+</section>
+<section id="handling-stateful-objects">
+<span id="pickle-state"></span><h3>Traitement des objets à état<a class="headerlink" href="#handling-stateful-objects" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-7">L'exemple suivant illustre comment modifier la sérialisation pour une classe. La classe <code class="xref py py-class docutils literal notranslate"><span class="pre">TextReader</span></code> ouvre un fichier de texte, et sa méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">readline()</span></code> renvoie le numéro de la ligne suivante et son contenu chaque fois qu'elle est appelée. Si une instance de <code class="xref py py-class docutils literal notranslate"><span class="pre">TextReader</span></code> est sérialisée, tous les attributs <em>sauf</em> le fichier ouvert sont enregistrés. Lorsque l'instance est désérialisée, le fichier est rouvert et la lecture reprend là où elle s'était arrêtée. Ceci est implémenté à travers les méthodes <code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code> et <code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TextReader</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print and number lines in a text file.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineno</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">readline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineno</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%i</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lineno</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Copy the object&#39;s state from self.__dict__ which contains</span>
+        <span class="c1"># all our instance attributes. Always use the dict.copy()</span>
+        <span class="c1"># method to avoid modifying the original state.</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># Remove the unpicklable entries.</span>
+        <span class="k">del</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="c1"># Restore instance attributes (i.e., filename and lineno).</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="c1"># Restore the previously opened file&#39;s state. To do so, we need to</span>
+        <span class="c1"># reopen it and read from it until the line count is restored.</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lineno</span><span class="p">):</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="c1"># Finally, save the file.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span>
+</pre></div>
+</div>
+<p>Voici un exemple d'utilisation :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reader</span> <span class="o">=</span> <span class="n">TextReader</span><span class="p">(</span><span class="s2">&quot;hello.txt&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+<span class="go">&#39;1: Hello world!&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+<span class="go">&#39;2: I am line number two.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_reader</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">reader</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+<span class="go">&#39;3: Goodbye!&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="custom-reduction-for-types-functions-and-other-objects">
+<span id="reducer-override"></span><h2>Réduction personnalisée pour les types, fonctions et autres objets<a class="headerlink" href="#custom-reduction-for-types-functions-and-other-objects" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.8.</span></p>
+</div>
+<p>Parfois, la simple utilisation de <a class="reference internal" href="#pickle.Pickler.dispatch_table" title="pickle.Pickler.dispatch_table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dispatch_table</span></code></a> n'offre pas assez de flexibilité. On peut vouloir changer la méthode de sérialisation selon d'autres critères que le type de l'objet, ou bien personnaliser la sérialisation des fonctions et des classes.</p>
+<p>Dans ces cas, il est possible d'écrire une méthode <a class="reference internal" href="#pickle.Pickler.reducer_override" title="pickle.Pickler.reducer_override"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reducer_override()</span></code></a> dans une classe fille de <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a>. Cette méthode renvoie un <em>n</em>-uplet de réduction arbitraire (voir <code class="xref py py-meth docutils literal notranslate"><span class="pre">__reduce__()</span></code>). Elle peut aussi renvoyer <code class="docutils literal notranslate"><span class="pre">NotImplemented</span></code>, auquel cas la méthode habituelle de réduction par table s'applique.</p>
+<p>Si <a class="reference internal" href="#pickle.Pickler.dispatch_table" title="pickle.Pickler.dispatch_table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dispatch_table</span></code></a> et <a class="reference internal" href="#pickle.Pickler.reducer_override" title="pickle.Pickler.reducer_override"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reducer_override()</span></code></a> sont tous les deux définis, <a class="reference internal" href="#pickle.Pickler.reducer_override" title="pickle.Pickler.reducer_override"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reducer_override()</span></code></a> a la priorité.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Pour des raisons de performance, la méthode <a class="reference internal" href="#pickle.Pickler.reducer_override" title="pickle.Pickler.reducer_override"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reducer_override()</span></code></a> n'est jamais appelée sur <code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code>, ainsi que les instances exactes (pas dérivées) de <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>, <a class="reference internal" href="stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, <a class="reference internal" href="stdtypes.html#set" title="set"><code class="xref py py-class docutils literal notranslate"><span class="pre">set</span></code></a>, <a class="reference internal" href="stdtypes.html#frozenset" title="frozenset"><code class="xref py py-class docutils literal notranslate"><span class="pre">frozenset</span></code></a>, <a class="reference internal" href="stdtypes.html#list" title="list"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> et <a class="reference internal" href="stdtypes.html#tuple" title="tuple"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>.</p>
+</div>
+<p>Voici un exemple simple qui implémente la sérialisation d'une classe :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span><span class="p">:</span>
+    <span class="n">my_attribute</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">class</span> <span class="nc">MyPickler</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">Pickler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">reducer_override</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Custom reducer for MyClass.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;MyClass&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">type</span><span class="p">,</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__bases__</span><span class="p">,</span>
+                          <span class="p">{</span><span class="s1">&#39;my_attribute&#39;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">my_attribute</span><span class="p">})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># For any other object, fallback to usual reduction</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">MyPickler</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">MyClass</span><span class="p">)</span>
+
+<span class="k">del</span> <span class="n">MyClass</span>
+
+<span class="n">unpickled_class</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">unpickled_class</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">unpickled_class</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;MyClass&quot;</span>
+<span class="k">assert</span> <span class="n">unpickled_class</span><span class="o">.</span><span class="n">my_attribute</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="out-of-band-buffers">
+<span id="pickle-oob"></span><h2>Tampons hors-bande<a class="headerlink" href="#out-of-band-buffers" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.8.</span></p>
+</div>
+<p>Le module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> est parfois utilisé pour transférer des quantités énormes de données. Il peut devenir important de réduire les copies de mémoire au minimum pour préserver la performance et diminuer l'usage des ressources matérielles. Cependant, dans son contexte courant d'utilisation, le module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> effectue des copies depuis et vers le flux de données pour les besoins de la conversion de structures d'objets semblables à des graphes en flux séquentiels d'octets.</p>
+<p>Cette contrainte peut être levée si le <em>producteur</em> (qui implémente les types d'objets à transférer) et le <em>consommateur</em> (qui implémente le système de communication) emploient les possibilités de transfert hors-bande offertes par les protocoles 5 et suivants.</p>
+<section id="provider-api">
+<h3>API des producteurs<a class="headerlink" href="#provider-api" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les objets de grande taille à sérialiser doivent posséder une méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__reduce_ex__()</span></code> qui, lorsqu'elle est appelée pour le protocole 5 ou plus, renvoie un objet <a class="reference internal" href="#pickle.PickleBuffer" title="pickle.PickleBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleBuffer</span></code></a> au lieu d'un objet <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> dès que la taille le justifie.</p>
+<p>Les objets <a class="reference internal" href="#pickle.PickleBuffer" title="pickle.PickleBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleBuffer</span></code></a> ne font que signaler que leur tampon permet le transfert hors-bande. Ils demeurent compatibles avec l'utilisation classique du module <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a>. Cependant, les consommateurs peuvent aussi choisir d'indiquer à <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> qu'ils gèrent eux-mêmes ces tampons.</p>
+</section>
+<section id="consumer-api">
+<h3>API des consommateurs<a class="headerlink" href="#consumer-api" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Un système de communication peut gérer de manière spécifique les objets <a class="reference internal" href="#pickle.PickleBuffer" title="pickle.PickleBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleBuffer</span></code></a> générés lors de la sérialisation d'un réseau d'objets.</p>
+<p>Du côté de l'expéditeur, il faut passer le paramètre <em>buffer_callback</em> à <a class="reference internal" href="#pickle.Pickler" title="pickle.Pickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickler</span></code></a> (ou à <a class="reference internal" href="#pickle.dump" title="pickle.dump"><code class="xref py py-func docutils literal notranslate"><span class="pre">dump()</span></code></a> ou <a class="reference internal" href="#pickle.dumps" title="pickle.dumps"><code class="xref py py-func docutils literal notranslate"><span class="pre">dumps()</span></code></a>). Le <em>buffer_callback</em> sera appelé avec chaque <a class="reference internal" href="#pickle.PickleBuffer" title="pickle.PickleBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleBuffer</span></code></a> généré lors de la sérialisation du réseau d'objets. Les tampons accumulés par le <em>buffer_callback</em> ne verront pas leurs données copiées dans le flux sérialisé. Il leur sera substitué un marqueur léger.</p>
+<p>Du côté du receveur, il faut passer l'argument <em>buffers</em> à <a class="reference internal" href="#pickle.Unpickler" title="pickle.Unpickler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unpickler</span></code></a> (ou <a class="reference internal" href="#pickle.load" title="pickle.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a> ou bien <a class="reference internal" href="#pickle.loads" title="pickle.loads"><code class="xref py py-func docutils literal notranslate"><span class="pre">loads()</span></code></a>). <em>buffers</em> est un itérable des tampons passés à <em>buffer_callback</em>. Il doit fournir les tampons dans le même ordre que celui dans lequel ils ont été passés à <em>buffer_callback</em>. Les tampons fournis constituent la source des données qu'attendent les reconstructeurs des objets dont la sérialisation a abouti aux objets <a class="reference internal" href="#pickle.PickleBuffer" title="pickle.PickleBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleBuffer</span></code></a>.</p>
+<p>Entre expéditeur et receveur, le système de communication peut implémenter son propre mécanisme de transfert pour les tampons hors-bande. Parmi les optimisations possibles se trouvent l'utilisation de mémoire partagée et la compression spécifique au type de données.</p>
+</section>
+<section id="example">
+<h3>Exemple<a class="headerlink" href="#example" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Voici un exemple trivial où est implémentée une classe fille de <a class="reference internal" href="stdtypes.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a> capable de sérialisation hors-bande :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ZeroCopyByteArray</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__reduce_ex__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">protocol</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">protocol</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_reconstruct</span><span class="p">,</span> <span class="p">(</span><span class="n">PickleBuffer</span><span class="p">(</span><span class="bp">self</span><span class="p">),),</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># PickleBuffer is forbidden with pickle protocols &lt;= 4.</span>
+            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_reconstruct</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="bp">self</span><span class="p">),)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_reconstruct</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">memoryview</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
+            <span class="c1"># Get a handle over the original buffer object</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">obj</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">cls</span><span class="p">:</span>
+                <span class="c1"># Original buffer object is a ZeroCopyByteArray, return it</span>
+                <span class="c1"># as-is.</span>
+                <span class="k">return</span> <span class="n">obj</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Lorsqu'il rencontre le bon type, le reconstructeur (la méthode de classe <code class="docutils literal notranslate"><span class="pre">_reconstruct</span></code>) renvoie directement le tampon original. Il s'agit d'une manière simple de simuler l'absence de copie dans cet exemple simpliste.</p>
+<p>En tant que consommateur des objets, on peut les sérialiser de la manière classique. La désérialisation conduit alors à une copie :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">ZeroCopyByteArray</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">new_b</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="n">new_b</span><span class="p">)</span>  <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span> <span class="ow">is</span> <span class="n">new_b</span><span class="p">)</span>  <span class="c1"># False: a copy was made</span>
+</pre></div>
+</div>
+<p>Mais en passant un <em>buffer_callback</em> et en donnant les tampons accumulés au désérialiseur, il n'y a plus de copie :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">ZeroCopyByteArray</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+<span class="n">buffers</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">buffer_callback</span><span class="o">=</span><span class="n">buffers</span><span class="o">.</span><span class="n">append</span><span class="p">)</span>
+<span class="n">new_b</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">buffers</span><span class="o">=</span><span class="n">buffers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="n">new_b</span><span class="p">)</span>  <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span> <span class="ow">is</span> <span class="n">new_b</span><span class="p">)</span>  <span class="c1"># True: no copy was made</span>
+</pre></div>
+</div>
+<p>Cet exemple est limité par le fait que <a class="reference internal" href="stdtypes.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a> effectue sa propre allocation de mémoire. Il n'est pas possible de créer un <a class="reference internal" href="stdtypes.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a> sur la mémoire d'un autre objet. Cependant, certains types de données que l'on trouve dans des bibliothèques externes, comme les tableaux NumPy, n'ont pas cette limitation. Le passage hors-bande permet alors de n'effectuer aucune copie (ou bien de minimiser le nombre de copies) lors du transfert de données d'un système à l'autre ou d'un processus à l'autre.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<p><span class="target" id="index-15"></span><a class="pep reference external" href="https://peps.python.org/pep-0574/"><strong>PEP 574</strong></a> — Protocole <em>pickle</em> 5 avec données hors-bande</p>
+</div>
+</section>
+</section>
+<section id="restricting-globals">
+<span id="pickle-restrict"></span><h2>Restriction des noms dans l'espace de nommage global<a class="headerlink" href="#restricting-globals" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-9">Par défaut, la désérialisation importe toutes les classes ou fonctions que demande le flux de données. Dans bien des cas, ce comportement est inacceptable, puisqu'il permet de faire exécuter du code arbitraire dans l'environnement de désérialisation. Observez le résultat de ce flux de données fait-main lorsqu'il est lu :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;cos</span><span class="se">\n</span><span class="s2">system</span><span class="se">\n</span><span class="s2">(S&#39;echo hello world&#39;</span><span class="se">\n</span><span class="s2">tR.&quot;</span><span class="p">)</span>
+<span class="go">hello world</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>Dans cet exemple, le désérialiseur importe la fonction <a class="reference internal" href="os.html#os.system" title="os.system"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.system()</span></code></a> et l'applique à la chaîne de caractères <code class="docutils literal notranslate"><span class="pre">&quot;echo</span> <span class="pre">hello</span> <span class="pre">world&quot;</span></code>. C'est inoffensif, mais il n'est pas difficile d'imaginer des variantes qui endommageraient le système.</p>
+<p>C'est pour cette raison qu'il s'avère parfois nécessaire de contrôler ce qui peut être désérialisé. Cela est possible en redéfinissant la méthode <a class="reference internal" href="#pickle.Unpickler.find_class" title="pickle.Unpickler.find_class"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Unpickler.find_class()</span></code></a>. Contrairement à ce que son nom laisse penser, <a class="reference internal" href="#pickle.Unpickler.find_class" title="pickle.Unpickler.find_class"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Unpickler.find_class()</span></code></a> est appelée pour tous les noms à chercher dans l'espace de nommage global, ce qui inclut les classes mais aussi les fonctions. Par ce biais, il est possible d'interdire complètement la résolution des noms globaux ou de la restreindre à un sous-ensemble que l'on considère sûr.</p>
+<p>Voici un exemple de désérialiseur qui permet seulement la désérialisation d'un petit nombre de classes sûres du module <a class="reference internal" href="builtins.html#module-builtins" title="builtins: The module that provides the built-in namespace."><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code></a> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">builtins</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="n">safe_builtins</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;range&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;complex&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;set&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;frozenset&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;slice&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">RestrictedUnpickler</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">Unpickler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">find_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="c1"># Only allow safe classes from builtins.</span>
+        <span class="k">if</span> <span class="n">module</span> <span class="o">==</span> <span class="s2">&quot;builtins&quot;</span> <span class="ow">and</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">safe_builtins</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">builtins</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="c1"># Forbid everything else.</span>
+        <span class="k">raise</span> <span class="n">pickle</span><span class="o">.</span><span class="n">UnpicklingError</span><span class="p">(</span><span class="s2">&quot;global &#39;</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&#39; is forbidden&quot;</span> <span class="o">%</span>
+                                     <span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">restricted_loads</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper function analogous to pickle.loads().&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">RestrictedUnpickler</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">s</span><span class="p">))</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A sample usage of our unpickler working as intended:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">restricted_loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">)]))</span>
+<span class="go">[1, 2, range(0, 15)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">restricted_loads</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;cos</span><span class="se">\n</span><span class="s2">system</span><span class="se">\n</span><span class="s2">(S&#39;echo hello world&#39;</span><span class="se">\n</span><span class="s2">tR.&quot;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">  </span><span class="c">...</span>
+<span class="gr">pickle.UnpicklingError</span>: <span class="n">global &#39;os.system&#39; is forbidden</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">restricted_loads</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;cbuiltins</span><span class="se">\n</span><span class="s1">eval</span><span class="se">\n</span><span class="s1">&#39;</span>
+<span class="gp">... </span>                 <span class="sa">b</span><span class="s1">&#39;(S</span><span class="se">\&#39;</span><span class="s1">getattr(__import__(&quot;os&quot;), &quot;system&quot;)&#39;</span>
+<span class="gp">... </span>                 <span class="sa">b</span><span class="s1">&#39;(&quot;echo hello world&quot;)</span><span class="se">\&#39;\n</span><span class="s1">tR.&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">  </span><span class="c">...</span>
+<span class="gr">pickle.UnpicklingError</span>: <span class="n">global &#39;builtins.eval&#39; is forbidden</span>
+</pre></div>
+</div>
+<p>Comme le montre l'exemple, il faut faire attention aux objets que l'on autorise à être désérialisés. Si la sécurité est une priorité, il peut être sage de se tourner vers des alternatives comme l'API du module <a class="reference internal" href="xmlrpc.client.html#module-xmlrpc.client" title="xmlrpc.client: XML-RPC client access."><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.client</span></code></a>, ou des bibliothèques tierces.</p>
+</section>
+<section id="performance">
+<h2>Performances<a class="headerlink" href="#performance" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Recent versions of the pickle protocol (from protocol 2 and upwards) feature
+efficient binary encodings for several common features and built-in types.
+Also, the <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> module has a transparent optimizer written in C.</p>
+</section>
+<section id="examples">
+<span id="pickle-example"></span><h2>Exemples<a class="headerlink" href="#examples" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans les cas les plus simples, utilisez les fonctions <a class="reference internal" href="#pickle.dump" title="pickle.dump"><code class="xref py py-func docutils literal notranslate"><span class="pre">dump()</span></code></a> et <a class="reference internal" href="#pickle.load" title="pickle.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">load()</span></code></a>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="c1"># An arbitrary collection of objects supported by pickle.</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="n">j</span><span class="p">],</span>
+    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;character string&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;byte string&quot;</span><span class="p">),</span>
+    <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">{</span><span class="kc">None</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># Pickle the &#39;data&#39; dictionary using the highest protocol available.</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Le code suivant lit les données qui viennent d'être sérialisées</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.pickle&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># The protocol version used is detected automatically, so we do not</span>
+    <span class="c1"># have to specify it.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt>Module <a class="reference internal" href="copyreg.html#module-copyreg" title="copyreg: Register pickle support functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code></a></dt><dd><p>Enregistre les fonctions de sérialisation pour les types définis par l'utilisateur.</p>
+</dd>
+<dt>Module <a class="reference internal" href="pickletools.html#module-pickletools" title="pickletools: Contains extensive comments about the pickle protocols and pickle-machine opcodes, as well as some useful functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code></a></dt><dd><p>Outils pour travailler sur les données sérialisées et les analyser.</p>
+</dd>
+<dt>Module <a class="reference internal" href="shelve.html#module-shelve" title="shelve: Python object persistence."><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code></a></dt><dd><p>Bases de données indexées (module fondé sur <a class="reference internal" href="#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a>).</p>
+</dd>
+<dt>Module <a class="reference internal" href="copy.html#module-copy" title="copy: Shallow and deep copy operations."><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code></a></dt><dd><p>Copie superficielle ou récursive d'objets.</p>
+</dd>
+<dt>Module <a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code></a></dt><dd><p>Sérialisation haute-performance des types natifs.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<dl class="footnote brackets">
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>À ne pas confondre avec ce que fait le module <a class="reference internal" href="marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code></a>.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>C'est la raison pour laquelle les fonctions <a class="reference internal" href="../reference/expressions.html#lambda"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">lambda</span></code></a> ne peuvent pas être sérialisées : elles partagent toutes le même nom, à savoir <code class="docutils literal notranslate"><span class="pre">&lt;lambda&gt;</span></code>.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id4">3</a></span></dt>
+<dd><p>L'exception levée est généralement de type <a class="reference internal" href="exceptions.html#ImportError" title="ImportError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportError</span></code></a> ou <a class="reference internal" href="exceptions.html#AttributeError" title="AttributeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code></a>, mais ce n'est pas systématique.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id5">4</a></span></dt>
+<dd><p>Le module <a class="reference internal" href="copy.html#module-copy" title="copy: Shallow and deep copy operations."><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code></a> fait appel à ce protocole pour les opérations de copie superficielle comme récursive.</p>
+</dd>
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id6">5</a></span></dt>
+<dd><p>The limitation on alphanumeric characters is due to the fact
+that persistent IDs in protocol 0 are delimited by the newline
+character.  Therefore if any kind of newline characters occurs in
+persistent IDs, the resulting pickled data will become unreadable.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Sérialisation d'objets Python</a><ul>
+<li><a class="reference internal" href="#relationship-to-other-python-modules">Relations aux autres modules Python</a><ul>
+<li><a class="reference internal" href="#comparison-with-marshal">Comparaison avec <code class="docutils literal notranslate"><span class="pre">marshal</span></code></a></li>
+<li><a class="reference internal" href="#comparison-with-json">Comparaison avec <code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-stream-format">Format du flux de données</a></li>
+<li><a class="reference internal" href="#module-interface">Interface du module</a></li>
+<li><a class="reference internal" href="#what-can-be-pickled-and-unpickled">Quels objets sont sérialisables ?</a></li>
+<li><a class="reference internal" href="#pickling-class-instances">Sérialisation des instances d'une classe</a><ul>
+<li><a class="reference internal" href="#persistence-of-external-objects">Persistance d'objets externes</a></li>
+<li><a class="reference internal" href="#dispatch-tables">Tables de distribution</a></li>
+<li><a class="reference internal" href="#handling-stateful-objects">Traitement des objets à état</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#custom-reduction-for-types-functions-and-other-objects">Réduction personnalisée pour les types, fonctions et autres objets</a></li>
+<li><a class="reference internal" href="#out-of-band-buffers">Tampons hors-bande</a><ul>
+<li><a class="reference internal" href="#provider-api">API des producteurs</a></li>
+<li><a class="reference internal" href="#consumer-api">API des consommateurs</a></li>
+<li><a class="reference internal" href="#example">Exemple</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#restricting-globals">Restriction des noms dans l'espace de nommage global</a></li>
+<li><a class="reference internal" href="#performance">Performances</a></li>
+<li><a class="reference internal" href="#examples">Exemples</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="persistence.html"
+                          title="Chapitre précédent">Persistance des données</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="copyreg.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Enregistre les fonctions support de <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/pickle.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="copyreg.html" title="copyreg — Enregistre les fonctions support de pickle"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="persistence.html" title="Persistance des données"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="persistence.html" >Persistance des données</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Sérialisation d'objets Python</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

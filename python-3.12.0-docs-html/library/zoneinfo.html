@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="zoneinfo — Prise en charge des fuseaux horaires IANA" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/zoneinfo.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/zoneinfo Le module zoneinfo fournit une implémentation concrète des fuseaux horaires qui s'appuie sur la base de données de fuseaux horaires IANA spécifiée initialement dans la PE..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/zoneinfo Le module zoneinfo fournit une implémentation concrète des fuseaux horaires qui s'appuie sur la base de données de fuseaux horaires IANA spécifiée initialement dans la PE..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>zoneinfo — Prise en charge des fuseaux horaires IANA &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="calendar — Fonctions calendaires générales" href="calendar.html" />
+    <link rel="prev" title="datetime — Types de base pour la date et l&#39;heure" href="datetime.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/zoneinfo.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — Prise en charge des fuseaux horaires IANA</a><ul>
+<li><a class="reference internal" href="#using-zoneinfo">Utilisation de <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code></a></li>
+<li><a class="reference internal" href="#data-sources">Sources de données</a><ul>
+<li><a class="reference internal" href="#configuring-the-data-sources">Configurer les sources de données</a><ul>
+<li><a class="reference internal" href="#compile-time-configuration">Configuration à la compilation</a></li>
+<li><a class="reference internal" href="#environment-configuration">Configuration par l'environnement</a></li>
+<li><a class="reference internal" href="#runtime-configuration">Configuration à l'exécution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-zoneinfo-class">La classe <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code></a><ul>
+<li><a class="reference internal" href="#string-representations">Représentation sous forme de chaîne de caractères</a></li>
+<li><a class="reference internal" href="#pickle-serialization">Sérialisation Pickle</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#functions">Fonctions</a></li>
+<li><a class="reference internal" href="#globals">Variables globales</a></li>
+<li><a class="reference internal" href="#exceptions-and-warnings">Exceptions et avertissements</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="datetime.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Types de base pour la date et l'heure</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="calendar.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — Fonctions calendaires générales</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/zoneinfo.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="calendar.html" title="calendar — Fonctions calendaires générales"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="datetime.html" title="datetime — Types de base pour la date et l&#39;heure"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" accesskey="U">Types de données</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — Prise en charge des fuseaux horaires IANA</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-zoneinfo">
+<span id="zoneinfo-iana-time-zone-support"></span><h1><a class="reference internal" href="#module-zoneinfo" title="zoneinfo: IANA time zone support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code></a> — Prise en charge des fuseaux horaires IANA<a class="headerlink" href="#module-zoneinfo" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.9.</span></p>
+</div>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/zoneinfo">Lib/zoneinfo</a></p>
+<hr class="docutils" />
+<p>Le module <a class="reference internal" href="#module-zoneinfo" title="zoneinfo: IANA time zone support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code></a> fournit une implémentation concrète des fuseaux horaires qui s'appuie sur la base de données de fuseaux horaires IANA spécifiée initialement dans la <span class="target" id="index-6"></span><a class="pep reference external" href="https://peps.python.org/pep-0615/"><strong>PEP 615</strong></a>. Par défaut, <a class="reference internal" href="#module-zoneinfo" title="zoneinfo: IANA time zone support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code></a> utilise les données des fuseaux horaires du système si elles sont disponibles, sinon la bibliothèque utilise le paquet quasi natif <a class="reference external" href="https://pypi.org/project/tzdata/">tzdata</a> disponible sur PyPI.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt>Module : <a class="reference internal" href="datetime.html#module-datetime" title="datetime: Basic date and time types."><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code></a></dt><dd><p>Fournit les types <a class="reference internal" href="datetime.html#datetime.time" title="datetime.time"><code class="xref py py-class docutils literal notranslate"><span class="pre">time</span></code></a> et <a class="reference internal" href="datetime.html#datetime.datetime" title="datetime.datetime"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></a> attendus par <a class="reference internal" href="#zoneinfo.ZoneInfo" title="zoneinfo.ZoneInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoneInfo</span></code></a>.</p>
+</dd>
+<dt>Paquet <a class="reference external" href="https://pypi.org/project/tzdata/">tzdata</a></dt><dd><p>Paquet « quasi natif » maintenu par les développeurs de CPython pour fournir les données des fuseaux horaires via PyPI.</p>
+</dd>
+</dl>
+</div>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Disponibilité</span></a> : pas Emscripten, pas WASI.</p>
+<p>Ce module ne fonctionne pas ou n’est pas disponible sur les plateformes WebAssembly <code class="docutils literal notranslate"><span class="pre">wasm32-emscripten</span></code> et <code class="docutils literal notranslate"><span class="pre">wasm32-wasi</span></code>. Voir <a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">Plateformes WebAssembly</span></a> pour plus d’informations.</p>
+</div>
+<section id="using-zoneinfo">
+<h2>Utilisation de <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code><a class="headerlink" href="#using-zoneinfo" title="Lien permanent vers ce titre">¶</a></h2>
+<p><a class="reference internal" href="#zoneinfo.ZoneInfo" title="zoneinfo.ZoneInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoneInfo</span></code></a> est une implémentation concrète de la classe de base abstraite <a class="reference internal" href="datetime.html#datetime.tzinfo" title="datetime.tzinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.tzinfo</span></code></a> et est destinée à être rattachée à <code class="docutils literal notranslate"><span class="pre">tzinfo</span></code>, par le constructeur, par <a class="reference internal" href="datetime.html#datetime.datetime.replace" title="datetime.datetime.replace"><code class="xref py py-meth docutils literal notranslate"><span class="pre">datetime.replace</span></code></a> ou par <a class="reference internal" href="datetime.html#datetime.datetime.astimezone" title="datetime.datetime.astimezone"><code class="xref py py-meth docutils literal notranslate"><span class="pre">datetime.astimezone</span></code></a> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">zoneinfo</span> <span class="kn">import</span> <span class="n">ZoneInfo</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;America/Los_Angeles&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+<span class="go">2020-10-31 12:00:00-07:00</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span><span class="o">.</span><span class="n">tzname</span><span class="p">()</span>
+<span class="go">&#39;PDT&#39;</span>
+</pre></div>
+</div>
+<p>Les <em>datetime</em> construits de cette manière sont compatibles avec l'arithmétique <em>datetime</em> et gèrent le passage à l'heure d'été sans autre intervention :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt_add</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dt_add</span><span class="p">)</span>
+<span class="go">2020-11-01 12:00:00-08:00</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dt_add</span><span class="o">.</span><span class="n">tzname</span><span class="p">()</span>
+<span class="go">&#39;PST&#39;</span>
+</pre></div>
+</div>
+<p>Ces fuseaux horaires prennent aussi en charge l'attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">fold</span></code> introduit dans la <span class="target" id="index-7"></span><a class="pep reference external" href="https://peps.python.org/pep-0495/"><strong>PEP 495</strong></a>. Pendant les transitions des décalages horaires qui induisent des temps ambigus (comme le passage de l'heure d'été à l'heure normale), le décalage <em>avant</em> la transition est utilisé quand <code class="docutils literal notranslate"><span class="pre">fold=0</span></code>, et le décalage <em>après</em> la transition est utilisé quand <code class="docutils literal notranslate"><span class="pre">fold=1</span></code>, par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;America/Los_Angeles&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+<span class="go">2020-11-01 01:00:00-07:00</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">fold</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">2020-11-01 01:00:00-08:00</span>
+</pre></div>
+</div>
+<p>Lors de la conversion à partir d'un autre fuseau horaire, <em>fold</em> est réglé à la valeur correcte :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">LOS_ANGELES</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;America/Los_Angeles&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dt_utc</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Before the PDT -&gt; PST transition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dt_utc</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">LOS_ANGELES</span><span class="p">))</span>
+<span class="go">2020-11-01 01:00:00-07:00</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># After the PDT -&gt; PST transition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">((</span><span class="n">dt_utc</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">LOS_ANGELES</span><span class="p">))</span>
+<span class="go">2020-11-01 01:00:00-08:00</span>
+</pre></div>
+</div>
+</section>
+<section id="data-sources">
+<h2>Sources de données<a class="headerlink" href="#data-sources" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le module <code class="docutils literal notranslate"><span class="pre">zoneinfo</span></code> ne fournit pas de données de fuseaux horaires directement, mais extrait des informations sur les fuseaux horaires de la base de données des fuseaux horaires du système ou du paquet PyPI quasi natif <a class="reference external" href="https://pypi.org/project/tzdata/">tzdata</a>, s'ils sont disponibles. Certains systèmes, comme les systèmes Windows, n'ont pas de base de données IANA, il est donc recommandé aux projets visant la compatibilité entre plates-formes et qui nécessitent des données sur les fuseaux horaires, de déclarer une dépendance à <em>tzdata</em>. Si aucune donnée système, ni <em>tzdata</em>, n'est disponible, tous les appels à <a class="reference internal" href="#zoneinfo.ZoneInfo" title="zoneinfo.ZoneInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoneInfo</span></code></a> lèvent <a class="reference internal" href="#zoneinfo.ZoneInfoNotFoundError" title="zoneinfo.ZoneInfoNotFoundError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ZoneInfoNotFoundError</span></code></a>.</p>
+<section id="configuring-the-data-sources">
+<span id="zoneinfo-data-configuration"></span><h3>Configurer les sources de données<a class="headerlink" href="#configuring-the-data-sources" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Lorsque <code class="docutils literal notranslate"><span class="pre">ZoneInfo(key)</span></code> est appelé, le constructeur recherche d'abord un fichier nommé <code class="docutils literal notranslate"><span class="pre">key</span></code> dans les répertoires spécifiés par <a class="reference internal" href="#zoneinfo.TZPATH" title="zoneinfo.TZPATH"><code class="xref py py-data docutils literal notranslate"><span class="pre">TZPATH</span></code></a> et, en cas d'échec, recherche dans le paquet <em>tzdata</em>. Ce comportement peut être configuré de trois manières :</p>
+<ol class="arabic simple">
+<li><p>La valeur par défaut <a class="reference internal" href="#zoneinfo.TZPATH" title="zoneinfo.TZPATH"><code class="xref py py-data docutils literal notranslate"><span class="pre">TZPATH</span></code></a>, lorsqu'elle n'est pas spécifiée autrement, peut être configurée à <a class="reference internal" href="#zoneinfo-data-compile-time-config"><span class="std std-ref">la compilation</span></a>.</p></li>
+<li><p><a class="reference internal" href="#zoneinfo.TZPATH" title="zoneinfo.TZPATH"><code class="xref py py-data docutils literal notranslate"><span class="pre">TZPATH</span></code></a> peut être configuré en utilisant <a class="reference internal" href="#zoneinfo-data-environment-var"><span class="std std-ref">une variable d'environnement</span></a>.</p></li>
+<li><p>À <a class="reference internal" href="#zoneinfo-data-runtime-config"><span class="std std-ref">l'exécution</span></a>, le chemin de recherche peut être manipulé à l'aide de la fonction <a class="reference internal" href="#zoneinfo.reset_tzpath" title="zoneinfo.reset_tzpath"><code class="xref py py-func docutils literal notranslate"><span class="pre">reset_tzpath()</span></code></a>.</p></li>
+</ol>
+<section id="compile-time-configuration">
+<span id="zoneinfo-data-compile-time-config"></span><h4>Configuration à la compilation<a class="headerlink" href="#compile-time-configuration" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Par défaut, <a class="reference internal" href="#zoneinfo.TZPATH" title="zoneinfo.TZPATH"><code class="xref py py-data docutils literal notranslate"><span class="pre">TZPATH</span></code></a> indique plusieurs emplacements de déploiement courants pour la base de données de fuseaux horaires (sauf sous Windows, où il n'existe pas de consensus pour l'emplacement des données de fuseaux horaires). Sur les systèmes POSIX, les distributeurs en aval ainsi que ceux qui construisent Python à partir des sources et qui savent où sont déployées les données de fuseau horaire de leur système peuvent modifier le chemin par défaut en spécifiant l'option de compilation <code class="docutils literal notranslate"><span class="pre">TZPATH</span></code> (ou, plus probablement, en utilisant l'option <a class="reference internal" href="../using/configure.html#cmdoption-with-tzpath"><code class="xref std std-option docutils literal notranslate"><span class="pre">--with-tzpath</span></code></a> du script <code class="docutils literal notranslate"><span class="pre">configure</span></code>), qui doit être une chaîne délimitée par <a class="reference internal" href="os.html#os.pathsep" title="os.pathsep"><code class="xref py py-data docutils literal notranslate"><span class="pre">os.pathsep</span></code></a>.</p>
+<p>Sur toutes les plates-formes, la valeur configurée est disponible en tant que clé de <code class="docutils literal notranslate"><span class="pre">TZPATH</span></code> dans <a class="reference internal" href="sysconfig.html#sysconfig.get_config_var" title="sysconfig.get_config_var"><code class="xref py py-func docutils literal notranslate"><span class="pre">sysconfig.get_config_var()</span></code></a>.</p>
+</section>
+<section id="environment-configuration">
+<span id="zoneinfo-data-environment-var"></span><h4>Configuration par l'environnement<a class="headerlink" href="#environment-configuration" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Lors de l'initialisation de <a class="reference internal" href="#zoneinfo.TZPATH" title="zoneinfo.TZPATH"><code class="xref py py-data docutils literal notranslate"><span class="pre">TZPATH</span></code></a> (soit au moment de l'importation, soit lorsque <a class="reference internal" href="#zoneinfo.reset_tzpath" title="zoneinfo.reset_tzpath"><code class="xref py py-func docutils literal notranslate"><span class="pre">reset_tzpath()</span></code></a> est appelé sans argument), le module <code class="docutils literal notranslate"><span class="pre">zoneinfo</span></code> utilise la variable d'environnement <code class="docutils literal notranslate"><span class="pre">PYTHONTZPATH</span></code>, si elle existe, pour définir le chemin de recherche.</p>
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-PYTHONTZPATH">
+<span class="sig-name descname"><span class="pre">PYTHONTZPATH</span></span><a class="headerlink" href="#envvar-PYTHONTZPATH" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Il s'agit d'une chaîne séparée par <a class="reference internal" href="os.html#os.pathsep" title="os.pathsep"><code class="xref py py-data docutils literal notranslate"><span class="pre">os.pathsep</span></code></a> contenant le chemin de recherche du fuseau horaire à utiliser. Elle doit être constituée uniquement de chemins absolus et non de chemins relatifs. Les composants relatifs spécifiés dans <code class="docutils literal notranslate"><span class="pre">PYTHONTZPATH</span></code> ne sont pas utilisés, mais le comportement reste défini par l'implémentation lorsqu'un chemin relatif est spécifié. CPython lève <a class="reference internal" href="#zoneinfo.InvalidTZPathWarning" title="zoneinfo.InvalidTZPathWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidTZPathWarning</span></code></a> dans ce cas. Les autres implémentations sont libres d'ignorer silencieusement le composant erroné ou de lever une exception.</p>
+</dd></dl>
+
+<p>Pour que le système ignore les données système et utilise le paquet <em>tzdata</em> à la place, définissez <code class="docutils literal notranslate"><span class="pre">PYTHONTZPATH=&quot;&quot;</span></code>.</p>
+</section>
+<section id="runtime-configuration">
+<span id="zoneinfo-data-runtime-config"></span><h4>Configuration à l'exécution<a class="headerlink" href="#runtime-configuration" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Le chemin de recherche <em>TZ</em> peut également être configuré au moment de l'exécution à l'aide de la fonction <a class="reference internal" href="#zoneinfo.reset_tzpath" title="zoneinfo.reset_tzpath"><code class="xref py py-func docutils literal notranslate"><span class="pre">reset_tzpath()</span></code></a>. Cette opération n'est généralement pas conseillée, bien qu'il soit raisonnable de l'utiliser dans les fonctions de test qui nécessitent l'utilisation d'un chemin de fuseau horaire spécifique (ou qui nécessitent de désactiver l'accès aux fuseaux horaires du système).</p>
+</section>
+</section>
+</section>
+<section id="the-zoneinfo-class">
+<h2>La classe <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code><a class="headerlink" href="#the-zoneinfo-class" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="zoneinfo.ZoneInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zoneinfo.</span></span><span class="sig-name descname"><span class="pre">ZoneInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoneinfo.ZoneInfo" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Une sous-classe concrète de <a class="reference internal" href="datetime.html#datetime.tzinfo" title="datetime.tzinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.tzinfo</span></code></a> qui représente un fuseau horaire IANA spécifié par la chaîne <code class="docutils literal notranslate"><span class="pre">key</span></code>. Les appels au constructeur principal renvoient toujours des objets dont la comparaison est identique ; autrement dit, sauf invalidation du cache via <a class="reference internal" href="#zoneinfo.ZoneInfo.clear_cache" title="zoneinfo.ZoneInfo.clear_cache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ZoneInfo.clear_cache()</span></code></a>, pour toutes les valeurs de <code class="docutils literal notranslate"><span class="pre">key</span></code>, l'assertion suivante est toujours vraie :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">key</span></code> doit être sous la forme d'un chemin POSIX relatif et normalisé, sans références de niveau supérieur. Le constructeur lève <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> si une clé non conforme est passée.</p>
+<p>Si aucun fichier correspondant à <code class="docutils literal notranslate"><span class="pre">key</span></code> n'est trouvé, le constructeur lève <a class="reference internal" href="#zoneinfo.ZoneInfoNotFoundError" title="zoneinfo.ZoneInfoNotFoundError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ZoneInfoNotFoundError</span></code></a>.</p>
+</dd></dl>
+
+<p>La classe <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> possède deux constructeurs alternatifs :</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="zoneinfo.ZoneInfo.from_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ZoneInfo.</span></span><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fobj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoneinfo.ZoneInfo.from_file" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Construit un objet <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> à partir d'un objet fichier renvoyant des octets (par exemple, un fichier ouvert en mode binaire ou un objet <a class="reference internal" href="io.html#io.BytesIO" title="io.BytesIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BytesIO</span></code></a>). Contrairement au constructeur principal, il construit toujours un nouvel objet.</p>
+<p>Le paramètre <code class="docutils literal notranslate"><span class="pre">key</span></code> définit le nom de la zone pour les besoins de <a class="reference internal" href="../reference/datamodel.html#object.__str__" title="object.__str__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__str__()</span></code></a> et <a class="reference internal" href="../reference/datamodel.html#object.__repr__" title="object.__repr__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__repr__()</span></code></a>.</p>
+<p>Les objets créés via ce constructeur ne peuvent pas être sérialisés (voir <a class="reference internal" href="#pickling">pickling</a>).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zoneinfo.ZoneInfo.no_cache">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ZoneInfo.</span></span><span class="sig-name descname"><span class="pre">no_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoneinfo.ZoneInfo.no_cache" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Un constructeur alternatif qui contourne le cache du constructeur. Il est identique au constructeur principal, mais renvoie un nouvel objet à chaque appel. Il est surtout utile à des fins de test ou de démonstration, mais il peut également être utilisé pour créer un système avec une stratégie d'invalidation du cache différente.</p>
+<p>Les objets créés via ce constructeur contournent également le cache d'un processus de <em>désérialisation</em> lorsqu'ils sont désérialisés.</p>
+<div class="admonition caution">
+<p class="admonition-title">Prudence</p>
+<p>L'utilisation de ce constructeur peut modifier la sémantique de vos <em>datetimes</em> de manière surprenante, ne l'utilisez que si vous en avez vraiment besoin.</p>
+</div>
+</dd></dl>
+
+<p>Les méthodes de classe suivantes sont également disponibles :</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="zoneinfo.ZoneInfo.clear_cache">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ZoneInfo.</span></span><span class="sig-name descname"><span class="pre">clear_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoneinfo.ZoneInfo.clear_cache" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Une méthode pour invalider le cache de la classe <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code>. Si aucun argument n'est passé, tous les caches sont invalidés et le prochain appel au constructeur principal pour chaque clé renverra une nouvelle instance.</p>
+<p>Si un itérable de noms de clés est passé au paramètre <code class="docutils literal notranslate"><span class="pre">only_keys</span></code>, seules les clés spécifiées sont retirées du cache. Les clés passées à <code class="docutils literal notranslate"><span class="pre">only_keys</span></code> mais non trouvées dans le cache sont ignorées.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Invoking this function may change the semantics of datetimes using
+<code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> in surprising ways; this modifies module state
+and thus may have wide-ranging effects. Only use it if you know that you
+need to.</p>
+</div>
+</dd></dl>
+
+<p>La classe a un attribut :</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zoneinfo.ZoneInfo.key">
+<span class="sig-prename descclassname"><span class="pre">ZoneInfo.</span></span><span class="sig-name descname"><span class="pre">key</span></span><a class="headerlink" href="#zoneinfo.ZoneInfo.key" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Il s'agit d'un <a class="reference internal" href="../glossary.html#term-attribute"><span class="xref std std-term">attribut</span></a> en lecture seule qui renvoie la valeur de <code class="docutils literal notranslate"><span class="pre">key</span></code> passée au constructeur, qui doit être une clé de recherche dans la base de données des fuseaux horaires de l'IANA (par exemple, <code class="docutils literal notranslate"><span class="pre">America/New_York</span></code>, <code class="docutils literal notranslate"><span class="pre">Europe/Paris</span></code> ou <code class="docutils literal notranslate"><span class="pre">Asia/Tokyo</span></code>).</p>
+<p>Pour les zones construites à partir d'un fichier sans spécifier de paramètre <code class="docutils literal notranslate"><span class="pre">key</span></code>, cette valeur sera fixée à <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Bien qu'il soit assez courant de les exposer aux utilisateurs finaux, ces valeurs sont conçues pour être des clés primaires permettant de représenter les zones concernées et pas nécessairement des éléments destinés à l'utilisateur. Des projets comme <em>CLDR</em> (<em>Unicode Common Locale Data Repository</em>) peuvent être utilisés pour obtenir des chaînes de caractères plus conviviales à partir de ces clés.</p>
+</div>
+</dd></dl>
+
+<section id="string-representations">
+<h3>Représentation sous forme de chaîne de caractères<a class="headerlink" href="#string-representations" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La représentation sous forme de chaîne renvoyée lors de l’appel de <a class="reference internal" href="stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> sur un objet <a class="reference internal" href="#zoneinfo.ZoneInfo" title="zoneinfo.ZoneInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoneInfo</span></code></a> utilise par défaut l’attribut <a class="reference internal" href="#zoneinfo.ZoneInfo.key" title="zoneinfo.ZoneInfo.key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ZoneInfo.key</span></code></a> (voir la note sur l’utilisation dans la documentation de l’attribut) :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">zone</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;Pacific/Kwajalein&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">zone</span><span class="p">)</span>
+<span class="go">&#39;Pacific/Kwajalein&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">zone</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dt</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">dt</span><span class="o">.</span><span class="n">tzinfo</span><span class="si">}</span><span class="s2">]&quot;</span>
+<span class="go">&#39;2020-04-01T03:15:00+12:00 [Pacific/Kwajalein]&#39;</span>
+</pre></div>
+</div>
+<p>Pour les objets construits à partir d’un fichier sans spécifier de paramètre <code class="docutils literal notranslate"><span class="pre">key</span></code>, <code class="docutils literal notranslate"><span class="pre">str</span></code> revient à appeler <a class="reference internal" href="functions.html#repr" title="repr"><code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code></a>. Le <code class="docutils literal notranslate"><span class="pre">repr</span></code> de <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> est défini par l’implémentation et n’est pas nécessairement stable entre les versions, mais il est garanti qu’il ne fournit pas un paramètre <em>key</em> <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> valide.</p>
+</section>
+<section id="pickle-serialization">
+<span id="pickling"></span><h3>Sérialisation Pickle<a class="headerlink" href="#pickle-serialization" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Plutôt que de sérialiser toutes les données de transition, les objets <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> sont sérialisés à partir de l'attribut <em>key</em> et les objets <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> construits à partir de fichiers (même ceux avec une valeur pour <code class="docutils literal notranslate"><span class="pre">key</span></code> spécifiée) ne peuvent pas être sérialisés.</p>
+<p>Le comportement d’un fichier <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> dépend de la façon dont il a été construit :</p>
+<ol class="arabic">
+<li><p><code class="docutils literal notranslate"><span class="pre">ZoneInfo(key)</span></code> : lorsqu’il est construit avec le constructeur primaire, un objet <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> est sérialisé en utilisant l'attribut <em>key</em> et, lorsqu’il est désérialisé, le processus de désérialisation utilise le constructeur primaire et donc on s’attend à ce qu’il soit le même objet que d’autres références au même fuseau horaire. Par exemple, si <code class="docutils literal notranslate"><span class="pre">europe_berlin_pkl</span></code> est une chaîne contenant un objet sérialisé construit à partir de <code class="docutils literal notranslate"><span class="pre">ZoneInfo(&quot;Europe/Berlin&quot;)</span></code>, on s’attend au comportement suivant :</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;Europe/Berlin&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">europe_berlin_pkl</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ZoneInfo.no_cache(key)</span></code> : lorsqu’il est construit à partir du constructeur de contournement de cache, l’objet <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> est également sérialisé en utilisant l'attribut <em>key</em> mais, lorsqu’il est désérialisé, le processus de désérialisation utilise le constructeur de contournement de cache. Si <code class="docutils literal notranslate"><span class="pre">europe_berlin_pkl_nc</span></code> est une chaîne contenant un objet sérialisé construit à partir de <code class="docutils literal notranslate"><span class="pre">ZoneInfo.no_cache(&quot;Europe/Berlin&quot;)</span></code>, le comportement suivant est attendu :</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;Europe/Berlin&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">europe_berlin_pkl_nc</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ZoneInfo.from_file(fobj,</span> <span class="pre">/,</span> <span class="pre">key=None)</span></code> : lorsqu’il est construit à partir d’un fichier, l’objet <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> lève une exception lors de la sérialisation. Si un utilisateur souhaite récupérer une <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> construite à partir d’un fichier, il est recommandé d’encapsuler les données dans un autre type ou d’utiliser une fonction de sérialisation personnalisée : soit en sérialisant en utilisant l'attribut <em>key</em>, soit en stockant le contenu de l’objet fichier et en sérialisant cet objet.</p></li>
+</ol>
+<p>Cette méthode de sérialisation nécessite que les données de fuseau horaire relatives à l'attribut <em>key</em> soient disponibles à la fois du côté de la sérialisation et de la désérialisation, de la même manière que les références aux classes et aux fonctions sont censées exister dans les environnements de sérialisation et de désérialisation. Cela signifie également qu’aucune garantie n’est donnée quant à la cohérence des résultats lors de la désérialisation d’un <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> sérialisé dans un environnement avec une version différente des données de fuseau horaire.</p>
+</section>
+</section>
+<section id="functions">
+<h2>Fonctions<a class="headerlink" href="#functions" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="zoneinfo.available_timezones">
+<span class="sig-prename descclassname"><span class="pre">zoneinfo.</span></span><span class="sig-name descname"><span class="pre">available_timezones</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zoneinfo.available_timezones" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fournit un ensemble contenant toutes les clés valides pour les fuseaux horaires IANA disponibles n’importe où sur <em>TZPATH</em>. Il est recalculé à chaque appel à la fonction.</p>
+<p>Cette fonction n’inclut que les noms de zone canoniques et n’inclut pas les zones « spéciales » telles que celles sous les répertoires <code class="docutils literal notranslate"><span class="pre">posix/</span></code> et <code class="docutils literal notranslate"><span class="pre">right/</span></code>, ou la zone <code class="docutils literal notranslate"><span class="pre">posixrules</span></code>.</p>
+<div class="admonition caution">
+<p class="admonition-title">Prudence</p>
+<p>cette fonction peut ouvrir un grand nombre de fichiers, car la meilleure façon de déterminer si un fichier sur le chemin du fuseau horaire est un fuseau horaire valide est de lire la « chaîne magique » au début.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ces valeurs n’ont pas vocation à être montrées aux utilisateurs ; pour les éléments destinés à l’utilisateur, les applications doivent utiliser quelque chose comme <em>CLDR</em> (le référentiel de données <em>Unicode Common Locale</em>) afin d’obtenir des chaînes plus conviviales. Voir aussi la note d’avertissement sur <a class="reference internal" href="#zoneinfo.ZoneInfo.key" title="zoneinfo.ZoneInfo.key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ZoneInfo.key</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="zoneinfo.reset_tzpath">
+<span class="sig-prename descclassname"><span class="pre">zoneinfo.</span></span><span class="sig-name descname"><span class="pre">reset_tzpath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoneinfo.reset_tzpath" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit ou réinitialise le chemin de recherche des fuseaux horaires (<a class="reference internal" href="#zoneinfo.TZPATH" title="zoneinfo.TZPATH"><code class="xref py py-data docutils literal notranslate"><span class="pre">TZPATH</span></code></a>) pour le module. Lorsqu’il est appelé sans arguments, <a class="reference internal" href="#zoneinfo.TZPATH" title="zoneinfo.TZPATH"><code class="xref py py-data docutils literal notranslate"><span class="pre">TZPATH</span></code></a> est défini sur la valeur par défaut.</p>
+<p>Appeler <code class="docutils literal notranslate"><span class="pre">reset_tzpath</span></code> n’invalide pas le cache <a class="reference internal" href="#zoneinfo.ZoneInfo" title="zoneinfo.ZoneInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoneInfo</span></code></a>, donc les appels au constructeur primaire <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> n’utiliseront le nouveau <code class="docutils literal notranslate"><span class="pre">TZPATH</span></code> qu’en cas d’échec du cache.</p>
+<p>Le paramètre <code class="docutils literal notranslate"><span class="pre">to</span></code> doit être une <a class="reference internal" href="../glossary.html#term-sequence"><span class="xref std std-term">séquence</span></a> de chaînes ou <a class="reference internal" href="os.html#os.PathLike" title="os.PathLike"><code class="xref py py-class docutils literal notranslate"><span class="pre">os.PathLike</span></code></a> et non une chaîne, qui doivent toutes être des chemins absolus. <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> est levée si autre chose qu’un chemin absolu est passé.</p>
+</dd></dl>
+
+</section>
+<section id="globals">
+<h2>Variables globales<a class="headerlink" href="#globals" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="zoneinfo.TZPATH">
+<span class="sig-prename descclassname"><span class="pre">zoneinfo.</span></span><span class="sig-name descname"><span class="pre">TZPATH</span></span><a class="headerlink" href="#zoneinfo.TZPATH" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Séquence en lecture seule représentant le chemin de recherche des fuseaux horaires – lors de la construction d’un <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> à partir de l'attribut <em>key</em>, la clé est jointe à chaque entrée dans le <code class="docutils literal notranslate"><span class="pre">TZPATH</span></code> et le premier fichier trouvé est utilisé.</p>
+<p><code class="docutils literal notranslate"><span class="pre">TZPATH</span></code> ne peut contenir que des chemins absolus, jamais des chemins relatifs, quelle que soit sa configuration.</p>
+<p>L’objet vers lequel <code class="docutils literal notranslate"><span class="pre">zoneinfo.TZPATH</span></code> pointe peut changer suite à un appel à <a class="reference internal" href="#zoneinfo.reset_tzpath" title="zoneinfo.reset_tzpath"><code class="xref py py-func docutils literal notranslate"><span class="pre">reset_tzpath()</span></code></a>, il est donc recommandé d’utiliser <code class="docutils literal notranslate"><span class="pre">zoneinfo.TZPATH</span></code> plutôt que d’importer <code class="docutils literal notranslate"><span class="pre">TZPATH</span></code> de <code class="docutils literal notranslate"><span class="pre">zoneinfo</span></code> ou en assignant une variable de longue durée à <code class="docutils literal notranslate"><span class="pre">zoneinfo.TZPATH</span></code>.</p>
+<p>Pour plus d’informations sur la configuration du chemin de recherche des fuseaux horaires, consultez <a class="reference internal" href="#zoneinfo-data-configuration"><span class="std std-ref">Configurer les sources de données</span></a>.</p>
+</dd></dl>
+
+</section>
+<section id="exceptions-and-warnings">
+<h2>Exceptions et avertissements<a class="headerlink" href="#exceptions-and-warnings" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="zoneinfo.ZoneInfoNotFoundError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zoneinfo.</span></span><span class="sig-name descname"><span class="pre">ZoneInfoNotFoundError</span></span><a class="headerlink" href="#zoneinfo.ZoneInfoNotFoundError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsque la construction d’un objet <a class="reference internal" href="#zoneinfo.ZoneInfo" title="zoneinfo.ZoneInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoneInfo</span></code></a> échoue parce que la clé spécifiée est introuvable sur le système. C’est une sous-classe de <a class="reference internal" href="exceptions.html#KeyError" title="KeyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="zoneinfo.InvalidTZPathWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zoneinfo.</span></span><span class="sig-name descname"><span class="pre">InvalidTZPathWarning</span></span><a class="headerlink" href="#zoneinfo.InvalidTZPathWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsque <span class="target" id="index-8"></span><a class="reference internal" href="#envvar-PYTHONTZPATH"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONTZPATH</span></code></a> contient un composant non valide qui ne sera pas retenu, tel qu’un chemin relatif.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — Prise en charge des fuseaux horaires IANA</a><ul>
+<li><a class="reference internal" href="#using-zoneinfo">Utilisation de <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code></a></li>
+<li><a class="reference internal" href="#data-sources">Sources de données</a><ul>
+<li><a class="reference internal" href="#configuring-the-data-sources">Configurer les sources de données</a><ul>
+<li><a class="reference internal" href="#compile-time-configuration">Configuration à la compilation</a></li>
+<li><a class="reference internal" href="#environment-configuration">Configuration par l'environnement</a></li>
+<li><a class="reference internal" href="#runtime-configuration">Configuration à l'exécution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-zoneinfo-class">La classe <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code></a><ul>
+<li><a class="reference internal" href="#string-representations">Représentation sous forme de chaîne de caractères</a></li>
+<li><a class="reference internal" href="#pickle-serialization">Sérialisation Pickle</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#functions">Fonctions</a></li>
+<li><a class="reference internal" href="#globals">Variables globales</a></li>
+<li><a class="reference internal" href="#exceptions-and-warnings">Exceptions et avertissements</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="datetime.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Types de base pour la date et l'heure</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="calendar.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — Fonctions calendaires générales</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/zoneinfo.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="calendar.html" title="calendar — Fonctions calendaires générales"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="datetime.html" title="datetime — Types de base pour la date et l&#39;heure"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" >Types de données</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — Prise en charge des fuseaux horaires IANA</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

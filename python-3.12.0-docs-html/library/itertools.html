@@ -1,0 +1,1446 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="itertools — Fonctions créant des itérateurs pour boucler efficacement" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/itertools.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Ce module implémente de nombreuses briques d'itérateurs inspirées par des éléments de APL, Haskell et SML. Toutes ont été retravaillées dans un format adapté à Python. Ce module standardise un ense..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Ce module implémente de nombreuses briques d'itérateurs inspirées par des éléments de APL, Haskell et SML. Toutes ont été retravaillées dans un format adapté à Python. Ce module standardise un ense..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>itertools — Fonctions créant des itérateurs pour boucler efficacement &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="functools — Fonctions d&#39;ordre supérieur et opérations sur des objets appelables" href="functools.html" />
+    <link rel="prev" title="Modules de programmation fonctionnelle" href="functional.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/itertools.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Fonctions créant des itérateurs pour boucler efficacement</a><ul>
+<li><a class="reference internal" href="#itertool-functions">Fonctions d'<em>itertool</em></a></li>
+<li><a class="reference internal" href="#itertools-recipes">Recettes <em>itertools</em></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="functional.html"
+                          title="Chapitre précédent">Modules de programmation fonctionnelle</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="functools.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Fonctions d'ordre supérieur et opérations sur des objets appelables</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/itertools.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="functools.html" title="functools — Fonctions d&#39;ordre supérieur et opérations sur des objets appelables"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="functional.html" title="Modules de programmation fonctionnelle"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="functional.html" accesskey="U">Modules de programmation fonctionnelle</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Fonctions créant des itérateurs pour boucler efficacement</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-itertools">
+<span id="itertools-functions-creating-iterators-for-efficient-looping"></span><h1><a class="reference internal" href="#module-itertools" title="itertools: Functions creating iterators for efficient looping."><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code></a> — Fonctions créant des itérateurs pour boucler efficacement<a class="headerlink" href="#module-itertools" title="Lien permanent vers ce titre">¶</a></h1>
+<hr class="docutils" />
+<p>Ce module implémente de nombreuses briques <a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">d'itérateurs</span></a> inspirées par des éléments de APL, Haskell et SML. Toutes ont été retravaillées dans un format adapté à Python.</p>
+<p>Ce module standardise un ensemble de base d'outils rapides et efficaces en mémoire qui peuvent être utilisés individuellement ou en les combinant. Ensemble, ils forment une « algèbre d'itérateurs » rendant possible la construction rapide et efficace d'outils spécialisés en Python.</p>
+<p>Par exemple, SML fournit un outil de tabulation <code class="docutils literal notranslate"><span class="pre">tabulate(f)</span></code> qui produit  une séquence <code class="docutils literal notranslate"><span class="pre">f(0),</span> <span class="pre">f(1),</span> <span class="pre">...</span></code>. Le même résultat peut être obtenu en Python en combinant <a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a> et <a class="reference internal" href="#itertools.count" title="itertools.count"><code class="xref py py-func docutils literal notranslate"><span class="pre">count()</span></code></a> pour former <code class="docutils literal notranslate"><span class="pre">map(f,</span> <span class="pre">count())</span></code>.</p>
+<p>Ces outils et leurs équivalents natifs fonctionnent également bien avec les fonctions optimisées du module <a class="reference internal" href="operator.html#module-operator" title="operator: Functions corresponding to the standard operators."><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code></a>. Par exemple, l'opérateur de multiplication peut être appliqué à deux vecteurs pour créer un produit scalaire efficace : <code class="docutils literal notranslate"><span class="pre">sum(map(operator.mul,</span> <span class="pre">vecteur1,</span> <span class="pre">vecteur2))</span></code>.</p>
+<p><strong>Itérateurs infinis :</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 39%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Itérateur</p></th>
+<th class="head"><p>Arguments</p></th>
+<th class="head"><p>Résultats</p></th>
+<th class="head"><p>Exemple</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#itertools.count" title="itertools.count"><code class="xref py py-func docutils literal notranslate"><span class="pre">count()</span></code></a></p></td>
+<td><p>start, [step]</p></td>
+<td><p>start, start+step, start+2*step, ...</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">count(10)</span> <span class="pre">--&gt;</span> <span class="pre">10</span> <span class="pre">11</span> <span class="pre">12</span> <span class="pre">13</span> <span class="pre">14</span> <span class="pre">...</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#itertools.cycle" title="itertools.cycle"><code class="xref py py-func docutils literal notranslate"><span class="pre">cycle()</span></code></a></p></td>
+<td><p>p</p></td>
+<td><p>p0, p1, ... plast, p0, p1, ...</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cycle('ABCD')</span> <span class="pre">--&gt;</span> <span class="pre">A</span> <span class="pre">B</span> <span class="pre">C</span> <span class="pre">D</span> <span class="pre">A</span> <span class="pre">B</span> <span class="pre">C</span> <span class="pre">D</span> <span class="pre">...</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#itertools.repeat" title="itertools.repeat"><code class="xref py py-func docutils literal notranslate"><span class="pre">repeat()</span></code></a></p></td>
+<td><p>elem [,n]</p></td>
+<td><p><em>elem</em>, <em>elem</em>, <em>elem</em>, ... à l'infini ou jusqu'à n fois</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">repeat(10,</span> <span class="pre">3)</span> <span class="pre">--&gt;</span> <span class="pre">10</span> <span class="pre">10</span> <span class="pre">10</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Itérateurs se terminant par la séquence d'entrée la plus courte :</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 30%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Itérateur</p></th>
+<th class="head"><p>Arguments</p></th>
+<th class="head"><p>Résultats</p></th>
+<th class="head"><p>Exemple</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#itertools.accumulate" title="itertools.accumulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">accumulate()</span></code></a></p></td>
+<td><p>p [,func]</p></td>
+<td><p>p0, p0+p1, p0+p1+p2, ...</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">accumulate([1,2,3,4,5])</span> <span class="pre">--&gt;</span> <span class="pre">1</span> <span class="pre">3</span> <span class="pre">6</span> <span class="pre">10</span> <span class="pre">15</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#itertools.batched" title="itertools.batched"><code class="xref py py-func docutils literal notranslate"><span class="pre">batched()</span></code></a></p></td>
+<td><p>p, n</p></td>
+<td><p>(p0, p1, ..., p_n-1), ...</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">batched('ABCDEFG',</span> <span class="pre">n=3)</span> <span class="pre">--&gt;</span> <span class="pre">ABC</span> <span class="pre">DEF</span> <span class="pre">G</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#itertools.chain" title="itertools.chain"><code class="xref py py-func docutils literal notranslate"><span class="pre">chain()</span></code></a></p></td>
+<td><p>p, q, ...</p></td>
+<td><p>p0, p1, ... plast, q0, q1, ...</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">chain('ABC',</span> <span class="pre">'DEF')</span> <span class="pre">--&gt;</span> <span class="pre">A</span> <span class="pre">B</span> <span class="pre">C</span> <span class="pre">D</span> <span class="pre">E</span> <span class="pre">F</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#itertools.chain.from_iterable" title="itertools.chain.from_iterable"><code class="xref py py-func docutils literal notranslate"><span class="pre">chain.from_iterable()</span></code></a></p></td>
+<td><p>itérable</p></td>
+<td><p>p0, p1, ... plast, q0, q1, ...</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">chain.from_iterable(['ABC',</span> <span class="pre">'DEF'])</span> <span class="pre">--&gt;</span> <span class="pre">A</span> <span class="pre">B</span> <span class="pre">C</span> <span class="pre">D</span> <span class="pre">E</span> <span class="pre">F</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#itertools.compress" title="itertools.compress"><code class="xref py py-func docutils literal notranslate"><span class="pre">compress()</span></code></a></p></td>
+<td><p>data, selectors</p></td>
+<td><p>(d[0] if s[0]), (d[1] if s[1]), ...</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">compress('ABCDEF',</span> <span class="pre">[1,0,1,0,1,1])</span> <span class="pre">--&gt;</span> <span class="pre">A</span> <span class="pre">C</span> <span class="pre">E</span> <span class="pre">F</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#itertools.dropwhile" title="itertools.dropwhile"><code class="xref py py-func docutils literal notranslate"><span class="pre">dropwhile()</span></code></a></p></td>
+<td><p>pred, seq</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">seq[n]</span></code>, <code class="docutils literal notranslate"><span class="pre">seq[n+1]</span></code>, commençant quand <em>pred</em> échoue</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dropwhile(lambda</span> <span class="pre">x:</span> <span class="pre">x&lt;5,</span> <span class="pre">[1,4,6,4,1])</span> <span class="pre">--&gt;</span> <span class="pre">6</span> <span class="pre">4</span> <span class="pre">1</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#itertools.filterfalse" title="itertools.filterfalse"><code class="xref py py-func docutils literal notranslate"><span class="pre">filterfalse()</span></code></a></p></td>
+<td><p>pred, seq</p></td>
+<td><p>éléments de <em>seq</em> pour lesquels <em>pred(elem)</em> est faux</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">filterfalse(lambda</span> <span class="pre">x:</span> <span class="pre">x%2,</span> <span class="pre">range(10))</span> <span class="pre">--&gt;</span> <span class="pre">0</span> <span class="pre">2</span> <span class="pre">4</span> <span class="pre">6</span> <span class="pre">8</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal notranslate"><span class="pre">groupby()</span></code></a></p></td>
+<td><p>iterable[, key]</p></td>
+<td><p>sous-itérateurs groupés par la valeur de <em>key(v)</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#itertools.islice" title="itertools.islice"><code class="xref py py-func docutils literal notranslate"><span class="pre">islice()</span></code></a></p></td>
+<td><p>seq, [start,] stop [, step]</p></td>
+<td><p>éléments de <code class="docutils literal notranslate"><span class="pre">seq[start:stop:step]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">islice('ABCDEFG',</span> <span class="pre">2,</span> <span class="pre">None)</span> <span class="pre">--&gt;</span> <span class="pre">C</span> <span class="pre">D</span> <span class="pre">E</span> <span class="pre">F</span> <span class="pre">G</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#itertools.pairwise" title="itertools.pairwise"><code class="xref py py-func docutils literal notranslate"><span class="pre">pairwise()</span></code></a></p></td>
+<td><p>itérable</p></td>
+<td><p>(p[0], p[1]), (p[1], p[2])</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pairwise('ABCDEFG')</span> <span class="pre">--&gt;</span> <span class="pre">AB</span> <span class="pre">BC</span> <span class="pre">CD</span> <span class="pre">DE</span> <span class="pre">EF</span> <span class="pre">FG</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#itertools.starmap" title="itertools.starmap"><code class="xref py py-func docutils literal notranslate"><span class="pre">starmap()</span></code></a></p></td>
+<td><p>func, seq</p></td>
+<td><p>func(*seq[0]), func(*seq[1]), ...</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">starmap(pow,</span> <span class="pre">[(2,5),</span> <span class="pre">(3,2),</span> <span class="pre">(10,3)])</span> <span class="pre">--&gt;</span> <span class="pre">32</span> <span class="pre">9</span> <span class="pre">1000</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#itertools.takewhile" title="itertools.takewhile"><code class="xref py py-func docutils literal notranslate"><span class="pre">takewhile()</span></code></a></p></td>
+<td><p>pred, seq</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">seq[0]</span></code>, <code class="docutils literal notranslate"><span class="pre">seq[1]</span></code>, jusqu'à ce que <em>pred</em> échoue</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">takewhile(lambda</span> <span class="pre">x:</span> <span class="pre">x&lt;5,</span> <span class="pre">[1,4,6,4,1])</span> <span class="pre">--&gt;</span> <span class="pre">1</span> <span class="pre">4</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#itertools.tee" title="itertools.tee"><code class="xref py py-func docutils literal notranslate"><span class="pre">tee()</span></code></a></p></td>
+<td><p>it, n</p></td>
+<td><p><em>it1</em>, <em>it2</em>, ... <em>itn</em> sépare un itérateur en <em>n</em></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#itertools.zip_longest" title="itertools.zip_longest"><code class="xref py py-func docutils literal notranslate"><span class="pre">zip_longest()</span></code></a></p></td>
+<td><p>p, q, ...</p></td>
+<td><p>(p[0], q[0]), (p[1], q[1]), ...</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">zip_longest('ABCD',</span> <span class="pre">'xy',</span> <span class="pre">fillvalue='-')</span> <span class="pre">--&gt;</span> <span class="pre">Ax</span> <span class="pre">By</span> <span class="pre">C-</span> <span class="pre">D-</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Itérateurs combinatoires :</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 16%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Itérateur</p></th>
+<th class="head"><p>Arguments</p></th>
+<th class="head"><p>Résultats</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#itertools.product" title="itertools.product"><code class="xref py py-func docutils literal notranslate"><span class="pre">product()</span></code></a></p></td>
+<td><p>p, q, ... [repeat=1]</p></td>
+<td><p>produit cartésien, équivalent à une boucle <em>for</em> imbriquée</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#itertools.permutations" title="itertools.permutations"><code class="xref py py-func docutils literal notranslate"><span class="pre">permutations()</span></code></a></p></td>
+<td><p>p[, r]</p></td>
+<td><p><em>n</em>-uplets de longueur r, tous les ré-arrangements possibles, sans répétition d'éléments</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#itertools.combinations" title="itertools.combinations"><code class="xref py py-func docutils literal notranslate"><span class="pre">combinations()</span></code></a></p></td>
+<td><p>p, r</p></td>
+<td><p><em>n</em>-uplets de longueur r, ordonnés, sans répétition d'éléments</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#itertools.combinations_with_replacement" title="itertools.combinations_with_replacement"><code class="xref py py-func docutils literal notranslate"><span class="pre">combinations_with_replacement()</span></code></a></p></td>
+<td><p>p, r</p></td>
+<td><p><em>n</em>-uplets de longueur r, ordonnés, avec répétition d'éléments</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Exemples</p></th>
+<th class="head"><p>Résultats</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">product('ABCD',</span> <span class="pre">repeat=2)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AA</span> <span class="pre">AB</span> <span class="pre">AC</span> <span class="pre">AD</span> <span class="pre">BA</span> <span class="pre">BB</span> <span class="pre">BC</span> <span class="pre">BD</span> <span class="pre">CA</span> <span class="pre">CB</span> <span class="pre">CC</span> <span class="pre">CD</span> <span class="pre">DA</span> <span class="pre">DB</span> <span class="pre">DC</span> <span class="pre">DD</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">permutations('ABCD',</span> <span class="pre">2)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AB</span> <span class="pre">AC</span> <span class="pre">AD</span> <span class="pre">BA</span> <span class="pre">BC</span> <span class="pre">BD</span> <span class="pre">CA</span> <span class="pre">CB</span> <span class="pre">CD</span> <span class="pre">DA</span> <span class="pre">DB</span> <span class="pre">DC</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">combinations('ABCD',</span> <span class="pre">2)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AB</span> <span class="pre">AC</span> <span class="pre">AD</span> <span class="pre">BC</span> <span class="pre">BD</span> <span class="pre">CD</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">combinations_with_replacement('ABCD',</span> <span class="pre">2)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AA</span> <span class="pre">AB</span> <span class="pre">AC</span> <span class="pre">AD</span> <span class="pre">BB</span> <span class="pre">BC</span> <span class="pre">BD</span> <span class="pre">CC</span> <span class="pre">CD</span> <span class="pre">DD</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<section id="itertool-functions">
+<span id="itertools-functions"></span><h2>Fonctions d'<em>itertool</em><a class="headerlink" href="#itertool-functions" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Toutes les fonctions du module qui suivent construisent et renvoient des itérateurs. Certaines produisent des flux de longueur infinie ; celles-ci ne doivent donc être contrôlées que par des fonctions ou boucles qui interrompent le flux.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.accumulate">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#itertools.accumulate" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un itérateur qui renvoie les sommes cumulées, ou les résultats cumulés d'autres fonctions binaires (spécifiées par l'argument optionnel <em>func</em>).</p>
+<p>Si <em>func</em> est renseigné, il doit être une fonction à deux arguments. Les éléments de <em>iterable</em> peuvent être de n'importe quel type acceptable comme arguments de <em>func</em>. Par exemple, avec l'opération par défaut d'addition, les éléments peuvent être de n'importe quel type additionnable, <a class="reference internal" href="decimal.html#decimal.Decimal" title="decimal.Decimal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Decimal</span></code></a> ou <a class="reference internal" href="fractions.html#fractions.Fraction" title="fractions.Fraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code></a> inclus.</p>
+<p>De manière générale, le nombre d'éléments produits par la sortie correspond au nombre d'éléments de <em>'iterable</em> en entrée. Cependant, si le paramètre nommé <em>initial</em> est fourni, l'accumulation conserve comme premier élément la valeur de <em>initial</em> et donc la sortie compte un élément de plus que ce qui est produit par l'entrée <em>iterable</em>.</p>
+<p>À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">accumulate</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="s1">&#39;Return running totals&#39;</span>
+    <span class="c1"># accumulate([1,2,3,4,5]) --&gt; 1 3 6 10 15</span>
+    <span class="c1"># accumulate([1,2,3,4,5], initial=100) --&gt; 100 101 103 106 110 115</span>
+    <span class="c1"># accumulate([1,2,3,4,5], operator.mul) --&gt; 1 2 6 24 120</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">initial</span>
+    <span class="k">if</span> <span class="n">initial</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+            <span class="k">return</span>
+    <span class="k">yield</span> <span class="n">total</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">total</span>
+</pre></div>
+</div>
+<p>Il y a de nombreuses utilisations à l'argument <em>func</em>. Celui-ci peut être <a class="reference internal" href="functions.html#min" title="min"><code class="xref py py-func docutils literal notranslate"><span class="pre">min()</span></code></a> pour calculer un minimum glissant, <a class="reference internal" href="functions.html#max" title="max"><code class="xref py py-func docutils literal notranslate"><span class="pre">max()</span></code></a> pour un maximum glissant ou <a class="reference internal" href="operator.html#operator.mul" title="operator.mul"><code class="xref py py-func docutils literal notranslate"><span class="pre">operator.mul()</span></code></a> pour un produit glissant. Des tableaux de remboursements peuvent être construits en ajoutant les intérêts et en soustrayant les paiements :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">))</span>     <span class="c1"># running product</span>
+<span class="go">[3, 12, 72, 144, 144, 1296, 0, 0, 0, 0]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">max</span><span class="p">))</span>              <span class="c1"># running maximum</span>
+<span class="go">[3, 4, 6, 6, 6, 9, 9, 9, 9, 9]</span>
+
+<span class="go"># Amortize a 5% loan of 1000 with 10 annual payments of 90</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">account_update</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">bal</span><span class="p">,</span> <span class="n">pmt</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">bal</span> <span class="o">*</span> <span class="mf">1.05</span><span class="p">)</span> <span class="o">+</span> <span class="n">pmt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">accumulate</span><span class="p">(</span><span class="n">repeat</span><span class="p">(</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">account_update</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="mi">1_000</span><span class="p">))</span>
+<span class="go">[1000, 960, 918, 874, 828, 779, 728, 674, 618, 559, 497]</span>
+</pre></div>
+</div>
+<p>Voir <a class="reference internal" href="functools.html#functools.reduce" title="functools.reduce"><code class="xref py py-func docutils literal notranslate"><span class="pre">functools.reduce()</span></code></a> pour une fonction similaire qui ne renvoie que la valeur accumulée finale.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.2.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span>Ajout du paramètre optionnel <em>func</em>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>Ajout du paramètre optionnel <em>initial</em>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.batched">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">batched</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.batched" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Batch data from the <em>iterable</em> into tuples of length <em>n</em>. The last
+batch may be shorter than <em>n</em>.</p>
+<p>Loops over the input iterable and accumulates data into tuples up to
+size <em>n</em>.  The input is consumed lazily, just enough to fill a batch.
+The result is yielded as soon as the batch is full or when the input
+iterable is exhausted:</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">flattened_data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;roses&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;violets&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">,</span> <span class="s1">&#39;sweet&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unflattened</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">batched</span><span class="p">(</span><span class="n">flattened_data</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unflattened</span>
+<span class="go">[(&#39;roses&#39;, &#39;red&#39;), (&#39;violets&#39;, &#39;blue&#39;), (&#39;sugar&#39;, &#39;sweet&#39;)]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">batched</span><span class="p">(</span><span class="s1">&#39;ABCDEFG&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">(&#39;A&#39;, &#39;B&#39;, &#39;C&#39;)</span>
+<span class="go">(&#39;D&#39;, &#39;E&#39;, &#39;F&#39;)</span>
+<span class="go">(&#39;G&#39;,)</span>
+</pre></div>
+</div>
+<p>À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">batched</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="c1"># batched(&#39;ABCDEFG&#39;, 3) --&gt; ABC DEF G</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;n must be at least one&#39;</span><span class="p">)</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">batch</span> <span class="o">:=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">n</span><span class="p">)):</span>
+        <span class="k">yield</span> <span class="n">batch</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.12.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.chain">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">iterables</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.chain" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un itérateur qui renvoie les éléments du premier itérable jusqu'à son épuisement, puis continue avec l'itérable suivant jusqu'à ce que tous les itérables soient épuisés. Utilisée pour traiter des séquences consécutives comme une seule séquence. À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">chain</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
+    <span class="c1"># chain(&#39;ABC&#39;, &#39;DEF&#39;) --&gt; A B C D E F</span>
+    <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">iterables</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">element</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="itertools.chain.from_iterable">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chain.</span></span><span class="sig-name descname"><span class="pre">from_iterable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.chain.from_iterable" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Constructeur alternatif pour <a class="reference internal" href="#itertools.chain" title="itertools.chain"><code class="xref py py-func docutils literal notranslate"><span class="pre">chain()</span></code></a>. Récupère des entrées chaînées depuis un unique itérable passé en argument, qui est évalué de manière paresseuse. À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">from_iterable</span><span class="p">(</span><span class="n">iterables</span><span class="p">):</span>
+    <span class="c1"># chain.from_iterable([&#39;ABC&#39;, &#39;DEF&#39;]) --&gt; A B C D E F</span>
+    <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">iterables</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">element</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.combinations">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.combinations" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie les combinaisons de longueur <em>r</em> de <em>iterable</em>.</p>
+<p>Les combinaisons sont produites dans l'ordre lexicographique dérivé de l'ordre des éléments de <em>iterable</em>. Ainsi, si <em>iterable</em> est ordonné, les <em>n</em>-uplets de combinaison produits le sont aussi.</p>
+<p>Les éléments sont considérés comme uniques en fonction de leur position, et non pas de leur valeur. Ainsi, si les éléments en entrée sont uniques, il n'y aura pas de valeurs répétées dans chaque combinaison.</p>
+<p>À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">combinations</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+    <span class="c1"># combinations(&#39;ABCD&#39;, 2) --&gt; AB AC AD BC BD CD</span>
+    <span class="c1"># combinations(range(4), 3) --&gt; 012 013 023 123</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+    <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">n</span> <span class="o">-</span> <span class="n">r</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+            <span class="n">indices</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Un appel à <a class="reference internal" href="#itertools.combinations" title="itertools.combinations"><code class="xref py py-func docutils literal notranslate"><span class="pre">combinations()</span></code></a> peut aussi être vu comme à un appel à <a class="reference internal" href="#itertools.permutations" title="itertools.permutations"><code class="xref py py-func docutils literal notranslate"><span class="pre">permutations()</span></code></a> en excluant les sorties dans lesquelles les éléments ne sont pas ordonnés (avec la même relation d'ordre que pour l'entrée) :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">combinations</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">permutations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">r</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Le nombre d'éléments renvoyés est <code class="docutils literal notranslate"><span class="pre">n!</span> <span class="pre">/</span> <span class="pre">r!</span> <span class="pre">/</span> <span class="pre">(n-r)!</span></code> quand <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">r</span> <span class="pre">&lt;=</span> <span class="pre">n</span></code> ou zéro quand <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">&gt;</span> <span class="pre">n</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.combinations_with_replacement">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">combinations_with_replacement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.combinations_with_replacement" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoyer les sous-séquences de longueur <em>r</em> des éléments de l'itérable <em>iterable</em> d'entrée, permettant aux éléments individuels d'être répétés plus d'une fois.</p>
+<p>Les combinaisons sont produites dans l'ordre lexicographique dérivé de l'ordre des éléments de <em>iterable</em>. Ainsi, si <em>iterable</em> est ordonné, les <em>n</em>-uplets de combinaison produits le sont aussi.</p>
+<p>Les éléments sont considérés comme uniques en fonction de leur position, et non pas de leur valeur. Ainsi si les éléments d'entrée sont uniques, les combinaisons générées seront aussi uniques.</p>
+<p>À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">combinations_with_replacement</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+    <span class="c1"># combinations_with_replacement(&#39;ABC&#39;, 2) --&gt; AA AB AC BB BC CC</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">r</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">r</span>
+    <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Un appel à <a class="reference internal" href="#itertools.combinations_with_replacement" title="itertools.combinations_with_replacement"><code class="xref py py-func docutils literal notranslate"><span class="pre">combinations_with_replacement()</span></code></a> peut aussi être vu comme un appel à <a class="reference internal" href="#itertools.product" title="itertools.product"><code class="xref py py-func docutils literal notranslate"><span class="pre">product()</span></code></a> en excluant les sorties dans lesquelles les éléments ne sont pas dans ordonnés (avec la même relation d'ordre que pour l'entrée) :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">combinations_with_replacement</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="n">r</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Le nombre d'éléments renvoyés est <code class="docutils literal notranslate"><span class="pre">(n+r-1)!</span> <span class="pre">/</span> <span class="pre">r!</span> <span class="pre">/</span> <span class="pre">(n-1)!</span></code> quand <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.1.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.compress">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">compress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selectors</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.compress" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un itérateur qui filtre les éléments de <em>data</em>, en ne renvoyant que ceux dont l'élément correspondant dans <em>selectors</em> s'évalue à <code class="docutils literal notranslate"><span class="pre">True</span></code>. S'arrête quand l'itérable <em>data</em> ou <em>selectors</em> a été épuisé. À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compress</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">selectors</span><span class="p">):</span>
+    <span class="c1"># compress(&#39;ABCDEF&#39;, [1,0,1,0,1,1]) --&gt; A C E F</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">selectors</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.1.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.count">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.count" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un itérateur qui renvoie des valeurs espacées régulièrement, en commençant par le nombre <em>start</em>. Souvent utilisé comme un argument de <a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a> pour générer des points de données consécutifs. Aussi utilisé avec <a class="reference internal" href="functions.html#zip" title="zip"><code class="xref py py-func docutils literal notranslate"><span class="pre">zip()</span></code></a> pour ajouter des nombres de séquence. À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># count(10) --&gt; 10 11 12 13 14 ...</span>
+    <span class="c1"># count(2.5, 0.5) --&gt; 2.5 3.0 3.5 ...</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">n</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="n">step</span>
+</pre></div>
+</div>
+<p>Pour compter avec des nombres à virgule flottante, il est parfois préférable d'utiliser le code : <code class="docutils literal notranslate"><span class="pre">(start</span> <span class="pre">+</span> <span class="pre">step</span> <span class="pre">*</span> <span class="pre">i</span> <span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">count())</span></code> pour obtenir une meilleure précision.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.1: </span>Ajout de l'argument <em>step</em> et ajout du support pour les arguments non-entiers.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.cycle">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">cycle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.cycle" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un itérateur qui renvoie les éléments de l'itérable en en sauvegardant une copie. Quand l'itérable est épuisé, renvoie les éléments depuis la sauvegarde. Répète à l'infini. À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cycle</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="c1"># cycle(&#39;ABCD&#39;) --&gt; A B C D A B C D A B C D ...</span>
+    <span class="n">saved</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">element</span>
+        <span class="n">saved</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">saved</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">saved</span><span class="p">:</span>
+              <span class="k">yield</span> <span class="n">element</span>
+</pre></div>
+</div>
+<p>Note, cette fonction peut avoir besoin d'un stockage auxiliaire important (en fonction de la longueur de l'itérable).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.dropwhile">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">dropwhile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predicate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.dropwhile" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un itérateur qui saute les éléments de l'itérable tant que le prédicat est vrai ; renvoie ensuite chaque élément. Notez que l'itérateur ne produit <em>aucune</em> sortie avant que le prédicat ne devienne faux, il peut donc avoir un temps de démarrage long. À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dropwhile</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+    <span class="c1"># dropwhile(lambda x: x&lt;5, [1,4,6,4,1]) --&gt; 6 4 1</span>
+    <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">predicate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">x</span>
+            <span class="k">break</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">x</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.filterfalse">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">filterfalse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predicate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.filterfalse" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Make an iterator that filters elements from iterable returning only those for
+which the predicate is false. If <em>predicate</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, return the items
+that are false. Roughly equivalent to:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filterfalse</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+    <span class="c1"># filterfalse(lambda x: x%2, range(10)) --&gt; 0 2 4 6 8</span>
+    <span class="k">if</span> <span class="n">predicate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">predicate</span> <span class="o">=</span> <span class="nb">bool</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">predicate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">x</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.groupby">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">groupby</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.groupby" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un itérateur qui renvoie les clés et les groupes de l'itérable <em>iterable</em>. La clé <em>key</em> est une fonction qui génère une clé pour chaque élément. Si <em>key</em> n'est pas spécifiée ou est <code class="docutils literal notranslate"><span class="pre">None</span></code>, elle vaut par défaut une fonction d'identité qui renvoie l'élément sans le modifier. Généralement, l'itérable a besoin d'avoir ses éléments déjà classés selon cette même fonction de clé.</p>
+<p>L'opération de  <a class="reference internal" href="#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal notranslate"><span class="pre">groupby()</span></code></a> est similaire au filtre <code class="docutils literal notranslate"><span class="pre">uniq</span></code> dans Unix. Elle génère un nouveau groupe à chaque fois que la valeur de la fonction <em>key</em> change (ce pourquoi il est souvent nécessaire d'avoir trié les données selon la même fonction de clé).  Ce comportement est différent de celui de GROUP BY de SQL qui agrège les éléments sans prendre compte de leur ordre d'entrée.</p>
+<p>Le groupe renvoyé est lui-même un itérateur qui partage l'itérable sous-jacent avec <a class="reference internal" href="#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal notranslate"><span class="pre">groupby()</span></code></a>. Puisque que la source est partagée, quand l'objet <a class="reference internal" href="#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal notranslate"><span class="pre">groupby()</span></code></a> est avancé, le groupe précédent n'est plus visible. Ainsi, si cette donnée doit être utilisée plus tard, elle doit être stockée comme une liste :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">uniquekeys</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">keyfunc</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">groupby</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">keyfunc</span><span class="p">):</span>
+    <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>      <span class="c1"># Store group iterator as a list</span>
+    <span class="n">uniquekeys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal notranslate"><span class="pre">groupby()</span></code></a> est à peu près équivalente à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">groupby</span><span class="p">:</span>
+    <span class="c1"># [k for k, g in groupby(&#39;AAAABBBCCDAABBB&#39;)] --&gt; A B C D A B</span>
+    <span class="c1"># [list(g) for k, g in groupby(&#39;AAAABBBCCD&#39;)] --&gt; AAAA BBB CC D</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keyfunc</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tgtkey</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currkey</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currvalue</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">currkey</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tgtkey</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currvalue</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">it</span><span class="p">)</span>    <span class="c1"># Exit on StopIteration</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currkey</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyfunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currvalue</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tgtkey</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currkey</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currkey</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grouper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tgtkey</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_grouper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tgtkey</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="ow">is</span> <span class="nb">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">currkey</span> <span class="o">==</span> <span class="n">tgtkey</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">currvalue</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">currvalue</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">it</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currkey</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyfunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currvalue</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.islice">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">islice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.islice" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">islice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p>Crée un itérateur qui renvoie les élément sélectionnés de l'itérable. Si <em>start</em> est différent de zéro, alors les éléments de l'itérable sont ignorés jusqu'à ce que <em>start</em> soit atteint. Ensuite, les éléments sont renvoyés consécutivement sauf si <em>step</em> est plus grand que 1, auquel cas certains éléments seront ignorés. Si <em>stop</em> est <code class="docutils literal notranslate"><span class="pre">None</span></code>, alors l'itération continue jusqu'à ce que l'itérateur soit épuisé s'il ne l'est pas déjà ; sinon, il s'arrête à la position spécifiée.</p>
+<p>Si <em>start</em> vaut <code class="docutils literal notranslate"><span class="pre">None</span></code>, alors l'itération commence à zéro. Si <em>step</em> vaut <code class="docutils literal notranslate"><span class="pre">None</span></code>, alors le pas est à 1 par défaut.</p>
+<p>Unlike regular slicing, <a class="reference internal" href="#itertools.islice" title="itertools.islice"><code class="xref py py-func docutils literal notranslate"><span class="pre">islice()</span></code></a> does not support negative values for
+<em>start</em>, <em>stop</em>, or <em>step</em>.  Can be used to extract related fields from
+data where the internal structure has been flattened (for example, a
+multi-line report may list a name field on every third line).</p>
+<p>À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">islice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="c1"># islice(&#39;ABCDEFG&#39;, 2) --&gt; A B</span>
+    <span class="c1"># islice(&#39;ABCDEFG&#39;, 2, 4) --&gt; C D</span>
+    <span class="c1"># islice(&#39;ABCDEFG&#39;, 2, None) --&gt; C D E F G</span>
+    <span class="c1"># islice(&#39;ABCDEFG&#39;, 0, None, 2) --&gt; A C E G</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">start</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">stop</span> <span class="ow">or</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">step</span> <span class="ow">or</span> <span class="mi">1</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">nexti</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+        <span class="c1"># Consume *iterable* up to the *start* position.</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">),</span> <span class="n">iterable</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">nexti</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">element</span>
+                <span class="n">nexti</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+        <span class="c1"># Consume to *stop*.</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">stop</span><span class="p">),</span> <span class="n">iterable</span><span class="p">):</span>
+            <span class="k">pass</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.pairwise">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">pairwise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.pairwise" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie des paires successives d'éléments consécutifs de <em>iterable</em>.</p>
+<p>En toute logique, il y a une paire de moins que d'éléments dans l'itérable. Aucune paire n'est renvoyée si l'itérable a zéro ou une valeur.</p>
+<p>À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pairwise</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="c1"># pairwise(&#39;ABCDEFG&#39;) --&gt; AB BC CD DE EF FG</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="nb">next</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.10.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.permutations">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">permutations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.permutations" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie les arrangements successifs de longueur <em>r</em> des éléments de <em>iterable</em>.</p>
+<p>Si <em>r</em> n'est pas spécifié ou vaut <code class="docutils literal notranslate"><span class="pre">None</span></code>, alors <em>r</em> a pour valeur la longueur de <em>iterable</em> et toutes les permutations de longueur <em>r</em> possibles sont générées.</p>
+<p>Les combinaisons sont produites dans l'ordre lexicographique qui provient de l'ordre des éléments de <em>iterable</em>. Ainsi, si <em>iterable</em> est ordonné, les <em>n</em>-uplets de combinaison produits le sont aussi.</p>
+<p>Les éléments sont considérés comme uniques en fonction de leur position, et non pas de leur valeur. Ainsi, si l'élément est unique, il n'y aura pas de valeurs répétées dans chaque permutation.</p>
+<p>À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">permutations</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># permutations(&#39;ABCD&#39;, 2) --&gt; AB AC AD BA BC BD CA CB CD DA DB DC</span>
+    <span class="c1"># permutations(range(3)) --&gt; 012 021 102 120 201 210</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">n</span> <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">r</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">cycles</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="n">r</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">[:</span><span class="n">r</span><span class="p">])</span>
+    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">)):</span>
+            <span class="n">cycles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">cycles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">cycles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">i</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="n">cycles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">indices</span><span class="p">[</span><span class="o">-</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="o">-</span><span class="n">j</span><span class="p">],</span> <span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">[:</span><span class="n">r</span><span class="p">])</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span>
+</pre></div>
+</div>
+<p>Un appel à <a class="reference internal" href="#itertools.permutations" title="itertools.permutations"><code class="xref py py-func docutils literal notranslate"><span class="pre">permutations()</span></code></a> peut aussi être vu un appel à <a class="reference internal" href="#itertools.product" title="itertools.product"><code class="xref py py-func docutils literal notranslate"><span class="pre">product()</span></code></a> en excluant les sorties avec des doublons (avec la même relation d'ordre que pour l'entrée) :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">permutations</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">n</span> <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">r</span>
+    <span class="k">for</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="n">r</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">indices</span><span class="p">))</span> <span class="o">==</span> <span class="n">r</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Le nombre d'éléments renvoyés est <code class="docutils literal notranslate"><span class="pre">n!</span> <span class="pre">/</span> <span class="pre">(n-r)!</span></code> quand <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">r</span> <span class="pre">&lt;=</span> <span class="pre">n</span></code> ou zéro quand <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">&gt;</span> <span class="pre">n</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.product">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">iterables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.product" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Produit cartésien des itérables d'entrée.</p>
+<p>À peu près équivalent à des boucles <em>for</em> imbriquées dans une expression de générateur. Par exemple <code class="docutils literal notranslate"><span class="pre">product(A,</span> <span class="pre">B)</span></code> renvoie la même chose que <code class="docutils literal notranslate"><span class="pre">((x,</span> <span class="pre">y)</span> <span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">A</span> <span class="pre">for</span> <span class="pre">y</span> <span class="pre">in</span> <span class="pre">B)</span></code>.</p>
+<p>Les boucles imbriquées tournent comme un compteur kilométrique avec l'élément le plus à droite avançant à chaque itération. Ce motif défini un ordre lexicographique afin que, si les éléments des itérables en l'entrée sont ordonnés, les <em>n</em>-uplets produits le sont aussi.</p>
+<p>Pour générer le produit d'un itérable avec lui-même, spécifiez le nombre de répétitions avec le paramètre nommé optionnel <em>repeat</em>. Par exemple, <code class="docutils literal notranslate"><span class="pre">product(A,</span> <span class="pre">repeat=4)</span></code> est équivalent à <code class="docutils literal notranslate"><span class="pre">product(A,</span> <span class="pre">A,</span> <span class="pre">A,</span> <span class="pre">A)</span></code>.</p>
+<p>Cette fonction est à peu près équivalente au code suivant, à la différence près que la vraie implémentation ne crée pas de résultats intermédiaires en mémoire :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># product(&#39;ABCD&#39;, &#39;xy&#39;) --&gt; Ax Ay Bx By Cx Cy Dx Dy</span>
+    <span class="c1"># product(range(2), repeat=3) --&gt; 000 001 010 011 100 101 110 111</span>
+    <span class="n">pools</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span> <span class="k">for</span> <span class="n">pool</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span> <span class="o">*</span> <span class="n">repeat</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[[]]</span>
+    <span class="k">for</span> <span class="n">pool</span> <span class="ow">in</span> <span class="n">pools</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">result</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">pool</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">prod</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#itertools.product" title="itertools.product"><code class="xref py py-func docutils literal notranslate"><span class="pre">product()</span></code></a> commence par consommer totalement les itérables qui lui sont passés et les conserve en mémoire pour générer les produits. Par conséquent, cette fonction ne sert que sur des itérables finis.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.repeat">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">repeat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#itertools.repeat" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un itérateur qui renvoie <em>object</em> à l'infini. S'exécute indéfiniment sauf si l'argument <em>times</em> est spécifié.</p>
+<p>À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">repeat</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># repeat(10, 3) --&gt; 10 10 10</span>
+    <span class="k">if</span> <span class="n">times</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="nb">object</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="nb">object</span>
+</pre></div>
+</div>
+<p>Une utilisation courante de <em>repeat</em> est de fournir un flux constant de valeurs à <em>map</em> ou <em>zip</em> :</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">pow</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+<span class="go">[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.starmap">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">starmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.starmap" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un itérateur qui exécute la fonction avec les arguments obtenus depuis l'itérable. Utilisée à la place de <a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a> quand les arguments sont déjà groupés en <em>n</em>-uplets depuis un seul itérable — la donnée a déjà été « pré-zippée ».</p>
+<p>The difference between <a class="reference internal" href="functions.html#map" title="map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a> and <a class="reference internal" href="#itertools.starmap" title="itertools.starmap"><code class="xref py py-func docutils literal notranslate"><span class="pre">starmap()</span></code></a> parallels the
+distinction between <code class="docutils literal notranslate"><span class="pre">function(a,b)</span></code> and <code class="docutils literal notranslate"><span class="pre">function(*c)</span></code>. Roughly
+equivalent to:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">starmap</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+    <span class="c1"># starmap(pow, [(2,5), (3,2), (10,3)]) --&gt; 32 9 1000</span>
+    <span class="k">for</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.takewhile">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">takewhile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predicate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.takewhile" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un itérateur qui renvoie les éléments d'un itérable tant que le prédicat est vrai. À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">takewhile</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+    <span class="c1"># takewhile(lambda x: x&lt;5, [1,4,6,4,1]) --&gt; 1 4</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">predicate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">x</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">break</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.tee">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">tee</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.tee" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie <em>n</em> itérateurs indépendants depuis un unique itérable.</p>
+<p>Le code Python qui suit aide à expliquer ce que fait <em>tee</em>, bien que la vraie implémentation soit plus complexe et n'utilise qu'une file <abbr title="premier entré, premier sorti ou *first-in, first-out* en anglais">FIFO</abbr> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tee</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">deques</span> <span class="o">=</span> <span class="p">[</span><span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">def</span> <span class="nf">gen</span><span class="p">(</span><span class="n">mydeque</span><span class="p">):</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">mydeque</span><span class="p">:</span>             <span class="c1"># when the local deque is empty</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">newval</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>   <span class="c1"># fetch a new value and</span>
+                <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                    <span class="k">return</span>
+                <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">deques</span><span class="p">:</span>        <span class="c1"># load it to all the deques</span>
+                    <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newval</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">mydeque</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">gen</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">deques</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Une fois qu’un <a class="reference internal" href="#itertools.tee" title="itertools.tee"><code class="xref py py-func docutils literal notranslate"><span class="pre">tee()</span></code></a> a été créé, l’original de <em>iterable</em> ne doit être utilisé nulle part ailleurs ; sinon <em>iterable</em> pourrait être avancé sans que les objets <em>tee</em> n’en soient informés.</p>
+<p><code class="docutils literal notranslate"><span class="pre">tee</span></code> iterators are not threadsafe. A <a class="reference internal" href="exceptions.html#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> may be
+raised when simultaneously using iterators returned by the same <a class="reference internal" href="#itertools.tee" title="itertools.tee"><code class="xref py py-func docutils literal notranslate"><span class="pre">tee()</span></code></a>
+call, even if the original <em>iterable</em> is threadsafe.</p>
+<p>Cet outil peut avoir besoin d'un stockage auxiliaire important (en fonction de la taille des données temporaires nécessaires). En général, si un itérateur utilise la majorité ou toute la donnée avant qu'un autre itérateur ne commence, il est plus rapide d'utiliser <a class="reference internal" href="stdtypes.html#list" title="list"><code class="xref py py-func docutils literal notranslate"><span class="pre">list()</span></code></a> à la place de <a class="reference internal" href="#itertools.tee" title="itertools.tee"><code class="xref py py-func docutils literal notranslate"><span class="pre">tee()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="itertools.zip_longest">
+<span class="sig-prename descclassname"><span class="pre">itertools.</span></span><span class="sig-name descname"><span class="pre">zip_longest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">iterables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillvalue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itertools.zip_longest" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un itérateur qui agrège les éléments de chacun des itérables. Si les itérables sont de longueurs différentes, les valeurs manquantes sont remplacées par <em>fillvalue</em>. L'itération continue jusqu'à ce que l'itérable le plus long soit épuisé. À peu près équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">zip_longest</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># zip_longest(&#39;ABCD&#39;, &#39;xy&#39;, fillvalue=&#39;-&#39;) --&gt; Ax By C- D-</span>
+    <span class="n">iterators</span> <span class="o">=</span> <span class="p">[</span><span class="nb">iter</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span>
+    <span class="n">num_active</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterators</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">num_active</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterators</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                <span class="n">num_active</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">num_active</span><span class="p">:</span>
+                    <span class="k">return</span>
+                <span class="n">iterators</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">fillvalue</span><span class="p">)</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">fillvalue</span>
+            <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Si un des itérables est potentiellement infini, alors la fonction <a class="reference internal" href="#itertools.zip_longest" title="itertools.zip_longest"><code class="xref py py-func docutils literal notranslate"><span class="pre">zip_longest()</span></code></a> doit être encapsulée dans un code qui limite le nombre d'appels (par exemple, <a class="reference internal" href="#itertools.islice" title="itertools.islice"><code class="xref py py-func docutils literal notranslate"><span class="pre">islice()</span></code></a> ou <a class="reference internal" href="#itertools.takewhile" title="itertools.takewhile"><code class="xref py py-func docutils literal notranslate"><span class="pre">takewhile()</span></code></a>). Si <em>fillvalue</em> n'est pas spécifié, il vaut <code class="docutils literal notranslate"><span class="pre">None</span></code> par défaut.</p>
+</dd></dl>
+
+</section>
+<section id="itertools-recipes">
+<span id="id1"></span><h2>Recettes <em>itertools</em><a class="headerlink" href="#itertools-recipes" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Cette section présente des recettes pour créer une vaste boîte à outils en se servant des <em>itertools</em> existants comme des briques.</p>
+<p>The primary purpose of the itertools recipes is educational.  The recipes show
+various ways of thinking about individual tools — for example, that
+<code class="docutils literal notranslate"><span class="pre">chain.from_iterable</span></code> is related to the concept of flattening.  The recipes
+also give ideas about ways that the tools can be combined — for example, how
+<code class="docutils literal notranslate"><span class="pre">compress()</span></code> and <code class="docutils literal notranslate"><span class="pre">range()</span></code> can work together.  The recipes also show patterns
+for using itertools with the <a class="reference internal" href="operator.html#module-operator" title="operator: Functions corresponding to the standard operators."><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code></a> and <a class="reference internal" href="collections.html#module-collections" title="collections: Container datatypes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections</span></code></a> modules as
+well as with the built-in itertools such as <code class="docutils literal notranslate"><span class="pre">map()</span></code>, <code class="docutils literal notranslate"><span class="pre">filter()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">reversed()</span></code>, and <code class="docutils literal notranslate"><span class="pre">enumerate()</span></code>.</p>
+<p>A secondary purpose of the recipes is to serve as an incubator.  The
+<code class="docutils literal notranslate"><span class="pre">accumulate()</span></code>, <code class="docutils literal notranslate"><span class="pre">compress()</span></code>, and <code class="docutils literal notranslate"><span class="pre">pairwise()</span></code> itertools started out as
+recipes.  Currently, the <code class="docutils literal notranslate"><span class="pre">sliding_window()</span></code> and <code class="docutils literal notranslate"><span class="pre">iter_index()</span></code> recipes
+are being tested to see whether they prove their worth.</p>
+<p>Toutes ces recettes — et encore beaucoup d'autres — sont regroupées dans le <a class="reference external" href="https://pypi.org/project/more-itertools/">projet more-itertools</a>, disponible dans le Python Package Index :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">more</span><span class="o">-</span><span class="n">itertools</span>
+</pre></div>
+</div>
+<p>Ces outils dérivés offrent la même bonne performance que les outils sous-jacents. La performance mémoire supérieure est gardée en traitant les éléments un à la fois plutôt que de charger tout l'itérable en mémoire en même temps. Le volume de code reste bas grâce à un chaînage de style fonctionnel qui aide à éliminer les variables temporaires. La grande vitesse est gardée en préférant les briques « vectorisées » plutôt que les boucles <em>for</em> et les <a class="reference internal" href="../glossary.html#term-generator"><span class="xref std std-term">générateurs</span></a> qui engendrent un surcoût de traitement.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">def</span> <span class="nf">take</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+    <span class="s2">&quot;Return first n items of the iterable as a list&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">prepend</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">iterator</span><span class="p">):</span>
+    <span class="s2">&quot;Prepend a single value in front of an iterator&quot;</span>
+    <span class="c1"># prepend(1, [2, 3, 4]) --&gt; 1 2 3 4</span>
+    <span class="k">return</span> <span class="n">chain</span><span class="p">([</span><span class="n">value</span><span class="p">],</span> <span class="n">iterator</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">tabulate</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="s2">&quot;Return function(0), function(1), ...&quot;</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">count</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">repeatfunc</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Repeat calls to func with specified arguments.</span>
+
+<span class="sd">    Example:  repeatfunc(random.random)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">times</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">starmap</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">repeat</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">starmap</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">repeat</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">times</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">list_of_lists</span><span class="p">):</span>
+    <span class="s2">&quot;Flatten one level of nesting&quot;</span>
+    <span class="k">return</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">list_of_lists</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">ncycles</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="s2">&quot;Returns the sequence elements n times&quot;</span>
+    <span class="k">return</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">repeat</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">n</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">tail</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+    <span class="s2">&quot;Return an iterator over the last n items&quot;</span>
+    <span class="c1"># tail(3, &#39;ABCDEFG&#39;) --&gt; E F G</span>
+    <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">n</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">consume</span><span class="p">(</span><span class="n">iterator</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="s2">&quot;Advance the iterator n-steps ahead. If n is None, consume entirely.&quot;</span>
+    <span class="c1"># Use functions that consume iterators at C speed.</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># feed the entire iterator into a zero-length deque</span>
+        <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="n">iterator</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># advance to the empty slice starting at position n</span>
+        <span class="nb">next</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">iterator</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">nth</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="s2">&quot;Returns the nth item or a default value&quot;</span>
+    <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">default</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">quantify</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">pred</span><span class="o">=</span><span class="nb">bool</span><span class="p">):</span>
+    <span class="s2">&quot;Given a predicate that returns True or False, count the True results.&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">iterable</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">all_equal</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="s2">&quot;Returns True if all the elements are equal to each other&quot;</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">groupby</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">first_true</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pred</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the first true value in the iterable.</span>
+
+<span class="sd">    If no true value is found, returns *default*</span>
+
+<span class="sd">    If *pred* is not None, returns the first item</span>
+<span class="sd">    for which pred(item) is true.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># first_true([a,b,c], x) --&gt; a or b or c or x</span>
+    <span class="c1"># first_true([a,b], x, f) --&gt; a if f(a) else b if f(b) else x</span>
+    <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">iterable</span><span class="p">),</span> <span class="n">default</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">iter_index</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="s2">&quot;Return indices where a value occurs in a sequence or iterable.&quot;</span>
+    <span class="c1"># iter_index(&#39;AABCADEAF&#39;, &#39;A&#39;) --&gt; 0 1 4 7</span>
+    <span class="n">seq_index</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">seq_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Slow path for general iterables</span>
+        <span class="n">it</span> <span class="o">=</span> <span class="n">islice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="n">value</span> <span class="ow">or</span> <span class="n">element</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">i</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Fast path for sequences</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span> <span class="k">if</span> <span class="n">stop</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">stop</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">start</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">(</span><span class="n">i</span> <span class="o">:=</span> <span class="n">seq_index</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">stop</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">iter_except</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">exception</span><span class="p">,</span> <span class="n">first</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Call a function repeatedly until an exception is raised.</span>
+
+<span class="sd">    Converts a call-until-exception interface to an iterator interface.</span>
+<span class="sd">    Like builtins.iter(func, sentinel) but uses an exception instead</span>
+<span class="sd">    of a sentinel to end the loop.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        iter_except(functools.partial(heappop, h), IndexError)   # priority queue iterator</span>
+<span class="sd">        iter_except(d.popitem, KeyError)                         # non-blocking dict iterator</span>
+<span class="sd">        iter_except(d.popleft, IndexError)                       # non-blocking deque iterator</span>
+<span class="sd">        iter_except(q.get_nowait, Queue.Empty)                   # loop over a producer Queue</span>
+<span class="sd">        iter_except(s.pop, KeyError)                             # non-blocking set iterator</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">first</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">first</span><span class="p">()</span>            <span class="c1"># For database APIs needing an initial cast to db.first()</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">func</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">exception</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">grouper</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">incomplete</span><span class="o">=</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="s2">&quot;Collect data into non-overlapping fixed-length chunks or blocks&quot;</span>
+    <span class="c1"># grouper(&#39;ABCDEFG&#39;, 3, fillvalue=&#39;x&#39;) --&gt; ABC DEF Gxx</span>
+    <span class="c1"># grouper(&#39;ABCDEFG&#39;, 3, incomplete=&#39;strict&#39;) --&gt; ABC DEF ValueError</span>
+    <span class="c1"># grouper(&#39;ABCDEFG&#39;, 3, incomplete=&#39;ignore&#39;) --&gt; ABC DEF</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">incomplete</span> <span class="o">==</span> <span class="s1">&#39;fill&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">zip_longest</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="n">fillvalue</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">incomplete</span> <span class="o">==</span> <span class="s1">&#39;strict&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">incomplete</span> <span class="o">==</span> <span class="s1">&#39;ignore&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Expected fill, strict, or ignore&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">sliding_window</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="c1"># sliding_window(&#39;ABCDEFG&#39;, 4) --&gt; ABCD BCDE CDEF DEFG</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">roundrobin</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
+    <span class="s2">&quot;roundrobin(&#39;ABC&#39;, &#39;D&#39;, &#39;EF&#39;) --&gt; A D E B F C&quot;</span>
+    <span class="c1"># Recipe credited to George Sakkis</span>
+    <span class="n">num_active</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterables</span><span class="p">)</span>
+    <span class="n">nexts</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">it</span><span class="p">)</span><span class="o">.</span><span class="fm">__next__</span> <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">iterables</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">num_active</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="nb">next</span> <span class="ow">in</span> <span class="n">nexts</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="nb">next</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+            <span class="c1"># Remove the iterator we just exhausted from the cycle.</span>
+            <span class="n">num_active</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">nexts</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">nexts</span><span class="p">,</span> <span class="n">num_active</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">partition</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Partition entries into false entries and true entries.</span>
+
+<span class="sd">    If *pred* is slow, consider wrapping it with functools.lru_cache().</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># partition(is_odd, range(10)) --&gt; 0 2 4 6 8   and  1 3 5 7 9</span>
+    <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filterfalse</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">t1</span><span class="p">),</span> <span class="nb">filter</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">subslices</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+    <span class="s2">&quot;Return all contiguous non-empty subslices of a sequence&quot;</span>
+    <span class="c1"># subslices(&#39;ABCD&#39;) --&gt; A AB ABC ABCD B BC BCD C CD D</span>
+    <span class="n">slices</span> <span class="o">=</span> <span class="n">starmap</span><span class="p">(</span><span class="nb">slice</span><span class="p">,</span> <span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">getitem</span><span class="p">,</span> <span class="n">repeat</span><span class="p">(</span><span class="n">seq</span><span class="p">),</span> <span class="n">slices</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">before_and_after</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">it</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Variant of takewhile() that allows complete</span>
+<span class="sd">        access to the remainder of the iterator.</span>
+
+<span class="sd">        &gt;&gt;&gt; it = iter(&#39;ABCdEfGhI&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; all_upper, remainder = before_and_after(str.isupper, it)</span>
+<span class="sd">        &gt;&gt;&gt; &#39;&#39;.join(all_upper)</span>
+<span class="sd">        &#39;ABC&#39;</span>
+<span class="sd">        &gt;&gt;&gt; &#39;&#39;.join(remainder)     # takewhile() would lose the &#39;d&#39;</span>
+<span class="sd">        &#39;dEfGhI&#39;</span>
+
+<span class="sd">        Note that the first iterator must be fully</span>
+<span class="sd">        consumed before the second iterator can</span>
+<span class="sd">        generate valid results.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+    <span class="n">transition</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">true_iterator</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">predicate</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">elem</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">transition</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+                <span class="k">return</span>
+    <span class="k">def</span> <span class="nf">remainder_iterator</span><span class="p">():</span>
+        <span class="k">yield from</span> <span class="n">transition</span>
+        <span class="k">yield from</span> <span class="n">it</span>
+    <span class="k">return</span> <span class="n">true_iterator</span><span class="p">(),</span> <span class="n">remainder_iterator</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">unique_everseen</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="s2">&quot;List unique elements, preserving order. Remember all elements ever seen.&quot;</span>
+    <span class="c1"># unique_everseen(&#39;AAAABBBCCDAABBB&#39;) --&gt; A B C D</span>
+    <span class="c1"># unique_everseen(&#39;ABBcCAD&#39;, str.lower) --&gt; A B c D</span>
+    <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">filterfalse</span><span class="p">(</span><span class="n">seen</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">element</span>
+        <span class="c1"># For order preserving deduplication,</span>
+        <span class="c1"># a faster but non-lazy solution is:</span>
+        <span class="c1">#     yield from dict.fromkeys(iterable)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">key</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">element</span>
+        <span class="c1"># For use cases that allow the last matching element to be returned,</span>
+        <span class="c1"># a faster but non-lazy solution is:</span>
+        <span class="c1">#      t1, t2 = tee(iterable)</span>
+        <span class="c1">#      yield from dict(zip(map(key, t1), t2)).values()</span>
+
+<span class="k">def</span> <span class="nf">unique_justseen</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="s2">&quot;List unique elements, preserving order. Remember only the element just seen.&quot;</span>
+    <span class="c1"># unique_justseen(&#39;AAAABBBCCDAABBB&#39;) --&gt; A B C D A B</span>
+    <span class="c1"># unique_justseen(&#39;ABBcCAD&#39;, str.lower) --&gt; A B c A D</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="nb">next</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">groupby</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>The following recipes have a more mathematical flavor:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">powerset</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="s2">&quot;powerset([1,2,3]) --&gt; () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">sum_of_squares</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
+    <span class="s2">&quot;Add up the squares of the input values.&quot;</span>
+    <span class="c1"># sum_of_squares([10, 20, 30]) -&gt; 1400</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sumprod</span><span class="p">(</span><span class="o">*</span><span class="n">tee</span><span class="p">(</span><span class="n">it</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
+    <span class="s2">&quot;Swap the rows and columns of the input.&quot;</span>
+    <span class="c1"># transpose([(1, 2, 3), (11, 22, 33)]) --&gt; (1, 11) (2, 22) (3, 33)</span>
+    <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">matmul</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">):</span>
+    <span class="s2">&quot;Multiply two matrices.&quot;</span>
+    <span class="c1"># matmul([(7, 5), (3, 5)], [(2, 5), (7, 9)]) --&gt; (49, 80), (41, 60)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">batched</span><span class="p">(</span><span class="n">starmap</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sumprod</span><span class="p">,</span> <span class="n">product</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">transpose</span><span class="p">(</span><span class="n">m2</span><span class="p">))),</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">convolve</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">kernel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Discrete linear convolution of two iterables.</span>
+
+<span class="sd">    The kernel is fully consumed before the calculations begin.</span>
+<span class="sd">    The signal is consumed lazily and can be infinite.</span>
+
+<span class="sd">    Convolutions are mathematically commutative.</span>
+<span class="sd">    If the signal and kernel are swapped,</span>
+<span class="sd">    the output will be the same.</span>
+
+<span class="sd">    Article:  https://betterexplained.com/articles/intuitive-convolution/</span>
+<span class="sd">    Video:    https://www.youtube.com/watch?v=KuXjwB4LzSA</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># convolve(data, [0.25, 0.25, 0.25, 0.25]) --&gt; Moving average (blur)</span>
+    <span class="c1"># convolve(data, [1/2, 0, -1/2]) --&gt; 1st derivative estimate</span>
+    <span class="c1"># convolve(data, [1, -2, 1]) --&gt; 2nd derivative estimate</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">kernel</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+    <span class="n">padded_signal</span> <span class="o">=</span> <span class="n">chain</span><span class="p">(</span><span class="n">repeat</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">signal</span><span class="p">,</span> <span class="n">repeat</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">windowed_signal</span> <span class="o">=</span> <span class="n">sliding_window</span><span class="p">(</span><span class="n">padded_signal</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sumprod</span><span class="p">,</span> <span class="n">repeat</span><span class="p">(</span><span class="n">kernel</span><span class="p">),</span> <span class="n">windowed_signal</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">polynomial_from_roots</span><span class="p">(</span><span class="n">roots</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute a polynomial&#39;s coefficients from its roots.</span>
+
+<span class="sd">       (x - 5) (x + 4) (x - 3)  expands to:   x³ -4x² -17x + 60</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># polynomial_from_roots([5, -4, 3]) --&gt; [1, -4, -17, 60]</span>
+    <span class="n">factors</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">neg</span><span class="p">,</span> <span class="n">roots</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">convolve</span><span class="p">,</span> <span class="n">factors</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="k">def</span> <span class="nf">polynomial_eval</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evaluate a polynomial at a specific value.</span>
+
+<span class="sd">    Computes with better numeric stability than Horner&#39;s method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Evaluate x³ -4x² -17x + 60 at x = 2.5</span>
+    <span class="c1"># polynomial_eval([1, -4, -17, 60], x=2.5) --&gt; 8.125</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">powers</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">pow</span><span class="p">,</span> <span class="n">repeat</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sumprod</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">powers</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">polynomial_derivative</span><span class="p">(</span><span class="n">coefficients</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the first derivative of a polynomial.</span>
+
+<span class="sd">       f(x)  =  x³ -4x² -17x + 60</span>
+<span class="sd">       f&#39;(x) = 3x² -8x  -17</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># polynomial_derivative([1, -4, -17, 60]) -&gt; [3, -8, -17]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span>
+    <span class="n">powers</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">powers</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">sieve</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="s2">&quot;Primes less than n.&quot;</span>
+    <span class="c1"># sieve(30) --&gt; 2 3 5 7 11 13 17 19 23 29</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="mi">2</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">isqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">iter_index</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+        <span class="k">yield from</span> <span class="n">iter_index</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">p</span><span class="o">*</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="o">*</span><span class="n">p</span> <span class="p">:</span> <span class="n">n</span> <span class="p">:</span> <span class="n">p</span><span class="o">+</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">+</span><span class="n">p</span><span class="p">)))</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="n">p</span>
+    <span class="k">yield from</span> <span class="n">iter_index</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">factor</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="s2">&quot;Prime factors of n.&quot;</span>
+    <span class="c1"># factor(99) --&gt; 3 3 11</span>
+    <span class="c1"># factor(1_000_000_000_000_007) --&gt; 47 59 360620266859</span>
+    <span class="c1"># factor(1_000_000_000_000_403) --&gt; 1000000000000403</span>
+    <span class="k">for</span> <span class="n">prime</span> <span class="ow">in</span> <span class="n">sieve</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">isqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">n</span> <span class="o">%</span> <span class="n">prime</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">prime</span>
+            <span class="n">n</span> <span class="o">//=</span> <span class="n">prime</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">n</span>
+
+<span class="k">def</span> <span class="nf">nth_combination</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="s2">&quot;Equivalent to list(combinations(iterable, r))[index]&quot;</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="n">c</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="n">c</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">c</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="n">r</span><span class="o">//</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="o">-</span><span class="mi">1</span>
+        <span class="k">while</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="n">c</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">-=</span> <span class="n">c</span>
+            <span class="n">c</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">r</span><span class="p">)</span><span class="o">//</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">n</span><span class="p">])</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Fonctions créant des itérateurs pour boucler efficacement</a><ul>
+<li><a class="reference internal" href="#itertool-functions">Fonctions d'<em>itertool</em></a></li>
+<li><a class="reference internal" href="#itertools-recipes">Recettes <em>itertools</em></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="functional.html"
+                          title="Chapitre précédent">Modules de programmation fonctionnelle</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="functools.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Fonctions d'ordre supérieur et opérations sur des objets appelables</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/itertools.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="functools.html" title="functools — Fonctions d&#39;ordre supérieur et opérations sur des objets appelables"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="functional.html" title="Modules de programmation fonctionnelle"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="functional.html" >Modules de programmation fonctionnelle</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Fonctions créant des itérateurs pour boucler efficacement</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

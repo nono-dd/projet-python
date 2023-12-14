@@ -1,0 +1,829 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="7. Les instructions simples" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/reference/simple_stmts.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Une instruction simple est contenue dans une seule ligne logique. Plusieurs instructions simples peuvent être écrites sur une seule ligne, séparées par des points-virgules. La syntaxe d'une instruc..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Une instruction simple est contenue dans une seule ligne logique. Plusieurs instructions simples peuvent être écrites sur une seule ligne, séparées par des points-virgules. La syntaxe d'une instruc..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>7. Les instructions simples &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="8. Instructions composées" href="compound_stmts.html" />
+    <link rel="prev" title="6. Expressions" href="expressions.html" />
+    <link rel="canonical" href="https://docs.python.org/3/reference/simple_stmts.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">7. Les instructions simples</a><ul>
+<li><a class="reference internal" href="#expression-statements">7.1. Les expressions</a></li>
+<li><a class="reference internal" href="#assignment-statements">7.2. Les assignations</a><ul>
+<li><a class="reference internal" href="#augmented-assignment-statements">7.2.1. Les assignations augmentées</a></li>
+<li><a class="reference internal" href="#annotated-assignment-statements">7.2.2. Les assignations annotées</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-assert-statement">7.3. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">assert</span></code></a></li>
+<li><a class="reference internal" href="#the-pass-statement">7.4. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">pass</span></code></a></li>
+<li><a class="reference internal" href="#the-del-statement">7.5. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">del</span></code></a></li>
+<li><a class="reference internal" href="#the-return-statement">7.6. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code></a></li>
+<li><a class="reference internal" href="#the-yield-statement">7.7. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">yield</span></code></a></li>
+<li><a class="reference internal" href="#the-raise-statement">7.8. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">raise</span></code></a></li>
+<li><a class="reference internal" href="#the-break-statement">7.9. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">break</span></code></a></li>
+<li><a class="reference internal" href="#the-continue-statement">7.10. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">continue</span></code></a></li>
+<li><a class="reference internal" href="#the-import-statement">7.11. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a><ul>
+<li><a class="reference internal" href="#future-statements">7.11.1. L'instruction future</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-global-statement">7.12. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code></a></li>
+<li><a class="reference internal" href="#the-nonlocal-statement">7.13. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">nonlocal</span></code></a></li>
+<li><a class="reference internal" href="#the-type-statement">7.14. The <code class="xref std std-keyword docutils literal notranslate"><span class="pre">type</span></code> statement</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="expressions.html"
+                          title="Chapitre précédent"><span class="section-number">6. </span>Expressions</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="compound_stmts.html"
+                          title="Chapitre suivant"><span class="section-number">8. </span>Instructions composées</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/reference/simple_stmts.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="compound_stmts.html" title="8. Instructions composées"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="expressions.html" title="6. Expressions"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">La référence du langage Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>Les instructions simples</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="simple-statements">
+<span id="simple"></span><h1><span class="section-number">7. </span>Les instructions simples<a class="headerlink" href="#simple-statements" title="Lien permanent vers ce titre">¶</a></h1>
+<p id="index-0">Une instruction simple est contenue dans une seule ligne logique. Plusieurs instructions simples peuvent être écrites sur une seule ligne, séparées par des points-virgules. La syntaxe d'une instruction simple est :</p>
+<pre>
+<strong id="grammar-token-python-grammar-simple_stmt"><span id="grammar-token-simple-stmt"></span>simple_stmt</strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-expression_stmt"><code class="xref docutils literal notranslate"><span class="pre">expression_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-assert_stmt"><code class="xref docutils literal notranslate"><span class="pre">assert_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-assignment_stmt"><code class="xref docutils literal notranslate"><span class="pre">assignment_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-augmented_assignment_stmt"><code class="xref docutils literal notranslate"><span class="pre">augmented_assignment_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-annotated_assignment_stmt"><code class="xref docutils literal notranslate"><span class="pre">annotated_assignment_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-pass_stmt"><code class="xref docutils literal notranslate"><span class="pre">pass_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-del_stmt"><code class="xref docutils literal notranslate"><span class="pre">del_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-return_stmt"><code class="xref docutils literal notranslate"><span class="pre">return_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-yield_stmt"><code class="xref docutils literal notranslate"><span class="pre">yield_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-raise_stmt"><code class="xref docutils literal notranslate"><span class="pre">raise_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-break_stmt"><code class="xref docutils literal notranslate"><span class="pre">break_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-continue_stmt"><code class="xref docutils literal notranslate"><span class="pre">continue_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-import_stmt"><code class="xref docutils literal notranslate"><span class="pre">import_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-future_stmt"><code class="xref docutils literal notranslate"><span class="pre">future_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-global_stmt"><code class="xref docutils literal notranslate"><span class="pre">global_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-nonlocal_stmt"><code class="xref docutils literal notranslate"><span class="pre">nonlocal_stmt</span></code></a>
+                 | <a class="reference internal" href="#grammar-token-python-grammar-type_stmt"><code class="xref docutils literal notranslate"><span class="pre">type_stmt</span></code></a>
+</pre>
+<section id="expression-statements">
+<span id="exprstmts"></span><h2><span class="section-number">7.1. </span>Les expressions<a class="headerlink" href="#expression-statements" title="Lien permanent vers ce titre">¶</a></h2>
+<span class="target" id="index-1"></span><p id="index-2">Les expressions sont utilisées (généralement de manière interactive) comme instructions pour calculer et écrire des valeurs, appeler une procédure (une fonction dont le résultat renvoyé n'a pas d'importance ; en Python, les procédures renvoient la valeur <code class="docutils literal notranslate"><span class="pre">None</span></code>). D'autres utilisations des expressions sont autorisées et parfois utiles. La syntaxe pour une expression en tant qu'instruction est :</p>
+<pre>
+<strong id="grammar-token-python-grammar-expression_stmt"><span id="grammar-token-expression-stmt"></span>expression_stmt</strong> ::=  <a class="reference internal" href="expressions.html#grammar-token-python-grammar-starred_expression"><code class="xref docutils literal notranslate"><span class="pre">starred_expression</span></code></a>
+</pre>
+<p>Ce genre d'instruction évalue la liste d'expressions (qui peut se limiter à une seule expression).</p>
+<p id="index-3">En mode interactif, si la valeur n'est pas <code class="docutils literal notranslate"><span class="pre">None</span></code>, elle est convertie en chaîne en utilisant la fonction native <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code></a> et la chaîne résultante est écrite sur la sortie standard sur sa propre ligne. Si le résultat est <code class="docutils literal notranslate"><span class="pre">None</span></code>, rien n'est écrit ce qui est usuel pour les appels de procédures.</p>
+</section>
+<section id="assignment-statements">
+<span id="assignment"></span><h2><span class="section-number">7.2. </span>Les assignations<a class="headerlink" href="#assignment-statements" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-4">Les assignations sont utilisées pour lier ou relier des noms à des valeurs et modifier des attributs ou des éléments d'objets muables :</p>
+<pre>
+<strong id="grammar-token-python-grammar-assignment_stmt"><span id="grammar-token-assignment-stmt"></span>assignment_stmt</strong> ::=  (<a class="reference internal" href="#grammar-token-python-grammar-target_list"><code class="xref docutils literal notranslate"><span class="pre">target_list</span></code></a> &quot;=&quot;)+ (<a class="reference internal" href="expressions.html#grammar-token-python-grammar-starred_expression"><code class="xref docutils literal notranslate"><span class="pre">starred_expression</span></code></a> | <a class="reference internal" href="expressions.html#grammar-token-python-grammar-yield_expression"><code class="xref docutils literal notranslate"><span class="pre">yield_expression</span></code></a>)
+<strong id="grammar-token-python-grammar-target_list"><span id="grammar-token-target-list"></span>target_list    </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-target"><code class="xref docutils literal notranslate"><span class="pre">target</span></code></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-python-grammar-target"><code class="xref docutils literal notranslate"><span class="pre">target</span></code></a>)* [&quot;,&quot;]
+<strong id="grammar-token-python-grammar-target"><span id="grammar-token-target"></span>target         </strong> ::=  <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>
+                     | &quot;(&quot; [<a class="reference internal" href="#grammar-token-python-grammar-target_list"><code class="xref docutils literal notranslate"><span class="pre">target_list</span></code></a>] &quot;)&quot;
+                     | &quot;[&quot; [<a class="reference internal" href="#grammar-token-python-grammar-target_list"><code class="xref docutils literal notranslate"><span class="pre">target_list</span></code></a>] &quot;]&quot;
+                     | <a class="reference internal" href="expressions.html#grammar-token-python-grammar-attributeref"><code class="xref docutils literal notranslate"><span class="pre">attributeref</span></code></a>
+                     | <a class="reference internal" href="expressions.html#grammar-token-python-grammar-subscription"><code class="xref docutils literal notranslate"><span class="pre">subscription</span></code></a>
+                     | <a class="reference internal" href="expressions.html#grammar-token-python-grammar-slicing"><code class="xref docutils literal notranslate"><span class="pre">slicing</span></code></a>
+                     | &quot;*&quot; <a class="reference internal" href="#grammar-token-python-grammar-target"><code class="xref docutils literal notranslate"><span class="pre">target</span></code></a>
+</pre>
+<p>Voir la section <a class="reference internal" href="expressions.html#primaries"><span class="std std-ref">Primaires</span></a> pour la définition des syntaxes de <em>attributeref</em>, <em>subscription</em> et <em>slicing</em>.</p>
+<p>Une assignation évalue la liste d'expressions (gardez en mémoire que ce peut être une simple expression ou une liste dont les éléments sont séparés par des virgules, cette dernière produisant un <em>n</em>-uplet) et assigne l'unique objet résultant à chaque liste cible, de la gauche vers la droite.</p>
+<p id="index-5">Une assignation est définie récursivement en fonction de la forme de la cible (une liste). Quand la cible est une partie d'un objet muable (une référence à un attribut, une sélection ou une tranche), l'objet muable doit effectuer l'assignation au final et décider de sa validité, voire lever une exception si l'assignation n'est pas acceptable. Les règles suivies par les différents types et les exceptions levées sont données dans les définitions des types d'objets (voir la section <a class="reference internal" href="datamodel.html#types"><span class="std std-ref">Hiérarchie des types standards</span></a>).</p>
+<p id="index-6">L'assignation d'un objet à une liste cible, optionnellement entourée par des parenthèses ou des crochets, est définie récursivement comme suit.</p>
+<ul class="simple">
+<li><p>Si la liste cible est une cible unique sans virgule de fin, optionnellement entre parenthèses, l'objet est assigné à cette cible.</p></li>
+<li><p>Sinon :</p>
+<ul>
+<li><p>Si la liste cible contient une cible préfixée par un astérisque, appelée cible <em>étoilée</em> (<em>starred target</em> en anglais) : l'objet doit être un itérable avec au moins autant d'éléments qu'il y a de cibles dans la liste cible, moins un. Les premiers éléments de l'itérable sont assignés, de la gauche vers la droite, aux cibles avant la cible étoilée. Les éléments de queue de l'itérable sont assignés aux cibles après la cible étoilée. Une liste des éléments restants dans l'itérable est alors assignée à la cible étoilée (cette liste peut être vide).</p></li>
+<li><p>Sinon : l'objet doit être un itérable avec le même nombre d'éléments qu'il y a de cibles dans la liste cible ; les éléments sont assignés, de la gauche vers la droite, vers les cibles correspondantes.</p></li>
+</ul>
+</li>
+</ul>
+<p>L'assignation d'un objet vers une cible unique est définie récursivement comme suit.</p>
+<ul>
+<li><p>Si la cible est une variable (un nom) :</p>
+<ul class="simple">
+<li><p>si le nom n'apparaît pas dans une instruction <a class="reference internal" href="#global"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code></a> ou <a class="reference internal" href="#nonlocal"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">nonlocal</span></code></a> (respectivement) du bloc de code courant, le nom est lié à l'objet dans l'espace courant des noms locaux ;</p></li>
+<li><p>sinon le nom est lié à l'objet dans l'espace des noms globaux ou dans un espace de nommage plus large déterminé par <a class="reference internal" href="#nonlocal"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">nonlocal</span></code></a>, respectivement.</p></li>
+</ul>
+<p id="index-7">Le lien du nom est modifié si le nom était déjà lié. Ceci peut faire que le compteur de références de l'objet auquel le nom était précédemment lié tombe à zéro, entrainant la dé-allocation de l'objet et l'appel de son destructeur (s'il existe).</p>
+</li>
+<li id="index-8"><p>Si la cible est une référence à un attribut : l'expression primaire de la référence est évaluée. Elle doit produire un objet avec des attributs que l'on peut assigner : si ce n'est pas le cas, une <a class="reference internal" href="../library/exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> est levée. Python demande alors à cet objet d'assigner l'attribut donné ; si ce n'est pas possible, une exception est levée (habituellement, mais pas nécessairement, <a class="reference internal" href="../library/exceptions.html#AttributeError" title="AttributeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code></a>).</p>
+<p id="attr-target-note">Note : si l'objet est une instance de classe et que la référence à l'attribut apparaît des deux côtés de l'opérateur d'assignation, l'expression « à droite », <code class="docutils literal notranslate"><span class="pre">a.x</span></code> peut accéder soit à l'attribut d'instance ou (si cet attribut d'instance n'existe pas) à l'attribut de classe. L'expression cible « à gauche » <code class="docutils literal notranslate"><span class="pre">a.x</span></code> est toujours définie comme un attribut d'instance, en le créant si nécessaire. Ainsi, les deux occurrences de <code class="docutils literal notranslate"><span class="pre">a.x</span></code> ne font pas nécessairement référence au même attribut : si l'expression « à droite » fait référence à un attribut de classe, l'expression « à gauche » crée un nouvel attribut d'instance comme cible de l'assignation :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Cls</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>             <span class="c1"># class variable</span>
+<span class="n">inst</span> <span class="o">=</span> <span class="n">Cls</span><span class="p">()</span>
+<span class="n">inst</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>   <span class="c1"># writes inst.x as 4 leaving Cls.x as 3</span>
+</pre></div>
+</div>
+<p>Cette description ne s'applique pas nécessairement aux attributs des descripteurs, telles que les propriétés créées avec <a class="reference internal" href="../library/functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a>.</p>
+</li>
+<li id="index-9"><p>Si la cible est une sélection : l'expression primaire de la référence est évaluée. Elle doit produire soit un objet séquence mutable (telle qu'une liste) ou un objet tableau de correspondances (tel qu'un dictionnaire). Ensuite, l'expression de la sélection est évaluée.</p>
+<p id="index-10">Si la primaire est un objet séquence mutable (telle qu'une liste), la sélection doit produire un entier. S'il est négatif, la longueur de la séquence lui est ajoutée. La valeur résultante doit être un entier positif ou nul, plus petit que la longueur de la séquence, et Python demande à la séquence d'assigner l'objet à l'élément se trouvant à cet indice. Si l'indice est hors limites, une <a class="reference internal" href="../library/exceptions.html#IndexError" title="IndexError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IndexError</span></code></a> est levée (une assignation à une sélection dans une séquence ne peut pas ajouter de nouveaux éléments à une liste).</p>
+<p id="index-11">If the primary is a mapping object (such as a dictionary), the subscript must
+have a type compatible with the mapping's key type, and the mapping is then
+asked to create a key/value pair which maps the subscript to the assigned
+object.  This can either replace an existing key/value pair with the same key
+value, or insert a new key/value pair (if no key with the same value existed).</p>
+<p>Pour les objets définis par l'utilisateur, la méthode <code class="xref py py-meth docutils literal notranslate"><span class="pre">__setitem__()</span></code> est appelée avec les arguments appropriés.</p>
+</li>
+<li id="index-12"><p>Si la cible est une tranche : l'expression primaire de la référence est évaluée. Elle doit produire un objet séquence mutable (telle qu'une liste). L'objet assigné doit être un objet séquence du même type. Ensuite, les expressions de la borne inférieure et de la borne supérieure sont évaluées, dans la mesure où elles sont spécifiées (les valeurs par défaut sont zéro et la longueur de la séquence). Les bornes doivent être des entiers. Si une borne est négative, la longueur de la séquence lui est ajoutée. Les bornes résultantes sont coupées pour être dans l'intervalle zéro -- longueur de la séquence, inclus. Finalement, Python demande à l'objet séquence de remplacer la tranche avec les éléments de la séquence à assigner. La longueur de la tranche peut être différente de la longueur de la séquence à assigner, ce qui modifie alors la longueur de la séquence cible, si celle-ci le permet.</p></li>
+</ul>
+<div class="impl-detail compound">
+<p><strong>Particularité de l'implémentation CPython :</strong> Dans l'implémentation actuelle, la syntaxe pour les cibles est similaire à celle des expressions. Toute syntaxe invalide est rejetée pendant la phase de génération de code, ce qui produit des messages d'erreurs moins détaillés.</p>
+</div>
+<p>Bien que la définition de l'assignation implique que le passage entre le côté gauche et le côté droit soient « simultanés » (par exemple, <code class="docutils literal notranslate"><span class="pre">a,</span> <span class="pre">b</span> <span class="pre">=</span> <span class="pre">b,</span> <span class="pre">a</span></code> permute les deux variables), le passage <em>à l'intérieur</em> des collections de variables que l'on assigne intervient de la gauche vers la droite, ce qui peut entraîner quelques confusions. Par exemple, le programme suivant affiche <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">2]</span></code> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>         <span class="c1"># i is updated, then x[i] is updated</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt><span class="target" id="index-55"></span><a class="pep reference external" href="https://peps.python.org/pep-3132/"><strong>PEP 3132</strong></a> -- dépaquetage étendu d'itérable</dt><dd><p>Spécification de la fonctionnalité <code class="docutils literal notranslate"><span class="pre">*cible</span></code>.</p>
+</dd>
+</dl>
+</div>
+<section id="augmented-assignment-statements">
+<span id="augassign"></span><h3><span class="section-number">7.2.1. </span>Les assignations augmentées<a class="headerlink" href="#augmented-assignment-statements" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-14">Une assignation augmentée est la combinaison, dans une seule instruction, d'une opération binaire et d'une assignation :</p>
+<pre>
+<strong id="grammar-token-python-grammar-augmented_assignment_stmt"><span id="grammar-token-augmented-assignment-stmt"></span>augmented_assignment_stmt</strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-augtarget"><code class="xref docutils literal notranslate"><span class="pre">augtarget</span></code></a> <a class="reference internal" href="#grammar-token-python-grammar-augop"><code class="xref docutils literal notranslate"><span class="pre">augop</span></code></a> (<a class="reference internal" href="expressions.html#grammar-token-python-grammar-expression_list"><code class="xref docutils literal notranslate"><span class="pre">expression_list</span></code></a> | <a class="reference internal" href="expressions.html#grammar-token-python-grammar-yield_expression"><code class="xref docutils literal notranslate"><span class="pre">yield_expression</span></code></a>)
+<strong id="grammar-token-python-grammar-augtarget"><span id="grammar-token-augtarget"></span>augtarget                </strong> ::=  <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a> | <a class="reference internal" href="expressions.html#grammar-token-python-grammar-attributeref"><code class="xref docutils literal notranslate"><span class="pre">attributeref</span></code></a> | <a class="reference internal" href="expressions.html#grammar-token-python-grammar-subscription"><code class="xref docutils literal notranslate"><span class="pre">subscription</span></code></a> | <a class="reference internal" href="expressions.html#grammar-token-python-grammar-slicing"><code class="xref docutils literal notranslate"><span class="pre">slicing</span></code></a>
+<strong id="grammar-token-python-grammar-augop"><span id="grammar-token-augop"></span>augop                    </strong> ::=  &quot;+=&quot; | &quot;-=&quot; | &quot;*=&quot; | &quot;&#64;=&quot; | &quot;/=&quot; | &quot;//=&quot; | &quot;%=&quot; | &quot;**=&quot;
+                               | &quot;&gt;&gt;=&quot; | &quot;&lt;&lt;=&quot; | &quot;&amp;=&quot; | &quot;^=&quot; | &quot;|=&quot;
+</pre>
+<p>Voir la section <a class="reference internal" href="expressions.html#primaries"><span class="std std-ref">Primaires</span></a> pour la définition des syntaxes des trois derniers symboles.</p>
+<p>Une assignation augmentée évalue la cible (qui, au contraire des assignations normales, ne peut pas être un dépaquetage) et la liste d'expressions, effectue l'opération binaire (spécifique au type d'assignation) sur les deux opérandes et assigne le résultat à la cible originale. La cible n'est évaluée qu'une seule fois.</p>
+<p>Une assignation augmentée comme <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+=</span> <span class="pre">1</span></code> peut être ré-écrite en <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code> pour obtenir un effet similaire, mais pas exactement équivalent. Dans la version augmentée. <code class="docutils literal notranslate"><span class="pre">x</span></code> n'est évalué qu'une seule fois. Aussi, lorsque c'est possible, l'opération concrète est effectuée <em>sur place</em>, c'est-à-dire que plutôt que de créer un nouvel objet et l'assigner à la cible, c'est le vieil objet qui est modifié.</p>
+<p>Au contraire des assignations normales, les assignations augmentées évaluent la partie gauche <em>avant</em> d'évaluer la partie droite. Par exemple, <code class="docutils literal notranslate"><span class="pre">a[i]</span> <span class="pre">+=</span> <span class="pre">f(x)</span></code> commence par s'intéresser à <code class="docutils literal notranslate"><span class="pre">a[i]</span></code>, puis Python évalue <code class="docutils literal notranslate"><span class="pre">f(x)</span></code>, effectue l'addition et, enfin, écrit le résultat dans <code class="docutils literal notranslate"><span class="pre">a[i]</span></code>.</p>
+<p>À l'exception de l'assignation de <em>n</em>-uplets et de cibles multiples dans une seule instruction, l'assignation effectuée par une assignation augmentée est traitée de la même manière qu'une assignation normale. De même, à l'exception du comportement possible <em>sur place</em>, l'opération binaire effectuée par assignation augmentée est la même que les opérations binaires normales.</p>
+<p>Pour les cibles qui sont des références à des attributs, la même <a class="reference internal" href="#attr-target-note"><span class="std std-ref">mise en garde sur les attributs de classe et d'instances</span></a> s'applique que pour les assignations normales.</p>
+</section>
+<section id="annotated-assignment-statements">
+<span id="annassign"></span><h3><span class="section-number">7.2.2. </span>Les assignations annotées<a class="headerlink" href="#annotated-assignment-statements" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-15">Une assignation <a class="reference internal" href="../glossary.html#term-variable-annotation"><span class="xref std std-term">annotée</span></a> est la combinaison, dans une seule instruction, d'une annotation de variable ou d'attribut et d'une assignation optionnelle :</p>
+<pre>
+<strong id="grammar-token-python-grammar-annotated_assignment_stmt"><span id="grammar-token-annotated-assignment-stmt"></span>annotated_assignment_stmt</strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-augtarget"><code class="xref docutils literal notranslate"><span class="pre">augtarget</span></code></a> &quot;:&quot; <a class="reference internal" href="expressions.html#grammar-token-python-grammar-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>
+                               [&quot;=&quot; (<a class="reference internal" href="expressions.html#grammar-token-python-grammar-starred_expression"><code class="xref docutils literal notranslate"><span class="pre">starred_expression</span></code></a> | <a class="reference internal" href="expressions.html#grammar-token-python-grammar-yield_expression"><code class="xref docutils literal notranslate"><span class="pre">yield_expression</span></code></a>)]
+</pre>
+<p>The difference from normal <a class="reference internal" href="#assignment"><span class="std std-ref">Les assignations</span></a> is that only a single target is allowed.</p>
+<p>Pour des noms simples en tant que cibles d'assignation, dans une portée de classe ou de module, les annotations sont évaluées et stockées dans un attribut de classe ou de module spécial, <code class="xref py py-attr docutils literal notranslate"><span class="pre">__annotations__</span></code>, qui est un dictionnaire dont les clés sont les noms de variables (réécrits si le nom est privé) et les valeurs sont les annotations. Cet attribut est accessible en écriture et est automatiquement créé au démarrage de l'exécution du corps de la classe ou du module, si les annotations sont trouvées statiquement.</p>
+<p>Pour les expressions en tant que cibles d'assignations, les annotations sont évaluées dans la portée de la classe ou du module, mais ne sont pas stockées.</p>
+<p>Si le nom est annoté dans la portée d'une fonction, alors ce nom est local à cette portée. Les annotations ne sont jamais évaluées et stockées dans les portées des fonctions.</p>
+<p>Si la partie droite est présente, une assignation annotée effectue l'assignation en tant que telle avant d'évaluer les annotations (là où c'est possible). Si la partie droite n'est pas présente pour une cible d'expression, alors l'interpréteur évalue la cible sauf pour le dernier appel à <code class="xref py py-meth docutils literal notranslate"><span class="pre">__setitem__()</span></code> ou <code class="xref py py-meth docutils literal notranslate"><span class="pre">__setattr__()</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt><span class="target" id="index-56"></span><a class="pep reference external" href="https://peps.python.org/pep-0526/"><strong>PEP 526</strong></a> -- Syntaxe pour les annotations de variables</dt><dd><p>La proposition qui a ajouté la syntaxe pour annoter les types de variables (y compris les variables de classe et les variables d'instance), au lieu de les exprimer par le biais de commentaires.</p>
+</dd>
+<dt><span class="target" id="index-57"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a> -- Indices de type</dt><dd><p>La proposition qui a ajouté le module <a class="reference internal" href="../library/typing.html#module-typing" title="typing: Support for type hints (see :pep:`484`)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">typing</span></code></a> pour fournir une syntaxe standard pour les annotations de type qui peuvent être utilisées dans les outils d'analyse statique et les EDIs.</p>
+</dd>
+</dl>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>Now annotated assignments allow the same expressions in the right hand side as
+regular assignments. Previously, some expressions (like un-parenthesized
+tuple expressions) caused a syntax error.</p>
+</div>
+</section>
+</section>
+<section id="the-assert-statement">
+<span id="assert"></span><h2><span class="section-number">7.3. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">assert</span></code><a class="headerlink" href="#the-assert-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-18">Les instructions <code class="docutils literal notranslate"><span class="pre">assert</span></code> sont une manière pratique d'insérer des tests de débogage au sein d'un programme :</p>
+<pre>
+<strong id="grammar-token-python-grammar-assert_stmt"><span id="grammar-token-assert-stmt"></span>assert_stmt</strong> ::=  &quot;assert&quot; <a class="reference internal" href="expressions.html#grammar-token-python-grammar-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> [&quot;,&quot; <a class="reference internal" href="expressions.html#grammar-token-python-grammar-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>]
+</pre>
+<p>La forme la plus simple, <code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">expression</span></code>, est équivalente à</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__debug__</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">expression</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">AssertionError</span>
+</pre></div>
+</div>
+<p>La forme étendue, <code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">expression1,</span> <span class="pre">expression2</span></code>, est équivalente à</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__debug__</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">expression1</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">expression2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p id="index-19">Ces équivalences supposent que <a class="reference internal" href="../library/constants.html#debug__" title="__debug__"><code class="xref py py-const docutils literal notranslate"><span class="pre">__debug__</span></code></a> et <a class="reference internal" href="../library/exceptions.html#AssertionError" title="AssertionError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AssertionError</span></code></a> font référence aux variables natives ainsi nommées. Dans l'implémentation actuelle, la variable native <a class="reference internal" href="../library/constants.html#debug__" title="__debug__"><code class="xref py py-const docutils literal notranslate"><span class="pre">__debug__</span></code></a> vaut <code class="docutils literal notranslate"><span class="pre">True</span></code> dans des circonstances normales, <code class="docutils literal notranslate"><span class="pre">False</span></code> quand les optimisations sont demandées (ligne de commande avec l'option <a class="reference internal" href="../using/cmdline.html#cmdoption-O"><code class="xref std std-option docutils literal notranslate"><span class="pre">-O</span></code></a>). Le générateur de code actuel ne produit aucun code pour une instruction <code class="docutils literal notranslate"><span class="pre">assert</span></code> quand vous demandez les optimisations à la compilation. Notez qu'il est superflu d'inclure le code source dans le message d'erreur pour l'expression qui a échoué : il est affiché dans la pile d'appels.</p>
+<p>Assigner vers <a class="reference internal" href="../library/constants.html#debug__" title="__debug__"><code class="xref py py-const docutils literal notranslate"><span class="pre">__debug__</span></code></a> est illégal. La valeur de cette variable native est déterminée au moment où l'interpréteur démarre.</p>
+</section>
+<section id="the-pass-statement">
+<span id="pass"></span><h2><span class="section-number">7.4. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">pass</span></code><a class="headerlink" href="#the-pass-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<pre id="index-20">
+<strong id="grammar-token-python-grammar-pass_stmt"><span id="grammar-token-pass-stmt"></span>pass_stmt</strong> ::=  &quot;pass&quot;
+</pre>
+<p><a class="reference internal" href="#pass"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">pass</span></code></a> est une opération vide --- quand elle est exécutée, rien ne se passe. Elle est utile comme bouche-trou lorsqu'une instruction est syntaxiquement requise mais qu'aucun code ne doit être exécuté. Par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span> <span class="k">pass</span>    <span class="c1"># a function that does nothing (yet)</span>
+
+<span class="k">class</span> <span class="nc">C</span><span class="p">:</span> <span class="k">pass</span>       <span class="c1"># a class with no methods (yet)</span>
+</pre></div>
+</div>
+</section>
+<section id="the-del-statement">
+<span id="del"></span><h2><span class="section-number">7.5. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">del</span></code><a class="headerlink" href="#the-del-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<pre id="index-21">
+<strong id="grammar-token-python-grammar-del_stmt"><span id="grammar-token-del-stmt"></span>del_stmt</strong> ::=  &quot;del&quot; <a class="reference internal" href="#grammar-token-python-grammar-target_list"><code class="xref docutils literal notranslate"><span class="pre">target_list</span></code></a>
+</pre>
+<p>La suppression est récursivement définie de la même manière que l'assignation. Plutôt que de détailler cela de manière approfondie, voici quelques indices.</p>
+<p>La suppression d'une liste cible (<em>target_list</em> dans la grammaire ci-dessus) supprime récursivement chaque cible, de la gauche vers la droite.</p>
+<p id="index-22">La suppression d'un nom détruit le lien entre ce nom dans l'espace des noms locaux, ou l'espace des noms globaux si ce nom apparaît dans une instruction <a class="reference internal" href="#global"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code></a> dans le même bloc de code. Si le nom n'est pas lié, une exception <a class="reference internal" href="../library/exceptions.html#NameError" title="NameError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NameError</span></code></a> est levée.</p>
+<p id="index-23">La suppression d'une référence à un attribut, une sélection ou une tranche est passée à l'objet primaire concerné : la suppression d'une tranche est en général équivalente à l'assignation d'une tranche vide du type adéquat (mais ceci est au final déterminé par l'objet que l'on tranche).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.2: </span>Auparavant, il était illégal de supprimer un nom dans l'espace des noms locaux si celui-ci apparaissait comme variable libre dans un bloc imbriqué.</p>
+</div>
+</section>
+<section id="the-return-statement">
+<span id="return"></span><h2><span class="section-number">7.6. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code><a class="headerlink" href="#the-return-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<pre id="index-24">
+<strong id="grammar-token-python-grammar-return_stmt"><span id="grammar-token-return-stmt"></span>return_stmt</strong> ::=  &quot;return&quot; [<a class="reference internal" href="expressions.html#grammar-token-python-grammar-expression_list"><code class="xref docutils literal notranslate"><span class="pre">expression_list</span></code></a>]
+</pre>
+<p><a class="reference internal" href="#return"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code></a> ne peut être placée qu'à l'intérieur d'une définition de fonction, pas à l'intérieur d'une définition de classe.</p>
+<p>Si une liste d'expressions (<em>expression_list</em> dans la grammaire ci-dessus) est présente, elle est évaluée, sinon <code class="docutils literal notranslate"><span class="pre">None</span></code> est utilisée comme valeur par défaut.</p>
+<p><a class="reference internal" href="#return"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code></a> quitte l'appel à la fonction courante avec la liste d'expressions (ou <code class="docutils literal notranslate"><span class="pre">None</span></code>) comme valeur de retour.</p>
+<p id="index-25">Quand <a class="reference internal" href="#return"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code></a> fait sortir d'une instruction <a class="reference internal" href="compound_stmts.html#try"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">try</span></code></a> avec une clause <a class="reference internal" href="compound_stmts.html#finally"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">finally</span></code></a>, cette clause <code class="xref std std-keyword docutils literal notranslate"><span class="pre">finally</span></code> est exécutée avant de réellement quitter la fonction.</p>
+<p>Dans une fonction génératrice, l'instruction <a class="reference internal" href="#return"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code></a> indique que le générateur est terminé et provoque la levée d'une <a class="reference internal" href="../library/exceptions.html#StopIteration" title="StopIteration"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StopIteration</span></code></a>. La valeur de retour (s'il y en a une) est utilisée comme argument pour construire l'exception <a class="reference internal" href="../library/exceptions.html#StopIteration" title="StopIteration"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StopIteration</span></code></a> et devient l'attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">StopIteration.value</span></code>.</p>
+<p>Dans une fonction génératrice asynchrone, une instruction <a class="reference internal" href="#return"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code></a> vide indique que le générateur asynchrone est terminé et provoque la levée d'une <a class="reference internal" href="../library/exceptions.html#StopAsyncIteration" title="StopAsyncIteration"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StopAsyncIteration</span></code></a>. Une instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code> non vide est une erreur de syntaxe dans une fonction génératrice asynchrone.</p>
+</section>
+<section id="the-yield-statement">
+<span id="yield"></span><h2><span class="section-number">7.7. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">yield</span></code><a class="headerlink" href="#the-yield-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<pre id="index-26">
+<strong id="grammar-token-python-grammar-yield_stmt"><span id="grammar-token-yield-stmt"></span>yield_stmt</strong> ::=  <a class="reference internal" href="expressions.html#grammar-token-python-grammar-yield_expression"><code class="xref docutils literal notranslate"><span class="pre">yield_expression</span></code></a>
+</pre>
+<p>L'instruction <a class="reference internal" href="#yield"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">yield</span></code></a> est sémantiquement équivalente à une <a class="reference internal" href="expressions.html#yieldexpr"><span class="std std-ref">expression yield</span></a>. L'instruction <em>yield</em> peut être utilisée pour omettre les parenthèses qui seraient autrement requises dans l'instruction équivalente d'expression <em>yield</em>. Par exemple, les instructions <em>yield</em></p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">yield</span> <span class="o">&lt;</span><span class="n">expr</span><span class="o">&gt;</span>
+<span class="k">yield from</span> <span class="o">&lt;</span><span class="n">expr</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>sont équivalentes aux instructions expressions <em>yield</em></p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="k">yield</span> <span class="o">&lt;</span><span class="n">expr</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">(</span><span class="k">yield from</span> <span class="o">&lt;</span><span class="n">expr</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Les expressions et les instructions <em>yield</em> sont utilisées seulement dans la définition des fonctions <a class="reference internal" href="../glossary.html#term-generator"><span class="xref std std-term">générateurs</span></a> et apparaissent uniquement dans le corps de la fonction génératrice. L'utilisation de <em>yield</em> dans la définition d'une fonction est suffisant pour que cette définition crée une fonction génératrice au lieu d'une fonction normale.</p>
+<p>Pour tous les détails sur la sémantique de <a class="reference internal" href="#yield"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">yield</span></code></a>, reportez-vous à la section <a class="reference internal" href="expressions.html#yieldexpr"><span class="std std-ref">Expressions yield</span></a>.</p>
+</section>
+<section id="the-raise-statement">
+<span id="raise"></span><h2><span class="section-number">7.8. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">raise</span></code><a class="headerlink" href="#the-raise-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<pre id="index-27">
+<strong id="grammar-token-python-grammar-raise_stmt"><span id="grammar-token-raise-stmt"></span>raise_stmt</strong> ::=  &quot;raise&quot; [<a class="reference internal" href="expressions.html#grammar-token-python-grammar-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> [&quot;from&quot; <a class="reference internal" href="expressions.html#grammar-token-python-grammar-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>]]
+</pre>
+<p>Si aucune expression n'est présente, <a class="reference internal" href="#raise"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">raise</span></code></a> propage l'exception en cours de traitement, aussi dénommée <em>exception active</em>. Si aucune exception n'est active, une exception <a class="reference internal" href="../library/exceptions.html#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> est levée, indiquant que c'est une erreur.</p>
+<p>Sinon, <a class="reference internal" href="#raise"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">raise</span></code></a> évalue la première expression en tant qu'objet exception. Ce doit être une sous-classe ou une instance de <a class="reference internal" href="../library/exceptions.html#BaseException" title="BaseException"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseException</span></code></a>. Si c'est une classe, l'instance de l'exception est obtenue en instanciant la classe sans argument (au moment voulu).</p>
+<p>Le <em class="dfn">type</em> de l'exception est la classe de l'instance de l'exception, la <em class="dfn">value</em> est l'instance elle-même.</p>
+<p id="index-28">Normalement, un objet <em>trace d'appels</em> est créé automatiquement quand une exception est levée et il lui est rattaché comme attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">__traceback__</span></code>, en lecture-écriture. Vous pouvez créer une exception et définir votre propre trace d'appels d'un seul coup en utilisant la méthode des exceptions <a class="reference internal" href="../library/exceptions.html#BaseException.with_traceback" title="BaseException.with_traceback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">with_traceback()</span></code></a> (qui renvoie la même instance d'exception avec sa trace d'appels passée en argument), comme ceci :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;foo occurred&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">with_traceback</span><span class="p">(</span><span class="n">tracebackobj</span><span class="p">)</span>
+</pre></div>
+</div>
+<p id="index-29">La clause <code class="docutils literal notranslate"><span class="pre">from</span></code> est utilisée pour chaîner les exceptions : si vous la fournissez, la seconde « expression » doit être une autre classe ou instance d'exception. Si c'est une instance, elle est rattachée à l'exception levée en tant qu'attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">__cause__</span></code> (en lecture-écriture). Si c'est une classe, elle est instanciée et l'instance ainsi formée est rattachée en tant que <code class="xref py py-attr docutils literal notranslate"><span class="pre">__cause__</span></code>. Si l'exception levée n'est pas gérée, les deux exceptions sont affichées :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Something bad happened&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
+<span class="gp">...</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">ZeroDivisionError</span>: <span class="n">division by zero</span>
+
+<span class="gt">The above exception was the direct cause of the following exception:</span>
+
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">4</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">RuntimeError</span>: <span class="n">Something bad happened</span>
+</pre></div>
+</div>
+<p>Un mécanisme similaire est mis en œuvre implicitement si une nouvelle exception est levée alors qu'une exception est déjà en cours de traitement. Une exception peut être traitée quand une clause <a class="reference internal" href="compound_stmts.html#except"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">except</span></code></a> ou <a class="reference internal" href="compound_stmts.html#finally"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">finally</span></code></a>, une instruction <a class="reference internal" href="compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a>, est utilisée. La première exception est alors rattachée à l'attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">__context__</span></code> de la nouvelle exception :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Something bad happened&quot;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">ZeroDivisionError</span>: <span class="n">division by zero</span>
+
+<span class="gt">During handling of the above exception, another exception occurred:</span>
+
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">4</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">RuntimeError</span>: <span class="n">Something bad happened</span>
+</pre></div>
+</div>
+<p>Le chaînage d'exceptions peut être explicitement supprimé en spécifiant <a class="reference internal" href="../library/constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a> dans la clause <code class="docutils literal notranslate"><span class="pre">from</span></code> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Something bad happened&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+<span class="gp">...</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">4</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">RuntimeError</span>: <span class="n">Something bad happened</span>
+</pre></div>
+</div>
+<p>Des informations complémentaires sur les exceptions sont disponibles dans la section <a class="reference internal" href="executionmodel.html#exceptions"><span class="std std-ref">Exceptions</span></a> et sur la gestion des exceptions dans la section <a class="reference internal" href="compound_stmts.html#try"><span class="std std-ref">L'instruction try</span></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span><a class="reference internal" href="../library/constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a> est dorénavant autorisée en tant que <code class="docutils literal notranslate"><span class="pre">Y</span></code> dans <code class="docutils literal notranslate"><span class="pre">raise</span> <span class="pre">X</span> <span class="pre">from</span> <span class="pre">Y</span></code>.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.3: </span>L'attribut <code class="docutils literal notranslate"><span class="pre">__suppress_context__</span></code> pour supprimer l'affichage automatique du contexte de l'exception.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.11: </span>si la trace d'appels de l'exception active est modifiée dans une clause <a class="reference internal" href="compound_stmts.html#except"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">except</span></code></a>, une instruction <code class="docutils literal notranslate"><span class="pre">raise</span></code> postérieure lève à nouveau l'exception avec la trace modifiée. Auparavant, l'exception était levée à nouveau avec la trace qu'elle avait au moment de son interception.</p>
+</div>
+</section>
+<section id="the-break-statement">
+<span id="break"></span><h2><span class="section-number">7.9. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">break</span></code><a class="headerlink" href="#the-break-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<pre id="index-30">
+<strong id="grammar-token-python-grammar-break_stmt"><span id="grammar-token-break-stmt"></span>break_stmt</strong> ::=  &quot;break&quot;
+</pre>
+<p>Une instruction <a class="reference internal" href="#break"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">break</span></code></a> ne peut apparaître qu'à l'intérieur d'une boucle <a class="reference internal" href="compound_stmts.html#for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a> ou <a class="reference internal" href="compound_stmts.html#while"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">while</span></code></a>, mais pas dans une définition de fonction ou de classe à l'intérieur de cette boucle.</p>
+<p id="index-31">Elle termine la boucle la plus imbriquée, shuntant l'éventuelle clause <code class="xref std std-keyword docutils literal notranslate"><span class="pre">else</span></code> de la boucle.</p>
+<p>Si une boucle <a class="reference internal" href="compound_stmts.html#for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a> est terminée par un <a class="reference internal" href="#break"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">break</span></code></a>, la cible qui contrôle la boucle garde sa valeur.</p>
+<p id="index-32">Quand <a class="reference internal" href="#break"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">break</span></code></a> passe le contrôle en dehors d'une instruction <a class="reference internal" href="compound_stmts.html#try"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">try</span></code></a> qui comporte une clause <a class="reference internal" href="compound_stmts.html#finally"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">finally</span></code></a>, cette clause <code class="xref std std-keyword docutils literal notranslate"><span class="pre">finally</span></code> est exécutée avant de quitter la boucle.</p>
+</section>
+<section id="the-continue-statement">
+<span id="continue"></span><h2><span class="section-number">7.10. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">continue</span></code><a class="headerlink" href="#the-continue-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<pre id="index-33">
+<strong id="grammar-token-python-grammar-continue_stmt"><span id="grammar-token-continue-stmt"></span>continue_stmt</strong> ::=  &quot;continue&quot;
+</pre>
+<p>L'instruction <a class="reference internal" href="#continue"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">continue</span></code></a> ne peut apparaître qu'à l'intérieur d'une boucle <a class="reference internal" href="compound_stmts.html#for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a> ou <a class="reference internal" href="compound_stmts.html#while"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">while</span></code></a>, mais pas dans une définition de fonction ou de classe à l'intérieur de cette boucle. Elle fait continuer le flot d'exécution au prochain cycle de la boucle la plus imbriquée.</p>
+<p>Quand <a class="reference internal" href="#continue"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">continue</span></code></a> passe le contrôle en dehors d'une instruction <a class="reference internal" href="compound_stmts.html#try"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">try</span></code></a> qui comporte une clause <a class="reference internal" href="compound_stmts.html#finally"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">finally</span></code></a>, cette clause <code class="xref std std-keyword docutils literal notranslate"><span class="pre">finally</span></code> est exécutée avant de commencer le cycle suivant de la boucle.</p>
+</section>
+<section id="the-import-statement">
+<span id="from"></span><span id="import"></span><h2><span class="section-number">7.11. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code><a class="headerlink" href="#the-import-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<pre id="index-34">
+<strong id="grammar-token-python-grammar-import_stmt"><span id="grammar-token-import-stmt"></span>import_stmt    </strong> ::=  &quot;import&quot; <a class="reference internal" href="#grammar-token-python-grammar-module"><code class="xref docutils literal notranslate"><span class="pre">module</span></code></a> [&quot;as&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>] (&quot;,&quot; <a class="reference internal" href="#grammar-token-python-grammar-module"><code class="xref docutils literal notranslate"><span class="pre">module</span></code></a> [&quot;as&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>])*
+                     | &quot;from&quot; <a class="reference internal" href="#grammar-token-python-grammar-relative_module"><code class="xref docutils literal notranslate"><span class="pre">relative_module</span></code></a> &quot;import&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a> [&quot;as&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>]
+                     (&quot;,&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a> [&quot;as&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>])*
+                     | &quot;from&quot; <a class="reference internal" href="#grammar-token-python-grammar-relative_module"><code class="xref docutils literal notranslate"><span class="pre">relative_module</span></code></a> &quot;import&quot; &quot;(&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a> [&quot;as&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>]
+                     (&quot;,&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a> [&quot;as&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>])* [&quot;,&quot;] &quot;)&quot;
+                     | &quot;from&quot; <a class="reference internal" href="#grammar-token-python-grammar-relative_module"><code class="xref docutils literal notranslate"><span class="pre">relative_module</span></code></a> &quot;import&quot; &quot;*&quot;
+<strong id="grammar-token-python-grammar-module"><span id="grammar-token-module"></span>module         </strong> ::=  (<a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a> &quot;.&quot;)* <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>
+<strong id="grammar-token-python-grammar-relative_module"><span id="grammar-token-relative-module"></span>relative_module</strong> ::=  &quot;.&quot;* <a class="reference internal" href="#grammar-token-python-grammar-module"><code class="xref docutils literal notranslate"><span class="pre">module</span></code></a> | &quot;.&quot;+
+</pre>
+<p>L'instruction de base <em>import</em> (sans clause <a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">from</span></code></a>) est exécutée en deux étapes :</p>
+<ol class="arabic simple">
+<li><p>trouve un module, le charge et l'initialise si nécessaire</p></li>
+<li><p>définit un ou des noms (<em>name</em> dans la grammaire ci-dessus) dans l'espace des noms locaux de la portée où l'instruction <a class="reference internal" href="#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a> apparaît.</p></li>
+</ol>
+<p>Quand l'instruction contient plusieurs clauses (séparées par des virgules), les deux étapes sont menées séparément pour chaque clause, comme si les clauses étaient séparées dans des instructions d'importations individuelles.</p>
+<p>The details of the first step, finding and loading modules, are described in
+greater detail in the section on the <a class="reference internal" href="import.html#importsystem"><span class="std std-ref">import system</span></a>,
+which also describes the various types of packages and modules that can
+be imported, as well as all the hooks that can be used to customize
+the import system. Note that failures in this step may indicate either
+that the module could not be located, <em>or</em> that an error occurred while
+initializing the module, which includes execution of the module's code.</p>
+<p>Si le module requis est bien récupéré, il est mis à disposition de l'espace de nommage local suivant l'une des trois façons suivantes :</p>
+<ul class="simple" id="index-35">
+<li><p>Si le nom du module est suivi par <code class="xref std std-keyword docutils literal notranslate"><span class="pre">as</span></code>, alors le nom suivant <code class="xref std std-keyword docutils literal notranslate"><span class="pre">as</span></code> est directement lié au module importé.</p></li>
+<li><p>si aucun autre nom n'est spécifié et que le module en cours d'importation est un module de niveau le plus haut, le nom du module est lié dans l'espace des noms locaux au module importé ;</p></li>
+<li><p>si le module en cours d'importation n'est <em>pas</em> un module de plus haut niveau, alors le nom du paquet de plus haut niveau qui contient ce module est lié dans l'espace des noms locaux au paquet de plus haut niveau. Vous pouvez accéder au module importé en utilisant son nom pleinement qualifié et non directement.</p></li>
+</ul>
+<p id="index-36">La forme <a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">from</span></code></a> utilise un processus un peu plus complexe :</p>
+<ol class="arabic simple">
+<li><p>trouve le module spécifié dans la clause <a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">from</span></code></a>, le charge et l'initialise si nécessaire ;</p></li>
+<li><p>pour chaque nom spécifié dans les clauses <a class="reference internal" href="#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a> :</p>
+<ol class="arabic simple">
+<li><p>vérifie si le module importé possède un attribut avec ce nom ;</p></li>
+<li><p>si non, essaie d'importer un sous-module avec ce nom puis vérifie si le module importé possède lui-même cet attribut ;</p></li>
+<li><p>si l'attribut n'est pas trouvé, une <a class="reference internal" href="../library/exceptions.html#ImportError" title="ImportError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportError</span></code></a> est levée.</p></li>
+<li><p>sinon, une référence à cette valeur est stockée dans l'espace des noms locaux, en utilisant le nom de la clause <code class="xref std std-keyword docutils literal notranslate"><span class="pre">as</span></code> si elle est présente, sinon en utilisant le nom de l'attribut.</p></li>
+</ol>
+</li>
+</ol>
+<p>Exemples :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">foo</span>                 <span class="c1"># foo imported and bound locally</span>
+<span class="kn">import</span> <span class="nn">foo.bar.baz</span>         <span class="c1"># foo, foo.bar, and foo.bar.baz imported, foo bound locally</span>
+<span class="kn">import</span> <span class="nn">foo.bar.baz</span> <span class="k">as</span> <span class="nn">fbb</span>  <span class="c1"># foo, foo.bar, and foo.bar.baz imported, foo.bar.baz bound as fbb</span>
+<span class="kn">from</span> <span class="nn">foo.bar</span> <span class="kn">import</span> <span class="n">baz</span>    <span class="c1"># foo, foo.bar, and foo.bar.baz imported, foo.bar.baz bound as baz</span>
+<span class="kn">from</span> <span class="nn">foo</span> <span class="kn">import</span> <span class="n">attr</span>       <span class="c1"># foo imported and foo.attr bound as attr</span>
+</pre></div>
+</div>
+<p id="index-37">Si la liste des noms est remplacée par une étoile (<code class="docutils literal notranslate"><span class="pre">'*'</span></code>), tous les noms publics définis dans le module sont liés dans l'espace des noms locaux de la portée où apparaît l'instruction <a class="reference internal" href="#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a>.</p>
+<p id="index-38">Les <em>noms publics</em> définis par un module sont déterminés en cherchant dans l'espace de nommage du module une variable nommée <code class="docutils literal notranslate"><span class="pre">__all__</span></code> ; Si elle est définie, elle doit être une séquence de chaînes désignant les noms définis ou importés par ce module. Les noms donnés dans <code class="docutils literal notranslate"><span class="pre">__all__</span></code> sont tous considérés publics et doivent exister. Si <code class="docutils literal notranslate"><span class="pre">__all__</span></code> n'est pas définie, l'ensemble des noms publics contient tous les noms trouvés dans l'espace des noms du module qui ne commencent pas par un caractère souligné (<code class="docutils literal notranslate"><span class="pre">_</span></code>). <code class="docutils literal notranslate"><span class="pre">__all__</span></code> doit contenir toute l'API publique. Elle est destinée à éviter l'exportation accidentelle d'éléments qui ne font pas partie de l'API (tels que des modules de bibliothèques qui ont été importés et utilisés à l'intérieur du module).</p>
+<p>La forme d'<em>import</em> avec astérisque --- <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">module</span> <span class="pre">import</span> <span class="pre">*</span></code> --- est autorisée seulement au niveau du module. Si vous essayez de l'utiliser dans une définition de classe ou de fonction, cela lève une <a class="reference internal" href="../library/exceptions.html#SyntaxError" title="SyntaxError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxError</span></code></a>.</p>
+<p id="index-39">Quand vous spécifiez les modules à importer, vous n'avez pas besoin de spécifier les noms absolus des modules. Quand un module ou un paquet est contenu dans un autre paquet, il est possible d'effectuer une importation relative à l'intérieur du même paquet de plus haut niveau sans avoir à mentionner le nom du paquet. En utilisant des points en entête du module ou du paquet spécifié après <a class="reference internal" href="#from"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">from</span></code></a>, vous pouvez spécifier combien de niveaux vous souhaitez remonter dans la hiérarchie du paquet courant sans spécifier de nom exact. Un seul point en tête signifie le paquet courant où se situe le module qui effectue l'importation. Deux points signifient de remonter d'un niveau. Trois points, remonter de deux niveaux et ainsi de suite. Ainsi, si vous exécutez <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">.</span> <span class="pre">import</span> <span class="pre">mod</span></code> dans un module du paquet <code class="docutils literal notranslate"><span class="pre">pkg</span></code>, vous importez finalement <code class="docutils literal notranslate"><span class="pre">pkg.mod</span></code>. Et si vous exécutez <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">..souspkg2</span> <span class="pre">import</span> <span class="pre">mod</span></code> depuis <code class="docutils literal notranslate"><span class="pre">pkg.souspkg1</span></code>, vous importez finalement <code class="docutils literal notranslate"><span class="pre">pkg.souspkg2.mod</span></code>. La spécification des importations relatives se situe dans la section <a class="reference internal" href="import.html#relativeimports"><span class="std std-ref">Importations relatives au paquet</span></a>.</p>
+<p><a class="reference internal" href="../library/importlib.html#importlib.import_module" title="importlib.import_module"><code class="xref py py-func docutils literal notranslate"><span class="pre">importlib.import_module()</span></code></a> est fournie pour gérer les applications qui déterminent dynamiquement les modules à charger.</p>
+<p class="audit-hook">Lève un <a class="reference internal" href="../library/sys.html#auditing"><span class="std std-ref">évènement d'audit</span></a> avec les arguments <code class="docutils literal notranslate"><span class="pre">module</span></code>, <code class="docutils literal notranslate"><span class="pre">filename</span></code>, <code class="docutils literal notranslate"><span class="pre">sys.path</span></code>, <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code>, <code class="docutils literal notranslate"><span class="pre">sys.path_hooks</span></code>.</p>
+<section id="future-statements">
+<span id="future"></span><h3><span class="section-number">7.11.1. </span>L'instruction future<a class="headerlink" href="#future-statements" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-40">Une <em class="dfn">instruction future</em> est une directive à l'attention du compilateur afin qu'un module particulier soit compilé en utilisant une syntaxe ou une sémantique qui sera disponible dans une future version de Python où cette fonctionnalité est devenue un standard.</p>
+<p>L'instruction <em>future</em> a vocation à faciliter les migrations vers les futures versions de Python qui introduisent des changements incompatibles au langage. Cela permet l'utilisation de nouvelles fonctionnalités module par module avant qu'une version n'officialise cette fonctionnalité comme un standard.</p>
+<pre>
+<strong id="grammar-token-python-grammar-future_stmt"><span id="grammar-token-future-stmt"></span>future_stmt</strong> ::=  &quot;from&quot; &quot;__future__&quot; &quot;import&quot; <a class="reference internal" href="#grammar-token-python-grammar-feature"><code class="xref docutils literal notranslate"><span class="pre">feature</span></code></a> [&quot;as&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>]
+                 (&quot;,&quot; <a class="reference internal" href="#grammar-token-python-grammar-feature"><code class="xref docutils literal notranslate"><span class="pre">feature</span></code></a> [&quot;as&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>])*
+                 | &quot;from&quot; &quot;__future__&quot; &quot;import&quot; &quot;(&quot; <a class="reference internal" href="#grammar-token-python-grammar-feature"><code class="xref docutils literal notranslate"><span class="pre">feature</span></code></a> [&quot;as&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>]
+                 (&quot;,&quot; <a class="reference internal" href="#grammar-token-python-grammar-feature"><code class="xref docutils literal notranslate"><span class="pre">feature</span></code></a> [&quot;as&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>])* [&quot;,&quot;] &quot;)&quot;
+<strong id="grammar-token-python-grammar-feature"><span id="grammar-token-feature"></span>feature    </strong> ::=  <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>
+</pre>
+<p>Une instruction <em>future</em> doit apparaître en haut du module. Les seules lignes autorisées avant une instruction <em>future</em> sont :</p>
+<ul class="simple">
+<li><p>la chaîne de documentation du module (si elle existe),</p></li>
+<li><p>des commentaires,</p></li>
+<li><p>des lignes vides et</p></li>
+<li><p>d'autres instructions <em>future</em>.</p></li>
+</ul>
+<p>La seule fonctionnalité qui nécessite l'utilisation de l'instruction <code class="docutils literal notranslate"><span class="pre">future</span></code> est <code class="docutils literal notranslate"><span class="pre">annotations</span></code> (voir la <span class="target" id="index-58"></span><a class="pep reference external" href="https://peps.python.org/pep-0563/"><strong>PEP 563</strong></a>).</p>
+<p>Toutes les fonctionnalités (<em>feature</em> dans la grammaire ci-dessus) autorisées par l'instruction <code class="docutils literal notranslate"><span class="pre">future</span></code> sont toujours reconnues par Python 3. Cette liste comprend <code class="docutils literal notranslate"><span class="pre">absolute_import</span></code>, <code class="docutils literal notranslate"><span class="pre">division</span></code>, <code class="docutils literal notranslate"><span class="pre">generators</span></code>, <code class="docutils literal notranslate"><span class="pre">generator_stop</span></code>, <code class="docutils literal notranslate"><span class="pre">unicode_literals</span></code>, <code class="docutils literal notranslate"><span class="pre">print_function</span></code>, <code class="docutils literal notranslate"><span class="pre">nested_scopes</span></code> et <code class="docutils literal notranslate"><span class="pre">with_statement</span></code>. Elles sont toutes redondantes car elles sont de toute manière activées ; elles ne sont conservées que par souci de compatibilité descendante.</p>
+<p>Une instruction <em>future</em> est reconnue et traitée spécialement au moment de la compilation : les modifications à la sémantique des constructions de base sont souvent implémentées en générant un code différent. Il peut même arriver qu'une nouvelle fonctionnalité ait une syntaxe incompatible (tel qu'un nouveau mot réservé) ; dans ce cas, le compilateur a besoin d'analyser le module de manière différente. De telles décisions ne peuvent pas être différées au moment de l'exécution.</p>
+<p>Pour une version donnée, le compilateur sait quelles fonctionnalités ont été définies et lève une erreur à la compilation si une instruction <em>future</em> contient une fonctionnalité qui lui est inconnue.</p>
+<p>La sémantique à l'exécution est la même que pour toute autre instruction d'importation : il existe un module standard <a class="reference internal" href="../library/__future__.html#module-__future__" title="__future__: Future statement definitions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code></a>, décrit plus loin, qui est importé comme les autres au moment où l'instruction <em>future</em> est exécutée.</p>
+<p>La sémantique particulière à l'exécution dépend des fonctionnalités apportées par l'instruction <em>future</em>.</p>
+<p>Notez que l'instruction suivante est tout à fait normale :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">__future__</span> <span class="p">[</span><span class="k">as</span> <span class="n">name</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Ce n'est pas une instruction <em>future</em> ; c'est une instruction d'importation ordinaire qui n'a aucune sémantique particulière ou restriction de syntaxe.</p>
+<p>Le code compilé par des appels aux fonctions natives <a class="reference internal" href="../library/functions.html#exec" title="exec"><code class="xref py py-func docutils literal notranslate"><span class="pre">exec()</span></code></a> et <a class="reference internal" href="../library/functions.html#compile" title="compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a> dans un module <code class="xref py py-mod docutils literal notranslate"><span class="pre">M</span></code> comportant une instruction <em>future</em> utilise, par défaut, la nouvelle syntaxe ou sémantique associée à l'instruction <em>future</em>. Ceci peut être contrôle par des arguments optionnels à <a class="reference internal" href="../library/functions.html#compile" title="compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a> — voir la documentation de cette fonction pour les détails.</p>
+<p>Une instruction <em>future</em> entrée à l'invite de l'interpréteur interactif est effective pour le reste de la session de l'interpréteur. Si l'interpréteur est démarré avec l'option <a class="reference internal" href="../using/cmdline.html#cmdoption-i"><code class="xref std std-option docutils literal notranslate"><span class="pre">-i</span></code></a>, qu'un nom de script est passé pour être exécuté et que ce script contient une instruction <em>future</em>, elle est effective pour la session interactive qui démarre après l'exécution du script.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt><span class="target" id="index-59"></span><a class="pep reference external" href="https://peps.python.org/pep-0236/"><strong>PEP 236</strong></a> — retour vers le <code class="docutils literal notranslate"><span class="pre">__future__</span></code></dt><dd><p>La proposition originale pour le mécanisme de <code class="docutils literal notranslate"><span class="pre">__future__</span></code>.</p>
+</dd>
+</dl>
+</div>
+</section>
+</section>
+<section id="the-global-statement">
+<span id="global"></span><h2><span class="section-number">7.12. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code><a class="headerlink" href="#the-global-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<pre id="index-43">
+<strong id="grammar-token-python-grammar-global_stmt"><span id="grammar-token-global-stmt"></span>global_stmt</strong> ::=  &quot;global&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a> (&quot;,&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>)*
+</pre>
+<p>L'instruction <a class="reference internal" href="#global"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code></a> est une déclaration qui couvre l'ensemble du bloc de code courant. Elle signifie que les noms (<em>identifier</em> dans la grammaire ci-dessus) listés doivent être interprétés comme globaux. Il est impossible d'assigner une variable globale sans <code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code>, mais rappelez-vous que les variables libres peuvent faire référence à des variables globales sans avoir été déclarées en tant que telles.</p>
+<p>Les noms listés dans l'instruction <a class="reference internal" href="#global"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code></a> ne doivent pas être utilisés, dans le même bloc de code, avant l'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code>.</p>
+<p>Les noms listés dans l'instruction <a class="reference internal" href="#global"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code></a> ne doivent pas être définis en tant que paramètre formel, cible d'une instruction <a class="reference internal" href="compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> ou d'une clause <a class="reference internal" href="compound_stmts.html#except"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">except</span></code></a>, ni dans la liste cible d'une boucle <a class="reference internal" href="compound_stmts.html#for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a>, dans une définition de <a class="reference internal" href="compound_stmts.html#class"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">class</span></code></a>, de fonction, d'instruction <a class="reference internal" href="#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a> ou une annotation de variable.</p>
+<div class="impl-detail compound">
+<p><strong>Particularité de l'implémentation CPython :</strong> L'implémentation actuelle ne vérifie pas toutes ces interdictions mais n'abusez pas de cette liberté car les implémentations futures pourraient faire la vérification ou modifier le comportement du programme sans vous avertir.</p>
+</div>
+<p id="index-44"><strong>Note pour les programmeurs :</strong> <a class="reference internal" href="#global"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code></a> est une directive à l'attention de l'analyseur syntaxique. Elle s'applique uniquement au code analysé en même temps que l'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code>. En particulier, une instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code> contenue dans une chaîne ou un objet code fourni à la fonction native <a class="reference internal" href="../library/functions.html#exec" title="exec"><code class="xref py py-func docutils literal notranslate"><span class="pre">exec()</span></code></a> n'affecte pas le code <em>contenant</em> cet appel et le code contenu dans un telle chaîne n'est pas affecté par une instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code> placée dans le code contenant l'appel. Il en est de même pour les fonctions <a class="reference internal" href="../library/functions.html#eval" title="eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">eval()</span></code></a> et <a class="reference internal" href="../library/functions.html#compile" title="compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a>.</p>
+</section>
+<section id="the-nonlocal-statement">
+<span id="nonlocal"></span><h2><span class="section-number">7.13. </span>L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">nonlocal</span></code><a class="headerlink" href="#the-nonlocal-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<pre id="index-45">
+<strong id="grammar-token-python-grammar-nonlocal_stmt"><span id="grammar-token-nonlocal-stmt"></span>nonlocal_stmt</strong> ::=  &quot;nonlocal&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a> (&quot;,&quot; <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a>)*
+</pre>
+<p>L'instruction <a class="reference internal" href="#nonlocal"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">nonlocal</span></code></a> fait que les noms listés font référence aux variables liées précédemment, dans la portée la plus petite entourant l'instruction, à l'exception des variables globales. C'est important car le comportement par défaut pour les liaisons consiste à chercher d'abord dans l'espace des noms locaux. Cette instruction permet à du code encapsulé de se lier à des variables en dehors de la portée locale du code mais sans avoir de portée globale (c'est-à-dire de niveau module).</p>
+<p>Les noms (<em>identifier</em> dans la grammaire ci-dessus) listés dans l'instruction <a class="reference internal" href="#nonlocal"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">nonlocal</span></code></a>, au contraire de ceux listés dans une instruction <a class="reference internal" href="#global"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code></a>, doivent faire référence à des liaisons pré-existantes dans les portées englobantes (en effet, la portée dans laquelle devrait être créée la liaison ne peut pas être déterminée <em>a priori</em>).</p>
+<p>Les noms listés dans l'instruction <a class="reference internal" href="#nonlocal"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">nonlocal</span></code></a> ne doivent entrer en collision avec des liaisons déjà établies dans la portée locale.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt><span class="target" id="index-60"></span><a class="pep reference external" href="https://peps.python.org/pep-3104/"><strong>PEP 3104</strong></a> -- Accès à des noms en dehors de la portée locale</dt><dd><p>Les spécifications pour l'instruction <a class="reference internal" href="#nonlocal"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">nonlocal</span></code></a>.</p>
+</dd>
+</dl>
+</div>
+</section>
+<section id="the-type-statement">
+<span id="type"></span><h2><span class="section-number">7.14. </span>The <code class="xref std std-keyword docutils literal notranslate"><span class="pre">type</span></code> statement<a class="headerlink" href="#the-type-statement" title="Lien permanent vers ce titre">¶</a></h2>
+<pre id="index-47">
+<strong id="grammar-token-python-grammar-type_stmt"><span id="grammar-token-type-stmt"></span>type_stmt</strong> ::=  'type' <a class="reference internal" href="lexical_analysis.html#grammar-token-python-grammar-identifier"><code class="xref docutils literal notranslate"><span class="pre">identifier</span></code></a> [<a class="reference internal" href="compound_stmts.html#grammar-token-python-grammar-type_params"><code class="xref docutils literal notranslate"><span class="pre">type_params</span></code></a>] &quot;=&quot; <a class="reference internal" href="expressions.html#grammar-token-python-grammar-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>
+</pre>
+<p>The <code class="xref std std-keyword docutils literal notranslate"><span class="pre">type</span></code> statement declares a type alias, which is an instance
+of <a class="reference internal" href="../library/typing.html#typing.TypeAliasType" title="typing.TypeAliasType"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.TypeAliasType</span></code></a>.</p>
+<p>For example, the following statement creates a type alias:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">Point</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This code is roughly equivalent to:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">annotation</span><span class="o">-</span><span class="k">def</span> <span class="nf">VALUE_OF_Point</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+<span class="n">Point</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeAliasType</span><span class="p">(</span><span class="s2">&quot;Point&quot;</span><span class="p">,</span> <span class="n">VALUE_OF_Point</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">annotation-def</span></code> indicates an <a class="reference internal" href="executionmodel.html#annotation-scopes"><span class="std std-ref">annotation scope</span></a>, which behaves
+mostly like a function, but with several small differences.</p>
+<p>The value of the
+type alias is evaluated in the annotation scope. It is not evaluated when the
+type alias is created, but only when the value is accessed through the type alias's
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">__value__</span></code> attribute (see <a class="reference internal" href="executionmodel.html#lazy-evaluation"><span class="std std-ref">Lazy evaluation</span></a>).
+This allows the type alias to refer to names that are not yet defined.</p>
+<p>Type aliases may be made generic by adding a <a class="reference internal" href="compound_stmts.html#type-params"><span class="std std-ref">type parameter list</span></a>
+after the name. See <a class="reference internal" href="compound_stmts.html#generic-type-aliases"><span class="std std-ref">Generic type aliases</span></a> for more.</p>
+<p><code class="xref std std-keyword docutils literal notranslate"><span class="pre">type</span></code> is a <a class="reference internal" href="lexical_analysis.html#soft-keywords"><span class="std std-ref">soft keyword</span></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.12.</span></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt><span class="target" id="index-48"></span><a class="pep reference external" href="https://peps.python.org/pep-0695/"><strong>PEP 695</strong></a> - Type Parameter Syntax</dt><dd><p>Introduced the <code class="xref std std-keyword docutils literal notranslate"><span class="pre">type</span></code> statement and syntax for
+generic classes and functions.</p>
+</dd>
+</dl>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">7. Les instructions simples</a><ul>
+<li><a class="reference internal" href="#expression-statements">7.1. Les expressions</a></li>
+<li><a class="reference internal" href="#assignment-statements">7.2. Les assignations</a><ul>
+<li><a class="reference internal" href="#augmented-assignment-statements">7.2.1. Les assignations augmentées</a></li>
+<li><a class="reference internal" href="#annotated-assignment-statements">7.2.2. Les assignations annotées</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-assert-statement">7.3. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">assert</span></code></a></li>
+<li><a class="reference internal" href="#the-pass-statement">7.4. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">pass</span></code></a></li>
+<li><a class="reference internal" href="#the-del-statement">7.5. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">del</span></code></a></li>
+<li><a class="reference internal" href="#the-return-statement">7.6. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">return</span></code></a></li>
+<li><a class="reference internal" href="#the-yield-statement">7.7. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">yield</span></code></a></li>
+<li><a class="reference internal" href="#the-raise-statement">7.8. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">raise</span></code></a></li>
+<li><a class="reference internal" href="#the-break-statement">7.9. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">break</span></code></a></li>
+<li><a class="reference internal" href="#the-continue-statement">7.10. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">continue</span></code></a></li>
+<li><a class="reference internal" href="#the-import-statement">7.11. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a><ul>
+<li><a class="reference internal" href="#future-statements">7.11.1. L'instruction future</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-global-statement">7.12. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code></a></li>
+<li><a class="reference internal" href="#the-nonlocal-statement">7.13. L'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">nonlocal</span></code></a></li>
+<li><a class="reference internal" href="#the-type-statement">7.14. The <code class="xref std std-keyword docutils literal notranslate"><span class="pre">type</span></code> statement</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="expressions.html"
+                          title="Chapitre précédent"><span class="section-number">6. </span>Expressions</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="compound_stmts.html"
+                          title="Chapitre suivant"><span class="section-number">8. </span>Instructions composées</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/reference/simple_stmts.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="compound_stmts.html" title="8. Instructions composées"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="expressions.html" title="6. Expressions"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La référence du langage Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>Les instructions simples</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

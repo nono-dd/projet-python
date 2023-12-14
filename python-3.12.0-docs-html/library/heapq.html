@@ -1,0 +1,496 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="heapq — File de priorité basée sur un tas" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/heapq.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/heapq.py Ce module expose une implémentation de l'algorithme de file de priorité, basée sur un tas. Les tas sont des arbres binaires pour lesquels chaque valeur portée par un nœud..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/heapq.py Ce module expose une implémentation de l'algorithme de file de priorité, basée sur un tas. Les tas sont des arbres binaires pour lesquels chaque valeur portée par un nœud..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>heapq — File de priorité basée sur un tas &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="bisect — Algorithme de bissection de listes" href="bisect.html" />
+    <link rel="prev" title="collections.abc --- Classes de base abstraites pour les conteneurs" href="collections.abc.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/heapq.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — File de priorité basée sur un tas</a><ul>
+<li><a class="reference internal" href="#basic-examples">Exemples simples</a></li>
+<li><a class="reference internal" href="#priority-queue-implementation-notes">Notes d'implémentation de la file de priorité</a></li>
+<li><a class="reference internal" href="#theory">Théorie</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="collections.abc.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> --- Classes de base abstraites pour les conteneurs</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="bisect.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Algorithme de bissection de listes</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/heapq.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bisect.html" title="bisect — Algorithme de bissection de listes"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="collections.abc.html" title="collections.abc --- Classes de base abstraites pour les conteneurs"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" accesskey="U">Types de données</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — File de priorité basée sur un tas</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-heapq">
+<span id="heapq-heap-queue-algorithm"></span><h1><a class="reference internal" href="#module-heapq" title="heapq: Heap queue algorithm (a.k.a. priority queue)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code></a> — File de priorité basée sur un tas<a class="headerlink" href="#module-heapq" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/heapq.py">Lib/heapq.py</a></p>
+<hr class="docutils" />
+<p>Ce module expose une implémentation de l'algorithme de file de priorité, basée sur un tas.</p>
+<p>Les tas sont des arbres binaires pour lesquels chaque valeur portée par un nœud est inférieure ou égale à celle de ses deux fils. Cette implémentation utilise des tableaux pour lesquels <code class="docutils literal notranslate"><span class="pre">tas[k]</span> <span class="pre">&lt;=</span> <span class="pre">tas[2*k+1]</span></code> et <code class="docutils literal notranslate"><span class="pre">tas[k]</span> <span class="pre">&lt;=</span> <span class="pre">tas[2*k+2]</span></code> pour tout <em>k</em>, en commençant la numérotation à zéro.  Pour contenter l'opérateur de comparaison, les éléments inexistants sont considérés comme porteur d'une valeur infinie. L'intérêt du tas est que son plus petit élément est toujours la racine, <code class="docutils literal notranslate"><span class="pre">tas[0]</span></code>.</p>
+<p>L'API ci-dessous diffère de la file de priorité classique par deux aspects : (a) l'indiçage commence à zéro. Cela complexifie légèrement la relation entre l'indice d'un nœud et les indices de ses fils mais est alignée avec l'indiçage commençant à zéro que Python utilise. (b) La méthode <em>pop</em> renvoie le plus petit élément et non le plus grand (appelé « tas-min » dans les manuels scolaires ; le « tas-max » étant généralement plus courant dans la littérature car il permet le classement sans tampon).</p>
+<p>Ces deux points permettent d'aborder le tas comme une liste Python standard sans surprise : <code class="docutils literal notranslate"><span class="pre">heap[0]</span></code> est le plus petit élément et <code class="docutils literal notranslate"><span class="pre">heap.sort()</span></code> conserve l'invariant du tas !</p>
+<p>Pour créer un tas, utilisez une liste initialisée à <code class="docutils literal notranslate"><span class="pre">[]</span></code> ou bien utilisez une liste existante et transformez la en tas à l'aide de la fonction <a class="reference internal" href="#heapq.heapify" title="heapq.heapify"><code class="xref py py-func docutils literal notranslate"><span class="pre">heapify()</span></code></a>.</p>
+<p>Les fonctions suivantes sont fournies :</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="heapq.heappush">
+<span class="sig-prename descclassname"><span class="pre">heapq.</span></span><span class="sig-name descname"><span class="pre">heappush</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#heapq.heappush" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Introduit la valeur <em>item</em> dans le tas <em>heap</em>, en conservant l'invariance du tas.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="heapq.heappop">
+<span class="sig-prename descclassname"><span class="pre">heapq.</span></span><span class="sig-name descname"><span class="pre">heappop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heap</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#heapq.heappop" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Extraie le plus petit élément de <em>heap</em> en préservant l'invariant du tas. Si le tas est vide, une exception <a class="reference internal" href="exceptions.html#IndexError" title="IndexError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IndexError</span></code></a> est levée. Pour accéder au plus petit élément sans le retirer, utilisez <code class="docutils literal notranslate"><span class="pre">heap[0]</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="heapq.heappushpop">
+<span class="sig-prename descclassname"><span class="pre">heapq.</span></span><span class="sig-name descname"><span class="pre">heappushpop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#heapq.heappushpop" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Introduit l'élément <em>item</em> dans le tas, puis extraie le plus petit élément de <em>heap</em>. Cette action combinée est plus efficace que <a class="reference internal" href="#heapq.heappush" title="heapq.heappush"><code class="xref py py-func docutils literal notranslate"><span class="pre">heappush()</span></code></a> suivie par un appel séparé à <a class="reference internal" href="#heapq.heappop" title="heapq.heappop"><code class="xref py py-func docutils literal notranslate"><span class="pre">heappop()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="heapq.heapify">
+<span class="sig-prename descclassname"><span class="pre">heapq.</span></span><span class="sig-name descname"><span class="pre">heapify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#heapq.heapify" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Transforme une liste <em>x</em> en un tas, sans utiliser de tampon et en temps linéaire.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="heapq.heapreplace">
+<span class="sig-prename descclassname"><span class="pre">heapq.</span></span><span class="sig-name descname"><span class="pre">heapreplace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#heapq.heapreplace" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Extraie le plus petit élément de <em>heap</em> et introduit le nouvel élément <em>item</em>. La taille du tas ne change pas. Si le tas est vide, une exception <a class="reference internal" href="exceptions.html#IndexError" title="IndexError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IndexError</span></code></a> est levée.</p>
+<p>Cette opération en une étape est plus efficace qu'un appel à <a class="reference internal" href="#heapq.heappop" title="heapq.heappop"><code class="xref py py-func docutils literal notranslate"><span class="pre">heappop()</span></code></a> suivi d'un appel à <a class="reference internal" href="#heapq.heappush" title="heapq.heappush"><code class="xref py py-func docutils literal notranslate"><span class="pre">heappush()</span></code></a> et est plus appropriée lorsque le tas est de taille fixe. La combinaison <em>pop</em>/<em>push</em> renvoie toujours un élément du tas et le remplace par <em>item</em>.</p>
+<p>La valeur renvoyée peut être plus grande que l'élément <em>item</em> ajouté. Si cela n'est pas souhaitable, utilisez plutôt <a class="reference internal" href="#heapq.heappushpop" title="heapq.heappushpop"><code class="xref py py-func docutils literal notranslate"><span class="pre">heappushpop()</span></code></a> à la place. Sa combinaison <em>push</em>/<em>pop</em> renvoie le plus petit élément des deux valeurs et laisse la plus grande sur le tas.</p>
+</dd></dl>
+
+<p>Ce module contient également trois fonctions génériques utilisant les tas.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="heapq.merge">
+<span class="sig-prename descclassname"><span class="pre">heapq.</span></span><span class="sig-name descname"><span class="pre">merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">iterables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#heapq.merge" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fusionne plusieurs entrées ordonnées en une unique sortie ordonnée (par exemple, fusionne des entrées datées provenant de multiples journaux applicatifs). Renvoie un <a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">iterator</span></a> sur les valeurs ordonnées.</p>
+<p>Similaire à <code class="docutils literal notranslate"><span class="pre">sorted(itertools.chain(*iterables))</span></code> mais renvoie un itérable, ne stocke pas toutes les données en mémoire en une fois et suppose que chaque flux d'entrée est déjà classé (en ordre croissant).</p>
+<p>A deux arguments optionnels qui doivent être fournis par mot clef.</p>
+<p><em>key</em> spécifie une <a class="reference internal" href="../glossary.html#term-key-function"><span class="xref std std-term">key function</span></a> d'un argument utilisée pour extraire une clef de comparaison de chaque élément de la liste. La valeur par défaut est <code class="docutils literal notranslate"><span class="pre">None</span></code> (compare les éléments directement).</p>
+<p><em>reverse</em> est une valeur booléenne. Si elle est <code class="docutils literal notranslate"><span class="pre">True</span></code>, la liste d'éléments est fusionnée comme si toutes les comparaisons étaient inversées. Pour obtenir un comportement similaire à <code class="docutils literal notranslate"><span class="pre">sorted(itertools.chain(*iterables),</span> <span class="pre">reverse=True)</span></code>, tous les itérables doivent être classés par ordre décroissant.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>Ajout des paramètres optionnels <em>key</em> et <em>reverse</em>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="heapq.nlargest">
+<span class="sig-prename descclassname"><span class="pre">heapq.</span></span><span class="sig-name descname"><span class="pre">nlargest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#heapq.nlargest" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une liste contenant les <em>n</em> plus grands éléments du jeu de données défini par <em>iterable</em>. Si l'option <em>key</em> est fournie, celle-ci spécifie une fonction à un argument qui est utilisée pour extraire la clé de comparaison de chaque élément dans <em>iterable</em> (par exemple, <code class="docutils literal notranslate"><span class="pre">key=str.lower</span></code>). Équivalent à : <code class="docutils literal notranslate"><span class="pre">sorted(iterable,</span> <span class="pre">key=key,</span> <span class="pre">reverse=True)[:n]</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="heapq.nsmallest">
+<span class="sig-prename descclassname"><span class="pre">heapq.</span></span><span class="sig-name descname"><span class="pre">nsmallest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#heapq.nsmallest" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une liste contenant les <em>n</em> plus petits éléments du jeu de données défini par <em>iterable</em>. Si l'option <em>key</em> est fournie, celle-ci spécifie une fonction à un argument qui est utilisée pour extraire la clé de comparaison de chaque élément dans <em>iterable</em> (par exemple, <code class="docutils literal notranslate"><span class="pre">key=str.lower</span></code>). Équivalent à : <code class="docutils literal notranslate"><span class="pre">sorted(iterable,</span> <span class="pre">key=key)[:n]</span></code>.</p>
+</dd></dl>
+
+<p>Les deux fonctions précédentes sont les plus efficaces pour des petites valeurs de <em>n</em>. Pour de grandes valeurs, il est préférable d'utiliser la fonction <a class="reference internal" href="functions.html#sorted" title="sorted"><code class="xref py py-func docutils literal notranslate"><span class="pre">sorted()</span></code></a>. En outre, lorsque <code class="docutils literal notranslate"><span class="pre">n==1</span></code>, il est plus efficace d'utiliser les fonctions natives <a class="reference internal" href="functions.html#min" title="min"><code class="xref py py-func docutils literal notranslate"><span class="pre">min()</span></code></a> et <a class="reference internal" href="functions.html#max" title="max"><code class="xref py py-func docutils literal notranslate"><span class="pre">max()</span></code></a>. Si vous devez utiliser ces fonctions de façon répétée, il est préférable de transformer l'itérable en tas.</p>
+<section id="basic-examples">
+<h2>Exemples simples<a class="headerlink" href="#basic-examples" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Un <a class="reference external" href="https://fr.wikipedia.org/wiki/Tri_par_tas">tri par tas</a> peut être implémenté en introduisant toutes les valeurs dans un tas puis en effectuant l'extraction des éléments un par un :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">heapsort</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">h</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">heappush</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="p">[</span><span class="n">heappop</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="p">))]</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">heapsort</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+</pre></div>
+</div>
+<p>Ceci est similaire à <code class="docutils literal notranslate"><span class="pre">sorted(iterable)</span></code> mais, contrairement à <a class="reference internal" href="functions.html#sorted" title="sorted"><code class="xref py py-func docutils literal notranslate"><span class="pre">sorted()</span></code></a>, cette implémentation n'est pas stable.</p>
+<p>Les éléments d'un tas peuvent être des <em>n</em>-uplets. C'est pratique pour assigner des valeurs de comparaison (par exemple, des priorités de tâches) en plus de l'élément qui est suivi :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">heappush</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;write code&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">heappush</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;release product&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">heappush</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;write spec&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">heappush</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;create tests&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">heappop</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<span class="go">(1, &#39;write spec&#39;)</span>
+</pre></div>
+</div>
+</section>
+<section id="priority-queue-implementation-notes">
+<h2>Notes d'implémentation de la file de priorité<a class="headerlink" href="#priority-queue-implementation-notes" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Une <a class="reference external" href="https://fr.wikipedia.org/wiki/File_de_priorit%C3%A9">file de priorité</a> est une application courante des tas et présente plusieurs défis d'implémentation :</p>
+<ul class="simple">
+<li><p>Stabilité du classement : comment s'assurer que deux tâches avec la même priorité sont renvoyées dans l'ordre de leur ajout ?</p></li>
+<li><p>La comparaison des couples (priorité, tâche) échoue si les priorités sont identiques et que les tâches n'ont pas de relation d'ordre par défaut.</p></li>
+<li><p>Si la priorité d'une tâche change, comment la déplacer à sa nouvelle position dans le tas ?</p></li>
+<li><p>Si une tâche en attente doit être supprimée, comment la trouver et la supprimer de la file ?</p></li>
+</ul>
+<p>Une solution aux deux premiers problèmes consiste à stocker les entrées sous forme de liste à 3 éléments incluant la priorité, le numéro d'ajout et la tâche. Le numéro d'ajout sert à briser les égalités de telle sorte que deux tâches avec la même priorité sont renvoyées dans l'ordre de leur insertion. Puisque deux tâches ne peuvent jamais avoir le même numéro d'ajout, la comparaison des triplets ne va jamais chercher à comparer des tâches entre elles.</p>
+<p>Une autre solution au fait que les tâches ne possèdent pas de relation d'ordre est de créer une classe d'encapsulation qui ignore l'élément tâche et ne compare que le champ priorité :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">PrioritizedItem</span><span class="p">:</span>
+    <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">item</span><span class="p">:</span> <span class="n">Any</span><span class="o">=</span><span class="n">field</span><span class="p">(</span><span class="n">compare</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Le problème restant consiste à trouver une tâche en attente et modifier sa priorité ou la supprimer. Trouver une tâche peut être réalisé à l'aide d'un dictionnaire pointant vers une entrée dans la file.</p>
+<p>Supprimer une entrée ou changer sa priorité est plus difficile puisque cela romprait l'invariant de la structure de tas. Une solution possible est de marquer l'entrée comme supprimée et d'ajouter une nouvelle entrée avec sa priorité modifiée :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pq</span> <span class="o">=</span> <span class="p">[]</span>                         <span class="c1"># list of entries arranged in a heap</span>
+<span class="n">entry_finder</span> <span class="o">=</span> <span class="p">{}</span>               <span class="c1"># mapping of tasks to entries</span>
+<span class="n">REMOVED</span> <span class="o">=</span> <span class="s1">&#39;&lt;removed-task&gt;&#39;</span>      <span class="c1"># placeholder for a removed task</span>
+<span class="n">counter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>     <span class="c1"># unique sequence count</span>
+
+<span class="k">def</span> <span class="nf">add_task</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">priority</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="s1">&#39;Add a new task or update the priority of an existing task&#39;</span>
+    <span class="k">if</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">entry_finder</span><span class="p">:</span>
+        <span class="n">remove_task</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+    <span class="n">entry</span> <span class="o">=</span> <span class="p">[</span><span class="n">priority</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">task</span><span class="p">]</span>
+    <span class="n">entry_finder</span><span class="p">[</span><span class="n">task</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span>
+    <span class="n">heappush</span><span class="p">(</span><span class="n">pq</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">remove_task</span><span class="p">(</span><span class="n">task</span><span class="p">):</span>
+    <span class="s1">&#39;Mark an existing task as REMOVED.  Raise KeyError if not found.&#39;</span>
+    <span class="n">entry</span> <span class="o">=</span> <span class="n">entry_finder</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    <span class="n">entry</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">REMOVED</span>
+
+<span class="k">def</span> <span class="nf">pop_task</span><span class="p">():</span>
+    <span class="s1">&#39;Remove and return the lowest priority task. Raise KeyError if empty.&#39;</span>
+    <span class="k">while</span> <span class="n">pq</span><span class="p">:</span>
+        <span class="n">priority</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">task</span> <span class="o">=</span> <span class="n">heappop</span><span class="p">(</span><span class="n">pq</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">task</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">REMOVED</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">entry_finder</span><span class="p">[</span><span class="n">task</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">task</span>
+    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;pop from an empty priority queue&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="theory">
+<h2>Théorie<a class="headerlink" href="#theory" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les tas sont des tableaux pour lesquels <code class="docutils literal notranslate"><span class="pre">a[k]</span> <span class="pre">&lt;=</span> <span class="pre">a[2*k+1]</span></code> et <code class="docutils literal notranslate"><span class="pre">a[k]</span> <span class="pre">&lt;=</span> <span class="pre">a[2*k+2]</span></code> pour tout <em>k</em> en comptant les éléments à partir de 0. Pour simplifier la comparaison, les éléments inexistants sont considérés comme étant infinis. L'intérêt des tas est que <code class="docutils literal notranslate"><span class="pre">a[0]</span></code> est toujours leur plus petit élément.</p>
+<p>L'invariant étrange ci-dessus est une représentation efficace en mémoire d'un tournoi. Les nombres ci-dessous sont <em>k</em> et non <code class="docutils literal notranslate"><span class="pre">a[k]</span></code> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>                               <span class="mi">0</span>
+
+              <span class="mi">1</span>                                 <span class="mi">2</span>
+
+      <span class="mi">3</span>               <span class="mi">4</span>                <span class="mi">5</span>               <span class="mi">6</span>
+
+  <span class="mi">7</span>       <span class="mi">8</span>       <span class="mi">9</span>       <span class="mi">10</span>      <span class="mi">11</span>      <span class="mi">12</span>      <span class="mi">13</span>      <span class="mi">14</span>
+
+<span class="mi">15</span> <span class="mi">16</span>   <span class="mi">17</span> <span class="mi">18</span>   <span class="mi">19</span> <span class="mi">20</span>   <span class="mi">21</span> <span class="mi">22</span>   <span class="mi">23</span> <span class="mi">24</span>   <span class="mi">25</span> <span class="mi">26</span>   <span class="mi">27</span> <span class="mi">28</span>   <span class="mi">29</span> <span class="mi">30</span>
+</pre></div>
+</div>
+<p>Dans l'arbre ci-dessus, chaque nœud <em>k</em> a pour enfants <code class="docutils literal notranslate"><span class="pre">2*k+1</span></code> et <code class="docutils literal notranslate"><span class="pre">2*k+2</span></code>. Dans les tournois binaires habituels dans les compétitions sportives, chaque nœud est le vainqueur des deux nœuds inférieurs et nous pouvons tracer le chemin du vainqueur le long de l'arbre afin de voir qui étaient ses adversaires. Cependant, dans de nombreuses applications informatiques de ces tournois, nous n'avons pas besoin de produire l'historique du vainqueur. Afin d'occuper moins de mémoire, on remplace le vainqueur lors de sa promotion par un autre élément à un plus bas niveau. La règle devient alors qu'un nœud et les deux nœuds qu'il chapeaute contiennent trois éléments différents, mais le nœud supérieur « gagne » contre les deux nœuds inférieurs.</p>
+<p>Si cet invariant de tas est vérifié à tout instant, alors l'élément à l'indice 0 est le vainqueur global. L'algorithme le plus simple pour le retirer et trouver le vainqueur « suivant » consiste à déplacer un perdant (par exemple le nœud 30 dans le diagramme ci-dessus) à la position 0, puis à faire redescendre cette nouvelle racine dans l'arbre en échangeant sa valeur avec celle d'un de ses fils jusqu'à ce que l'invariant soit rétabli. Cette approche a un coût logarithmique par rapport au nombre total d'éléments dans l'arbre. En itérant sur tous les éléments, le classement s'effectue en O(n log n) opérations.</p>
+<p>Une propriété agréable de cet algorithme est qu'il est possible d'insérer efficacement de nouveaux éléments en cours de classement, du moment que les éléments insérés ne sont pas « meilleurs » que le dernier élément qui a été extrait. Ceci s'avère très utile dans des simulations où l'arbre contient la liste des événements arrivants et que la condition de « victoire » est le plus petit temps d'exécution planifié. Lorsqu'un événement programme l'exécution d'autres événements, ceux-ci sont planifiés pour le futur et peuvent donc rejoindre le tas. Ainsi, le tas est une bonne structure pour implémenter un ordonnanceur (et c'est ce que j'ai utilisé pour mon séquenceur MIDI ☺).</p>
+<p>Plusieurs structures ont été étudiées en détail pour implémenter des ordonnanceurs et les tas sont bien adaptés : ils sont raisonnablement rapides, leur vitesse est presque constante et le pire cas ne diffère pas trop du cas moyen. S'il existe des représentations qui sont plus efficaces en général, les pires cas peuvent être terriblement mauvais.</p>
+<p>Les tas sont également très utiles pour ordonner les données sur de gros disques. Vous savez probablement qu'un gros tri implique la production de séquences pré-classées (dont la taille est généralement liée à la quantité de mémoire CPU disponible), suivie par une passe de fusion qui est généralement organisée de façon très intelligente <a class="footnote-reference brackets" href="#id2" id="id1">1</a>. Il est très important que le classement initial produise des séquences les plus longues possibles. Les tournois sont une bonne façon d'arriver à ce résultat. Si, en utilisant toute la mémoire disponible pour stocker un tournoi, vous remplacez et faites percoler les éléments qui s'avèrent acceptables pour la séquence courante, vous produirez des séquences d'une taille égale au double de la mémoire pour une entrée aléatoire et bien mieux pour une entrée approximativement triée.</p>
+<p>Qui plus est, si vous écrivez l'élément 0 sur le disque et que vous recevez en entrée un élément qui n'est pas adapté au tournoi actuel (parce que sa valeur « gagne » par rapport à la dernière valeur de sortie), alors il ne peut pas être stocké dans le tas donc la taille de ce dernier diminue. La mémoire libérée peut être réutilisée immédiatement pour progressivement construire un deuxième tas, qui croit à la même vitesse que le premier décroît. Lorsque le premier tas a complètement disparu, vous échangez les tas et démarrez une nouvelle séquence. Malin et plutôt efficace !</p>
+<p>Pour résumer, les tas sont des structures de données qu'il est bon de connaître. Je les utilise dans quelques applications et je pense qu'il est bon de garder le module <em>heap</em> sous le coude. ☺</p>
+<p class="rubric">Notes</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Les algorithmes de répartition de charge pour les disques, courants de nos jours, sont plus embêtants qu'utiles, en raison de la capacité des disques à réaliser des accès aléatoires. Sur les périphériques qui ne peuvent faire que de la lecture séquentielle, comme les gros lecteurs à bandes, le besoin était différent et il fallait être malin pour s'assurer (bien à l'avance) que chaque mouvement de bande serait le plus efficace possible (c'est-à-dire participerait au mieux à l'« avancée » de la fusion). Certaines cassettes pouvaient même lire à l'envers et cela était aussi utilisé pour éviter de remonter dans le temps. Croyez-moi, les bons tris sur bandes étaient spectaculaires à regarder ! Depuis la nuit des temps, trier a toujours été le Grand Art ! ☺</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — File de priorité basée sur un tas</a><ul>
+<li><a class="reference internal" href="#basic-examples">Exemples simples</a></li>
+<li><a class="reference internal" href="#priority-queue-implementation-notes">Notes d'implémentation de la file de priorité</a></li>
+<li><a class="reference internal" href="#theory">Théorie</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="collections.abc.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> --- Classes de base abstraites pour les conteneurs</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="bisect.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Algorithme de bissection de listes</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/heapq.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bisect.html" title="bisect — Algorithme de bissection de listes"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="collections.abc.html" title="collections.abc --- Classes de base abstraites pour les conteneurs"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="datatypes.html" >Types de données</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — File de priorité basée sur un tas</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

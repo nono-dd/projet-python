@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="hmac — Authentification de messages par hachage en combinaison avec une clé secrète" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/hmac.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/hmac.py Ce module implémente l'algorithme HMAC tel que décrit par la RFC 2104. Un objet HMAC a les méthodes suivantes : Un objet code d'authentification de message(HMAC) possède l..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/hmac.py Ce module implémente l'algorithme HMAC tel que décrit par la RFC 2104. Un objet HMAC a les méthodes suivantes : Un objet code d'authentification de message(HMAC) possède l..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>hmac — Authentification de messages par hachage en combinaison avec une clé secrète &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="secrets — Générer des nombres aléatoires de façon sécurisée pour la gestion des secrets" href="secrets.html" />
+    <link rel="prev" title="hashlib --- Algorithmes de hachage sécurisés et synthèse de messages" href="hashlib.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/hmac.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="hashlib.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> --- Algorithmes de hachage sécurisés et synthèse de messages</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="secrets.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Générer des nombres aléatoires de façon sécurisée pour la gestion des secrets</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/hmac.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="secrets.html" title="secrets — Générer des nombres aléatoires de façon sécurisée pour la gestion des secrets"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="hashlib.html" title="hashlib --- Algorithmes de hachage sécurisés et synthèse de messages"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="crypto.html" accesskey="U">Service de cryptographie</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Authentification de messages par hachage en combinaison avec une clé secrète</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-hmac">
+<span id="hmac-keyed-hashing-for-message-authentication"></span><h1><a class="reference internal" href="#module-hmac" title="hmac: Keyed-Hashing for Message Authentication (HMAC) implementation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code></a> — Authentification de messages par hachage en combinaison avec une clé secrète<a class="headerlink" href="#module-hmac" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/hmac.py">Lib/hmac.py</a></p>
+<hr class="docutils" />
+<p>Ce module implémente l'algorithme HMAC tel que décrit par la <span class="target" id="index-2"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2104.html"><strong>RFC 2104</strong></a>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="hmac.new">
+<span class="sig-prename descclassname"><span class="pre">hmac.</span></span><span class="sig-name descname"><span class="pre">new</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digestmod</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hmac.new" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie un nouvel objet HMAC.  <em>key</em> est un objet <em>byte</em> ou <em>bytearray</em> représentant la clé secrète.  Si <em>msg</em> est présent, un appel à <code class="docutils literal notranslate"><span class="pre">update(msg)</span></code> est effectué. <em>digestmod</em> permet de choisir l’algorithme à utiliser par l’objet HMAC, il accepte un nom de fonction de hachage (peut être tout ce qui convient à <a class="reference internal" href="hashlib.html#hashlib.new" title="hashlib.new"><code class="xref py py-func docutils literal notranslate"><span class="pre">hashlib.new()</span></code></a>), un constructeur de fonction de hachage ou un module implémentant la PEP 247. Bien qu’il soit après <em>msg</em>, <em>digestmod</em> est un paramètre obligatoire.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.4: </span>Le paramètre <em>key</em> peut être un <em>byte</em> ou un objet <em>bytearray</em>. Le paramètre <em>msg</em> peut être de n'importe quel type pris en charge par <a class="reference internal" href="hashlib.html#module-hashlib" title="hashlib: Secure hash and message digest algorithms."><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code></a>. Le paramètre <em>digestmod</em> peut être le nom d'un algorithme de hachage.</p>
+</div>
+<div class="deprecated-removed">
+<p><span class="versionmodified">Obsolète depuis la version 3.4, supprimé dans la version 3.8: </span>MD5 en tant qu’algorithme cryptographique par défaut implicite pour <em>digestmod</em> est obsolète. Le paramètre <em>digestmod</em> est maintenant requis.  Passez-le en argument nommé pour éviter la bizarrerie que ça donnerait quand vous n'avez pas un <em>msg</em> initial.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hmac.digest">
+<span class="sig-prename descclassname"><span class="pre">hmac.</span></span><span class="sig-name descname"><span class="pre">digest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hmac.digest" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie le code d'authentification de <em>msg</em>, pour la clé secrète <em>key</em> et à l'algorithme <em>digest</em> donné. La fonction est équivalente à <code class="docutils literal notranslate"><span class="pre">HMAC(key,</span> <span class="pre">msg,</span> <span class="pre">digest).digest()</span></code>, mais elle utilise une implémentation optimisée en C ou <em>inline</em>, qui est plus rapide pour les messages dont la taille leur permet de tenir en mémoire vive. Les paramètres <em>key</em>, <em>msg</em> et <em>digest</em> ont la même signification que pour <a class="reference internal" href="#hmac.new" title="hmac.new"><code class="xref py py-func docutils literal notranslate"><span class="pre">new()</span></code></a>.</p>
+<p>Détail d'implémentation CPython, l'implémentation C optimisée n'est utilisée que lorsque le <em>digest</em> est une chaîne de caractères et le nom d'un algorithme de hachage implémenté dans OpenSSL.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.7.</span></p>
+</div>
+</dd></dl>
+
+<p>Un objet HMAC a les méthodes suivantes :</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hmac.HMAC.update">
+<span class="sig-prename descclassname"><span class="pre">HMAC.</span></span><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hmac.HMAC.update" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Met à jour l'objet HMAC avec <em>msg</em>. Des appels répétés sont équivalents à un seul appel avec la concaténation de tous les arguments : <code class="docutils literal notranslate"><span class="pre">m.update(a);</span> <span class="pre">m.update(b)</span></code> est équivalent à <code class="docutils literal notranslate"><span class="pre">m.update(a</span> <span class="pre">+</span> <span class="pre">b)</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.4: </span>Le paramètre <em>msg</em> peut être de n'importe quel type géré par <a class="reference internal" href="hashlib.html#module-hashlib" title="hashlib: Secure hash and message digest algorithms."><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hmac.HMAC.digest">
+<span class="sig-prename descclassname"><span class="pre">HMAC.</span></span><span class="sig-name descname"><span class="pre">digest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hmac.HMAC.digest" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie le condensat des octets passés à la méthode <a class="reference internal" href="#hmac.HMAC.update" title="hmac.HMAC.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> jusque là. L'objet <em>bytes</em> renvoyé sera de la même longueur que la <em>digest_size</em> de la fonction de hachage donnée au constructeur. Il peut contenir des octets qui ne sont pas dans la table ASCII, y compris des octets NUL.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>When comparing the output of <a class="reference internal" href="#hmac.digest" title="hmac.digest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">digest()</span></code></a> to an externally supplied
+digest during a verification routine, it is recommended to use the
+<a class="reference internal" href="#hmac.compare_digest" title="hmac.compare_digest"><code class="xref py py-func docutils literal notranslate"><span class="pre">compare_digest()</span></code></a> function instead of the <code class="docutils literal notranslate"><span class="pre">==</span></code> operator
+to reduce the vulnerability to timing attacks.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hmac.HMAC.hexdigest">
+<span class="sig-prename descclassname"><span class="pre">HMAC.</span></span><span class="sig-name descname"><span class="pre">hexdigest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hmac.HMAC.hexdigest" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Comme <a class="reference internal" href="#hmac.digest" title="hmac.digest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">digest()</span></code></a> sauf que ce condensat est renvoyé en tant que chaîne de caractères de taille doublée contenant seulement des chiffres hexadécimaux. Cela permet d’échanger le résultat sans problèmes par e-mail ou dans d'autres environnements ne gérant pas les données binaires.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>When comparing the output of <a class="reference internal" href="#hmac.HMAC.hexdigest" title="hmac.HMAC.hexdigest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">hexdigest()</span></code></a> to an externally supplied
+digest during a verification routine, it is recommended to use the
+<a class="reference internal" href="#hmac.compare_digest" title="hmac.compare_digest"><code class="xref py py-func docutils literal notranslate"><span class="pre">compare_digest()</span></code></a> function instead of the <code class="docutils literal notranslate"><span class="pre">==</span></code> operator
+to reduce the vulnerability to timing attacks.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hmac.HMAC.copy">
+<span class="sig-prename descclassname"><span class="pre">HMAC.</span></span><span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hmac.HMAC.copy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une copie (un clone) de l'objet HMAC. C'est utile pour calculer de manière efficace les empreintes cryptographiques de chaînes de caractères qui ont en commun une sous-chaîne initiale.</p>
+</dd></dl>
+
+<p>Un objet <em>code d'authentification de message</em> (HMAC) possède les attributs suivants :</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hmac.HMAC.digest_size">
+<span class="sig-prename descclassname"><span class="pre">HMAC.</span></span><span class="sig-name descname"><span class="pre">digest_size</span></span><a class="headerlink" href="#hmac.HMAC.digest_size" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La taille du code d'authentification (c.-à-d. de l'empreinte cryptographique) en octets.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hmac.HMAC.block_size">
+<span class="sig-prename descclassname"><span class="pre">HMAC.</span></span><span class="sig-name descname"><span class="pre">block_size</span></span><a class="headerlink" href="#hmac.HMAC.block_size" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La taille interne d'un bloc de l'algorithme de hachage en octets.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.4.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hmac.HMAC.name">
+<span class="sig-prename descclassname"><span class="pre">HMAC.</span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#hmac.HMAC.name" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le nom canonique de ce HMAC, toujours en lettres minuscules, par exemple <code class="docutils literal notranslate"><span class="pre">hmac-md5</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.4.</span></p>
+</div>
+</dd></dl>
+
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.9: </span>Les attributs <code class="docutils literal notranslate"><span class="pre">HMAC.digest_cons</span></code>, <code class="docutils literal notranslate"><span class="pre">HMAC.inner</span></code> et <code class="docutils literal notranslate"><span class="pre">HMAC.outer</span></code> (non documentés) sont des détails d'implémentation internes et seront supprimés en Python 3.10.</p>
+</div>
+<p>Ce module fournit également la fonction utilitaire suivante :</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="hmac.compare_digest">
+<span class="sig-prename descclassname"><span class="pre">hmac.</span></span><span class="sig-name descname"><span class="pre">compare_digest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hmac.compare_digest" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">==</span> <span class="pre">b</span></code>. Cette fonction a été conçue pour prévenir les attaques temporelles en évitant l'implémentation de courts-circuits basés sur le contenu, ce qui la rend appropriée pour de la cryptographie. <em>a</em> et <em>b</em> doivent être du même type : soit <a class="reference internal" href="stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> (caractères ASCII seulement, comme retourné par <a class="reference internal" href="#hmac.HMAC.hexdigest" title="hmac.HMAC.hexdigest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">HMAC.hexdigest()</span></code></a> par exemple), ou <a class="reference internal" href="../glossary.html#term-bytes-like-object"><span class="xref std std-term">bytes-like object</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Si <em>a</em> et <em>b</em> sont de longueurs différentes ou si une erreur se produit, une attaque temporelle pourrait en théorie obtenir des informations sur les types et longueurs de <em>a</em> et de <em>b</em>, mais pas sur leurs valeurs.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.3.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.10: </span>Cette fonction utilise la fonction <code class="docutils literal notranslate"><span class="pre">CRYPTO_memcmp()</span></code> de OpenSSL quand celle-ci est disponible.</p>
+</div>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt>Module <a class="reference internal" href="hashlib.html#module-hashlib" title="hashlib: Secure hash and message digest algorithms."><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code></a></dt><dd><p>Le module Python fournissant des fonctions de hachage sécurisé.</p>
+</dd>
+</dl>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="hashlib.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> --- Algorithmes de hachage sécurisés et synthèse de messages</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="secrets.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Générer des nombres aléatoires de façon sécurisée pour la gestion des secrets</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/hmac.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="secrets.html" title="secrets — Générer des nombres aléatoires de façon sécurisée pour la gestion des secrets"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="hashlib.html" title="hashlib --- Algorithmes de hachage sécurisés et synthèse de messages"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="crypto.html" >Service de cryptographie</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Authentification de messages par hachage en combinaison avec une clé secrète</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,1264 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="Exceptions natives" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/exceptions.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="En python, une exception est une instance d'une classe héritée de BaseException. Dans un bloc try, la clause except traite non seulement la classe d'exception qu'elle mentionne, mais aussi toutes l..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="En python, une exception est une instance d'une classe héritée de BaseException. Dans un bloc try, la clause except traite non seulement la classe d'exception qu'elle mentionne, mais aussi toutes l..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>Exceptions natives &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Services de Manipulation de Texte" href="text.html" />
+    <link rel="prev" title="Types natifs" href="stdtypes.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/exceptions.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Exceptions natives</a><ul>
+<li><a class="reference internal" href="#exception-context">Contexte des exceptions</a></li>
+<li><a class="reference internal" href="#inheriting-from-built-in-exceptions">Hériter des exceptions natives</a></li>
+<li><a class="reference internal" href="#base-classes">Classes mères</a></li>
+<li><a class="reference internal" href="#concrete-exceptions">Exceptions concrètes</a><ul>
+<li><a class="reference internal" href="#os-exceptions">Exceptions système</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#warnings">Avertissements</a></li>
+<li><a class="reference internal" href="#exception-groups">Exception groups</a></li>
+<li><a class="reference internal" href="#exception-hierarchy">Hiérarchie des exceptions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="stdtypes.html"
+                          title="Chapitre précédent">Types natifs</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="text.html"
+                          title="Chapitre suivant">Services de Manipulation de Texte</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/exceptions.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="text.html" title="Services de Manipulation de Texte"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="stdtypes.html" title="Types natifs"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">La bibliothèque standard</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Exceptions natives</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="built-in-exceptions">
+<span id="bltin-exceptions"></span><h1>Exceptions natives<a class="headerlink" href="#built-in-exceptions" title="Lien permanent vers ce titre">¶</a></h1>
+<p id="index-0">En python, une exception est une instance d'une classe héritée de <a class="reference internal" href="#BaseException" title="BaseException"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseException</span></code></a>. Dans un bloc <a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">try</span></code></a>, la clause  <a class="reference internal" href="../reference/compound_stmts.html#except"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">except</span></code></a> traite non seulement la classe d'exception qu'elle mentionne, mais aussi toutes les classes dérivées de cette classe (contrairement à ses classes mères).  Deux classes qui ne sont pas liées par héritage ne sont jamais équivalentes, même si elles ont le même nom.</p>
+<p id="index-1">Les exceptions natives présentes ci-dessous peuvent être levées par l'interpréteur ou par les fonctions natives. Sauf mention contraire, une &quot;valeur associée&quot; indique la cause de l'erreur. Cela peut être une chaîne ou un <em>n</em>-uplet contenant plusieurs éléments d'information (e.g., un code d'erreur ou un message explicatif). Cette valeur associée est généralement donnée en argument du constructeur de la classe.</p>
+<p>Du code utilisateur peut lever des exceptions natives. Cela peut être utilisé pour tester un gestionnaire d'exception ou pour rapporter une condition d'erreur &quot;comme si&quot; c'était l'interpréteur qui levait cette exception ; mais attention car rien n'empêche du code utilisateur de lever une erreur inappropriée.</p>
+<p>Les classes d'exception natives peuvent être héritées pour définir de nouvelles exceptions ; les programmeurs sont encouragés à faire dériver les nouvelles exceptions de la classe <a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> ou d'une de ses sous-classes, et non de <a class="reference internal" href="#BaseException" title="BaseException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BaseException</span></code></a>. Plus d'informations sur la définition des exceptions sont disponibles dans le Tutoriel Python au chapitre <a class="reference internal" href="../tutorial/errors.html#tut-userexceptions"><span class="std std-ref">Exceptions définies par l'utilisateur</span></a>.</p>
+<section id="exception-context">
+<h2>Contexte des exceptions<a class="headerlink" href="#exception-context" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Quand une exception est levée pendant qu'une autre exception est déjà en traitement, l'attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">__context__</span></code> de la nouvelle exception est automatiquement affecté à l'exception qui est en cours de traitement. Une exception peut être traitée quand une clause <a class="reference internal" href="../reference/compound_stmts.html#except"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">except</span></code></a> ou <a class="reference internal" href="../reference/compound_stmts.html#finally"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">finally</span></code></a>, ou une instruction <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> est utilisée.</p>
+<p>Ce contexte implicite d'exception peut être complété par une cause explicite en utilisant <code class="xref std std-keyword docutils literal notranslate"><span class="pre">from</span></code> avec <a class="reference internal" href="../reference/simple_stmts.html#raise"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">raise</span></code></a> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">raise</span> <span class="n">new_exc</span> <span class="kn">from</span> <span class="nn">original_exc</span>
+</pre></div>
+</div>
+<p>L'expression suivant <a class="reference internal" href="../reference/simple_stmts.html#raise"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">from</span></code></a> doit être une exception ou <code class="docutils literal notranslate"><span class="pre">None</span></code>. Elle sera assignée en tant que <code class="xref py py-attr docutils literal notranslate"><span class="pre">__cause__</span></code> dans l'exception levée. Changer <code class="xref py py-attr docutils literal notranslate"><span class="pre">__cause__</span></code> change aussi implicitement l'attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">__suppress_context__</span></code> à <code class="docutils literal notranslate"><span class="pre">True</span></code>, de sorte que l'utilisation de <code class="docutils literal notranslate"><span class="pre">raise</span> <span class="pre">new_exc</span> <span class="pre">from</span> <span class="pre">None</span></code> remplace bien l'ancienne exception avec la nouvelle à des fins d'affichage (par exemple, convertir <a class="reference internal" href="#KeyError" title="KeyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a> en <a class="reference internal" href="#AttributeError" title="AttributeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code></a>), tout en laissant l'ancienne exception disponible dans <code class="xref py py-attr docutils literal notranslate"><span class="pre">__context__</span></code> pour introspection lors du débogage.</p>
+<p>Le code d'affichage par défaut de la trace d'appels montre ces exceptions chaînées en plus de la trace de l'exception elle-même. Si elle est présente, une exception chaînée explicitement dans <code class="xref py py-attr docutils literal notranslate"><span class="pre">__cause__</span></code> est toujours affichée. Une exception implicitement chaînée dans <code class="xref py py-attr docutils literal notranslate"><span class="pre">__context__</span></code> n'est affichée que si <code class="xref py py-attr docutils literal notranslate"><span class="pre">__cause__</span></code> est <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a> et <code class="xref py py-attr docutils literal notranslate"><span class="pre">__suppress_context__</span></code> est faux.</p>
+<p>Dans les deux cas, l'exception elle-même est toujours affichée après toutes les exceptions enchaînées, de sorte que la dernière ligne de la trace d'appels montre toujours la dernière exception qui a été levée.</p>
+</section>
+<section id="inheriting-from-built-in-exceptions">
+<h2>Hériter des exceptions natives<a class="headerlink" href="#inheriting-from-built-in-exceptions" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le code de l'utilisateur peut créer des sous-classes qui dérivent d'un type d'exception. Il est recommandé de ne dériver que d'un seul type d'exception à la fois pour éviter des conflits possibles dans la façon dont les classes mères traitent l'argument <code class="docutils literal notranslate"><span class="pre">args</span></code> ainsi que des incompatibilités potentielles avec l'utilisation de la mémoire.</p>
+<div class="impl-detail compound">
+<p><strong>Particularité de l'implémentation CPython :</strong> La majorité des exceptions natives sont implémentées en C pour des raisons d'efficacité, voir <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Objects/exceptions.c">Objects/exceptions.c</a>. L'architecture interne de certaines est telle que cela rend impossible la création de sous-classes qui dérivent de plusieurs types d'exceptions. L'agencement de la mémoire est un détail d'implémentation qui est sujet à changement d'une version de Python à l'autre, ce qui peut poser conflit dans le futur. Il est donc déconseillé de dériver de plusieurs types d'exceptions.</p>
+</div>
+</section>
+<section id="base-classes">
+<h2>Classes mères<a class="headerlink" href="#base-classes" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les exceptions suivantes sont utilisées principalement en tant que classes mères pour d'autres exceptions.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="BaseException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BaseException</span></span><a class="headerlink" href="#BaseException" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La classe mère pour toutes les exceptions natives. Elle n'est pas vouée à être héritée directement par des classes utilisateur (pour cela, utilisez <a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a>). Si <a class="reference internal" href="stdtypes.html#str" title="str"><code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code></a> est appelée sur une instance de cette classe, la représentation du ou des argument(s) de l'instance est retournée, ou la chaîne vide s'il n'y avait pas d'arguments.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BaseException.args">
+<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#BaseException.args" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le <em>n</em>-uplet d'arguments donné au constructeur d'exception. Certaines exceptions natives (comme <a class="reference internal" href="#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>) attendent un certain nombre d'arguments et attribuent une signification spéciale aux éléments de ce <em>n</em>-uplet, alors que d'autres ne sont généralement appelées qu'avec une seule chaîne de caractères rendant un message d'erreur.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseException.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tb</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseException.with_traceback" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette méthode affecte <em>tb</em> comme la nouvelle trace d'appels de l'exception et renvoie l'objet exception. Elle était utilisée de façon plus courante avant que la fonctionnalité de chaînage des exceptions de la <span class="target" id="index-20"></span><a class="pep reference external" href="https://peps.python.org/pep-3134/"><strong>PEP 3134</strong></a> devienne disponible. L'exemple suivant démontre comment convertir une instance de <code class="docutils literal notranslate"><span class="pre">SomeException</span></code> en une instance de <code class="docutils literal notranslate"><span class="pre">OtherException</span></code> tout en préservant la pile d'appels. Une fois l'exception levée, le cadre courant est empilé sur la trace d'appels de <code class="docutils literal notranslate"><span class="pre">OtherException</span></code>, comme cela se serait produit pour la trace d'appels de <code class="docutils literal notranslate"><span class="pre">SomeException</span></code> si on l'avait laissée se propager jusqu'à l'appelant</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="o">...</span>
+<span class="k">except</span> <span class="n">SomeException</span><span class="p">:</span>
+    <span class="n">tb</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exception</span><span class="p">()</span><span class="o">.</span><span class="n">__traceback__</span>
+    <span class="k">raise</span> <span class="n">OtherException</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">with_traceback</span><span class="p">(</span><span class="n">tb</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseException.add_note">
+<span class="sig-name descname"><span class="pre">add_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseException.add_note" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Add the string <code class="docutils literal notranslate"><span class="pre">note</span></code> to the exception's notes which appear in the standard
+traceback after the exception string. A <a class="reference internal" href="#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> is raised if <code class="docutils literal notranslate"><span class="pre">note</span></code>
+is not a string.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.11.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BaseException.__notes__">
+<span class="sig-name descname"><span class="pre">__notes__</span></span><a class="headerlink" href="#BaseException.__notes__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>A list of the notes of this exception, which were added with <a class="reference internal" href="#BaseException.add_note" title="BaseException.add_note"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_note()</span></code></a>.
+This attribute is created when <a class="reference internal" href="#BaseException.add_note" title="BaseException.add_note"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_note()</span></code></a> is called.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.11.</span></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="Exception">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Exception</span></span><a class="headerlink" href="#Exception" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Toutes les exceptions natives, qui n'entraînent pas une sortie du système dérivent de cette classe. Toutes les exceptions définies par l'utilisateur devraient également être dérivées de cette classe.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ArithmeticError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ArithmeticError</span></span><a class="headerlink" href="#ArithmeticError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La classe mère pour les exceptions natives qui sont levées pour diverses erreurs arithmétiques : <a class="reference internal" href="#OverflowError" title="OverflowError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OverflowError</span></code></a>, <a class="reference internal" href="#ZeroDivisionError" title="ZeroDivisionError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code></a>, <a class="reference internal" href="#FloatingPointError" title="FloatingPointError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">FloatingPointError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="BufferError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BufferError</span></span><a class="headerlink" href="#BufferError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une opération liée à un <a class="reference internal" href="../c-api/buffer.html#bufferobjects"><span class="std std-ref">tampon</span></a> ne peut pas être exécutée.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="LookupError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LookupError</span></span><a class="headerlink" href="#LookupError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La classe mère pour les exceptions qui sont levées lorsqu'une clé ou un index utilisé sur un tableau de correspondances ou une séquence est invalide : <a class="reference internal" href="#IndexError" title="IndexError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IndexError</span></code></a>, <a class="reference internal" href="#KeyError" title="KeyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a>. Peut être levée directement par <a class="reference internal" href="codecs.html#codecs.lookup" title="codecs.lookup"><code class="xref py py-func docutils literal notranslate"><span class="pre">codecs.lookup()</span></code></a>.</p>
+</dd></dl>
+
+</section>
+<section id="concrete-exceptions">
+<h2>Exceptions concrètes<a class="headerlink" href="#concrete-exceptions" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les exceptions suivantes sont celles qui sont habituellement levées.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="AssertionError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AssertionError</span></span><a class="headerlink" href="#AssertionError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p id="index-3">Levée lorsqu'une instruction <a class="reference internal" href="../reference/simple_stmts.html#assert"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">assert</span></code></a> échoue.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="AttributeError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AttributeError</span></span><a class="headerlink" href="#AttributeError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une référence ou une assignation d'attribut (voir <a class="reference internal" href="../reference/expressions.html#attribute-references"><span class="std std-ref">Références à des attributs</span></a>) échoue. (Lorsqu'un objet ne supporte pas du tout la référence ou l'assignation d'attribut, <a class="reference internal" href="#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>  est levé.)</p>
+<p>Les attributs <code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code> et <code class="xref py py-attr docutils literal notranslate"><span class="pre">obj</span></code> peuvent être définis uniquement à l'aide d'arguments nommés passés au constructeur. Lorsqu'ils sont définis, ils représentent respectivement le nom de l'attribut pour lequel il y a eu une tentative d'accès et l'objet qui a été accédé pour cet attribut.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.10: </span>Ajout des attributs <code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code> et <code class="xref py py-attr docutils literal notranslate"><span class="pre">obj</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="EOFError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EOFError</span></span><a class="headerlink" href="#EOFError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsque la fonction <a class="reference internal" href="functions.html#input" title="input"><code class="xref py py-func docutils literal notranslate"><span class="pre">input()</span></code></a> atteint une condition de fin de fichier (EOF) sans lire aucune donnée. (N.B. : les méthodes <code class="xref py py-meth docutils literal notranslate"><span class="pre">io.IOBase.read()</span></code> et <a class="reference internal" href="io.html#io.IOBase.readline" title="io.IOBase.readline"><code class="xref py py-meth docutils literal notranslate"><span class="pre">io.IOBase.readline()</span></code></a> retournent une chaîne vide lorsqu'elles atteignent EOF.)</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="FloatingPointError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FloatingPointError</span></span><a class="headerlink" href="#FloatingPointError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>N’est pas utilisé pour le moment.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="GeneratorExit">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GeneratorExit</span></span><a class="headerlink" href="#GeneratorExit" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'un <a class="reference internal" href="../glossary.html#term-generator"><span class="xref std std-term">generator</span></a> ou une <a class="reference internal" href="../glossary.html#term-coroutine"><span class="xref std std-term">coroutine</span></a> est fermé, voir <a class="reference internal" href="../reference/expressions.html#generator.close" title="generator.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generator.close()</span></code></a> et <a class="reference internal" href="../reference/datamodel.html#coroutine.close" title="coroutine.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">coroutine.close()</span></code></a>. Elle hérite directement de <a class="reference internal" href="#BaseException" title="BaseException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BaseException</span></code></a> au lieu de <a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> puisqu'il ne s'agit pas techniquement d'une erreur.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ImportError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ImportError</span></span><a class="headerlink" href="#ImportError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsque l'instruction <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a> a des problèmes pour essayer de charger un module. Également levée lorsque Python ne trouve pas un nom dans <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">import</span></code>.</p>
+<p>The optional <em>name</em> and <em>path</em> keyword-only arguments
+set the corresponding attributes:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ImportError.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#ImportError.name" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>The name of the module that was attempted to be imported.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ImportError.path">
+<span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#ImportError.path" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>The path to any file which triggered the exception.</p>
+</dd></dl>
+
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span>Ajout des attributs <a class="reference internal" href="#ImportError.name" title="ImportError.name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code></a> et <a class="reference internal" href="#ImportError.path" title="ImportError.path"><code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ModuleNotFoundError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ModuleNotFoundError</span></span><a class="headerlink" href="#ModuleNotFoundError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Une sous-classe de <a class="reference internal" href="#ImportError" title="ImportError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportError</span></code></a> qui est levée par <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a> lorsqu'un module n'a pas pu être localisé. Elle est généralement levée quand <code class="docutils literal notranslate"><span class="pre">None</span></code> est trouvé dans <a class="reference internal" href="sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.6.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="IndexError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IndexError</span></span><a class="headerlink" href="#IndexError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'un indice de séquence est hors de la plage. (Les indices de tranches (<em>slices</em>) sont tronqués silencieusement pour tomber dans la plage autorisée ; si un indice n'est pas un entier, <a class="reference internal" href="#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> est levée.)</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="KeyError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">KeyError</span></span><a class="headerlink" href="#KeyError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une clef (de dictionnaire) n'est pas trouvée dans l'ensemble des clefs existantes.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="KeyboardInterrupt">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">KeyboardInterrupt</span></span><a class="headerlink" href="#KeyboardInterrupt" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsque l'utilisateur appuie sur la touche d'interruption (normalement <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Control</kbd>-<kbd class="kbd docutils literal notranslate">C</kbd></kbd> or <kbd class="kbd docutils literal notranslate">Delete</kbd>). Pendant l'exécution, un contrôle des interruptions est effectué régulièrement. L'exception hérite de <a class="reference internal" href="#BaseException" title="BaseException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BaseException</span></code></a> afin de ne pas être accidentellement interceptée par du code qui intercepte <a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> et ainsi empêcher l'interpréteur de quitter.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Attraper une <a class="reference internal" href="#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a> demande une considération particulière. Comme elle peut être levée à des moments imprévisibles, elle peut dans certains cas laisser le programme en cours d'exécution dans un état incohérent. Il est généralement préférable de laisser <a class="reference internal" href="#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a> arrêter le programme aussi rapidement que possible ou d'éviter catégoriquement de la lever (voir <a class="reference internal" href="signal.html#handlers-and-exceptions"><span class="std std-ref">Note on Signal Handlers and Exceptions</span></a>).</p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="MemoryError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MemoryError</span></span><a class="headerlink" href="#MemoryError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une opération est à court de mémoire mais que la situation peut encore être rattrapée (en supprimant certains objets). La valeur associée est une chaîne de caractères indiquant quel type d'opération (interne) est à court de mémoire. À noter qu'en raison de l'architecture interne de gestion de la mémoire (la fonction <code class="xref c c-func docutils literal notranslate"><span class="pre">malloc()</span></code> du C), l'interpréteur peut ne pas toujours être capable de rattraper cette situation ; il lève néanmoins une exception pour qu'une pile d'appels puisse être affichée, dans le cas où un programme en cours d'exécution en était la cause.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="NameError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NameError</span></span><a class="headerlink" href="#NameError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'un nom local ou global n'est pas trouvé. Ceci ne s'applique qu'aux noms non qualifiés. La valeur associée est un message d'erreur qui inclut le nom qui n'a pas pu être trouvé.</p>
+<p>L'attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code> doit être défini uniquement à l'aide d'un argument nommé passé au constructeur. Lorsqu'il est défini, il représente le nom de la variable pour laquelle il y a eu une tentative d'accès.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.10: </span>Ajout de l'attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="NotImplementedError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NotImplementedError</span></span><a class="headerlink" href="#NotImplementedError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette exception est dérivée de <a class="reference internal" href="#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a>. Dans les classes mères définies par l'utilisateur, les méthodes abstraites devraient lever cette exception lorsqu'elles nécessitent des classes dérivées pour remplacer la méthode, ou lorsque la classe est en cours de développement pour indiquer que l'implémentation concrète doit encore être ajoutée.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Elle ne devrait pas être utilisée pour indiquer qu'un opérateur ou qu'une méthode n'est pas destiné à être pris en charge du tout – dans ce cas, évitez de définir l'opérateur ou la méthode, ou s'il s'agit d'une sous-classe, assignez-le à <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code> et <code class="docutils literal notranslate"><span class="pre">NotImplemented</span></code> ne sont pas interchangeables, même s'ils ont des noms et des objectifs similaires. Voir <a class="reference internal" href="constants.html#NotImplemented" title="NotImplemented"><code class="xref py py-data docutils literal notranslate"><span class="pre">NotImplemented</span></code></a> pour des détails sur la façon de les utiliser.</p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="OSError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OSError</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#OSError" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OSError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strerror</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">winerror</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">filename2</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><p id="index-4">Cette exception est levée lorsqu'une fonction système retourne une erreur liée au système, incluant les erreurs entrées-sorties telles que &quot;fichier non trouvé&quot; ou &quot;disque plein&quot; (pas pour les types d'arguments illégaux ou d'autres erreurs accidentelles).</p>
+<p>La deuxième forme du constructeur définit les attributs correspondants, décrits ci-dessous. Les attributs par défaut sont <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a> si non spécifiés. Pour la rétrocompatibilité, si trois arguments sont passés, l'attribut <a class="reference internal" href="#BaseException.args" title="BaseException.args"><code class="xref py py-attr docutils literal notranslate"><span class="pre">args</span></code></a> contient seulement une paire avec les valeurs des deux premiers arguments du constructeur.</p>
+<p>Le constructeur retourne souvent une sous-classe d'<a class="reference internal" href="#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>, comme décrit dans <a class="reference internal" href="#os-exceptions">OS exceptions</a> ci-dessous. La sous-classe particulière dépend de la valeur finale d'<a class="reference internal" href="#OSError.errno" title="OSError.errno"><code class="xref py py-attr docutils literal notranslate"><span class="pre">errno</span></code></a>. Ce comportement ne se produit que lors de la construction d'<a class="reference internal" href="#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> directement ou via un alias, et n'est pas hérité lors du sous-classement.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="OSError.errno">
+<span class="sig-name descname"><span class="pre">errno</span></span><a class="headerlink" href="#OSError.errno" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Code d'erreur numérique de la variable C <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="OSError.winerror">
+<span class="sig-name descname"><span class="pre">winerror</span></span><a class="headerlink" href="#OSError.winerror" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Sous Windows, cela donne le code d'erreur Windows natif. L'attribut <a class="reference internal" href="#OSError.errno" title="OSError.errno"><code class="xref py py-attr docutils literal notranslate"><span class="pre">errno</span></code></a> est alors une traduction approximative, en termes POSIX, de ce code d'erreur natif.</p>
+<p>Sous Windows, si l'argument du constructeur <em>winerror</em> est un entier, l'attribut <a class="reference internal" href="#OSError.errno" title="OSError.errno"><code class="xref py py-attr docutils literal notranslate"><span class="pre">errno</span></code></a> est déterminé à partir du code d'erreur Windows, et l'argument <em>errno</em> est ignoré. Sur d'autres plateformes, l'argument <em>winerror</em> est ignoré, et l'attribut <a class="reference internal" href="#OSError.winerror" title="OSError.winerror"><code class="xref py py-attr docutils literal notranslate"><span class="pre">winerror</span></code></a> n'existe pas.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="OSError.strerror">
+<span class="sig-name descname"><span class="pre">strerror</span></span><a class="headerlink" href="#OSError.strerror" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le message d'erreur correspondant, tel que fourni par le système d'exploitation. Il est formaté par les fonctions C <code class="xref c c-func docutils literal notranslate"><span class="pre">perror()</span></code> sous POSIX, et <code class="xref c c-func docutils literal notranslate"><span class="pre">FormatMessage()</span></code> sous Windows.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="OSError.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#OSError.filename" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="OSError.filename2">
+<span class="sig-name descname"><span class="pre">filename2</span></span><a class="headerlink" href="#OSError.filename2" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Pour les exceptions qui font référence à un chemin d'accès au système de fichiers (comme <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a> ou <a class="reference internal" href="os.html#os.unlink" title="os.unlink"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.unlink()</span></code></a>), <a class="reference internal" href="#OSError.filename" title="OSError.filename"><code class="xref py py-attr docutils literal notranslate"><span class="pre">filename</span></code></a> est le nom du fichier transmis à la fonction. Pour les fonctions qui font référence à deux chemins d'accès au système de fichiers (comme <a class="reference internal" href="os.html#os.rename" title="os.rename"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.rename()</span></code></a>), <a class="reference internal" href="#OSError.filename2" title="OSError.filename2"><code class="xref py py-attr docutils literal notranslate"><span class="pre">filename2</span></code></a> correspond au deuxième nom de fichier passé à la fonction.</p>
+</dd></dl>
+
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span><a class="reference internal" href="#EnvironmentError" title="EnvironmentError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">EnvironmentError</span></code></a>, <a class="reference internal" href="#IOError" title="IOError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IOError</span></code></a>, <a class="reference internal" href="#WindowsError" title="WindowsError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">WindowsError</span></code></a>, <a class="reference internal" href="socket.html#socket.error" title="socket.error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">socket.error</span></code></a>, <a class="reference internal" href="select.html#select.error" title="select.error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">select.error</span></code></a> et <code class="xref py py-exc docutils literal notranslate"><span class="pre">mmap.error</span></code> ont fusionnées en <a class="reference internal" href="#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>, et le constructeur peut renvoyer une sous-classe.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.4: </span>L'attribut <a class="reference internal" href="#OSError.filename" title="OSError.filename"><code class="xref py py-attr docutils literal notranslate"><span class="pre">filename</span></code></a> est maintenant le nom du fichier originel passé à la fonction, au lieu du nom encodé ou décodé à partir du <a class="reference internal" href="../glossary.html#term-filesystem-encoding-and-error-handler"><span class="xref std std-term">gestionnaire d'encodage et d'erreur du système de fichiers</span></a>. De plus, l'argument du constructeur et attribut <em>filename2</em> a été ajouté.</p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="OverflowError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OverflowError</span></span><a class="headerlink" href="#OverflowError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsque le résultat d'une opération arithmétique est trop grand pour être représenté. Cela ne peut pas se produire pour les entiers (qui préfèrent lever <a class="reference internal" href="#MemoryError" title="MemoryError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">MemoryError</span></code></a> plutôt que d'abandonner). Cependant, pour des raisons historiques, <code class="docutils literal notranslate"><span class="pre">OverflowError</span></code> est parfois levée pour des entiers qui sont en dehors d'une plage requise. En raison de l'absence de normalisation de la gestion des exceptions de virgule flottante en C, la plupart des opérations en virgule flottante ne sont pas vérifiées.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="RecursionError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RecursionError</span></span><a class="headerlink" href="#RecursionError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette exception est dérivée de <a class="reference internal" href="#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a>. Elle est levée lorsque l'interpréteur détecte que la profondeur de récursivité maximale (voir <a class="reference internal" href="sys.html#sys.getrecursionlimit" title="sys.getrecursionlimit"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.getrecursionlimit()</span></code></a>) est dépassée.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.5: </span>Auparavant, une simple <a class="reference internal" href="#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> était levée.</p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ReferenceError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ReferenceError</span></span><a class="headerlink" href="#ReferenceError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette exception est levée lorsqu'un pointeur faible d'un objet proxy, créé par la fonction <a class="reference internal" href="weakref.html#weakref.proxy" title="weakref.proxy"><code class="xref py py-func docutils literal notranslate"><span class="pre">weakref.proxy()</span></code></a>, est utilisé pour accéder à un attribut du référent après qu'il ait été récupéré par le ramasse-miettes. Pour plus d'informations sur les pointeurs faibles, voir le module <a class="reference internal" href="weakref.html#module-weakref" title="weakref: Support for weak references and weak dictionaries."><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="RuntimeError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RuntimeError</span></span><a class="headerlink" href="#RuntimeError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une erreur qui n'appartient à aucune des autres catégories est détectée. La valeur associée est une chaîne de caractères indiquant précisément ce qui s'est mal passé.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="StopIteration">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StopIteration</span></span><a class="headerlink" href="#StopIteration" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée par la fonction native <a class="reference internal" href="functions.html#next" title="next"><code class="xref py py-func docutils literal notranslate"><span class="pre">next()</span></code></a> et la méthode <a class="reference internal" href="stdtypes.html#iterator.__next__" title="iterator.__next__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__next__()</span></code></a> d'un <a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">iterator</span></a> (itérateur) pour signaler qu'il n'y a pas d'autres éléments produits par l'itérateur.</p>
+<p>L'objet exception a un unique attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code>, qui est donné en argument lors de la construction de l'exception, et vaut <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a> par défaut.</p>
+<p>Lorsqu'une fonction de type <a class="reference internal" href="../glossary.html#term-generator"><span class="xref std std-term">generator</span></a> ou <a class="reference internal" href="../glossary.html#term-coroutine"><span class="xref std std-term">coroutine</span></a> retourne une valeur, une nouvelle instance de <a class="reference internal" href="#StopIteration" title="StopIteration"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StopIteration</span></code></a> est levée, et la valeur retournée par la fonction est passée au paramètre <code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code> du constructeur de l'exception.</p>
+<p>Si le code d'un générateur lève, directement ou indirectement, une <a class="reference internal" href="#StopIteration" title="StopIteration"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StopIteration</span></code></a>, elle est convertie en <a class="reference internal" href="#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> (en conservant <a class="reference internal" href="#StopIteration" title="StopIteration"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StopIteration</span></code></a> comme cause de la nouvelle exception).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span>Ajout de l'attribut <code class="docutils literal notranslate"><span class="pre">value</span></code> et de la possibilité pour les fonctions de générateur de l'utiliser pour retourner une valeur.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>Introduit la transformation des erreurs <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code> via <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">__future__</span> <span class="pre">import</span> <span class="pre">generator_stop</span></code>, cf. <span class="target" id="index-21"></span><a class="pep reference external" href="https://peps.python.org/pep-0479/"><strong>PEP 479</strong></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7: </span>Active <span class="target" id="index-22"></span><a class="pep reference external" href="https://peps.python.org/pep-0479/"><strong>PEP 479</strong></a> pour tout le code par défaut : quand une erreur <a class="reference internal" href="#StopIteration" title="StopIteration"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StopIteration</span></code></a> est levée dans un générateur elle est transformée en une <a class="reference internal" href="#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="StopAsyncIteration">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StopAsyncIteration</span></span><a class="headerlink" href="#StopAsyncIteration" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Must be raised by <a class="reference internal" href="../reference/datamodel.html#object.__anext__" title="object.__anext__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__anext__()</span></code></a> method of an
+<a class="reference internal" href="../glossary.html#term-asynchronous-iterator"><span class="xref std std-term">asynchronous iterator</span></a> object to stop the iteration.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.5.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="SyntaxError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SyntaxError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SyntaxError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsque l'analyseur syntaxique rencontre une erreur de syntaxe. Cela peut se produire dans une instruction <a class="reference internal" href="../reference/simple_stmts.html#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a>, dans un appel aux fonctions natives <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a>, <a class="reference internal" href="functions.html#exec" title="exec"><code class="xref py py-func docutils literal notranslate"><span class="pre">exec()</span></code></a> ou <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">eval()</span></code></a>, ou lors de la lecture du script initial ou de l'entrée standard (également de manière interactive).</p>
+<p>La conversion en chaîne avec <a class="reference internal" href="stdtypes.html#str" title="str"><code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code></a> de l'instance de l'exception ne renvoie que le message d'erreur. L'argument <code class="docutils literal notranslate"><span class="pre">details</span></code> est un <em>n</em>-uplet dont les membres sont disponibles en tant qu'attributs séparés.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SyntaxError.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#SyntaxError.filename" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le nom du fichier dans lequel l'erreur de syntaxe a été rencontrée.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SyntaxError.lineno">
+<span class="sig-name descname"><span class="pre">lineno</span></span><a class="headerlink" href="#SyntaxError.lineno" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le numéro de la ligne dans le fichier où l'erreur s'est produite. L'indiçage commence à 1 : <code class="docutils literal notranslate"><span class="pre">lineno</span></code> vaut 1 pour la première ligne du fichier.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SyntaxError.offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#SyntaxError.offset" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La colonne dans la ligne où l'erreur s'est produite. L'indiçage commence à 1 : <code class="docutils literal notranslate"><span class="pre">offset</span></code> vaut 1 pour le premier caractère de la ligne.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SyntaxError.text">
+<span class="sig-name descname"><span class="pre">text</span></span><a class="headerlink" href="#SyntaxError.text" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le texte du code source impliqué dans l'erreur.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SyntaxError.end_lineno">
+<span class="sig-name descname"><span class="pre">end_lineno</span></span><a class="headerlink" href="#SyntaxError.end_lineno" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le numéro de la dernière ligne produisant l'erreur. L'indiçage commence à 1 : <code class="docutils literal notranslate"><span class="pre">lineno</span></code> vaut 1 pour la première ligne du fichier.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SyntaxError.end_offset">
+<span class="sig-name descname"><span class="pre">end_offset</span></span><a class="headerlink" href="#SyntaxError.end_offset" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le numéro de la dernière colonne (de la dernière ligne) produisant l'erreur. L'indiçage commence à 1 : <code class="docutils literal notranslate"><span class="pre">offset</span></code> vaut 1 pour le premier caractère de la ligne.</p>
+</dd></dl>
+
+<p>Pour les erreurs dans les chaînes de formatage <em>f-strings</em>, le message commence par « f-string: » et les champs <em>offset</em> sont les décalages dans un texte construit à partir de l’expression de remplacement. Par exemple, compiler <code class="docutils literal notranslate"><span class="pre">f'Bad</span> <span class="pre">{a</span> <span class="pre">b}</span> <span class="pre">field'</span></code> produit cet attribut <em>args</em> : <code class="docutils literal notranslate"><span class="pre">('f-string:</span> <span class="pre">...',</span> <span class="pre">('',</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">'(a</span> <span class="pre">b)\n',</span> <span class="pre">1,</span> <span class="pre">5)).</span></code></p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.10: </span>Ajout des attributs <a class="reference internal" href="#SyntaxError.end_lineno" title="SyntaxError.end_lineno"><code class="xref py py-attr docutils literal notranslate"><span class="pre">end_lineno</span></code></a> et <a class="reference internal" href="#SyntaxError.end_offset" title="SyntaxError.end_offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">end_offset</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="IndentationError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IndentationError</span></span><a class="headerlink" href="#IndentationError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les erreurs de syntaxe liées à une indentation incorrecte. C'est une sous-classe de <a class="reference internal" href="#SyntaxError" title="SyntaxError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="TabError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TabError</span></span><a class="headerlink" href="#TabError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une indentation contient une utilisation incohérente des tabulations et des espaces. C'est une sous-classe de <a class="reference internal" href="#IndentationError" title="IndentationError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IndentationError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="SystemError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SystemError</span></span><a class="headerlink" href="#SystemError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsque l'interpréteur trouve une erreur interne, mais que la situation ne semble pas si grave au point de lui faire abandonner tout espoir. La valeur associée est une chaîne de caractères indiquant l'erreur qui est survenue (en termes bas niveau).</p>
+<p>Vous devriez le signaler à l'auteur ou au responsable de votre interpréteur Python. Assurez-vous de signaler la version de l'interpréteur (<code class="docutils literal notranslate"><span class="pre">sys.version</span></code> ; elle est également affichée au lancement d'une session interactive), le message d'erreur exact (la valeur associée à l'exception) et si possible le code source du programme qui a déclenché l'erreur.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="SystemExit">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SystemExit</span></span><a class="headerlink" href="#SystemExit" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette exception est levée par la fonction <a class="reference internal" href="sys.html#sys.exit" title="sys.exit"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.exit()</span></code></a>. Elle hérite de <a class="reference internal" href="#BaseException" title="BaseException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BaseException</span></code></a> au lieu d'<a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> pour ne pas qu'elle soit interceptée accidentellement par du code qui intercepte <a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a>. Cela permet à l'exception de se propager correctement et de faire quitter l'interpréteur. Lorsqu'elle n'est pas gérée, l'interpréteur Python quitte ; aucune trace d'appels n'est affichée. Le constructeur accepte le même argument optionnel passé à <a class="reference internal" href="sys.html#sys.exit" title="sys.exit"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.exit()</span></code></a>. Si la valeur est un entier, elle spécifie l'état de sortie du système (passé à la fonction C <code class="xref c c-func docutils literal notranslate"><span class="pre">exit()</span></code>) ; si elle est <code class="docutils literal notranslate"><span class="pre">None</span></code>, l'état de sortie est zéro ; si elle a un autre type (comme une chaîne de caractères), la valeur de l'objet est affichée et l'état de sortie est un.</p>
+<p>Un appel à <a class="reference internal" href="sys.html#sys.exit" title="sys.exit"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.exit()</span></code></a> est traduit en une exception pour que les gestionnaires de nettoyage (les clauses <a class="reference internal" href="../reference/compound_stmts.html#finally"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">finally</span></code></a> des instructions <a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">try</span></code></a>) puissent être exécutés, et pour qu'un débogueur puisse exécuter un script sans courir le risque de perdre le contrôle. La fonction <a class="reference internal" href="os.html#os._exit" title="os._exit"><code class="xref py py-func docutils literal notranslate"><span class="pre">os._exit()</span></code></a> peut être utilisée s'il est absolument nécessaire de sortir immédiatement (par exemple, dans le processus enfant après un appel à <a class="reference internal" href="os.html#os.fork" title="os.fork"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.fork()</span></code></a>).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SystemExit.code">
+<span class="sig-name descname"><span class="pre">code</span></span><a class="headerlink" href="#SystemExit.code" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>L'état de sortie ou le message d'erreur passé au constructeur. (<code class="docutils literal notranslate"><span class="pre">None</span></code> par défaut.)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="TypeError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TypeError</span></span><a class="headerlink" href="#TypeError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une opération ou fonction est appliquée à un objet d'un type inapproprié. La valeur associée est une chaîne de caractères donnant des détails sur le type d'inadéquation.</p>
+<p>Cette exception peut être levée par du code utilisateur pour indiquer qu'une tentative d'opération sur un objet n'est pas prise en charge, et n'est pas censée l'être. Si un objet est destiné à prendre en charge une opération donnée mais n'a pas encore fourni une implémentation, lever <a class="reference internal" href="#NotImplementedError" title="NotImplementedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> est plus approprié.</p>
+<p>Le passage d'arguments du mauvais type (e.g. passer une <a class="reference internal" href="stdtypes.html#list" title="list"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> quand un <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> est attendu) devrait résulter en un <a class="reference internal" href="#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>, mais le passage d'arguments avec la mauvaise valeur (e.g. un nombre en dehors des limites attendues) devrait résulter en une <a class="reference internal" href="#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="UnboundLocalError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UnboundLocalError</span></span><a class="headerlink" href="#UnboundLocalError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une référence est faite à une variable locale dans une fonction ou une méthode, mais qu'aucune valeur n'a été liée à cette variable. C'est une sous-classe de <a class="reference internal" href="#NameError" title="NameError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NameError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="UnicodeError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UnicodeError</span></span><a class="headerlink" href="#UnicodeError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une erreur d'encodage ou de décodage liée à Unicode se produit. C'est une sous-classe de <a class="reference internal" href="#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>.</p>
+<p><a class="reference internal" href="#UnicodeError" title="UnicodeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UnicodeError</span></code></a> a des attributs qui décrivent l'erreur d'encodage ou de décodage. Par exemple, <code class="docutils literal notranslate"><span class="pre">err.object[err.start:err.end]</span></code> donne l'entrée particulière invalide sur laquelle le codec a échoué.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="UnicodeError.encoding">
+<span class="sig-name descname"><span class="pre">encoding</span></span><a class="headerlink" href="#UnicodeError.encoding" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le nom de l'encodage qui a provoqué l'erreur.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="UnicodeError.reason">
+<span class="sig-name descname"><span class="pre">reason</span></span><a class="headerlink" href="#UnicodeError.reason" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Une chaîne de caractères décrivant l'erreur de codec spécifique.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="UnicodeError.object">
+<span class="sig-name descname"><span class="pre">object</span></span><a class="headerlink" href="#UnicodeError.object" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>L'objet que le codec essayait d'encoder ou de décoder.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="UnicodeError.start">
+<span class="sig-name descname"><span class="pre">start</span></span><a class="headerlink" href="#UnicodeError.start" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le premier index des données invalides dans <a class="reference internal" href="functions.html#object" title="object"><code class="xref py py-attr docutils literal notranslate"><span class="pre">object</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="UnicodeError.end">
+<span class="sig-name descname"><span class="pre">end</span></span><a class="headerlink" href="#UnicodeError.end" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>L'index après la dernière donnée invalide dans <a class="reference internal" href="functions.html#object" title="object"><code class="xref py py-attr docutils literal notranslate"><span class="pre">object</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="UnicodeEncodeError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UnicodeEncodeError</span></span><a class="headerlink" href="#UnicodeEncodeError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une erreur liée à Unicode se produit durant l'encodage. C'est une sous-classe d'<a class="reference internal" href="#UnicodeError" title="UnicodeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UnicodeError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="UnicodeDecodeError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UnicodeDecodeError</span></span><a class="headerlink" href="#UnicodeDecodeError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une erreur liée à Unicode se produit durant le décodage. C'est une sous-classe d'<a class="reference internal" href="#UnicodeError" title="UnicodeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UnicodeError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="UnicodeTranslateError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UnicodeTranslateError</span></span><a class="headerlink" href="#UnicodeTranslateError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une erreur liée à Unicode se produit durant la traduction. C'est une sous-classe d'<a class="reference internal" href="#UnicodeError" title="UnicodeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UnicodeError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ValueError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ValueError</span></span><a class="headerlink" href="#ValueError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsqu'une opération ou fonction native reçoit un argument qui possède le bon type mais une valeur inappropriée, et que la situation n'est pas décrite par une exception plus précise telle que <a class="reference internal" href="#IndexError" title="IndexError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IndexError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ZeroDivisionError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ZeroDivisionError</span></span><a class="headerlink" href="#ZeroDivisionError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Levée lorsque le second argument d'une opération de division ou d'un modulo est zéro. La valeur associée est une chaîne indiquant le type des opérandes et de l'opération.</p>
+</dd></dl>
+
+<p>Les exceptions suivantes sont conservées pour la compatibilité avec les anciennes versions ; depuis Python 3.3, ce sont des alias d'<a class="reference internal" href="#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="EnvironmentError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EnvironmentError</span></span><a class="headerlink" href="#EnvironmentError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="IOError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IOError</span></span><a class="headerlink" href="#IOError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="WindowsError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WindowsError</span></span><a class="headerlink" href="#WindowsError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Seulement disponible sous Windows.</p>
+</dd></dl>
+
+<section id="os-exceptions">
+<h3>Exceptions système<a class="headerlink" href="#os-exceptions" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les exceptions suivantes sont des sous-classes d'<a class="reference internal" href="#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>, elles sont levées en fonction du code d'erreur système.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="BlockingIOError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BlockingIOError</span></span><a class="headerlink" href="#BlockingIOError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Raised when an operation would block on an object (e.g. socket) set
+for non-blocking operation.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.EAGAIN" title="errno.EAGAIN"><code class="xref py py-const docutils literal notranslate"><span class="pre">EAGAIN</span></code></a>, <a class="reference internal" href="errno.html#errno.EALREADY" title="errno.EALREADY"><code class="xref py py-const docutils literal notranslate"><span class="pre">EALREADY</span></code></a>,
+<a class="reference internal" href="errno.html#errno.EWOULDBLOCK" title="errno.EWOULDBLOCK"><code class="xref py py-const docutils literal notranslate"><span class="pre">EWOULDBLOCK</span></code></a> and <a class="reference internal" href="errno.html#errno.EINPROGRESS" title="errno.EINPROGRESS"><code class="xref py py-const docutils literal notranslate"><span class="pre">EINPROGRESS</span></code></a>.</p>
+<p>En plus de ceux de <a class="reference internal" href="#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>, <a class="reference internal" href="#BlockingIOError" title="BlockingIOError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BlockingIOError</span></code></a> peut avoir un attribut de plus :</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BlockingIOError.characters_written">
+<span class="sig-name descname"><span class="pre">characters_written</span></span><a class="headerlink" href="#BlockingIOError.characters_written" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Un nombre entier contenant le nombre de caractères écrits dans le flux avant qu'il ne soit bloqué. Cet attribut est disponible lors de l'utilisation des classes tampon entrées-sorties du module <a class="reference internal" href="io.html#module-io" title="io: Core tools for working with streams."><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ChildProcessError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ChildProcessError</span></span><a class="headerlink" href="#ChildProcessError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Raised when an operation on a child process failed.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.ECHILD" title="errno.ECHILD"><code class="xref py py-const docutils literal notranslate"><span class="pre">ECHILD</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ConnectionError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConnectionError</span></span><a class="headerlink" href="#ConnectionError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les problèmes de connexion.</p>
+<p>Les sous-classes sont <a class="reference internal" href="#BrokenPipeError" title="BrokenPipeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BrokenPipeError</span></code></a>, <a class="reference internal" href="#ConnectionAbortedError" title="ConnectionAbortedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ConnectionAbortedError</span></code></a>, <a class="reference internal" href="#ConnectionRefusedError" title="ConnectionRefusedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ConnectionRefusedError</span></code></a> et <a class="reference internal" href="#ConnectionResetError" title="ConnectionResetError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ConnectionResetError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="BrokenPipeError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BrokenPipeError</span></span><a class="headerlink" href="#BrokenPipeError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>A subclass of <a class="reference internal" href="#ConnectionError" title="ConnectionError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ConnectionError</span></code></a>, raised when trying to write on a
+pipe while the other end has been closed, or trying to write on a socket
+which has been shutdown for writing.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.EPIPE" title="errno.EPIPE"><code class="xref py py-const docutils literal notranslate"><span class="pre">EPIPE</span></code></a> and <a class="reference internal" href="errno.html#errno.ESHUTDOWN" title="errno.ESHUTDOWN"><code class="xref py py-const docutils literal notranslate"><span class="pre">ESHUTDOWN</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ConnectionAbortedError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConnectionAbortedError</span></span><a class="headerlink" href="#ConnectionAbortedError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>A subclass of <a class="reference internal" href="#ConnectionError" title="ConnectionError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ConnectionError</span></code></a>, raised when a connection attempt
+is aborted by the peer.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.ECONNABORTED" title="errno.ECONNABORTED"><code class="xref py py-const docutils literal notranslate"><span class="pre">ECONNABORTED</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ConnectionRefusedError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConnectionRefusedError</span></span><a class="headerlink" href="#ConnectionRefusedError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>A subclass of <a class="reference internal" href="#ConnectionError" title="ConnectionError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ConnectionError</span></code></a>, raised when a connection attempt
+is refused by the peer.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.ECONNREFUSED" title="errno.ECONNREFUSED"><code class="xref py py-const docutils literal notranslate"><span class="pre">ECONNREFUSED</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ConnectionResetError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConnectionResetError</span></span><a class="headerlink" href="#ConnectionResetError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>A subclass of <a class="reference internal" href="#ConnectionError" title="ConnectionError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ConnectionError</span></code></a>, raised when a connection is
+reset by the peer.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.ECONNRESET" title="errno.ECONNRESET"><code class="xref py py-const docutils literal notranslate"><span class="pre">ECONNRESET</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="FileExistsError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FileExistsError</span></span><a class="headerlink" href="#FileExistsError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Raised when trying to create a file or directory which already exists.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.EEXIST" title="errno.EEXIST"><code class="xref py py-const docutils literal notranslate"><span class="pre">EEXIST</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="FileNotFoundError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FileNotFoundError</span></span><a class="headerlink" href="#FileNotFoundError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Raised when a file or directory is requested but doesn't exist.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.ENOENT" title="errno.ENOENT"><code class="xref py py-const docutils literal notranslate"><span class="pre">ENOENT</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="InterruptedError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InterruptedError</span></span><a class="headerlink" href="#InterruptedError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Raised when a system call is interrupted by an incoming signal.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.EINTR" title="errno.EINTR"><code class="xref py py-const docutils literal notranslate"><span class="pre">EINTR</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>Python relance maintenant les appels système lorsqu'ils sont interrompus par un signal, sauf si le gestionnaire de signal lève une exception (voir <span class="target" id="index-23"></span><a class="pep reference external" href="https://peps.python.org/pep-0475/"><strong>PEP 475</strong></a> pour les raisons), au lieu de lever <a class="reference internal" href="#InterruptedError" title="InterruptedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InterruptedError</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="IsADirectoryError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsADirectoryError</span></span><a class="headerlink" href="#IsADirectoryError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Raised when a file operation (such as <a class="reference internal" href="os.html#os.remove" title="os.remove"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.remove()</span></code></a>) is requested
+on a directory.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.EISDIR" title="errno.EISDIR"><code class="xref py py-const docutils literal notranslate"><span class="pre">EISDIR</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="NotADirectoryError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NotADirectoryError</span></span><a class="headerlink" href="#NotADirectoryError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Raised when a directory operation (such as <a class="reference internal" href="os.html#os.listdir" title="os.listdir"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.listdir()</span></code></a>) is requested on
+something which is not a directory.  On most POSIX platforms, it may also be
+raised if an operation attempts to open or traverse a non-directory file as if
+it were a directory.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.ENOTDIR" title="errno.ENOTDIR"><code class="xref py py-const docutils literal notranslate"><span class="pre">ENOTDIR</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="PermissionError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PermissionError</span></span><a class="headerlink" href="#PermissionError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Raised when trying to run an operation without the adequate access
+rights - for example filesystem permissions.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.EACCES" title="errno.EACCES"><code class="xref py py-const docutils literal notranslate"><span class="pre">EACCES</span></code></a>,
+<a class="reference internal" href="errno.html#errno.EPERM" title="errno.EPERM"><code class="xref py py-const docutils literal notranslate"><span class="pre">EPERM</span></code></a>, and <a class="reference internal" href="errno.html#errno.ENOTCAPABLE" title="errno.ENOTCAPABLE"><code class="xref py py-const docutils literal notranslate"><span class="pre">ENOTCAPABLE</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.11.1: </span>WASI's <a class="reference internal" href="errno.html#errno.ENOTCAPABLE" title="errno.ENOTCAPABLE"><code class="xref py py-const docutils literal notranslate"><span class="pre">ENOTCAPABLE</span></code></a> is now mapped to
+<a class="reference internal" href="#PermissionError" title="PermissionError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">PermissionError</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ProcessLookupError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ProcessLookupError</span></span><a class="headerlink" href="#ProcessLookupError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Raised when a given process doesn't exist.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.ESRCH" title="errno.ESRCH"><code class="xref py py-const docutils literal notranslate"><span class="pre">ESRCH</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="TimeoutError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TimeoutError</span></span><a class="headerlink" href="#TimeoutError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Raised when a system function timed out at the system level.
+Corresponds to <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code> <a class="reference internal" href="errno.html#errno.ETIMEDOUT" title="errno.ETIMEDOUT"><code class="xref py py-const docutils literal notranslate"><span class="pre">ETIMEDOUT</span></code></a>.</p>
+</dd></dl>
+
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.3: </span>Toutes les sous-classes d'<a class="reference internal" href="#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> ci-dessus ont été ajoutées.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<p><span class="target" id="index-24"></span><a class="pep reference external" href="https://peps.python.org/pep-3151/"><strong>PEP 3151</strong></a> -- Refonte de la hiérarchie des exceptions système et IO</p>
+</div>
+</section>
+</section>
+<section id="warnings">
+<span id="warning-categories-as-exceptions"></span><h2>Avertissements<a class="headerlink" href="#warnings" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les exceptions suivantes sont utilisées comme catégories d'avertissement ; voir <code class="xref py py-mod docutils literal notranslate"><span class="pre">warning-categories</span></code> pour plus d'informations.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="Warning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Warning</span></span><a class="headerlink" href="#Warning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les catégories d'avertissement.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="UserWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UserWarning</span></span><a class="headerlink" href="#UserWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les avertissements générés par du code utilisateur.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="DeprecationWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeprecationWarning</span></span><a class="headerlink" href="#DeprecationWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les avertissements sur les fonctionnalités obsolètes, lorsque ces avertissements sont destinés aux autres développeurs Python.</p>
+<p>Ignoré par les filtres d'avertissements par défaut, sauf dans le module <code class="docutils literal notranslate"><span class="pre">__main__</span></code> (<span class="target" id="index-25"></span><a class="pep reference external" href="https://peps.python.org/pep-0565/"><strong>PEP 565</strong></a>). Activer le <a class="reference internal" href="devmode.html#devmode"><span class="std std-ref">mode de développement de Python</span></a> affiche cet avertissement.</p>
+<p>La politique relative à l'obsolescence est décrite dans la <span class="target" id="index-26"></span><a class="pep reference external" href="https://peps.python.org/pep-0387/"><strong>PEP 387</strong></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="PendingDeprecationWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PendingDeprecationWarning</span></span><a class="headerlink" href="#PendingDeprecationWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les avertissements d'obsolescence programmée. Ils indiquent que la fonctionnalité peut encore être utilisée actuellement, mais qu'elle sera supprimée dans le futur.</p>
+<p>Cette classe est rarement utilisée car émettre un avertissement à propos d’une obsolescence à venir est inhabituel, et <a class="reference internal" href="#DeprecationWarning" title="DeprecationWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">DeprecationWarning</span></code></a> est préféré pour les obsolescences actuelles.</p>
+<p>Ignoré par les filtres d'avertissements par défaut. Activer le <a class="reference internal" href="devmode.html#devmode"><span class="std std-ref">mode de développement de Python</span></a> affiche cet avertissement.</p>
+<p>La politique relative à l'obsolescence est décrite dans la <span class="target" id="index-27"></span><a class="pep reference external" href="https://peps.python.org/pep-0387/"><strong>PEP 387</strong></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="SyntaxWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SyntaxWarning</span></span><a class="headerlink" href="#SyntaxWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les avertissements sur de la syntaxe douteuse.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="RuntimeWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RuntimeWarning</span></span><a class="headerlink" href="#RuntimeWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les avertissements sur les comportements d'exécution douteux.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="FutureWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FutureWarning</span></span><a class="headerlink" href="#FutureWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les avertissements à propos de fonctionnalités qui seront obsolètes dans le futur quand ces avertissements destinés aux utilisateurs finaux des applications écrites en Python.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ImportWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ImportWarning</span></span><a class="headerlink" href="#ImportWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les avertissements sur des erreurs probables dans les importations de modules.</p>
+<p>Ignoré par les filtres d'avertissements par défaut. Activer le <a class="reference internal" href="devmode.html#devmode"><span class="std std-ref">mode de développement de Python</span></a> affiche cet avertissement.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="UnicodeWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UnicodeWarning</span></span><a class="headerlink" href="#UnicodeWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les avertissements liés à l'Unicode.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="EncodingWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EncodingWarning</span></span><a class="headerlink" href="#EncodingWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les avertissements liés à l'encodage des chaînes.</p>
+<p>Voir <a class="reference internal" href="io.html#io-encoding-warning"><span class="std std-ref">Opt-in EncodingWarning</span></a> pour plus d'informations.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.10.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="BytesWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BytesWarning</span></span><a class="headerlink" href="#BytesWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les avertissements liés à <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> et <a class="reference internal" href="stdtypes.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ResourceWarning">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ResourceWarning</span></span><a class="headerlink" href="#ResourceWarning" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe mère pour les avertissements liés à l'utilisation des ressources.</p>
+<p>Ignoré par les filtres d'avertissements par défaut. Activer le <a class="reference internal" href="devmode.html#devmode"><span class="std std-ref">mode de développement de Python</span></a> affiche cet avertissement.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.2.</span></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="exception-groups">
+<span id="lib-exception-groups"></span><h2>Exception groups<a class="headerlink" href="#exception-groups" title="Lien permanent vers ce titre">¶</a></h2>
+<p>The following are used when it is necessary to raise multiple unrelated
+exceptions. They are part of the exception hierarchy so they can be
+handled with <a class="reference internal" href="../reference/compound_stmts.html#except"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">except</span></code></a> like all other exceptions. In addition,
+they are recognised by <a class="reference internal" href="../reference/compound_stmts.html#except-star"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">except*</span></code></a>, which matches
+their subgroups based on the types of the contained exceptions.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ExceptionGroup">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ExceptionGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">excs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ExceptionGroup" title="Lien permanent vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="BaseExceptionGroup">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BaseExceptionGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">excs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseExceptionGroup" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Both of these exception types wrap the exceptions in the sequence <code class="docutils literal notranslate"><span class="pre">excs</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">msg</span></code> parameter must be a string. The difference between the two
+classes is that <a class="reference internal" href="#BaseExceptionGroup" title="BaseExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BaseExceptionGroup</span></code></a> extends <a class="reference internal" href="#BaseException" title="BaseException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BaseException</span></code></a> and
+it can wrap any exception, while <a class="reference internal" href="#ExceptionGroup" title="ExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ExceptionGroup</span></code></a> extends <a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a>
+and it can only wrap subclasses of <a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a>. This design is so that
+<code class="docutils literal notranslate"><span class="pre">except</span> <span class="pre">Exception</span></code> catches an <a class="reference internal" href="#ExceptionGroup" title="ExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ExceptionGroup</span></code></a> but not
+<a class="reference internal" href="#BaseExceptionGroup" title="BaseExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BaseExceptionGroup</span></code></a>.</p>
+<p>The <a class="reference internal" href="#BaseExceptionGroup" title="BaseExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BaseExceptionGroup</span></code></a> constructor returns an <a class="reference internal" href="#ExceptionGroup" title="ExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ExceptionGroup</span></code></a>
+rather than a <a class="reference internal" href="#BaseExceptionGroup" title="BaseExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BaseExceptionGroup</span></code></a> if all contained exceptions are
+<a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> instances, so it can be used to make the selection
+automatic. The <a class="reference internal" href="#ExceptionGroup" title="ExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ExceptionGroup</span></code></a> constructor, on the other hand,
+raises a <a class="reference internal" href="#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> if any contained exception is not an
+<a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> subclass.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BaseExceptionGroup.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#BaseExceptionGroup.message" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">msg</span></code> argument to the constructor. This is a read-only attribute.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BaseExceptionGroup.exceptions">
+<span class="sig-name descname"><span class="pre">exceptions</span></span><a class="headerlink" href="#BaseExceptionGroup.exceptions" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>A tuple of the exceptions in the <code class="docutils literal notranslate"><span class="pre">excs</span></code> sequence given to the
+constructor. This is a read-only attribute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseExceptionGroup.subgroup">
+<span class="sig-name descname"><span class="pre">subgroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseExceptionGroup.subgroup" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Returns an exception group that contains only the exceptions from the
+current group that match <em>condition</em>, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the result is empty.</p>
+<p>The condition can be either a function that accepts an exception and returns
+true for those that should be in the subgroup, or it can be an exception type
+or a tuple of exception types, which is used to check for a match using the
+same check that is used in an <code class="docutils literal notranslate"><span class="pre">except</span></code> clause.</p>
+<p>The nesting structure of the current exception is preserved in the result,
+as are the values of its <a class="reference internal" href="#BaseExceptionGroup.message" title="BaseExceptionGroup.message"><code class="xref py py-attr docutils literal notranslate"><span class="pre">message</span></code></a>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">__traceback__</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">__cause__</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">__context__</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">__notes__</span></code> fields.
+Empty nested groups are omitted from the result.</p>
+<p>The condition is checked for all exceptions in the nested exception group,
+including the top-level and any nested exception groups. If the condition is
+true for such an exception group, it is included in the result in full.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseExceptionGroup.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseExceptionGroup.split" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Like <a class="reference internal" href="#BaseExceptionGroup.subgroup" title="BaseExceptionGroup.subgroup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">subgroup()</span></code></a>, but returns the pair <code class="docutils literal notranslate"><span class="pre">(match,</span> <span class="pre">rest)</span></code> where <code class="docutils literal notranslate"><span class="pre">match</span></code>
+is <code class="docutils literal notranslate"><span class="pre">subgroup(condition)</span></code> and <code class="docutils literal notranslate"><span class="pre">rest</span></code> is the remaining non-matching
+part.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseExceptionGroup.derive">
+<span class="sig-name descname"><span class="pre">derive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">excs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseExceptionGroup.derive" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Returns an exception group with the same <a class="reference internal" href="#BaseExceptionGroup.message" title="BaseExceptionGroup.message"><code class="xref py py-attr docutils literal notranslate"><span class="pre">message</span></code></a>, but which
+wraps the exceptions in <code class="docutils literal notranslate"><span class="pre">excs</span></code>.</p>
+<p>This method is used by <a class="reference internal" href="#BaseExceptionGroup.subgroup" title="BaseExceptionGroup.subgroup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">subgroup()</span></code></a> and <a class="reference internal" href="#BaseExceptionGroup.split" title="BaseExceptionGroup.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code></a>. A
+subclass needs to override it in order to make <a class="reference internal" href="#BaseExceptionGroup.subgroup" title="BaseExceptionGroup.subgroup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">subgroup()</span></code></a>
+and <a class="reference internal" href="#BaseExceptionGroup.split" title="BaseExceptionGroup.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code></a> return instances of the subclass rather
+than <a class="reference internal" href="#ExceptionGroup" title="ExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ExceptionGroup</span></code></a>.</p>
+<p><a class="reference internal" href="#BaseExceptionGroup.subgroup" title="BaseExceptionGroup.subgroup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">subgroup()</span></code></a> and <a class="reference internal" href="#BaseExceptionGroup.split" title="BaseExceptionGroup.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code></a> copy the <code class="xref py py-attr docutils literal notranslate"><span class="pre">__traceback__</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">__cause__</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">__context__</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">__notes__</span></code> fields from
+the original exception group to the one returned by <a class="reference internal" href="#BaseExceptionGroup.derive" title="BaseExceptionGroup.derive"><code class="xref py py-meth docutils literal notranslate"><span class="pre">derive()</span></code></a>, so
+these fields do not need to be updated by <a class="reference internal" href="#BaseExceptionGroup.derive" title="BaseExceptionGroup.derive"><code class="xref py py-meth docutils literal notranslate"><span class="pre">derive()</span></code></a>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyGroup</span><span class="p">(</span><span class="n">ExceptionGroup</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">derive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">excs</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="n">MyGroup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">excs</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">MyGroup</span><span class="p">(</span><span class="s2">&quot;eg&quot;</span><span class="p">,</span> <span class="p">[</span><span class="ne">ValueError</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="ne">TypeError</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span><span class="o">.</span><span class="n">add_note</span><span class="p">(</span><span class="s2">&quot;a note&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span><span class="o">.</span><span class="n">__context__</span> <span class="o">=</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;context&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span><span class="o">.</span><span class="n">__cause__</span> <span class="o">=</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;cause&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="k">raise</span> <span class="n">e</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="n">exc</span> <span class="o">=</span> <span class="n">e</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">match</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exc</span><span class="p">,</span> <span class="n">exc</span><span class="o">.</span><span class="n">__context__</span><span class="p">,</span> <span class="n">exc</span><span class="o">.</span><span class="n">__cause__</span><span class="p">,</span> <span class="n">exc</span><span class="o">.</span><span class="n">__notes__</span>
+<span class="go">(MyGroup(&#39;eg&#39;, [ValueError(1), TypeError(2)]), Exception(&#39;context&#39;), Exception(&#39;cause&#39;), [&#39;a note&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">match</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">__context__</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">__cause__</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">__notes__</span>
+<span class="go">(MyGroup(&#39;eg&#39;, [ValueError(1)]), Exception(&#39;context&#39;), Exception(&#39;cause&#39;), [&#39;a note&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rest</span><span class="p">,</span> <span class="n">rest</span><span class="o">.</span><span class="n">__context__</span><span class="p">,</span> <span class="n">rest</span><span class="o">.</span><span class="n">__cause__</span><span class="p">,</span> <span class="n">rest</span><span class="o">.</span><span class="n">__notes__</span>
+<span class="go">(MyGroup(&#39;eg&#39;, [TypeError(2)]), Exception(&#39;context&#39;), Exception(&#39;cause&#39;), [&#39;a note&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exc</span><span class="o">.</span><span class="n">__traceback__</span> <span class="ow">is</span> <span class="n">match</span><span class="o">.</span><span class="n">__traceback__</span> <span class="ow">is</span> <span class="n">rest</span><span class="o">.</span><span class="n">__traceback__</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Note that <a class="reference internal" href="#BaseExceptionGroup" title="BaseExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BaseExceptionGroup</span></code></a> defines <code class="xref py py-meth docutils literal notranslate"><span class="pre">__new__()</span></code>, so
+subclasses that need a different constructor signature need to
+override that rather than <code class="xref py py-meth docutils literal notranslate"><span class="pre">__init__()</span></code>. For example, the following
+defines an exception group subclass which accepts an exit_code and
+and constructs the group's message from it.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Errors</span><span class="p">(</span><span class="n">ExceptionGroup</span><span class="p">):</span>
+   <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">exit_code</span><span class="p">):</span>
+      <span class="bp">self</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">Errors</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;exit code: </span><span class="si">{</span><span class="n">exit_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">exit_code</span> <span class="o">=</span> <span class="n">exit_code</span>
+      <span class="k">return</span> <span class="bp">self</span>
+
+   <span class="k">def</span> <span class="nf">derive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">excs</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">Errors</span><span class="p">(</span><span class="n">excs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">exit_code</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Like <a class="reference internal" href="#ExceptionGroup" title="ExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ExceptionGroup</span></code></a>, any subclass of <a class="reference internal" href="#BaseExceptionGroup" title="BaseExceptionGroup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BaseExceptionGroup</span></code></a> which
+is also a subclass of <a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> can only wrap instances of
+<a class="reference internal" href="#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.11.</span></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="exception-hierarchy">
+<h2>Hiérarchie des exceptions<a class="headerlink" href="#exception-hierarchy" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La hiérarchie de classes pour les exceptions natives est la suivante :</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>BaseException
+ ├── BaseExceptionGroup
+ ├── GeneratorExit
+ ├── KeyboardInterrupt
+ ├── SystemExit
+ └── Exception
+      ├── ArithmeticError
+      │    ├── FloatingPointError
+      │    ├── OverflowError
+      │    └── ZeroDivisionError
+      ├── AssertionError
+      ├── AttributeError
+      ├── BufferError
+      ├── EOFError
+      ├── ExceptionGroup [BaseExceptionGroup]
+      ├── ImportError
+      │    └── ModuleNotFoundError
+      ├── LookupError
+      │    ├── IndexError
+      │    └── KeyError
+      ├── MemoryError
+      ├── NameError
+      │    └── UnboundLocalError
+      ├── OSError
+      │    ├── BlockingIOError
+      │    ├── ChildProcessError
+      │    ├── ConnectionError
+      │    │    ├── BrokenPipeError
+      │    │    ├── ConnectionAbortedError
+      │    │    ├── ConnectionRefusedError
+      │    │    └── ConnectionResetError
+      │    ├── FileExistsError
+      │    ├── FileNotFoundError
+      │    ├── InterruptedError
+      │    ├── IsADirectoryError
+      │    ├── NotADirectoryError
+      │    ├── PermissionError
+      │    ├── ProcessLookupError
+      │    └── TimeoutError
+      ├── ReferenceError
+      ├── RuntimeError
+      │    ├── NotImplementedError
+      │    └── RecursionError
+      ├── StopAsyncIteration
+      ├── StopIteration
+      ├── SyntaxError
+      │    └── IndentationError
+      │         └── TabError
+      ├── SystemError
+      ├── TypeError
+      ├── ValueError
+      │    └── UnicodeError
+      │         ├── UnicodeDecodeError
+      │         ├── UnicodeEncodeError
+      │         └── UnicodeTranslateError
+      └── Warning
+           ├── BytesWarning
+           ├── DeprecationWarning
+           ├── EncodingWarning
+           ├── FutureWarning
+           ├── ImportWarning
+           ├── PendingDeprecationWarning
+           ├── ResourceWarning
+           ├── RuntimeWarning
+           ├── SyntaxWarning
+           ├── UnicodeWarning
+           └── UserWarning
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Exceptions natives</a><ul>
+<li><a class="reference internal" href="#exception-context">Contexte des exceptions</a></li>
+<li><a class="reference internal" href="#inheriting-from-built-in-exceptions">Hériter des exceptions natives</a></li>
+<li><a class="reference internal" href="#base-classes">Classes mères</a></li>
+<li><a class="reference internal" href="#concrete-exceptions">Exceptions concrètes</a><ul>
+<li><a class="reference internal" href="#os-exceptions">Exceptions système</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#warnings">Avertissements</a></li>
+<li><a class="reference internal" href="#exception-groups">Exception groups</a></li>
+<li><a class="reference internal" href="#exception-hierarchy">Hiérarchie des exceptions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="stdtypes.html"
+                          title="Chapitre précédent">Types natifs</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="text.html"
+                          title="Chapitre suivant">Services de Manipulation de Texte</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/exceptions.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="text.html" title="Services de Manipulation de Texte"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="stdtypes.html" title="Types natifs"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Exceptions natives</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

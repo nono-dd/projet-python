@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="cgitb — Gestionnaire d'exceptions pour les scripts CGI" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/cgitb.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/cgitb.py Le module cgitb fournit un gestionnaire d'exceptions spécifique pour les scripts Python. (Son nom est trompeur : Il a été conçu à l'origine pour afficher des pile d'appel..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/cgitb.py Le module cgitb fournit un gestionnaire d'exceptions spécifique pour les scripts Python. (Son nom est trompeur : Il a été conçu à l'origine pour afficher des pile d'appel..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>cgitb — Gestionnaire d&#39;exceptions pour les scripts CGI &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="chunk --- Read IFF chunked data" href="chunk.html" />
+    <link rel="prev" title="cgi --- Common Gateway Interface support" href="cgi.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/cgitb.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="cgi.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgi</span></code> --- Common Gateway Interface support</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="chunk.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">chunk</span></code> --- Read IFF chunked data</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/cgitb.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="chunk.html" title="chunk --- Read IFF chunked data"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="cgi.html" title="cgi --- Common Gateway Interface support"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="superseded.html" accesskey="U">Modules remplacés</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgitb</span></code> — Gestionnaire d'exceptions pour les scripts CGI</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-cgitb">
+<span id="cgitb-traceback-manager-for-cgi-scripts"></span><h1><a class="reference internal" href="#module-cgitb" title="cgitb: Configurable traceback handler for CGI scripts. (obsolète)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgitb</span></code></a> — Gestionnaire d'exceptions pour les scripts CGI<a class="headerlink" href="#module-cgitb" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/cgitb.py">Lib/cgitb.py</a></p>
+<div class="deprecated-removed" id="index-0">
+<p><span class="versionmodified">Obsolète depuis la version 3.11, sera supprimé dans la version 3.13: </span>The <a class="reference internal" href="#module-cgitb" title="cgitb: Configurable traceback handler for CGI scripts. (obsolète)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgitb</span></code></a> module is deprecated
+(see <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0594/#cgitb"><strong>PEP 594</strong></a> for details).</p>
+</div>
+<hr class="docutils" />
+<p>Le module <a class="reference internal" href="#module-cgitb" title="cgitb: Configurable traceback handler for CGI scripts. (obsolète)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgitb</span></code></a> fournit un gestionnaire d'exceptions spécifique pour les scripts Python. (Son nom est trompeur : Il a été conçu à l'origine pour afficher des pile d'appels en HTML pour les scripts CGI, puis a été généralisé par la suite pour afficher cette information en texte brut.) Une fois ce module activé, si une exception remonte jusqu'à l'interpréteur, un rapport détaillé sera affiché. Le rapport affiche la pile d'appels, montrant des extraits de code pour chaque niveau, ainsi que les arguments et les variables locales des fonctions appelantes pour vous aider à résoudre le problème. Il est aussi possible de sauvegarder cette information dans un fichier plutôt que de l'envoyer dans le navigateur.</p>
+<p>Pour activer cette fonctionnalité, ajoutez simplement ceci au début de votre script CGI :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Les paramètres optionnels de la fonction <a class="reference internal" href="#cgitb.enable" title="cgitb.enable"><code class="xref py py-func docutils literal notranslate"><span class="pre">enable()</span></code></a> permettent de choisir si le rapport est envoyé au navigateur ou si le rapport est écrit dans un fichier pour analyse ultérieure.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="cgitb.enable">
+<span class="sig-prename descclassname"><span class="pre">cgitb.</span></span><span class="sig-name descname"><span class="pre">enable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'html'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgitb.enable" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p id="index-2">Appeler cette fonction remplace le gestionnaire d'exceptions par défaut de l'interpréteur par celui du module <a class="reference internal" href="#module-cgitb" title="cgitb: Configurable traceback handler for CGI scripts. (obsolète)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgitb</span></code></a>, en configurant <a class="reference internal" href="sys.html#sys.excepthook" title="sys.excepthook"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sys.excepthook</span></code></a>.</p>
+<p>Le paramètre optionnel <em>display</em> vaut <code class="docutils literal notranslate"><span class="pre">1</span></code> par défaut, et peut être mis à <code class="docutils literal notranslate"><span class="pre">0</span></code> pour désactiver l'envoi des piles d'appels au navigateur. Si l'argument <em>logdir</em> est donné les piles d'appels seront écrites dans des fichiers placés dans le dossier <em>logdir</em>. L'argument optionnel <em>context</em> est le nombre de lignes de code à afficher autour de la ligne courante dans le code source à chaque niveau de la pile d'appel, il vaut <code class="docutils literal notranslate"><span class="pre">5</span></code> par défaut. Si l'argument optionnel <em>format</em> est <code class="docutils literal notranslate"><span class="pre">&quot;html&quot;</span></code>, le rapport sera rédigé en HTML. Le rapport sera écrit en texte brut pour toute autre valeur.  La valeur par défaut est <code class="docutils literal notranslate"><span class="pre">&quot;html&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cgitb.text">
+<span class="sig-prename descclassname"><span class="pre">cgitb.</span></span><span class="sig-name descname"><span class="pre">text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgitb.text" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette fonction gère l’exception décrite par <em>info</em> (un triplet contenant le résultat de <a class="reference internal" href="sys.html#sys.exc_info" title="sys.exc_info"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.exc_info()</span></code></a>), elle présente sa pile d’appels en texte brut et renvois le résultat sous forme de chaîne de caractères. L’argument facultatif <em>contexte</em> est le nombre de lignes de contexte à afficher autour de la ligne courante du code source dans la pile d’appels ; la valeur par défaut est <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cgitb.html">
+<span class="sig-prename descclassname"><span class="pre">cgitb.</span></span><span class="sig-name descname"><span class="pre">html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgitb.html" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette fonction gère l’exception décrite par <em>info</em> (un triplet contenant le résultat de <a class="reference internal" href="sys.html#sys.exc_info" title="sys.exc_info"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.exc_info()</span></code></a>), elle présente sa pile d’appels en HTML et renvoie le résultat sous forme de chaîne de caractères. L’argument facultatif <em>contexte</em> est le nombre de lignes de contexte à afficher autour de la ligne courante du code source dans la pile d’appels ; la valeur par défaut est <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cgitb.handler">
+<span class="sig-prename descclassname"><span class="pre">cgitb.</span></span><span class="sig-name descname"><span class="pre">handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgitb.handler" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette fonction gère les exceptions en utilisant la configuration par défaut (c'est à dire envoyer un rapport HTML au navigateur sans l'enregistrer dans un fichier). Il peut être utilisé lorsque vous avez intercepté une exception et que vous en voulez un rapport généré par <a class="reference internal" href="#module-cgitb" title="cgitb: Configurable traceback handler for CGI scripts. (obsolète)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgitb</span></code></a>. L'argument optionnel <em>info</em> doit être un <em>n</em>-uplet de trois éléments contenant le type de l'exception, l'exception, et la pile d'appels, tel que le <em>n</em>-uplet renvoyé par <a class="reference internal" href="sys.html#sys.exc_info" title="sys.exc_info"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.exc_info()</span></code></a>. Si l'argument <em>info</em> n'est pas donné, l'exception courante est obtenue via <a class="reference internal" href="sys.html#sys.exc_info" title="sys.exc_info"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.exc_info()</span></code></a>.</p>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="cgi.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgi</span></code> --- Common Gateway Interface support</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="chunk.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">chunk</span></code> --- Read IFF chunked data</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/cgitb.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="chunk.html" title="chunk --- Read IFF chunked data"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="cgi.html" title="cgi --- Common Gateway Interface support"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="superseded.html" >Modules remplacés</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgitb</span></code> — Gestionnaire d'exceptions pour les scripts CGI</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

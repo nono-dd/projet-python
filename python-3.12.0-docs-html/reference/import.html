@@ -1,0 +1,849 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="5. Le système d'importation" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/reference/import.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Le code Python d'un module peut accéder à du code d'un autre module par un mécanisme qui consiste à importer cet autre module. L'instruction import est la façon la plus courante de faire appel à ce..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Le code Python d'un module peut accéder à du code d'un autre module par un mécanisme qui consiste à importer cet autre module. L'instruction import est la façon la plus courante de faire appel à ce..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>5. Le système d&#39;importation &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="6. Expressions" href="expressions.html" />
+    <link rel="prev" title="4. Modèle d&#39;exécution" href="executionmodel.html" />
+    <link rel="canonical" href="https://docs.python.org/3/reference/import.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">5. Le système d'importation</a><ul>
+<li><a class="reference internal" href="#importlib">5.1. <code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code></a></li>
+<li><a class="reference internal" href="#packages">5.2. Les paquets</a><ul>
+<li><a class="reference internal" href="#regular-packages">5.2.1. Paquets classiques</a></li>
+<li><a class="reference internal" href="#namespace-packages">5.2.2. Paquets espaces de nommage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#searching">5.3. Recherche</a><ul>
+<li><a class="reference internal" href="#the-module-cache">5.3.1. Cache des modules</a></li>
+<li><a class="reference internal" href="#finders-and-loaders">5.3.2. Chercheurs et chargeurs</a></li>
+<li><a class="reference internal" href="#import-hooks">5.3.3. Points d'entrées automatiques pour l'importation</a></li>
+<li><a class="reference internal" href="#the-meta-path">5.3.4. Méta-chemins</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#loading">5.4. Chargement</a><ul>
+<li><a class="reference internal" href="#loaders">5.4.1. Chargeurs</a></li>
+<li><a class="reference internal" href="#submodules">5.4.2. Sous-modules</a></li>
+<li><a class="reference internal" href="#module-spec">5.4.3. Spécificateurs de modules</a></li>
+<li><a class="reference internal" href="#import-related-module-attributes">5.4.4. Attributs des modules importés</a></li>
+<li><a class="reference internal" href="#module-path">5.4.5. module.__path__</a></li>
+<li><a class="reference internal" href="#module-reprs">5.4.6. Représentation textuelle d'un module</a></li>
+<li><a class="reference internal" href="#cached-bytecode-invalidation">5.4.7. Invalidation de <em>bytecode</em> mis en cache</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-path-based-finder">5.5. Le chercheur dans <em>path</em></a><ul>
+<li><a class="reference internal" href="#path-entry-finders">5.5.1. Chercheurs d'entrée dans <em>path</em></a></li>
+<li><a class="reference internal" href="#path-entry-finder-protocol">5.5.2. Protocole des chercheurs d'entrée dans <em>path</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#replacing-the-standard-import-system">5.6. Remplacement du système d'importation standard</a></li>
+<li><a class="reference internal" href="#package-relative-imports">5.7. Importations relatives au paquet</a></li>
+<li><a class="reference internal" href="#special-considerations-for-main">5.8. Cas particulier de <code class="docutils literal notranslate"><span class="pre">__main__</span></code></a><ul>
+<li><a class="reference internal" href="#main-spec">5.8.1. <code class="docutils literal notranslate"><span class="pre">__main__.__spec__</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">5.9. Références</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="executionmodel.html"
+                          title="Chapitre précédent"><span class="section-number">4. </span>Modèle d'exécution</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="expressions.html"
+                          title="Chapitre suivant"><span class="section-number">6. </span>Expressions</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/reference/import.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="expressions.html" title="6. Expressions"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="executionmodel.html" title="4. Modèle d&#39;exécution"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">La référence du langage Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>Le système d'importation</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="the-import-system">
+<span id="importsystem"></span><h1><span class="section-number">5. </span>Le système d'importation<a class="headerlink" href="#the-import-system" title="Lien permanent vers ce titre">¶</a></h1>
+<p id="index-0">Le code Python d'un <a class="reference internal" href="../glossary.html#term-module"><span class="xref std std-term">module</span></a> peut accéder à du code d'un autre module par un mécanisme qui consiste à <a class="reference internal" href="../glossary.html#term-importer"><span class="xref std std-term">importer</span></a> cet autre module. L'instruction <a class="reference internal" href="simple_stmts.html#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a> est la façon la plus courante de faire appel à ce système d'importation, mais ce n'est pas la seule. Les fonctions telles que <a class="reference internal" href="../library/importlib.html#importlib.import_module" title="importlib.import_module"><code class="xref py py-func docutils literal notranslate"><span class="pre">importlib.import_module()</span></code></a> et <a class="reference internal" href="../library/functions.html#import__" title="__import__"><code class="xref py py-func docutils literal notranslate"><span class="pre">__import__()</span></code></a> peuvent aussi être utilisées pour mettre en œuvre le mécanisme d'importation.</p>
+<p>L'instruction <a class="reference internal" href="simple_stmts.html#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a> effectue deux opérations ; elle cherche le module dont le nom a été donné puis elle lie le résultat de cette recherche à un nom dans la portée locale. L'opération de recherche de l'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code> consiste à appeler la fonction <a class="reference internal" href="../library/functions.html#import__" title="__import__"><code class="xref py py-func docutils literal notranslate"><span class="pre">__import__()</span></code></a> avec les arguments adéquats. La valeur renvoyée par <a class="reference internal" href="../library/functions.html#import__" title="__import__"><code class="xref py py-func docutils literal notranslate"><span class="pre">__import__()</span></code></a> est utilisée pour effectuer l'opération de liaison avec le nom fourni à l'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code>. Reportez-vous à l'instruction <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code> pour les détails exacts de l'opération de liaison avec le nom.</p>
+<p>Un appel direct à <a class="reference internal" href="../library/functions.html#import__" title="__import__"><code class="xref py py-func docutils literal notranslate"><span class="pre">__import__()</span></code></a> effectue seulement la recherche du module et, s'il est trouvé, l'opération de création du module. Bien que des effets collatéraux puissent se produire, tels que l'importation de paquets parents et la mise à jour de divers caches (y compris <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>), il n'y a que l'instruction <a class="reference internal" href="simple_stmts.html#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a> qui déclenche l'opération de liaison avec le nom.</p>
+<p>Quand une instruction <a class="reference internal" href="simple_stmts.html#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a> est exécutée, la fonction native <a class="reference internal" href="../library/functions.html#import__" title="__import__"><code class="xref py py-func docutils literal notranslate"><span class="pre">__import__()</span></code></a> est appelée. D'autres mécanismes d'appel au système d'importation (tels que <a class="reference internal" href="../library/importlib.html#importlib.import_module" title="importlib.import_module"><code class="xref py py-func docutils literal notranslate"><span class="pre">importlib.import_module()</span></code></a>) peuvent choisir d'ignorer <a class="reference internal" href="../library/functions.html#import__" title="__import__"><code class="xref py py-func docutils literal notranslate"><span class="pre">__import__()</span></code></a> et utiliser leurs propres solutions pour implémenter la sémantique d'importation.</p>
+<p>Quand un module est importé pour la première fois, Python recherche le module et, s'il est trouvé, crée un objet module <a class="footnote-reference brackets" href="#fnmo" id="id1">1</a> en l'initialisant. Si le module n'est pas trouvé, une <a class="reference internal" href="../library/exceptions.html#ModuleNotFoundError" title="ModuleNotFoundError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code></a> est levée. Python implémente plusieurs stratégies pour rechercher le module d'un nom donné quand le mécanisme d'importation est invoqué. Ces stratégies peuvent être modifiées et étendues par divers moyens décrits dans les sections suivantes.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span>le système d'importation a été mis à jour pour implémenter complètement la deuxième partie de la <span class="target" id="index-40"></span><a class="pep reference external" href="https://peps.python.org/pep-0302/"><strong>PEP 302</strong></a>. Il n'existe plus de mécanisme implicite d'importation (le système d'importation complet est exposé <em>via</em> <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a>). En complément, la gestion des paquets dans l'espace des noms natif a été implémentée (voir la <span class="target" id="index-41"></span><a class="pep reference external" href="https://peps.python.org/pep-0420/"><strong>PEP 420</strong></a>).</p>
+</div>
+<section id="importlib">
+<h2><span class="section-number">5.1. </span><a class="reference internal" href="../library/importlib.html#module-importlib" title="importlib: The implementation of the import machinery."><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code></a><a class="headerlink" href="#importlib" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le module <a class="reference internal" href="../library/importlib.html#module-importlib" title="importlib: The implementation of the import machinery."><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code></a> fournit une API riche pour interagir avec le système d'importation. Par exemple, <a class="reference internal" href="../library/importlib.html#importlib.import_module" title="importlib.import_module"><code class="xref py py-func docutils literal notranslate"><span class="pre">importlib.import_module()</span></code></a> fournit une API (que nous vous recommandons) plus simple que la fonction native <a class="reference internal" href="../library/functions.html#import__" title="__import__"><code class="xref py py-func docutils literal notranslate"><span class="pre">__import__()</span></code></a> pour mettre en œuvre le mécanisme d'importation. Reportez-vous à la documentation de la bibliothèque <a class="reference internal" href="../library/importlib.html#module-importlib" title="importlib: The implementation of the import machinery."><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code></a> pour obtenir davantage de détails.</p>
+</section>
+<section id="packages">
+<h2><span class="section-number">5.2. </span>Les paquets<a class="headerlink" href="#packages" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-3">Python ne connait qu'un seul type d'objet module et tous les modules sont donc de ce type, que le module soit implémenté en Python, en C ou quoi que ce soit d'autre. Pour aider à l'organisation des modules et fournir une hiérarchie des noms, Python développe le concept de <a class="reference internal" href="../glossary.html#term-package"><span class="xref std std-term">paquets</span></a>.</p>
+<p>Vous pouvez vous représenter les paquets comme des répertoires dans le système de fichiers et les modules comme des fichiers dans ces répertoires. Mais ne prenez pas trop cette analogie au pied de la lettre car les paquets et les modules ne proviennent pas obligatoirement du système de fichiers. Dans le cadre de cette documentation, nous utilisons cette analogie bien pratique des répertoires et des fichiers. Comme les répertoires du système de fichiers, les paquets sont organisés de manière hiérarchique et les paquets peuvent eux-mêmes contenir des sous-paquets ou des modules.</p>
+<p>Il est important de garder à l'esprit que tous les paquets sont des modules mais que tous les modules ne sont pas des paquets. Formulé autrement, les paquets sont juste un certain type de modules. Spécifiquement, tout module qui contient un attribut <code class="docutils literal notranslate"><span class="pre">__path__</span></code> est réputé être un paquet.</p>
+<p>Tous les modules ont un nom. Les noms des sous-paquets sont séparés du nom du paquet parent par un point (<code class="docutils literal notranslate"><span class="pre">.</span></code>), à l'instar de la syntaxe standard d'accès aux attributs en Python. Ainsi, vous pouvez avoir un paquet nommé <a class="reference internal" href="../library/email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages."><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code></a> qui possède un sous-paquet nommé <a class="reference internal" href="../library/email.mime.html#module-email.mime" title="email.mime: Build MIME messages."><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code></a> et un module dans ce sous-paquet nommé <code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime.text</span></code>.</p>
+<section id="regular-packages">
+<h3><span class="section-number">5.2.1. </span>Paquets classiques<a class="headerlink" href="#regular-packages" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-4">Python définit deux types de paquets, les <a class="reference internal" href="../glossary.html#term-regular-package"><span class="xref std std-term">paquets classiques</span></a> et les <a class="reference internal" href="../glossary.html#term-namespace-package"><span class="xref std std-term">paquets espaces de nommage</span></a>. Les paquets classiques sont les paquets traditionnels tels qu'ils existaient dans Python 3.2 et antérieurs. Un paquet classique est typiquement implémenté sous la forme d'un répertoire contenant un fichier <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>. Quand un paquet classique est importé, ce fichier <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> est implicitement exécuté.</p>
+<p>Par exemple, l'arborescence suivante définit un paquet <code class="docutils literal notranslate"><span class="pre">parent</span></code> au niveau le plus haut avec trois sous-paquets :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">parent</span><span class="o">/</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">one</span><span class="o">/</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">two</span><span class="o">/</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">three</span><span class="o">/</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Importer <code class="docutils literal notranslate"><span class="pre">parent.one</span></code> exécute implicitement <code class="docutils literal notranslate"><span class="pre">parent/__init__.py</span></code> et <code class="docutils literal notranslate"><span class="pre">parent/one/__init__.py</span></code>. Les importations postérieures de <code class="docutils literal notranslate"><span class="pre">parent.two</span></code> ou <code class="docutils literal notranslate"><span class="pre">parent.three</span></code> respectivement exécutent <code class="docutils literal notranslate"><span class="pre">parent/two/__init__.py</span></code> ou <code class="docutils literal notranslate"><span class="pre">parent/three/__init__.py</span></code> respectivement.</p>
+</section>
+<section id="namespace-packages">
+<h3><span class="section-number">5.2.2. </span>Paquets espaces de nommage<a class="headerlink" href="#namespace-packages" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-5">Un paquet-espace de nommage est la combinaison de plusieurs <a class="reference internal" href="../glossary.html#term-portion"><span class="xref std std-term">portions</span></a> où chaque portion fournit un sous-paquet au paquet parent. Les portions peuvent être situées à différents endroits du système de fichiers. Les portions peuvent aussi être stockées dans des fichiers zip, sur le réseau ou à tout autre endroit dans lequel Python cherche pendant l'importation. Les paquets-espaces de nommage peuvent correspondre directement à des objets du système de fichiers, ou pas ; ils peuvent être des modules virtuels qui n'ont aucune représentation concrète.</p>
+<p>Les paquets-espaces de nommage n'utilisent pas une liste ordinaire pour leur attribut <code class="docutils literal notranslate"><span class="pre">__path__</span></code>. Ils utilisent en lieu et place un type itérable personnalisé qui effectue automatiquement une nouvelle recherche de portions de paquets à la tentative suivante d'importation dans ce paquet si le chemin de leur paquet parent (ou <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> pour les paquets de plus haut niveau) change.</p>
+<p>Pour les paquets-espaces de nommage, il n'existe pas de fichier <code class="docutils literal notranslate"><span class="pre">parent/__init__.py</span></code>. En fait, il peut y avoir plusieurs répertoires <code class="docutils literal notranslate"><span class="pre">parent</span></code> trouvés pendant le processus d'importation, où chacun est apporté par une portion différente. Ainsi, <code class="docutils literal notranslate"><span class="pre">parent/one</span></code> n'est pas forcément physiquement à côté de <code class="docutils literal notranslate"><span class="pre">parent/two</span></code>. Dans ce cas, Python crée un paquet-espace de nommage pour le paquet de plus haut niveau <code class="docutils literal notranslate"><span class="pre">parent</span></code> dès que lui ou l'un de ses sous-paquet est importé.</p>
+<p>Voir aussi la <span class="target" id="index-42"></span><a class="pep reference external" href="https://peps.python.org/pep-0420/"><strong>PEP 420</strong></a> pour les spécifications des paquets-espaces de nommage.</p>
+</section>
+</section>
+<section id="searching">
+<h2><span class="section-number">5.3. </span>Recherche<a class="headerlink" href="#searching" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Pour commencer la recherche, Python a besoin du <a class="reference internal" href="../glossary.html#term-qualified-name"><span class="xref std std-term">nom qualifié</span></a> du module (ou du paquet, mais ici cela ne fait pas de différence) que vous souhaitez importer. Le nom peut être donné en argument à l'instruction <a class="reference internal" href="simple_stmts.html#import"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a> ou comme paramètre aux fonctions <a class="reference internal" href="../library/importlib.html#importlib.import_module" title="importlib.import_module"><code class="xref py py-func docutils literal notranslate"><span class="pre">importlib.import_module()</span></code></a> ou <a class="reference internal" href="../library/functions.html#import__" title="__import__"><code class="xref py py-func docutils literal notranslate"><span class="pre">__import__()</span></code></a>.</p>
+<p>Le nom est utilisé dans plusieurs phases de la recherche et peut être un chemin séparé par des points pour un sous-module, par exemple <code class="docutils literal notranslate"><span class="pre">truc.machin.bidule</span></code>. Dans ce cas, Python essaie d'abord d'importer <code class="docutils literal notranslate"><span class="pre">truc</span></code> puis <code class="docutils literal notranslate"><span class="pre">truc.machin</span></code> et enfin <code class="docutils literal notranslate"><span class="pre">truc.machin.bidule</span></code>. Si n'importe laquelle des importations intermédiaires échoue, une <a class="reference internal" href="../library/exceptions.html#ModuleNotFoundError" title="ModuleNotFoundError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code></a> est levée.</p>
+<section id="the-module-cache">
+<h3><span class="section-number">5.3.1. </span>Cache des modules<a class="headerlink" href="#the-module-cache" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-7">Le premier endroit vérifié pendant la recherche d'une importation est <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>. Ce tableau de correspondances est utilisé comme cache de tous les modules déjà importés, y compris les chemins intermédiaires. Ainsi, si <code class="docutils literal notranslate"><span class="pre">truc.machin.bidule</span></code> a déjà été importé, <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> contient les entrées correspondantes à <code class="docutils literal notranslate"><span class="pre">truc</span></code>, <code class="docutils literal notranslate"><span class="pre">truc.machin</span></code> et <code class="docutils literal notranslate"><span class="pre">truc.machin.bidule</span></code>. À chaque chemin correspond une clé.</p>
+<p>Pendant l'importation, le nom de module est cherché dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> et, s'il est trouvé, la valeur associée est le module recherché et le processus est fini. Cependant, si la valeur est <code class="docutils literal notranslate"><span class="pre">None</span></code>, alors une <a class="reference internal" href="../library/exceptions.html#ModuleNotFoundError" title="ModuleNotFoundError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code></a> est levée. Si le nom du module n'est pas trouvé, Python continue la recherche du module.</p>
+<p><a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> est accessible en lecture-écriture. Supprimer une clé peut ne pas détruire le module associé (car d'autres modules contiennent possiblement des références vers ce module), mais cela invalide l'entrée du cache pour ce nom de module. Python cherche alors un nouveau module pour ce nom. La clé peut aussi être assignée à <code class="docutils literal notranslate"><span class="pre">None</span></code> de manière à forcer une <a class="reference internal" href="../library/exceptions.html#ModuleNotFoundError" title="ModuleNotFoundError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code></a> lors de la prochaine importation du module.</p>
+<p>Attention cependant : s'il reste une référence à l'objet module et que vous invalidez l'entrée dans le cache de <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> puis ré-importez le module, les deux objets modules ne seront pas les mêmes. À l'inverse, <a class="reference internal" href="../library/importlib.html#importlib.reload" title="importlib.reload"><code class="xref py py-func docutils literal notranslate"><span class="pre">importlib.reload()</span></code></a> ré-utilise le <em>même</em> objet module et ré-initialise simplement le contenu du module en ré-exécutant le code du module.</p>
+</section>
+<section id="finders-and-loaders">
+<span id="id2"></span><h3><span class="section-number">5.3.2. </span>Chercheurs et chargeurs<a class="headerlink" href="#finders-and-loaders" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-8">Si le module n'est pas trouvé dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>, alors Python utilise son protocole d'importation pour chercher et charger le module. Ce protocole se compose de deux objets conceptuels : les <a class="reference internal" href="../glossary.html#term-finder"><span class="xref std std-term">chercheurs</span></a> et les <a class="reference internal" href="../glossary.html#term-loader"><span class="xref std std-term">chargeurs</span></a>. Le travail du chercheur consiste à trouver, à l'aide de différentes stratégies, le module dont le nom a été fourni. Les objets qui implémentent ces deux interfaces sont connus sous le vocable « <a class="reference internal" href="../glossary.html#term-importer"><span class="xref std std-term">importateurs</span></a> » (ils renvoient une référence vers eux-mêmes quand ils trouvent un module qui répond aux attentes).</p>
+<p>Python inclut plusieurs chercheurs et importateurs par défaut. Le premier sait comment trouver les modules natifs et le deuxième sait comment trouver les modules figés. Un troisième chercheur recherche les modules dans <a class="reference internal" href="../glossary.html#term-import-path"><span class="xref std std-term">import path</span></a>. <a class="reference internal" href="../glossary.html#term-import-path"><span class="xref std std-term">import path</span></a> est une énumération sous forme de liste de chemins ou de fichiers zip. Il peut être étendu pour rechercher aussi dans toute ressource qui dispose d'un identifiant pour la localiser, une URL par exemple.</p>
+<p>Le mécanisme d'importation est extensible, vous pouvez donc ajouter de nouveaux chercheurs pour étendre le domaine de recherche des modules.</p>
+<p>Les chercheurs ne chargent pas les modules. S'il trouve le module demandé, un chercheur renvoie un <em class="dfn">spécificateur de module</em>, qui contient toutes les informations nécessaires pour importer le module ; celui-ci sera alors utilisé par le mécanisme d'importation pour charger le module.</p>
+<p>Les sections suivantes décrivent plus en détail le protocole utilisé par les chercheurs et les chargeurs, y compris la manière de les créer et les enregistrer pour étendre le mécanisme d'importation.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.4: </span>dans les versions précédentes de Python, les chercheurs renvoyaient directement les <a class="reference internal" href="../glossary.html#term-loader"><span class="xref std std-term">chargeurs</span></a>. Dorénavant, ils renvoient des spécificateurs de modules qui <em>contiennent</em> les chargeurs. Les chargeurs sont encore utilisés lors de l'importation mais ont moins de responsabilités.</p>
+</div>
+</section>
+<section id="import-hooks">
+<h3><span class="section-number">5.3.3. </span>Points d'entrées automatiques pour l'importation<a class="headerlink" href="#import-hooks" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-9">Le mécanisme d'importation est conçu pour être extensible ; vous pouvez y insérer des <em>points d'entrée automatique</em> (<em>hooks</em> en anglais). Il existe deux types de points d'entrée automatique pour l'importation : les <em>méta-points d'entrée</em> et les <em>points d'entrée sur le chemin des importations</em>.</p>
+<p>Les méta-points d'entrée sont appelés au début du processus d'importation, juste après la vérification dans le cache <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> mais avant tout le reste. Cela permet aux méta-points d'entrée de surcharger le traitement effectué sur <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>, les modules figés ou même les modules natifs. L'enregistrement des méta-points d'entrée se fait en ajoutant de nouveaux objets chercheurs à <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a>, comme décrit ci-dessous.</p>
+<p>Les points d'entrée sur le chemin des importations sont appelés pendant le traitement de <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> (ou <code class="docutils literal notranslate"><span class="pre">package.__path__</span></code>), au moment où le chemin qui leur correspond est atteint. Les points d'entrée sur le chemin des importations sont enregistrés en ajoutant de nouveaux appelables à <a class="reference internal" href="../library/sys.html#sys.path_hooks" title="sys.path_hooks"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_hooks</span></code></a>, comme décrit ci-dessous.</p>
+</section>
+<section id="the-meta-path">
+<h3><span class="section-number">5.3.4. </span>Méta-chemins<a class="headerlink" href="#the-meta-path" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-10">Quand le module demandé n'est pas trouvé dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>, Python recherche alors dans <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a> qui contient une liste d'objets chercheurs dans des méta-chemins. Ces chercheurs sont interrogés dans l'ordre pour voir s'ils savent prendre en charge le module passé en paramètre. Les chercheurs dans les méta-chemins implémentent une méthode <a class="reference internal" href="../library/importlib.html#importlib.abc.MetaPathFinder.find_spec" title="importlib.abc.MetaPathFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a> qui prend trois arguments : un nom, un chemin d'importation et (optionnellement) un module cible. Un chercheur dans les méta-chemins peut utiliser n'importe quelle stratégie pour déterminer s'il est apte à prendre en charge le module.</p>
+<p>Si un chercheur dans les méta-chemins sait prendre en charge le module donné, il renvoie un objet spécificateur. S'il ne sait pas, il renvoie <code class="docutils literal notranslate"><span class="pre">None</span></code>. Si le traitement de <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a> arrive à la fin de la liste sans qu'aucun chercheur n'a renvoyé un objet spécificateur, alors une <a class="reference internal" href="../library/exceptions.html#ModuleNotFoundError" title="ModuleNotFoundError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code></a> est levée. Toute autre exception levée est simplement propagée à l'appelant, mettant fin au processus d'importation.</p>
+<p>La méthode <a class="reference internal" href="../library/importlib.html#importlib.abc.MetaPathFinder.find_spec" title="importlib.abc.MetaPathFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a> des chercheurs dans les méta-chemins est appelée avec deux ou trois arguments. Le premier est le nom complètement qualifié du module à importer, par exemple <code class="docutils literal notranslate"><span class="pre">truc.machin.bidule</span></code>. Le deuxième argument est l'ensemble des chemins dans lesquels chercher. Pour les modules de plus haut niveau, le deuxième argument est <code class="docutils literal notranslate"><span class="pre">None</span></code> mais pour les sous-modules ou les paquets, le deuxième argument est la valeur de l'attribut <code class="docutils literal notranslate"><span class="pre">__path__</span></code> du paquet parent. Si l'attribut <code class="docutils literal notranslate"><span class="pre">__path__</span></code> approprié n'est pas accessible, une <a class="reference internal" href="../library/exceptions.html#ModuleNotFoundError" title="ModuleNotFoundError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code></a> est levée. Le troisième argument est un objet module existant qui va être la cible du chargement (plus tard). Le système d'importation ne passe le module cible en paramètre que lors d'un rechargement.</p>
+<p>Le méta-chemin peut être parcouru plusieurs fois pour une seule requête d'importation. Par exemple, si nous supposons qu'aucun des modules concernés n'a déjà été mis en cache, importer <code class="docutils literal notranslate"><span class="pre">truc.machin.bidule</span></code> effectue une première importation au niveau le plus haut, en appelant <code class="docutils literal notranslate"><span class="pre">c_m_c.find_spec(&quot;truc&quot;,</span> <span class="pre">None,</span> <span class="pre">None)</span></code> pour chaque chercheur dans les méta-chemins (<code class="docutils literal notranslate"><span class="pre">c_m_c</span></code>). Après que <code class="docutils literal notranslate"><span class="pre">truc</span></code> a été importé, <code class="docutils literal notranslate"><span class="pre">truc.machin</span></code> est importé en parcourant le méta-chemin une deuxième fois, appelant <code class="docutils literal notranslate"><span class="pre">c_m_c.find_spec(&quot;truc.machin&quot;,</span> <span class="pre">truc.__path__,</span> <span class="pre">None)</span></code>. Une fois <code class="docutils literal notranslate"><span class="pre">truc.machin</span></code> importé, le parcours final appelle <code class="docutils literal notranslate"><span class="pre">c_m_c.find_spec(&quot;truc.machin.bidule&quot;,</span> <span class="pre">truc.machin.__path__,</span> <span class="pre">None)</span></code>.</p>
+<p>Quelques chercheurs dans les méta-chemins ne gèrent que les importations de plus haut niveau. Ces importateurs renvoient toujours <code class="docutils literal notranslate"><span class="pre">None</span></code> si on leur passe un deuxième argument autre que <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>Le <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a> de Python comprend trois chercheurs par défaut : un qui sait importer les modules natifs, un qui sait importer les modules figés et un qui sait importer les modules depuis un <a class="reference internal" href="../glossary.html#term-import-path"><span class="xref std std-term">chemin des importations</span></a> (c'est le <a class="reference internal" href="../glossary.html#term-path-based-finder"><span class="xref std std-term">chercheur dans path</span></a>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.4: </span>The <a class="reference internal" href="../library/importlib.html#importlib.abc.MetaPathFinder.find_spec" title="importlib.abc.MetaPathFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a> method of meta path
+finders replaced <code class="xref py py-meth docutils literal notranslate"><span class="pre">find_module()</span></code>, which
+is now deprecated.  While it will continue to work without change, the
+import machinery will try it only if the finder does not implement
+<code class="docutils literal notranslate"><span class="pre">find_spec()</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.10: </span>Use of <code class="xref py py-meth docutils literal notranslate"><span class="pre">find_module()</span></code> by the import system
+now raises <a class="reference internal" href="../library/exceptions.html#ImportWarning" title="ImportWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportWarning</span></code></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span><code class="docutils literal notranslate"><span class="pre">find_module()</span></code> has been removed.  Use <code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code> instead.</p>
+</div>
+</section>
+</section>
+<section id="loading">
+<h2><span class="section-number">5.4. </span>Chargement<a class="headerlink" href="#loading" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Quand un spécificateur de module est trouvé, le mécanisme d'importation l'utilise (et le chargeur qu'il contient) pour charger le module. Voici à peu près ce qui se passe au sein de l'importation pendant la phase de chargement :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">loader</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="p">,</span> <span class="s1">&#39;create_module&#39;</span><span class="p">):</span>
+    <span class="c1"># It is assumed &#39;exec_module&#39; will also be defined on the loader.</span>
+    <span class="n">module</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">create_module</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">module</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">module</span> <span class="o">=</span> <span class="n">ModuleType</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="c1"># The import-related module attributes get set here:</span>
+<span class="n">_init_module_attrs</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">module</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">loader</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># unsupported</span>
+    <span class="k">raise</span> <span class="ne">ImportError</span>
+<span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">origin</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">spec</span><span class="o">.</span><span class="n">submodule_search_locations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># namespace package</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">spec</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">module</span>
+<span class="k">elif</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="p">,</span> <span class="s1">&#39;exec_module&#39;</span><span class="p">):</span>
+    <span class="n">module</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">spec</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">module</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">BaseException</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">spec</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">raise</span>
+<span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">spec</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Notez les détails suivants :</p>
+<ul class="simple">
+<li><p>S'il existe un objet module dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> avec le même nom, <em>import</em> l'aurait déjà renvoyé.</p></li>
+<li><p>Le module existe dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> avant que le chargeur exécute le code du module. C'est crucial car le code du module peut (directement ou indirectement) s'importer lui-même ; l'ajouter à <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> avant évite les récursions infinies dans le pire cas et le chargement multiple dans le meilleur des cas.</p></li>
+<li><p>Si le chargement échoue, le module en cause (et seulement ce module) est enlevé de <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>. Tout module déjà dans le cache de <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> et tout module qui a été chargé avec succès par effet de bord doit rester dans le cache. C'est différent dans le cas d'un rechargement où même le module qui a échoué est conservé dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>.</p></li>
+<li><p>Après que le module est créé mais avant son exécution, le mécanisme d'importation définit les attributs relatifs à l'importation (<code class="docutils literal notranslate"><span class="pre">_init_module_attrs</span></code> dans l'exemple de pseudo-code ci-dessus), comme indiqué brièvement dans une <a class="reference internal" href="#import-mod-attrs"><span class="std std-ref">section</span></a> que nous abordons ensuite.</p></li>
+<li><p>L'exécution du module est le moment clé du chargement dans lequel l'espace de nommage du module est peuplé. L'exécution est entièrement déléguée au chargeur qui doit décider ce qui est peuplé et comment.</p></li>
+<li><p>Le modulé créé pendant le chargement et passé à <code class="docutils literal notranslate"><span class="pre">exec_module()</span></code> peut ne pas être celui qui est renvoyé à la fin de l'importation <a class="footnote-reference brackets" href="#fnlo" id="id3">2</a>.</p></li>
+</ul>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.4: </span>le système d'importation a pris en charge les responsabilités des chargeurs. Celles-ci étaient auparavant effectuées par la méthode <a class="reference internal" href="../library/importlib.html#importlib.abc.Loader.load_module" title="importlib.abc.Loader.load_module"><code class="xref py py-meth docutils literal notranslate"><span class="pre">importlib.abc.Loader.load_module()</span></code></a>.</p>
+</div>
+<section id="loaders">
+<h3><span class="section-number">5.4.1. </span>Chargeurs<a class="headerlink" href="#loaders" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les chargeurs de modules fournissent la fonction critique du chargement : l'exécution du module. Le mécanisme d'importation appelle la méthode <a class="reference internal" href="../library/importlib.html#importlib.abc.Loader.exec_module" title="importlib.abc.Loader.exec_module"><code class="xref py py-meth docutils literal notranslate"><span class="pre">importlib.abc.Loader.exec_module()</span></code></a> avec un unique argument, l'objet module à exécuter. Toute valeur renvoyée par <a class="reference internal" href="../library/importlib.html#importlib.abc.Loader.exec_module" title="importlib.abc.Loader.exec_module"><code class="xref py py-meth docutils literal notranslate"><span class="pre">exec_module()</span></code></a> est ignorée.</p>
+<p>Les chargeurs doivent satisfaire les conditions suivantes :</p>
+<ul class="simple">
+<li><p>Si le module est un module Python (par opposition aux modules natifs ou aux extensions chargées dynamiquement), le chargeur doit exécuter le code du module dans l'espace des noms globaux du module (<code class="docutils literal notranslate"><span class="pre">module.__dict__</span></code>).</p></li>
+<li><p>Si le chargeur ne peut pas exécuter le module, il doit lever une <a class="reference internal" href="../library/exceptions.html#ImportError" title="ImportError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportError</span></code></a>, alors que toute autre exception levée durant <a class="reference internal" href="../library/importlib.html#importlib.abc.Loader.exec_module" title="importlib.abc.Loader.exec_module"><code class="xref py py-meth docutils literal notranslate"><span class="pre">exec_module()</span></code></a> est propagée.</p></li>
+</ul>
+<p>Souvent, le chercheur et le chargeur sont le même objet ; dans ce cas, la méthode <a class="reference internal" href="../library/importlib.html#importlib.abc.MetaPathFinder.find_spec" title="importlib.abc.MetaPathFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a> doit juste renvoyer un spécificateur avec le chargeur défini à <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p>
+<p>Les chargeurs de modules peuvent choisir de créer l'objet module pendant le chargement en implémentant une méthode <a class="reference internal" href="../library/importlib.html#importlib.abc.Loader.create_module" title="importlib.abc.Loader.create_module"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_module()</span></code></a>. Elle prend un argument, l'objet spécificateur du module et renvoie le nouvel objet du module à utiliser pendant le chargement. Notez que <code class="docutils literal notranslate"><span class="pre">create_module()</span></code> n'a besoin de définir aucun attribut sur l'objet module. Si cette méthode renvoie <code class="docutils literal notranslate"><span class="pre">None</span></code>, le mécanisme d'importation crée le nouveau module lui-même.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.4: </span>la méthode <a class="reference internal" href="../library/importlib.html#importlib.abc.Loader.create_module" title="importlib.abc.Loader.create_module"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_module()</span></code></a> des chargeurs.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.4: </span>la méthode <a class="reference internal" href="../library/importlib.html#importlib.abc.Loader.load_module" title="importlib.abc.Loader.load_module"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load_module()</span></code></a> a été remplacée par <a class="reference internal" href="../library/importlib.html#importlib.abc.Loader.exec_module" title="importlib.abc.Loader.exec_module"><code class="xref py py-meth docutils literal notranslate"><span class="pre">exec_module()</span></code></a> et le mécanisme d'import assume toutes les responsabilités du chargement.</p>
+<p>Par compatibilité avec les chargeurs existants, le mécanisme d'importation utilise la méthode <code class="docutils literal notranslate"><span class="pre">load_module()</span></code> des chargeurs si elle existe et si le chargeur n'implémente pas <code class="docutils literal notranslate"><span class="pre">exec_module()</span></code>. Cependant, <code class="docutils literal notranslate"><span class="pre">load_module()</span></code> est déclarée obsolète et les chargeurs doivent implémenter <code class="docutils literal notranslate"><span class="pre">exec_module()</span></code> à la place.</p>
+<p>La méthode <code class="docutils literal notranslate"><span class="pre">load_module()</span></code> <em>doit</em> implémenter toutes les fonctionnalités de chargement décrites ci-dessus en plus de l'exécution du module. Toutes les contraintes s'appliquent aussi, avec quelques précisions supplémentaires :</p>
+<ul class="simple">
+<li><p>S'il y a un objet module existant avec le même nom dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>, le chargeur doit utiliser le module existant (sinon, <a class="reference internal" href="../library/importlib.html#importlib.reload" title="importlib.reload"><code class="xref py py-func docutils literal notranslate"><span class="pre">importlib.reload()</span></code></a> ne fonctionnera pas correctement). Si le module considéré n'est pas trouvé dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>, le chargeur doit créer un nouvel objet module et l'ajouter à <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>.</p></li>
+<li><p>Le module <em>doit</em> exister dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> avant que le chargeur n'exécute le code du module, afin d'éviter les récursions infinies ou le chargement multiple.</p></li>
+<li><p>Si le chargement échoue, le chargeur ne doit enlever de <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> <strong>que</strong> le (ou les) module ayant échoué et seulement si le chargeur lui-même a chargé le module explicitement.</p></li>
+</ul>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>un avertissement <a class="reference internal" href="../library/exceptions.html#DeprecationWarning" title="DeprecationWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">DeprecationWarning</span></code></a> est levé quand <code class="docutils literal notranslate"><span class="pre">exec_module()</span></code> est définie mais <code class="docutils literal notranslate"><span class="pre">create_module()</span></code> ne l'est pas.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>une exception <a class="reference internal" href="../library/exceptions.html#ImportError" title="ImportError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportError</span></code></a> est levée quand <code class="docutils literal notranslate"><span class="pre">exec_module()</span></code> est définie mais <code class="docutils literal notranslate"><span class="pre">create_module()</span></code> ne l'est pas.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.10: </span>l'utilisation de <code class="docutils literal notranslate"><span class="pre">load_module()</span></code> lève un <a class="reference internal" href="../library/exceptions.html#ImportWarning" title="ImportWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportWarning</span></code></a>.</p>
+</div>
+</section>
+<section id="submodules">
+<h3><span class="section-number">5.4.2. </span>Sous-modules<a class="headerlink" href="#submodules" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Quand un sous-module est chargé, quel que soit le mécanisme (par exemple avec les instructions <code class="docutils literal notranslate"><span class="pre">import</span></code>, <code class="docutils literal notranslate"><span class="pre">import-from</span></code> ou avec la fonction native <code class="docutils literal notranslate"><span class="pre">__import__()</span></code>), une liaison est créée dans l'espace de nommage du module parent vers l'objet sous-module. Par exemple, si le paquet <code class="docutils literal notranslate"><span class="pre">spam</span></code> possède un sous-module <code class="docutils literal notranslate"><span class="pre">foo</span></code>, après l'importation de <code class="docutils literal notranslate"><span class="pre">spam.foo</span></code>, <code class="docutils literal notranslate"><span class="pre">spam</span></code> possède un attribut <code class="docutils literal notranslate"><span class="pre">foo</span></code> qui est lié au sous-module. Supposons que nous ayons l'arborescence suivante :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">spam</span><span class="o">/</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">foo</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>et que le contenu de <code class="docutils literal notranslate"><span class="pre">spam/__init__.py</span></code> contienne :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.foo</span> <span class="kn">import</span> <span class="n">Foo</span>
+</pre></div>
+</div>
+<p>alors exécuter les lignes suivantes crée des liens vers <code class="docutils literal notranslate"><span class="pre">foo</span></code> et <code class="docutils literal notranslate"><span class="pre">Foo</span></code> dans le module <code class="docutils literal notranslate"><span class="pre">spam</span></code> :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">spam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spam</span><span class="o">.</span><span class="n">foo</span>
+<span class="go">&lt;module &#39;spam.foo&#39; from &#39;/tmp/imports/spam/foo.py&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spam</span><span class="o">.</span><span class="n">Foo</span>
+<span class="go">&lt;class &#39;spam.foo.Foo&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Connaissant la façon habituelle dont Python effectue les liens, cela peut sembler surprenant. Mais c'est en fait une fonctionnalité fondamentale du système d'importation. Si vous avez quelque part <code class="docutils literal notranslate"><span class="pre">sys.modules['spam']</span></code> et <code class="docutils literal notranslate"><span class="pre">sys.modules['spam.foo']</span></code> (comme dans c'est le cas ci-dessus après l'importation), alors le dernier doit apparaître comme l'attribut <code class="docutils literal notranslate"><span class="pre">foo</span></code> du premier.</p>
+</section>
+<section id="module-spec">
+<h3><span class="section-number">5.4.3. </span>Spécificateurs de modules<a class="headerlink" href="#module-spec" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le mécanisme d'importation utilise diverses informations de chaque module pendant l'importation, spécialement avant le chargement. La plupart de ces informations sont communes à tous les modules. Le but d'un spécificateur de module est d'encapsuler ces informations relatives à l'importation au sein de chaque module.</p>
+<p>Utiliser un spécificateur pendant l'importation permet de transférer l'état entre les composants du système d'importation, par exemple entre le chercheur qui crée le spécificateur de module et le chargeur qui l'exécute. Surtout, cela permet au mécanisme d'importation d'effectuer toutes les opérations classiques de chargement, alors que c'était le chargeur qui en avait la responsabilité quand il n'y avait pas de spécificateur.</p>
+<p>Le spécificateur de module est accessible par l'attribut <code class="docutils literal notranslate"><span class="pre">__spec__</span></code> de l'objet module. Lisez <a class="reference internal" href="../library/importlib.html#importlib.machinery.ModuleSpec" title="importlib.machinery.ModuleSpec"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModuleSpec</span></code></a> pour davantage d'informations sur le contenu du spécificateur de module.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.4.</span></p>
+</div>
+</section>
+<section id="import-related-module-attributes">
+<span id="import-mod-attrs"></span><h3><span class="section-number">5.4.4. </span>Attributs des modules importés<a class="headerlink" href="#import-related-module-attributes" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le mécanisme d'importation renseigne ces attributs pour chaque objet module pendant le chargement, sur la base du spécificateur de module et avant que le chargeur n'exécute le module.</p>
+<p>It is <strong>strongly</strong> recommended that you rely on <a class="reference internal" href="#spec__" title="__spec__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__spec__</span></code></a> and
+its attributes instead of any of the other individual attributes
+listed below.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="name__">
+<span id="__name__"></span><span class="sig-name descname"><span class="pre">__name__</span></span><a class="headerlink" href="#name__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>L'attribut <code class="docutils literal notranslate"><span class="pre">__name__</span></code> doit contenir le nom complètement qualifié du module. Ce nom est utilisé pour identifier de manière non équivoque le module dans le mécanisme d'importation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="loader__">
+<span id="__loader__"></span><span class="sig-name descname"><span class="pre">__loader__</span></span><a class="headerlink" href="#loader__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>L'attribut <code class="docutils literal notranslate"><span class="pre">__loader__</span></code> doit pointer vers l'objet chargeur que le mécanisme d'importation a utilisé pour charger le module. L'utilisation principale concerne l'introspection, mais il peut être utilisé pour d'autres fonctionnalités relatives au chargement. Par exemple, obtenir des données par l'intermédiaire du chargeur.</p>
+<p>It is <strong>strongly</strong> recommended that you rely on <a class="reference internal" href="#spec__" title="__spec__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__spec__</span></code></a>
+instead instead of this attribute.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span>The value of <code class="docutils literal notranslate"><span class="pre">__loader__</span></code> is expected to be the same as
+<code class="docutils literal notranslate"><span class="pre">__spec__.loader</span></code>.  The use of <code class="docutils literal notranslate"><span class="pre">__loader__</span></code> is deprecated and slated
+for removal in Python 3.14.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="package__">
+<span id="__package__"></span><span class="sig-name descname"><span class="pre">__package__</span></span><a class="headerlink" href="#package__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>The module's <code class="docutils literal notranslate"><span class="pre">__package__</span></code> attribute may be set.  Its value must
+be a string, but it can be the same value as its <code class="docutils literal notranslate"><span class="pre">__name__</span></code>.  When
+the module is a package, its <code class="docutils literal notranslate"><span class="pre">__package__</span></code> value should be set to
+its <code class="docutils literal notranslate"><span class="pre">__name__</span></code>.  When the module is not a package, <code class="docutils literal notranslate"><span class="pre">__package__</span></code>
+should be set to the empty string for top-level modules, or for
+submodules, to the parent package's name.  See <span class="target" id="index-11"></span><a class="pep reference external" href="https://peps.python.org/pep-0366/"><strong>PEP 366</strong></a> for further
+details.</p>
+<p>This attribute is used instead of <code class="docutils literal notranslate"><span class="pre">__name__</span></code> to calculate explicit
+relative imports for main modules, as defined in <span class="target" id="index-12"></span><a class="pep reference external" href="https://peps.python.org/pep-0366/"><strong>PEP 366</strong></a>.</p>
+<p>It is <strong>strongly</strong> recommended that you rely on <a class="reference internal" href="#spec__" title="__spec__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__spec__</span></code></a>
+instead instead of this attribute.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>la valeur de <code class="docutils literal notranslate"><span class="pre">__package__</span></code> devrait être la même que celle de <code class="docutils literal notranslate"><span class="pre">__spec__.parent</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.10: </span><a class="reference internal" href="../library/exceptions.html#ImportWarning" title="ImportWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportWarning</span></code></a> is raised if import falls back to
+<code class="docutils literal notranslate"><span class="pre">__package__</span></code> instead of
+<a class="reference internal" href="../library/importlib.html#importlib.machinery.ModuleSpec.parent" title="importlib.machinery.ModuleSpec.parent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">parent</span></code></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span>Raise <a class="reference internal" href="../library/exceptions.html#DeprecationWarning" title="DeprecationWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">DeprecationWarning</span></code></a> instead of <a class="reference internal" href="../library/exceptions.html#ImportWarning" title="ImportWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportWarning</span></code></a>
+when falling back to <code class="docutils literal notranslate"><span class="pre">__package__</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spec__">
+<span id="__spec__"></span><span class="sig-name descname"><span class="pre">__spec__</span></span><a class="headerlink" href="#spec__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>L'attribut <code class="docutils literal notranslate"><span class="pre">__spec__</span></code> doit contenir un lien vers le spécificateur de module qui a été utilisé lors de l'importation du module. Définir <code class="docutils literal notranslate"><span class="pre">__spec__</span></code> correctement s'applique aussi pour <a class="reference internal" href="toplevel_components.html#programs"><span class="std std-ref">l'initialisation des modules au démarrage de l'interpréteur</span></a>. La seule exception concerne <code class="docutils literal notranslate"><span class="pre">__main__</span></code> où la valeur de <code class="docutils literal notranslate"><span class="pre">__spec__</span></code> est <a class="reference internal" href="#main-spec"><span class="std std-ref">None dans certains cas</span></a>.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">__spec__.parent</span></code> is not set, <code class="docutils literal notranslate"><span class="pre">__package__</span></code> is used as
+a fallback.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.4.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span><code class="docutils literal notranslate"><span class="pre">__spec__.parent</span></code> est utilisé par défaut quand <code class="docutils literal notranslate"><span class="pre">__package__</span></code> n'est pas défini.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="path__">
+<span id="__path__"></span><span class="sig-name descname"><span class="pre">__path__</span></span><a class="headerlink" href="#path__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Si le module est un paquet (classique ou espace de nommage), l'attribut <code class="docutils literal notranslate"><span class="pre">__path__</span></code> de l'objet module doit être défini. La valeur doit être un itérable mais peut être vide si <code class="docutils literal notranslate"><span class="pre">__path__</span></code> n'a pas de sens dans le contexte. Si <code class="docutils literal notranslate"><span class="pre">__path__</span></code> n'est pas vide, il doit produire des chaînes lorsque l'on itère dessus. Vous trouvez plus de détails sur la sémantique de <code class="docutils literal notranslate"><span class="pre">__path__</span></code> <a class="reference internal" href="#package-path-rules"><span class="std std-ref">plus loin ci-dessous</span></a>.</p>
+<p>Les modules qui ne sont pas des paquets ne doivent pas avoir d'attribut <code class="docutils literal notranslate"><span class="pre">__path__</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="file__">
+<span id="__file__"></span><span class="sig-name descname"><span class="pre">__file__</span></span><a class="headerlink" href="#file__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cached__">
+<span id="__cached__"></span><span class="sig-name descname"><span class="pre">__cached__</span></span><a class="headerlink" href="#cached__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">__file__</span></code> est optionnel (si elle est spécifiée, la valeur doit être une chaîne). Cela indique le chemin vers le fichier depuis lequel le module a été chargé (s'il a été chargé à partir d'un fichier) ou le chemin du fichier de la bibliothèque partagée  pour les modules d'extension chargés dynamiquement depuis une bibliothèque partagée. Il se peut qu'il n'existe pas pour certains types de modules, tels que les modules C qui sont liés statiquement à l'interpréteur, où le système d'importation le laisse indéfini parce que sa sémantique serait mauvaise (par exemple, un module chargé depuis une base de données).</p>
+<p>Si <code class="docutils literal notranslate"><span class="pre">__file__</span></code> est défini, il peut être judicieux de définir l'attribut <code class="docutils literal notranslate"><span class="pre">__cached__</span></code> dont la valeur est le chemin vers une version compilée du code (par exemple, le fichier <em>bytecode</em>). Le fichier n'a pas besoin d'exister pour définir cet attribut : le chemin peut simplement pointer vers l'endroit où le fichier compilé aurait été placé (voir la <span class="target" id="index-43"></span><a class="pep reference external" href="https://peps.python.org/pep-3147/"><strong>PEP 3147</strong></a>).</p>
+<p>Notez que  <code class="docutils literal notranslate"><span class="pre">__cached__</span></code> peut être défini même si <code class="docutils literal notranslate"><span class="pre">__file__</span></code> n'est pas défini. Cependant, ce scénario semble rare. Au final, c'est le chargeur qui utilise les spécifications du module fournies par le chercheur (spécifications à partir desquelles sont dérivées <code class="docutils literal notranslate"><span class="pre">__file__</span></code> et <code class="docutils literal notranslate"><span class="pre">__cached__</span></code>). Donc, si le chargeur peut charger depuis un module mis en cache mais ne peut pas charger depuis un fichier, ce scénario a du sens.</p>
+<p>It is <strong>strongly</strong> recommended that you rely on <a class="reference internal" href="#spec__" title="__spec__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__spec__</span></code></a>
+instead instead of <code class="docutils literal notranslate"><span class="pre">__cached__</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="module-path">
+<span id="package-path-rules"></span><h3><span class="section-number">5.4.5. </span>module.__path__<a class="headerlink" href="#module-path" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Par définition, si un module possède un attribut <code class="docutils literal notranslate"><span class="pre">__path__</span></code>, c'est un paquet.</p>
+<p>L'attribut <code class="docutils literal notranslate"><span class="pre">__path__</span></code> d'un paquet est utilisé pendant l'importation des sous-paquets. Dans le mécanisme d'importation, son fonctionnement ressemble beaucoup à <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>, c'est-à-dire qu'il fournit une liste d'emplacements où rechercher les modules pendant l'importation. Cependant, <code class="docutils literal notranslate"><span class="pre">__path__</span></code> est beaucoup plus contraint que <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">__path__</span></code> doit être un itérable de chaînes de caractères, mais il peut être vide. Les mêmes règles que pour <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> s'appliquent au <code class="docutils literal notranslate"><span class="pre">__path__</span></code> d'un paquet et <a class="reference internal" href="../library/sys.html#sys.path_hooks" title="sys.path_hooks"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_hooks</span></code></a> (dont la description est donnée plus bas) est consulté pendant le parcours de <code class="docutils literal notranslate"><span class="pre">__path__</span></code> du paquet.</p>
+<p>Le fichier <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> d'un paquet peut définir ou modifier l'attribut <code class="docutils literal notranslate"><span class="pre">__path__</span></code> d'un paquet, et c'est ainsi qu'étaient implémentés les paquets-espaces de nommage avant la <span class="target" id="index-44"></span><a class="pep reference external" href="https://peps.python.org/pep-0420/"><strong>PEP 420</strong></a>. Depuis l'adoption de la <span class="target" id="index-45"></span><a class="pep reference external" href="https://peps.python.org/pep-0420/"><strong>PEP 420</strong></a>, les paquets-espaces de nommage n'ont plus besoin d'avoir des fichiers <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> qui ne font que de la manipulation de <code class="docutils literal notranslate"><span class="pre">__path__</span></code> ; le mécanisme d'importation définit automatiquement <code class="docutils literal notranslate"><span class="pre">__path__</span></code> correctement pour un paquet-espace de nommage.</p>
+</section>
+<section id="module-reprs">
+<h3><span class="section-number">5.4.6. </span>Représentation textuelle d'un module<a class="headerlink" href="#module-reprs" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Par défaut, tous les modules ont une représentation textuelle utilisable. Cependant, en utilisant les attributs définis ci-dessus et dans le spécificateur de module, vous pouvez explicitement mieux contrôler l'affichage des objets modules.</p>
+<p>Si le module possède un spécificateur (<code class="docutils literal notranslate"><span class="pre">__spec__</span></code>), le mécanisme d'importation essaie de générer une représentation avec celui-ci. S'il échoue ou s'il n'y a pas de spécificateur, le système d'importation construit une représentation par défaut en utilisant toute information disponible sur le module. Il tente d'utiliser <code class="docutils literal notranslate"><span class="pre">module.__name__</span></code>, <code class="docutils literal notranslate"><span class="pre">module.__file__</span></code> et <code class="docutils literal notranslate"><span class="pre">module.__loader__</span></code> comme entrées pour la représentation, avec des valeurs par défaut lorsque l'information est manquante.</p>
+<p>Les règles exactes utilisées sont :</p>
+<ul class="simple">
+<li><p>Si le module possède un attribut <code class="docutils literal notranslate"><span class="pre">__spec__</span></code>, la valeur est utilisée pour générer la représentation. Les attributs <em>name</em>, <em>loader</em>, <em>origin</em> et <em>has_location</em> sont consultés.</p></li>
+<li><p>Si le module possède un attribut <code class="docutils literal notranslate"><span class="pre">__file__</span></code>, il est utilisé pour construire la représentation du module.</p></li>
+<li><p>Si le module ne possède pas d'attribut <code class="docutils literal notranslate"><span class="pre">__file__</span></code> mais possède un <code class="docutils literal notranslate"><span class="pre">__loader__</span></code> qui n'est pas <code class="docutils literal notranslate"><span class="pre">None</span></code>, alors la représentation du chargeur est utilisée pour construire la représentation du module.</p></li>
+<li><p>Sinon, il utilise juste le <code class="docutils literal notranslate"><span class="pre">__name__</span></code> du module dans la représentation.</p></li>
+</ul>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span>Use of <code class="xref py py-meth docutils literal notranslate"><span class="pre">module_repr()</span></code>, having been deprecated since Python 3.4, was
+removed in Python 3.12 and is no longer called during the resolution of a
+module's repr.</p>
+</div>
+</section>
+<section id="cached-bytecode-invalidation">
+<span id="pyc-invalidation"></span><h3><span class="section-number">5.4.7. </span>Invalidation de <em>bytecode</em> mis en cache<a class="headerlink" href="#cached-bytecode-invalidation" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Avant que Python ne charge du <em>bytecode</em> en cache à partir d'un fichier <code class="docutils literal notranslate"><span class="pre">.pyc</span></code>, il vérifie si ce cache est bien à jour par rapport au fichier source <code class="docutils literal notranslate"><span class="pre">.py</span></code>. Python effectue cette vérification en stockant l'horodatage de la dernière modification de la source ainsi que sa taille dans le fichier cache au moment où il l'écrit. À l'exécution, le système d'importation valide le fichier cache en comparant les métadonnées que le cache contient avec les métadonnées de la source.</p>
+<p>Python gère également les fichiers caches « avec empreintes », qui stockent une empreinte (<em>hash</em> en anglais) du contenu de la source plutôt que des métadonnées. Il existe deux variations des fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> avec empreintes : vérifiés et non-vérifiés. Pour les fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> avec empreinte vérifiés, Python valide le fichier cache en calculant l'empreinte du fichier source et compare les empreintes. Si l'empreinte stockée dans le fichier cache est invalide, Python la recalcule et écrit un nouveau fichier cache avec empreinte. Pour les fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> avec empreinte non vérifiés, Python considère simplement que le fichier cache est valide s'il existe. La validation (ou non) des fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> avec empreinte peut être définie avec l'option <a class="reference internal" href="../using/cmdline.html#cmdoption-check-hash-based-pycs"><code class="xref std std-option docutils literal notranslate"><span class="pre">--check-hash-based-pycs</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7: </span>ajout des fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> avec empreinte. Auparavant, Python gérait les caches de <em>bytecode</em> sur la base de l'horodatage.</p>
+</div>
+</section>
+</section>
+<section id="the-path-based-finder">
+<h2><span class="section-number">5.5. </span>Le chercheur dans <em>path</em><a class="headerlink" href="#the-path-based-finder" title="Lien permanent vers ce titre">¶</a></h2>
+<p id="index-16">Comme indiqué précédemment, Python est livré par défaut avec plusieurs chercheurs dans les méta-chemins. L'un deux, appelé <a class="reference internal" href="../glossary.html#term-path-based-finder"><span class="xref std std-term">chercheur dans path</span></a> (<a class="reference internal" href="../library/importlib.html#importlib.machinery.PathFinder" title="importlib.machinery.PathFinder"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathFinder</span></code></a>), recherche dans le <a class="reference internal" href="../glossary.html#term-import-path"><span class="xref std std-term">chemin des importations</span></a> qui contient une liste <a class="reference internal" href="../glossary.html#term-path-entry"><span class="xref std std-term">d'entrées dans path</span></a>. Chaque entrée désigne un emplacement où rechercher des modules.</p>
+<p>Le chercheur dans <em>path</em> en tant que tel ne sait pas comment importer quoi que ce soit. Il ne fait que parcourir chaque entrée de <em>path</em> et associe à chacune d'elle un « chercheur d'entrée dans <em>path</em> » qui sait comment gérer le type particulier de chemin considéré.</p>
+<p>L'ensemble par défaut des « chercheurs d'entrée dans <em>path</em> » implémente toute la sémantique pour trouver des modules dans le système de fichiers, gérer des fichiers spéciaux tels que le code source Python (fichiers <code class="docutils literal notranslate"><span class="pre">.py</span></code>), le <em>bytecode</em> Python (fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code>) et les bibliothèques partagées (par exemple les fichiers <code class="docutils literal notranslate"><span class="pre">.so</span></code>). Quand le module <a class="reference internal" href="../library/zipimport.html#module-zipimport" title="zipimport: Support for importing Python modules from ZIP archives."><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipimport</span></code></a> de la bibliothèque standard le permet, les « chercheurs d'entrée dans <em>path</em> » par défaut savent aussi gérer tous ces types de fichiers (autres que les bibliothèques partagées) encapsulés dans des fichiers zip.</p>
+<p>Les chemins ne sont pas limités au système de fichiers. Ils peuvent faire référence à des URL, des requêtes dans des bases de données ou tout autre emplacement qui peut être spécifié dans une chaîne de caractères.</p>
+<p>Le chercheur dans <em>path</em> fournit aussi des points d'entrées (ou <em>hooks</em>) et des protocoles de manière à pouvoir étendre et personnaliser les types de chemins dans lesquels chercher. Par exemple, si vous voulez pouvoir chercher dans des URL réseau, vous pouvez écrire une fonction « point d'entrée » qui implémente la sémantique HTTP pour chercher des modules sur la toile. Ce point d'entrée (qui doit être un appelable) doit renvoyer un <a class="reference internal" href="../glossary.html#term-path-entry-finder"><span class="xref std std-term">chercheur d'entrée dans path</span></a> qui gère le protocole décrit plus bas et qui sera utilisé pour obtenir un chargeur de module sur la toile.</p>
+<p>Avertissement : cette section et la précédente utilisent toutes les deux le terme <em>chercheur</em>, dans un cas <a class="reference internal" href="../glossary.html#term-meta-path-finder"><span class="xref std std-term">chercheur dans les méta-chemins</span></a> et dans l'autre <a class="reference internal" href="../glossary.html#term-path-entry-finder"><span class="xref std std-term">chercheur d'entrée dans path</span></a>. Ces deux types de chercheurs sont très similaires, gèrent des protocoles similaires et fonctionnent de manière semblable pendant le processus d'importation, mais il est important de garder à l'esprit qu'ils sont subtilement différents. En particulier, les chercheurs dans les méta-chemins opèrent au début du processus d'importation, comme clé de parcours de <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a>.</p>
+<p>Au contraire, les « chercheurs d'entrée dans <em>path</em> » sont, dans un sens, un détail d'implémentation du chercheur dans <em>path</em> et, en fait, si le chercheur dans <em>path</em> était enlevé de <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a>, aucune des sémantiques des « chercheurs d'entrée dans <em>path</em> » ne serait invoquée.</p>
+<section id="path-entry-finders">
+<h3><span class="section-number">5.5.1. </span>Chercheurs d'entrée dans <em>path</em><a class="headerlink" href="#path-entry-finders" title="Lien permanent vers ce titre">¶</a></h3>
+<p id="index-17">Le <a class="reference internal" href="../glossary.html#term-path-based-finder"><span class="xref std std-term">chercheur dans path</span></a> (<em>path based finder</em> en anglais) est responsable de trouver et charger les modules et les paquets Python dont l'emplacement est spécifié par une chaîne dite <a class="reference internal" href="../glossary.html#term-path-entry"><span class="xref std std-term">d'entrée dans path</span></a>. La plupart de ces entrées désignent des emplacements sur le système de fichiers, mais il n'y a aucune raison de les limiter à ça.</p>
+<p>En tant que chercheur dans les méta-chemins, un <a class="reference internal" href="../glossary.html#term-path-based-finder"><span class="xref std std-term">chercheur dans path</span></a> implémente le protocole <a class="reference internal" href="../library/importlib.html#importlib.abc.MetaPathFinder.find_spec" title="importlib.abc.MetaPathFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a> décrit précédemment. Cependant, il autorise des points d'entrée (<em>hooks</em> en anglais) supplémentaires qui peuvent être utilisés pour personnaliser la façon dont les modules sont trouvés et chargés depuis le <a class="reference internal" href="../glossary.html#term-import-path"><span class="xref std std-term">chemin des importations</span></a>.</p>
+<p>Trois variables sont utilisées par le <a class="reference internal" href="../glossary.html#term-path-based-finder"><span class="xref std std-term">chercheur dans path</span></a> : <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>, <a class="reference internal" href="../library/sys.html#sys.path_hooks" title="sys.path_hooks"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_hooks</span></code></a> et <a class="reference internal" href="../library/sys.html#sys.path_importer_cache" title="sys.path_importer_cache"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_importer_cache</span></code></a>. L'attribut <code class="docutils literal notranslate"><span class="pre">__path__</span></code> des objets paquets est aussi utilisé. Il permet de personnaliser encore davantage le mécanisme d'importation.</p>
+<p><a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> contient une liste de chaînes de caractères indiquant des emplacements où chercher des modules ou des paquets. Elle est initialisée à partir de la variable d'environnement <code class="xref py py-data docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> et de plusieurs autres valeurs par défaut qui dépendent de l'installation et de l'implémentation. Les entrées de <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> désignent des répertoires du système de fichiers, des fichiers zip et possiblement d'autres « endroits » (lisez le module <a class="reference internal" href="../library/site.html#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code></a>) tels que des URL ou des requêtes dans des bases de données où Python doit rechercher des modules. <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> ne doit contenir que des chaînes de caractères ; tous les autres types sont ignorés.</p>
+<p>Le <a class="reference internal" href="../glossary.html#term-path-based-finder"><span class="xref std std-term">chercheur dans path</span></a> est un <a class="reference internal" href="../glossary.html#term-meta-path-finder"><span class="xref std std-term">chercheur dans les méta-chemins</span></a>, donc le mécanisme d'importation commence la recherche dans le <a class="reference internal" href="../glossary.html#term-import-path"><span class="xref std std-term">chemin des importations</span></a> par un appel à la méthode <a class="reference internal" href="../library/importlib.html#importlib.machinery.PathFinder.find_spec" title="importlib.machinery.PathFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a> du chercheur dans <em>path</em>, comme décrit précédemment. Quand l'argument <em>path</em> de <a class="reference internal" href="../library/importlib.html#importlib.machinery.PathFinder.find_spec" title="importlib.machinery.PathFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a> est donné, c'est une liste de chemins à parcourir, typiquement un attribut <code class="docutils literal notranslate"><span class="pre">__path__</span></code> pour une importation à l'intérieur d'un paquet. Si l'argument <em>path</em> est <code class="docutils literal notranslate"><span class="pre">None</span></code>, cela indique une importation de niveau le plus haut et <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> est utilisée.</p>
+<p>The path based finder iterates over every entry in the search path, and
+for each of these, looks for an appropriate <a class="reference internal" href="../glossary.html#term-path-entry-finder"><span class="xref std std-term">path entry finder</span></a>
+(<a class="reference internal" href="../library/importlib.html#importlib.abc.PathEntryFinder" title="importlib.abc.PathEntryFinder"><code class="xref py py-class docutils literal notranslate"><span class="pre">PathEntryFinder</span></code></a>) for the
+path entry.  Because this can be an expensive operation (e.g. there may be
+<code class="docutils literal notranslate"><span class="pre">stat()</span></code> call overheads for this search), the path based finder maintains
+a cache mapping path entries to path entry finders.  This cache is maintained
+in <a class="reference internal" href="../library/sys.html#sys.path_importer_cache" title="sys.path_importer_cache"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_importer_cache</span></code></a> (despite the name, this cache actually
+stores finder objects rather than being limited to <a class="reference internal" href="../glossary.html#term-importer"><span class="xref std std-term">importer</span></a> objects).
+In this way, the expensive search for a particular <a class="reference internal" href="../glossary.html#term-path-entry"><span class="xref std std-term">path entry</span></a>
+location's <a class="reference internal" href="../glossary.html#term-path-entry-finder"><span class="xref std std-term">path entry finder</span></a> need only be done once.  User code is
+free to remove cache entries from <a class="reference internal" href="../library/sys.html#sys.path_importer_cache" title="sys.path_importer_cache"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_importer_cache</span></code></a> forcing
+the path based finder to perform the path entry search again.</p>
+<p>Si une entrée n'est pas présente dans le cache, le chercheur dans <em>path</em> itère sur chaque <em>callable</em> de <a class="reference internal" href="../library/sys.html#sys.path_hooks" title="sys.path_hooks"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_hooks</span></code></a>. Chaque <a class="reference internal" href="../glossary.html#term-path-entry-hook"><span class="xref std std-term">point d'entrée sur une entrée de path</span></a> de cette liste est appelé avec un unique argument, l'entrée dans laquelle chercher. L'appelable peut soit renvoyer un <a class="reference internal" href="../glossary.html#term-path-entry-finder"><span class="xref std std-term">chercheur d'entrée dans path</span></a> apte à prendre en charge l'entrée ou lever une <a class="reference internal" href="../library/exceptions.html#ImportError" title="ImportError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportError</span></code></a>. Une <a class="reference internal" href="../library/exceptions.html#ImportError" title="ImportError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportError</span></code></a> est utilisée par le chercheur dans <em>path</em> pour signaler que le point d'entrée n'a pas trouvé de <a class="reference internal" href="../glossary.html#term-path-entry-finder"><span class="xref std std-term">chercheur d'entrée dans path</span></a> pour cette <a class="reference internal" href="../glossary.html#term-path-entry"><span class="xref std std-term">entrée</span></a>. L'exception est ignorée et l'itération sur le <a class="reference internal" href="../glossary.html#term-import-path"><span class="xref std std-term">chemin des importations</span></a> se poursuit. Le point d'entrée doit attendre qu'on lui passe soit une chaîne de caractères soit une chaîne d'octets ; l'encodage des chaînes d'octets est à la main du point d'entrée (par exemple, ce peut être l'encodage du système de fichiers, de l'UTF-8 ou autre chose) et, si le point d'entrée n'arrive pas à décoder l'argument, il doit lever une <a class="reference internal" href="../library/exceptions.html#ImportError" title="ImportError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportError</span></code></a>.</p>
+<p>Si l'itération sur <a class="reference internal" href="../library/sys.html#sys.path_hooks" title="sys.path_hooks"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_hooks</span></code></a> se termine sans qu'aucun <a class="reference internal" href="../glossary.html#term-path-entry-finder"><span class="xref std std-term">chercheur d'entrée dans path</span></a> ne soit renvoyé, alors la méthode <a class="reference internal" href="../library/importlib.html#importlib.machinery.PathFinder.find_spec" title="importlib.machinery.PathFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a> du chercheur dans <em>path</em> stocke <code class="docutils literal notranslate"><span class="pre">None</span></code> dans le <a class="reference internal" href="../library/sys.html#sys.path_importer_cache" title="sys.path_importer_cache"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_importer_cache</span></code></a> (pour indiquer qu'il n'y a pas de chercheur pour cette entrée) et renvoie <code class="docutils literal notranslate"><span class="pre">None</span></code>, indiquant que ce <a class="reference internal" href="../glossary.html#term-meta-path-finder"><span class="xref std std-term">chercheur dans les méta-chemins</span></a> n'a pas trouvé le module.</p>
+<p>Si un <a class="reference internal" href="../glossary.html#term-path-entry-finder"><span class="xref std std-term">chercheur d'entrée dans path</span></a> <em>est</em> renvoyé par un des <a class="reference internal" href="../glossary.html#term-path-entry-hook"><span class="xref std std-term">points d'entrée</span></a> de <a class="reference internal" href="../library/sys.html#sys.path_hooks" title="sys.path_hooks"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_hooks</span></code></a>, alors le protocole suivant est utilisé pour demander un spécificateur de module au chercheur, spécificateur qui sera utilisé pour charger le module.</p>
+<p>Le répertoire de travail courant — noté sous la forme d'une chaîne de caractères vide — est géré d'une manière légèrement différente des autres entrées de <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>. D'abord, si le répertoire de travail courant s'avère ne pas exister, aucune valeur n'est stockée dans <a class="reference internal" href="../library/sys.html#sys.path_importer_cache" title="sys.path_importer_cache"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_importer_cache</span></code></a>. Ensuite, la valeur pour le répertoire de travail courant est vérifiée à chaque recherche de module. Enfin, le chemin utilisé pour <a class="reference internal" href="../library/sys.html#sys.path_importer_cache" title="sys.path_importer_cache"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path_importer_cache</span></code></a> et renvoyée par <a class="reference internal" href="../library/importlib.html#importlib.machinery.PathFinder.find_spec" title="importlib.machinery.PathFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">importlib.machinery.PathFinder.find_spec()</span></code></a> est le nom réel du répertoire de travail courant et non pas la chaîne vide.</p>
+</section>
+<section id="path-entry-finder-protocol">
+<h3><span class="section-number">5.5.2. </span>Protocole des chercheurs d'entrée dans <em>path</em><a class="headerlink" href="#path-entry-finder-protocol" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Afin de gérer les importations de modules, l'initialisation des paquets et d'être capables de contribuer aux portions des paquets-espaces de nommage, les chercheurs d'entrée dans <em>path</em> doivent implémenter la méthode <a class="reference internal" href="../library/importlib.html#importlib.abc.PathEntryFinder.find_spec" title="importlib.abc.PathEntryFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a>.</p>
+<p>La méthode <a class="reference internal" href="../library/importlib.html#importlib.abc.PathEntryFinder.find_spec" title="importlib.abc.PathEntryFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a> prend deux arguments : le nom complètement qualifié du module en cours d'importation et (optionnellement) le module cible. <code class="docutils literal notranslate"><span class="pre">find_spec()</span></code> renvoie un spécificateur de module pleinement peuplé. Ce spécificateur doit avoir son chargeur (attribut <code class="docutils literal notranslate"><span class="pre">loader</span></code>) défini, à une exception près.</p>
+<p>To indicate to the import machinery that the spec represents a namespace
+<a class="reference internal" href="../glossary.html#term-portion"><span class="xref std std-term">portion</span></a>, the path entry finder sets <code class="docutils literal notranslate"><span class="pre">submodule_search_locations</span></code> to
+a list containing the portion.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.4: </span><a class="reference internal" href="../library/importlib.html#importlib.abc.PathEntryFinder.find_spec" title="importlib.abc.PathEntryFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a> replaced
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">find_loader()</span></code> and
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">find_module()</span></code>, both of which
+are now deprecated, but will be used if <code class="docutils literal notranslate"><span class="pre">find_spec()</span></code> is not defined.</p>
+<p>Les vieux chercheurs d'entrée dans <em>path</em> peuvent implémenter une des deux méthodes obsolètes à la place de <code class="docutils literal notranslate"><span class="pre">find_spec()</span></code>. Ces méthodes sont toujours prises en compte dans le cadre de la compatibilité descendante. Cependant, si <code class="docutils literal notranslate"><span class="pre">find_spec()</span></code> est implémentée par le chercheur d'entrée dans <em>path</em>, les méthodes historiques sont ignorées.</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_loader()</span></code> takes one argument, the
+fully qualified name of the module being imported.  <code class="docutils literal notranslate"><span class="pre">find_loader()</span></code>
+returns a 2-tuple where the first item is the loader and the second item
+is a namespace <a class="reference internal" href="../glossary.html#term-portion"><span class="xref std std-term">portion</span></a>.</p>
+<p>À fin de compatibilité descendante avec d'autres implémentations du protocole d'importation, beaucoup de chercheurs d'entrée dans <em>path</em> gèrent aussi la méthode traditionnelle <code class="docutils literal notranslate"><span class="pre">find_module()</span></code> que l'on trouve dans les chercheurs dans les méta-chemins. Cependant, les méthodes <code class="docutils literal notranslate"><span class="pre">find_module()</span></code> des chercheurs d'entrée dans <em>path</em> ne sont jamais appelées avec un argument <em>path</em> (il est convenu qu'elles enregistrent les informations relatives au chemin approprié au moment de leur appel initial au point d'entrée).</p>
+<p>La méthode <code class="docutils literal notranslate"><span class="pre">find_module()</span></code> des chercheurs d'entrée dans <em>path</em> est obsolète car elle n'autorise pas le chercheur d'entrée dans <em>path</em> à contribuer aux portions d'espaces de nommage des paquets-espaces de nommage. Si à la fois <code class="docutils literal notranslate"><span class="pre">find_loader()</span></code> et <code class="docutils literal notranslate"><span class="pre">find_module()</span></code> sont définies pour un chercheur d'entrée dans <em>path</em>, le système d'importation utilise toujours <code class="docutils literal notranslate"><span class="pre">find_loader()</span></code> plutôt que <code class="docutils literal notranslate"><span class="pre">find_module()</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.10: </span>Calls to <code class="xref py py-meth docutils literal notranslate"><span class="pre">find_module()</span></code> and
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">find_loader()</span></code> by the import
+system will raise <a class="reference internal" href="../library/exceptions.html#ImportWarning" title="ImportWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportWarning</span></code></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.12: </span><code class="docutils literal notranslate"><span class="pre">find_module()</span></code> and <code class="docutils literal notranslate"><span class="pre">find_loader()</span></code> have been removed.</p>
+</div>
+</section>
+</section>
+<section id="replacing-the-standard-import-system">
+<h2><span class="section-number">5.6. </span>Remplacement du système d'importation standard<a class="headerlink" href="#replacing-the-standard-import-system" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La manière la plus fiable de remplacer tout le système d'importation est de supprimer le contenu par défaut de <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a> et de le remplacer complètement par un chercheur dans les méta-chemins sur mesure.</p>
+<p>S'il convient juste de modifier le comportement de l'instruction import sans affecter les autres API qui utilisent le système d'importation, alors remplacer la fonction native <a class="reference internal" href="../library/functions.html#import__" title="__import__"><code class="xref py py-func docutils literal notranslate"><span class="pre">__import__()</span></code></a> peut être suffisant. Cette technique peut aussi être employée au niveau d'un module pour n'altérer le comportement des importations qu'à l'intérieur de ce module.</p>
+<p>Pour empêcher sélectivement l'importation de certains modules par un point d'entrée placé en tête dans le méta-chemin (plutôt que de désactiver complètement le système d'importation), il suffit de lever une <a class="reference internal" href="../library/exceptions.html#ModuleNotFoundError" title="ModuleNotFoundError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code></a> directement depuis <a class="reference internal" href="../library/importlib.html#importlib.abc.MetaPathFinder.find_spec" title="importlib.abc.MetaPathFinder.find_spec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_spec()</span></code></a> au lieu de renvoyer <code class="docutils literal notranslate"><span class="pre">None</span></code>. En effet, ce dernier indique que la recherche dans le méta-chemin peut continuer alors que la levée de l'exception termine immédiatement la recherche.</p>
+</section>
+<section id="package-relative-imports">
+<span id="relativeimports"></span><h2><span class="section-number">5.7. </span>Importations relatives au paquet<a class="headerlink" href="#package-relative-imports" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les importations relatives commencent par une suite de points. Un seul point avant indique une importation relative, démarrant avec le paquet actuel. Deux points ou plus avant indiquent une importation relative au parent du paquet actuel, un niveau par point avant le premier. Par exemple, en ayant le contenu suivant :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">package</span><span class="o">/</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">subpackage1</span><span class="o">/</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">moduleX</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">moduleY</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">subpackage2</span><span class="o">/</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">moduleZ</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">moduleA</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Dans <code class="docutils literal notranslate"><span class="pre">subpackage1/moduleX.py</span></code> ou <code class="docutils literal notranslate"><span class="pre">subpackage1/__init__.py</span></code>, les importations suivantes sont des importations relatives valides :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.moduleY</span> <span class="kn">import</span> <span class="n">spam</span>
+<span class="kn">from</span> <span class="nn">.moduleY</span> <span class="kn">import</span> <span class="n">spam</span> <span class="k">as</span> <span class="n">ham</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">moduleY</span>
+<span class="kn">from</span> <span class="nn">..subpackage1</span> <span class="kn">import</span> <span class="n">moduleY</span>
+<span class="kn">from</span> <span class="nn">..subpackage2.moduleZ</span> <span class="kn">import</span> <span class="n">eggs</span>
+<span class="kn">from</span> <span class="nn">..moduleA</span> <span class="kn">import</span> <span class="n">foo</span>
+</pre></div>
+</div>
+<p>Les importations absolues peuvent utiliser soit la syntaxe <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">&lt;&gt;</span></code>, soit <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">&lt;&gt;</span> <span class="pre">import</span> <span class="pre">&lt;&gt;</span></code>, mais les importations relatives doivent seulement utiliser la deuxième forme, la raison étant :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">XXX.YYY.ZZZ</span>
+</pre></div>
+</div>
+<p>devrait exposer <code class="docutils literal notranslate"><span class="pre">XXX.YYY.ZZZ</span></code> comme une expression utilisable, mais <code class="docutils literal notranslate"><span class="pre">.moduleY</span></code> n’est pas une expression valide.</p>
+</section>
+<section id="special-considerations-for-main">
+<span id="import-dunder-main"></span><h2><span class="section-number">5.8. </span>Cas particulier de <code class="docutils literal notranslate"><span class="pre">__main__</span></code><a class="headerlink" href="#special-considerations-for-main" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le module <a class="reference internal" href="../library/__main__.html#module-__main__" title="__main__: The environment where top-level code is run. Covers command-line interfaces, import-time behavior, and ``__name__ == '__main__'``."><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code></a> est un cas particulier pour le système d'importation de Python. Comme indiqué par <a class="reference internal" href="toplevel_components.html#programs"><span class="std std-ref">ailleurs</span></a>, le module <code class="docutils literal notranslate"><span class="pre">__main__</span></code> est initialisé directement au démarrage de l'interpréteur, un peu comme <a class="reference internal" href="../library/sys.html#module-sys" title="sys: Access system-specific parameters and functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code></a> et <a class="reference internal" href="../library/builtins.html#module-builtins" title="builtins: The module that provides the built-in namespace."><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code></a>. Cependant, au contraire des deux cités précédemment, ce n'est pas vraiment un module natif. Effectivement, la manière dont est initialisé <code class="docutils literal notranslate"><span class="pre">__main__</span></code> dépend des drapeaux et options avec lesquels l'interpréteur est lancé.</p>
+<section id="main-spec">
+<span id="id4"></span><h3><span class="section-number">5.8.1. </span><code class="docutils literal notranslate"><span class="pre">__main__.__spec__</span></code><a class="headerlink" href="#main-spec" title="Lien permanent vers ce titre">¶</a></h3>
+<p>En fonction de la manière dont <a class="reference internal" href="../library/__main__.html#module-__main__" title="__main__: The environment where top-level code is run. Covers command-line interfaces, import-time behavior, and ``__name__ == '__main__'``."><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code></a> est initialisé, <code class="docutils literal notranslate"><span class="pre">__main__.__spec__</span></code> est défini de manière conforme ou mis à <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>Quand Python est démarré avec l'option <a class="reference internal" href="../using/cmdline.html#cmdoption-m"><code class="xref std std-option docutils literal notranslate"><span class="pre">-m</span></code></a>, <code class="docutils literal notranslate"><span class="pre">__spec__</span></code> est défini à la valeur du spécificateur du module ou paquet correspondant. Python peuple aussi <code class="docutils literal notranslate"><span class="pre">__spec__</span></code> quand le module <code class="docutils literal notranslate"><span class="pre">__main__</span></code> est chargé en tant que partie de l'exécution d'un répertoire, d'un fichier zip ou d'une entrée de <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>.</p>
+<p>Dans <a class="reference internal" href="../using/cmdline.html#using-on-interface-options"><span class="std std-ref">les autres cas</span></a>, <code class="docutils literal notranslate"><span class="pre">__main__.__spec__</span></code> est mis à <code class="docutils literal notranslate"><span class="pre">None</span></code>, car le code qui peuple <a class="reference internal" href="../library/__main__.html#module-__main__" title="__main__: The environment where top-level code is run. Covers command-line interfaces, import-time behavior, and ``__name__ == '__main__'``."><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code></a> ne trouve pas de correspondance directe avec un module que l'on importe :</p>
+<ul class="simple">
+<li><p>invite de commande interactive</p></li>
+<li><p>l'option <a class="reference internal" href="../using/cmdline.html#cmdoption-c"><code class="xref std std-option docutils literal notranslate"><span class="pre">-c</span></code></a></p></li>
+<li><p>lecture depuis l'entrée standard</p></li>
+<li><p>lecture depuis un fichier de code source ou de <em>bytecode</em></p></li>
+</ul>
+<p>Notez que <code class="docutils literal notranslate"><span class="pre">__main__.__spec__</span></code> vaut toujours <code class="docutils literal notranslate"><span class="pre">None</span></code> dans le dernier cas, <em>même si</em> le fichier pourrait techniquement être importé directement en tant que module. Utilisez l'option <a class="reference internal" href="../using/cmdline.html#cmdoption-m"><code class="xref std std-option docutils literal notranslate"><span class="pre">-m</span></code></a> si vous souhaitez disposer de métadonnées valides du module dans <a class="reference internal" href="../library/__main__.html#module-__main__" title="__main__: The environment where top-level code is run. Covers command-line interfaces, import-time behavior, and ``__name__ == '__main__'``."><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code></a>.</p>
+<p>Notez aussi que même quand <code class="docutils literal notranslate"><span class="pre">__main__</span></code> correspond à un module importable et que <code class="docutils literal notranslate"><span class="pre">__main__.__spec__</span></code> est défini en conséquence, ils seront toujours considérés comme des modules <em>distincts</em>. Cela est dû au fait que le bloc encadré par <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code> ne s'exécute que quand le module est utilisé pour peupler l'espace de nommage de <code class="docutils literal notranslate"><span class="pre">__main__</span></code>, et pas durant une importation normale.</p>
+</section>
+</section>
+<section id="references">
+<h2><span class="section-number">5.9. </span>Références<a class="headerlink" href="#references" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le mécanisme d'importation a considérablement évolué depuis les débuts de Python. La <a class="reference external" href="https://www.python.org/doc/essays/packages/">spécification des paquets</a> originale est toujours disponible, bien que quelques détails ont changé depuis l'écriture de ce document.</p>
+<p>La spécification originale de <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a> se trouve dans la <span class="target" id="index-46"></span><a class="pep reference external" href="https://peps.python.org/pep-0302/"><strong>PEP 302</strong></a>. La <span class="target" id="index-47"></span><a class="pep reference external" href="https://peps.python.org/pep-0420/"><strong>PEP 420</strong></a> contient des extensions significatives.</p>
+<p><span class="target" id="index-20"></span><a class="pep reference external" href="https://peps.python.org/pep-0420/"><strong>PEP 420</strong></a> introduced <a class="reference internal" href="../glossary.html#term-namespace-package"><span class="xref std std-term">namespace packages</span></a> for
+Python 3.3.  <span class="target" id="index-21"></span><a class="pep reference external" href="https://peps.python.org/pep-0420/"><strong>PEP 420</strong></a> also introduced the <code class="xref py py-meth docutils literal notranslate"><span class="pre">find_loader()</span></code> protocol as an
+alternative to <code class="xref py py-meth docutils literal notranslate"><span class="pre">find_module()</span></code>.</p>
+<p>La <span class="target" id="index-48"></span><a class="pep reference external" href="https://peps.python.org/pep-0366/"><strong>PEP 366</strong></a> décrit l'ajout de l'attribut <code class="docutils literal notranslate"><span class="pre">__package__</span></code> pour les importations relatives explicites dans les modules principaux.</p>
+<p>La <span class="target" id="index-49"></span><a class="pep reference external" href="https://peps.python.org/pep-0328/"><strong>PEP 328</strong></a> a introduit les importations absolues et les importations relatives explicites. Elle a aussi proposé <code class="docutils literal notranslate"><span class="pre">__name__</span></code> pour la sémantique que la <span class="target" id="index-50"></span><a class="pep reference external" href="https://peps.python.org/pep-0366/"><strong>PEP 366</strong></a> attribuait à <code class="docutils literal notranslate"><span class="pre">__package__</span></code>.</p>
+<p><span class="target" id="index-51"></span><a class="pep reference external" href="https://peps.python.org/pep-0338/"><strong>PEP 338</strong></a> définit l'exécution de modules en tant que scripts.</p>
+<p><span class="target" id="index-52"></span><a class="pep reference external" href="https://peps.python.org/pep-0451/"><strong>PEP 451</strong></a> ajoute l'encapsulation dans les objets spécificateurs de l'état des importations, module par module. Elle reporte aussi la majorité des responsabilités des chargeurs vers le mécanisme d'importation. Ces changements permettent de supprimer plusieurs API dans le système d'importation et d'ajouter de nouvelles méthodes aux chercheurs et chargeurs.</p>
+<p class="rubric">Notes</p>
+<dl class="footnote brackets">
+<dt class="label" id="fnmo"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Voir <a class="reference internal" href="../library/types.html#types.ModuleType" title="types.ModuleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">types.ModuleType</span></code></a>.</p>
+</dd>
+<dt class="label" id="fnlo"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>L'implémentation de <em>importlib</em> évite d'utiliser directement la valeur de retour. À la place, elle récupère l'objet module en recherchant le nom du module dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>. L'effet indirect est que le module importé peut remplacer le module de même nom dans <a class="reference internal" href="../library/sys.html#sys.modules" title="sys.modules"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a>. C'est un comportement spécifique à l'implémentation dont le résultat n'est pas garanti pour les autres implémentations de Python.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">5. Le système d'importation</a><ul>
+<li><a class="reference internal" href="#importlib">5.1. <code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code></a></li>
+<li><a class="reference internal" href="#packages">5.2. Les paquets</a><ul>
+<li><a class="reference internal" href="#regular-packages">5.2.1. Paquets classiques</a></li>
+<li><a class="reference internal" href="#namespace-packages">5.2.2. Paquets espaces de nommage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#searching">5.3. Recherche</a><ul>
+<li><a class="reference internal" href="#the-module-cache">5.3.1. Cache des modules</a></li>
+<li><a class="reference internal" href="#finders-and-loaders">5.3.2. Chercheurs et chargeurs</a></li>
+<li><a class="reference internal" href="#import-hooks">5.3.3. Points d'entrées automatiques pour l'importation</a></li>
+<li><a class="reference internal" href="#the-meta-path">5.3.4. Méta-chemins</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#loading">5.4. Chargement</a><ul>
+<li><a class="reference internal" href="#loaders">5.4.1. Chargeurs</a></li>
+<li><a class="reference internal" href="#submodules">5.4.2. Sous-modules</a></li>
+<li><a class="reference internal" href="#module-spec">5.4.3. Spécificateurs de modules</a></li>
+<li><a class="reference internal" href="#import-related-module-attributes">5.4.4. Attributs des modules importés</a></li>
+<li><a class="reference internal" href="#module-path">5.4.5. module.__path__</a></li>
+<li><a class="reference internal" href="#module-reprs">5.4.6. Représentation textuelle d'un module</a></li>
+<li><a class="reference internal" href="#cached-bytecode-invalidation">5.4.7. Invalidation de <em>bytecode</em> mis en cache</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-path-based-finder">5.5. Le chercheur dans <em>path</em></a><ul>
+<li><a class="reference internal" href="#path-entry-finders">5.5.1. Chercheurs d'entrée dans <em>path</em></a></li>
+<li><a class="reference internal" href="#path-entry-finder-protocol">5.5.2. Protocole des chercheurs d'entrée dans <em>path</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#replacing-the-standard-import-system">5.6. Remplacement du système d'importation standard</a></li>
+<li><a class="reference internal" href="#package-relative-imports">5.7. Importations relatives au paquet</a></li>
+<li><a class="reference internal" href="#special-considerations-for-main">5.8. Cas particulier de <code class="docutils literal notranslate"><span class="pre">__main__</span></code></a><ul>
+<li><a class="reference internal" href="#main-spec">5.8.1. <code class="docutils literal notranslate"><span class="pre">__main__.__spec__</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">5.9. Références</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="executionmodel.html"
+                          title="Chapitre précédent"><span class="section-number">4. </span>Modèle d'exécution</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="expressions.html"
+                          title="Chapitre suivant"><span class="section-number">6. </span>Expressions</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/reference/import.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="expressions.html" title="6. Expressions"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="executionmodel.html" title="4. Modèle d&#39;exécution"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La référence du langage Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>Le système d'importation</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

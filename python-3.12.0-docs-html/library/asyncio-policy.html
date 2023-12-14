@@ -1,0 +1,592 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="Politiques" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/asyncio-policy.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Une politique de boucle d'événements est un objet global utilisé pour obtenir et définir la boucle d'événements actuelle, ainsi que créer de nouvelles boucles d'événements. La politique par défaut ..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Une politique de boucle d'événements est un objet global utilisé pour obtenir et définir la boucle d'événements actuelle, ainsi que créer de nouvelles boucles d'événements. La politique par défaut ..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>Politiques &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Prise en charge de la plate-forme" href="asyncio-platforms.html" />
+    <link rel="prev" title="Transports et Protocoles" href="asyncio-protocol.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/asyncio-policy.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Politiques</a><ul>
+<li><a class="reference internal" href="#getting-and-setting-the-policy">Obtenir et définir la politique</a></li>
+<li><a class="reference internal" href="#policy-objects">Objets politiques</a></li>
+<li><a class="reference internal" href="#process-watchers">Observateurs de processus</a></li>
+<li><a class="reference internal" href="#custom-policies">Politiques personnalisées</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="asyncio-protocol.html"
+                          title="Chapitre précédent">Transports et Protocoles</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="asyncio-platforms.html"
+                          title="Chapitre suivant">Prise en charge de la plate-forme</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/asyncio-policy.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asyncio-platforms.html" title="Prise en charge de la plate-forme"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="asyncio-protocol.html" title="Transports et Protocoles"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="ipc.html" >Réseau et communication entre processus</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asyncio.html" accesskey="U"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Entrées/Sorties asynchrones</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Politiques</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="policies">
+<span id="asyncio-policies"></span><h1>Politiques<a class="headerlink" href="#policies" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Une politique de boucle d'événements est un objet global utilisé pour obtenir et définir la <a class="reference internal" href="asyncio-eventloop.html#asyncio-event-loop"><span class="std std-ref">boucle d'événements</span></a> actuelle, ainsi que créer de nouvelles boucles d'événements. La politique par défaut peut être <a class="reference internal" href="#asyncio-policy-get-set"><span class="std std-ref">remplacée</span></a> par des <a class="reference internal" href="#asyncio-policy-builtin"><span class="std std-ref">alternatives intégrées</span></a> afin d'utiliser d'autres implémentations de boucles d'événements, ou remplacée par une <a class="reference internal" href="#asyncio-custom-policies"><span class="std std-ref">politique personnalisée</span></a> qui peut remplacer ces comportements.</p>
+<p>Un <a class="reference internal" href="#asyncio-policy-objects"><span class="std std-ref">objet politique</span></a> définit la notion de <em>contexte</em> et gère une boucle d'événement distincte par contexte. Ceci est valable fil par fil d'exécution par défaut, bien que les politiques personnalisées puissent définir le <em>contexte</em> différemment.</p>
+<p>En utilisant une politique de boucle d'événement personnalisée, le comportement des fonctions <a class="reference internal" href="asyncio-eventloop.html#asyncio.get_event_loop" title="asyncio.get_event_loop"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_event_loop()</span></code></a>, <a class="reference internal" href="asyncio-eventloop.html#asyncio.set_event_loop" title="asyncio.set_event_loop"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_event_loop()</span></code></a> et <a class="reference internal" href="asyncio-eventloop.html#asyncio.new_event_loop" title="asyncio.new_event_loop"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_event_loop()</span></code></a> peut être personnalisé.</p>
+<p>Les objets politiques doivent implémenter les API définies dans la classe mère abstraite <a class="reference internal" href="#asyncio.AbstractEventLoopPolicy" title="asyncio.AbstractEventLoopPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractEventLoopPolicy</span></code></a>.</p>
+<section id="getting-and-setting-the-policy">
+<span id="asyncio-policy-get-set"></span><h2>Obtenir et définir la politique<a class="headerlink" href="#getting-and-setting-the-policy" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les fonctions suivantes peuvent être utilisées pour obtenir et définir la politique du processus en cours :</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="asyncio.get_event_loop_policy">
+<span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">get_event_loop_policy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.get_event_loop_policy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la politique actuelle à l'échelle du processus.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="asyncio.set_event_loop_policy">
+<span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">set_event_loop_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">policy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.set_event_loop_policy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la politique actuelle sur l'ensemble du processus sur <em>policy</em>.</p>
+<p>Si <em>policy</em> est définie sur <code class="docutils literal notranslate"><span class="pre">None</span></code>, la politique par défaut est restaurée.</p>
+</dd></dl>
+
+</section>
+<section id="policy-objects">
+<span id="asyncio-policy-objects"></span><h2>Objets politiques<a class="headerlink" href="#policy-objects" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La classe mère abstraite de la politique de boucle d'événements est définie comme suit :</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="asyncio.AbstractEventLoopPolicy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">AbstractEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.AbstractEventLoopPolicy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Une classe de base abstraite pour les politiques <em>asyncio</em>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="asyncio.AbstractEventLoopPolicy.get_event_loop">
+<span class="sig-name descname"><span class="pre">get_event_loop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.AbstractEventLoopPolicy.get_event_loop" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Récupère la boucle d'évènements pour le contexte actuel.</p>
+<p>Renvoie un objet de boucle d'événements en implémentant l'interface <a class="reference internal" href="asyncio-eventloop.html#asyncio.AbstractEventLoop" title="asyncio.AbstractEventLoop"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractEventLoop</span></code></a>.</p>
+<p>Cette méthode ne devrait jamais renvoyer <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="asyncio.AbstractEventLoopPolicy.set_event_loop">
+<span class="sig-name descname"><span class="pre">set_event_loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loop</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.AbstractEventLoopPolicy.set_event_loop" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la boucle d'événements du contexte actuel sur <em>loop</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="asyncio.AbstractEventLoopPolicy.new_event_loop">
+<span class="sig-name descname"><span class="pre">new_event_loop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.AbstractEventLoopPolicy.new_event_loop" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée et renvoie un nouvel objet de boucle d'événements.</p>
+<p>Cette méthode ne devrait jamais renvoyer <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="asyncio.AbstractEventLoopPolicy.get_child_watcher">
+<span class="sig-name descname"><span class="pre">get_child_watcher</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.AbstractEventLoopPolicy.get_child_watcher" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Récupère un objet observateur du processus enfant.</p>
+<p>Renvoie un objet observateur implémentant l'interface <a class="reference internal" href="#asyncio.AbstractChildWatcher" title="asyncio.AbstractChildWatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractChildWatcher</span></code></a>.</p>
+<p>Cette fonction est spécifique à Unix.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.12.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="asyncio.AbstractEventLoopPolicy.set_child_watcher">
+<span class="sig-name descname"><span class="pre">set_child_watcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">watcher</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.AbstractEventLoopPolicy.set_child_watcher" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit l'observateur du processus enfant actuel à <em>watcher</em>.</p>
+<p>Cette fonction est spécifique à Unix.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.12.</span></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<p id="asyncio-policy-builtin"><em>asyncio</em> est livré avec les politiques intégrées suivantes :</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="asyncio.DefaultEventLoopPolicy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">DefaultEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.DefaultEventLoopPolicy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La politique <em>asyncio</em> par défaut. Utilise <a class="reference internal" href="asyncio-eventloop.html#asyncio.SelectorEventLoop" title="asyncio.SelectorEventLoop"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectorEventLoop</span></code></a> sur les plates-formes Unix et <a class="reference internal" href="asyncio-eventloop.html#asyncio.ProactorEventLoop" title="asyncio.ProactorEventLoop"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProactorEventLoop</span></code></a> sur Windows.</p>
+<p>Il n'est pas nécessaire d'installer la politique par défaut manuellement. <em>asyncio</em> est configuré pour utiliser automatiquement la politique par défaut.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>Sous Windows, <a class="reference internal" href="asyncio-eventloop.html#asyncio.ProactorEventLoop" title="asyncio.ProactorEventLoop"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProactorEventLoop</span></code></a> est désormais utilisée par défaut.</p>
+</div>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.12: </span>The <a class="reference internal" href="asyncio-eventloop.html#asyncio.get_event_loop" title="asyncio.get_event_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_event_loop()</span></code></a> method of the default asyncio policy now emits
+a <a class="reference internal" href="exceptions.html#DeprecationWarning" title="DeprecationWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">DeprecationWarning</span></code></a> if there is no current event loop set and it
+decides to create one.
+In some future Python release this will become an error.</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="asyncio.WindowsSelectorEventLoopPolicy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">WindowsSelectorEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.WindowsSelectorEventLoopPolicy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Politique de boucle d'événements alternative utilisant l'implémentation de la boucle d'événements <a class="reference internal" href="asyncio-eventloop.html#asyncio.ProactorEventLoop" title="asyncio.ProactorEventLoop"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProactorEventLoop</span></code></a>.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Disponibilité</span></a> : Windows.</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="asyncio.WindowsProactorEventLoopPolicy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">WindowsProactorEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.WindowsProactorEventLoopPolicy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Politique de boucle d'événements alternative utilisant l'implémentation de la boucle d'événements <a class="reference internal" href="asyncio-eventloop.html#asyncio.ProactorEventLoop" title="asyncio.ProactorEventLoop"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProactorEventLoop</span></code></a>.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Disponibilité</span></a> : Windows.</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="process-watchers">
+<span id="asyncio-watchers"></span><h2>Observateurs de processus<a class="headerlink" href="#process-watchers" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Un observateur de processus permet de personnaliser la manière dont une boucle d'événements surveille les processus enfants sous Unix. Plus précisément, la boucle d'événements a besoin de savoir quand un processus enfant s'est terminé.</p>
+<p>Dans <em>asyncio</em>, les processus enfants sont créés avec les fonctions <a class="reference internal" href="asyncio-subprocess.html#asyncio.create_subprocess_exec" title="asyncio.create_subprocess_exec"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_subprocess_exec()</span></code></a> et <a class="reference internal" href="asyncio-eventloop.html#asyncio.loop.subprocess_exec" title="asyncio.loop.subprocess_exec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">loop.subprocess_exec()</span></code></a>.</p>
+<p><em>asyncio</em> définit la classe mère abstraite <a class="reference internal" href="#asyncio.AbstractChildWatcher" title="asyncio.AbstractChildWatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractChildWatcher</span></code></a>, que les observateurs enfants doivent implémenter et possède quatre implémentations différentes : <a class="reference internal" href="#asyncio.ThreadedChildWatcher" title="asyncio.ThreadedChildWatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadedChildWatcher</span></code></a> (configurée pour être utilisé par défaut), <a class="reference internal" href="#asyncio.MultiLoopChildWatcher" title="asyncio.MultiLoopChildWatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiLoopChildWatcher</span></code></a>, <a class="reference internal" href="#asyncio.SafeChildWatcher" title="asyncio.SafeChildWatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">SafeChildWatcher</span></code></a> et <a class="reference internal" href="#asyncio.FastChildWatcher" title="asyncio.FastChildWatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">FastChildWatcher</span></code></a>.</p>
+<p>Voir aussi la section <a class="reference internal" href="asyncio-subprocess.html#asyncio-subprocess-threads"><span class="std std-ref">sous-processus et fils d'exécution</span></a>.</p>
+<p>Les deux fonctions suivantes peuvent être utilisées pour personnaliser l'implémentation de l'observateur de processus enfant utilisé par la boucle d'événements <em>asyncio</em> :</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="asyncio.get_child_watcher">
+<span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">get_child_watcher</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.get_child_watcher" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie l'observateur enfant actuel pour la politique actuelle.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.12.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="asyncio.set_child_watcher">
+<span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">set_child_watcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">watcher</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.set_child_watcher" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit l'observateur enfant actuel à <em>watcher</em> pour la politique actuelle. <em>watcher</em> doit implémenter les méthodes définies dans la classe de base <a class="reference internal" href="#asyncio.AbstractChildWatcher" title="asyncio.AbstractChildWatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractChildWatcher</span></code></a>.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.12.</span></p>
+</div>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Les implémentations de boucles d'événements tierces peuvent ne pas prendre en charge les observateurs enfants personnalisés. Pour ces boucles d'événements, utiliser <a class="reference internal" href="#asyncio.set_child_watcher" title="asyncio.set_child_watcher"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_child_watcher()</span></code></a> pourrait être interdit ou n'avoir aucun effet.</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="asyncio.AbstractChildWatcher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">AbstractChildWatcher</span></span><a class="headerlink" href="#asyncio.AbstractChildWatcher" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="asyncio.AbstractChildWatcher.add_child_handler">
+<span class="sig-name descname"><span class="pre">add_child_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.AbstractChildWatcher.add_child_handler" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Enregistre un nouveau gestionnaire.</p>
+<p>Organise l'appel de <code class="docutils literal notranslate"><span class="pre">callback(pid,</span> <span class="pre">returncode,</span> <span class="pre">*</span> <span class="pre">args)</span></code> lorsqu'un processus dont le <em>PID</em> est égal à <em>pid</em> se termine. La spécification d'un autre rappel pour le même processus remplace le gestionnaire précédent.</p>
+<p>L'appelable <em>callback</em> doit être compatible avec les programmes à fils d'exécution multiples.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="asyncio.AbstractChildWatcher.remove_child_handler">
+<span class="sig-name descname"><span class="pre">remove_child_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.AbstractChildWatcher.remove_child_handler" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Supprime le gestionnaire de processus avec un PID égal à <em>pid</em>.</p>
+<p>La fonction renvoie <code class="docutils literal notranslate"><span class="pre">True</span></code> si le gestionnaire a été supprimé avec succès, <code class="docutils literal notranslate"><span class="pre">False</span></code> s'il n'y a rien à supprimer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="asyncio.AbstractChildWatcher.attach_loop">
+<span class="sig-name descname"><span class="pre">attach_loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loop</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.AbstractChildWatcher.attach_loop" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Attache l'observateur à une boucle d'événement.</p>
+<p>Si l'observateur était précédemment attaché à une boucle d'événements, il est d'abord détaché avant d'être rattaché à la nouvelle boucle.</p>
+<p>Remarque : la boucle peut être <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="asyncio.AbstractChildWatcher.is_active">
+<span class="sig-name descname"><span class="pre">is_active</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.AbstractChildWatcher.is_active" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie <code class="docutils literal notranslate"><span class="pre">True</span></code> si l'observateur est prêt à être utilisé.</p>
+<p>La création d'un sous-processus avec un observateur enfant actuel <em>inactif</em> lève une <a class="reference internal" href="exceptions.html#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="asyncio.AbstractChildWatcher.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.AbstractChildWatcher.close" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ferme l'observateur.</p>
+<p>Cette méthode doit être appelée pour s'assurer que les ressources sous-jacentes sont nettoyées.</p>
+</dd></dl>
+
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.12.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="asyncio.ThreadedChildWatcher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">ThreadedChildWatcher</span></span><a class="headerlink" href="#asyncio.ThreadedChildWatcher" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette implémentation démarre un nouveau fil d'exécution en attente pour chaque génération de sous-processus.</p>
+<p>Il fonctionne de manière fiable même lorsque la boucle d'événements <em>asyncio</em> est exécutée dans un fil d'exécution non principal.</p>
+<p>Il n'y a pas de surcharge visible lors de la manipulation d'un grand nombre d'enfants (<em>O(1)</em> à chaque fois qu'un enfant se termine).</p>
+<p>Cet observateur est utilisé par défaut.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="asyncio.MultiLoopChildWatcher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">MultiLoopChildWatcher</span></span><a class="headerlink" href="#asyncio.MultiLoopChildWatcher" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette implémentation enregistre un gestionnaire de signal <code class="xref py py-data docutils literal notranslate"><span class="pre">SIGCHLD</span></code> lors de l'instanciation. Cela peut casser le code tiers qui installe un gestionnaire personnalisé pour le signal <code class="xref py py-data docutils literal notranslate"><span class="pre">SIGCHLD</span></code>.</p>
+<p>L'observateur évite de perturber un autre code qui crée des processus en interrogeant explicitement chaque processus sur un signal <code class="xref py py-data docutils literal notranslate"><span class="pre">SIGCHLD</span></code>.</p>
+<p>Il n'y a aucune limitation pour l'exécution de sous-processus à partir de différents fils d'exécution une fois l'observateur installé.</p>
+<p>La solution est sûre mais elle a une surcharge importante lors de la gestion d'un grand nombre de processus (<em>O(n)</em> chaque fois qu'un <code class="xref py py-data docutils literal notranslate"><span class="pre">SIGCHLD</span></code> est reçu).</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.8.</span></p>
+</div>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.12.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="asyncio.SafeChildWatcher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">SafeChildWatcher</span></span><a class="headerlink" href="#asyncio.SafeChildWatcher" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette implémentation utilise une boucle d'événements active du fil d'exécution principal pour gérer le signal <code class="xref py py-data docutils literal notranslate"><span class="pre">SIGCHLD</span></code>. Si le fil d'exécution principal n'a pas de boucle d'événements en cours d'exécution, un autre fil ne pourra pas générer de sous-processus (une <a class="reference internal" href="exceptions.html#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> est levée).</p>
+<p>L'observateur évite de perturber un autre code qui crée des processus en interrogeant explicitement chaque processus sur un signal <code class="xref py py-data docutils literal notranslate"><span class="pre">SIGCHLD</span></code>.</p>
+<p>Cette solution est aussi sûre que <a class="reference internal" href="#asyncio.MultiLoopChildWatcher" title="asyncio.MultiLoopChildWatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiLoopChildWatcher</span></code></a> et a la même complexité en <em>O(N)</em> mais nécessite une boucle d'événements en cours d'exécution dans le fil d'exécution principal pour fonctionner.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.12.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="asyncio.FastChildWatcher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">FastChildWatcher</span></span><a class="headerlink" href="#asyncio.FastChildWatcher" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette implémentation récupère tous les processus terminés en appelant directement <code class="docutils literal notranslate"><span class="pre">os.waitpid(-1)</span></code>, cassant éventuellement un autre code qui génère des processus et attend leur fin.</p>
+<p>Il n'y a pas de surcharge visible lors de la manipulation d'un grand nombre d'enfants (<em>O(1)</em> à chaque fois qu'un enfant se termine).</p>
+<p>Cette solution nécessite une boucle d'événements en cours d'exécution dans le fil d'exécution principal pour fonctionner, comme <a class="reference internal" href="#asyncio.SafeChildWatcher" title="asyncio.SafeChildWatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">SafeChildWatcher</span></code></a>.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Obsolète depuis la version 3.12.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="asyncio.PidfdChildWatcher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">PidfdChildWatcher</span></span><a class="headerlink" href="#asyncio.PidfdChildWatcher" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette implémentation interroge les descripteurs de fichiers de processus (<em>pidfds</em>) pour attendre la fin du processus enfant. À certains égards, <a class="reference internal" href="#asyncio.PidfdChildWatcher" title="asyncio.PidfdChildWatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">PidfdChildWatcher</span></code></a> est une implémentation d'observateur d'enfants <em>Goldilocks</em>. Elle ne nécessite ni signaux ni threads, n'interfère avec aucun processus lancé en dehors de la boucle d'événements et évolue de manière linéaire avec le nombre de sous-processus lancés par la boucle d'événements. Le principal inconvénient est que les <em>pidfds</em> sont spécifiques à Linux et ne fonctionnent que sur les noyaux récents (5.3+).</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.9.</span></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="custom-policies">
+<span id="asyncio-custom-policies"></span><h2>Politiques personnalisées<a class="headerlink" href="#custom-policies" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Pour implémenter une nouvelle politique de boucle d’événements, il est recommandé de sous-classer <a class="reference internal" href="#asyncio.DefaultEventLoopPolicy" title="asyncio.DefaultEventLoopPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultEventLoopPolicy</span></code></a> et de réimplémenter les méthodes pour lesquelles un comportement personnalisé est souhaité, par exemple :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyEventLoopPolicy</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">DefaultEventLoopPolicy</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">get_event_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the event loop.</span>
+
+<span class="sd">        This may be None or an instance of EventLoop.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+        <span class="c1"># Do something with loop ...</span>
+        <span class="k">return</span> <span class="n">loop</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop_policy</span><span class="p">(</span><span class="n">MyEventLoopPolicy</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Politiques</a><ul>
+<li><a class="reference internal" href="#getting-and-setting-the-policy">Obtenir et définir la politique</a></li>
+<li><a class="reference internal" href="#policy-objects">Objets politiques</a></li>
+<li><a class="reference internal" href="#process-watchers">Observateurs de processus</a></li>
+<li><a class="reference internal" href="#custom-policies">Politiques personnalisées</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="asyncio-protocol.html"
+                          title="Chapitre précédent">Transports et Protocoles</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="asyncio-platforms.html"
+                          title="Chapitre suivant">Prise en charge de la plate-forme</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/asyncio-policy.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asyncio-platforms.html" title="Prise en charge de la plate-forme"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="asyncio-protocol.html" title="Transports et Protocoles"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="ipc.html" >Réseau et communication entre processus</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asyncio.html" ><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Entrées/Sorties asynchrones</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Politiques</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="http.cookies — gestion d'état pour HTTP" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/http.cookies.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/http/cookies.py Le module http.cookies définit des classes abstrayant le concept de témoin web (cookie), un mécanisme de gestion d'état pour HTTP. Il fournit une abstraction géran..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/http/cookies.py Le module http.cookies définit des classes abstrayant le concept de témoin web (cookie), un mécanisme de gestion d'état pour HTTP. Il fournit une abstraction géran..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>http.cookies — gestion d&#39;état pour HTTP &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="http.cookiejar --- Cookie handling for HTTP clients" href="http.cookiejar.html" />
+    <link rel="prev" title="http.server --- serveurs HTTP" href="http.server.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/http.cookies.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — gestion d'état pour HTTP</a><ul>
+<li><a class="reference internal" href="#cookie-objects">Objets <em>Cookie</em></a></li>
+<li><a class="reference internal" href="#morsel-objects">Objets <em>Morsel</em></a></li>
+<li><a class="reference internal" href="#example">Exemple</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="http.server.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> --- serveurs HTTP</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="http.cookiejar.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> --- Cookie handling for HTTP clients</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/http.cookies.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="http.cookiejar.html" title="http.cookiejar --- Cookie handling for HTTP clients"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="http.server.html" title="http.server --- serveurs HTTP"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" accesskey="U">Gestion des protocoles internet</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — gestion d'état pour HTTP</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-http.cookies">
+<span id="http-cookies-http-state-management"></span><h1><a class="reference internal" href="#module-http.cookies" title="http.cookies: Support for HTTP state management (cookies)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code></a> — gestion d'état pour HTTP<a class="headerlink" href="#module-http.cookies" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/http/cookies.py">Lib/http/cookies.py</a></p>
+<hr class="docutils" />
+<p>Le module <a class="reference internal" href="#module-http.cookies" title="http.cookies: Support for HTTP state management (cookies)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code></a> définit des classes abstrayant le concept de témoin web (cookie), un mécanisme de gestion d'état pour HTTP. Il fournit une abstraction gérant des données textuelles et tout type de données sérialisable comme valeur de témoin.</p>
+<p>Auparavant, le module appliquait strictement les règles d'analyse décrites dans les spécifications <span class="target" id="index-15"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2109.html"><strong>RFC 2109</strong></a> et <span class="target" id="index-16"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2068.html"><strong>RFC 2068</strong></a>. Entre temps, il a été découvert que Internet Explorer 3.0 ne suit pas les règles liées aux caractères précisées dans ces spécifications. De plus, plusieurs navigateurs et serveurs dans leur versions récentes ont assoupli les règles d'analyse quant à la gestion des témoins. En conséquence, les règles d'analyse utilisées sont un peu moins strictes que les spécifications initiales.</p>
+<p>Les jeux de caractères <a class="reference internal" href="string.html#string.ascii_letters" title="string.ascii_letters"><code class="xref py py-data docutils literal notranslate"><span class="pre">string.ascii_letters</span></code></a>, <a class="reference internal" href="string.html#string.digits" title="string.digits"><code class="xref py py-data docutils literal notranslate"><span class="pre">string.digits</span></code></a> et <code class="docutils literal notranslate"><span class="pre">!#$%&amp;'*+-.^_`|~:</span></code> définissent l'ensemble des caractères autorisés par ce module pour le nom du témoin (comme <a class="reference internal" href="#http.cookies.Morsel.key" title="http.cookies.Morsel.key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">key</span></code></a>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span>ajout de « : » comme caractère autorisé pour les noms de témoin.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Quand un témoin invalide est rencontré, l'exception <a class="reference internal" href="#http.cookies.CookieError" title="http.cookies.CookieError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CookieError</span></code></a> est levée. Si les données du témoin proviennent d'un navigateur il faut impérativement gérer les données invalides en attrapant <a class="reference internal" href="#http.cookies.CookieError" title="http.cookies.CookieError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CookieError</span></code></a>.</p>
+</div>
+<dl class="py exception">
+<dt class="sig sig-object py" id="http.cookies.CookieError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">http.cookies.</span></span><span class="sig-name descname"><span class="pre">CookieError</span></span><a class="headerlink" href="#http.cookies.CookieError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Exception levée pour cause d'incompatibilité avec la <span class="target" id="index-17"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2109.html"><strong>RFC 2109</strong></a>. Exemples : attributs incorrects, en-tête <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> incorrect, etc.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="http.cookies.BaseCookie">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">http.cookies.</span></span><span class="sig-name descname"><span class="pre">BaseCookie</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.BaseCookie" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette classe définit un dictionnaire dont les clés sont des chaines de caractères et dont les valeurs sont des instances de <a class="reference internal" href="#http.cookies.Morsel" title="http.cookies.Morsel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Morsel</span></code></a>. Notez qu'à l'assignation d'une valeur à une clé, la valeur est transformée en <a class="reference internal" href="#http.cookies.Morsel" title="http.cookies.Morsel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Morsel</span></code></a> contenant la clé et la valeur.</p>
+<p>Si l'argument <em>input</em> est donné, il est passé à la méthode <a class="reference internal" href="#http.cookies.BaseCookie.load" title="http.cookies.BaseCookie.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="http.cookies.SimpleCookie">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">http.cookies.</span></span><span class="sig-name descname"><span class="pre">SimpleCookie</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.SimpleCookie" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette classe dérive de <a class="reference internal" href="#http.cookies.BaseCookie" title="http.cookies.BaseCookie"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCookie</span></code></a>. Elle surcharge les méthodes <code class="xref py py-meth docutils literal notranslate"><span class="pre">value_decode()</span></code> et <code class="xref py py-meth docutils literal notranslate"><span class="pre">value_encode()</span></code>. <strong>SimpleCookie</strong> gère les chaines de caractères pour spécifier des valeurs de cookies. Lorsque la valeur est définie, <strong>SimpleCookie</strong> appelle la fonction native <a class="reference internal" href="stdtypes.html#str" title="str"><code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code></a> pour convertir la valeur en chaine de caractères. Les valeurs reçues par HTTP sont gardées comme chaines.</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt>Module <a class="reference internal" href="http.cookiejar.html#module-http.cookiejar" title="http.cookiejar: Classes for automatic handling of HTTP cookies."><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code></a></dt><dd><p>Gestion de témoins HTTP pour <em>clients</em> web.  Les modules <a class="reference internal" href="http.cookiejar.html#module-http.cookiejar" title="http.cookiejar: Classes for automatic handling of HTTP cookies."><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code></a> et <a class="reference internal" href="#module-http.cookies" title="http.cookies: Support for HTTP state management (cookies)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code></a> ne dépendent pas l'un de l'autre.</p>
+</dd>
+<dt><span class="target" id="index-3"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2109.html"><strong>RFC 2109</strong></a> - HTTP State Management Mechanism</dt><dd><p>Spécification de gestion d'états implantée par ce module.</p>
+</dd>
+</dl>
+</div>
+<section id="cookie-objects">
+<span id="id1"></span><h2>Objets <em>Cookie</em><a class="headerlink" href="#cookie-objects" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.BaseCookie.value_decode">
+<span class="sig-prename descclassname"><span class="pre">BaseCookie.</span></span><span class="sig-name descname"><span class="pre">value_decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.BaseCookie.value_decode" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une paire <code class="docutils literal notranslate"><span class="pre">(real_value,</span> <span class="pre">coded_value)</span></code> depuis une représentation de chaine. <code class="docutils literal notranslate"><span class="pre">real_value</span></code> peut être de n’importe quel type. Cette méthode ne décode rien dans <a class="reference internal" href="#http.cookies.BaseCookie" title="http.cookies.BaseCookie"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCookie</span></code></a> – elle existe pour être surchargée.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.BaseCookie.value_encode">
+<span class="sig-prename descclassname"><span class="pre">BaseCookie.</span></span><span class="sig-name descname"><span class="pre">value_encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.BaseCookie.value_encode" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une paire <code class="docutils literal notranslate"><span class="pre">(real_value,</span> <span class="pre">coded_value)</span></code>. <em>val</em> peut être de n’importe quel type, mais <code class="docutils literal notranslate"><span class="pre">coded_value</span></code> est toujours converti en chaine de caractères. Cette méthode n’encode pas dans <a class="reference internal" href="#http.cookies.BaseCookie" title="http.cookies.BaseCookie"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCookie</span></code></a> – elle existe pour être surchargée.</p>
+<p>Généralement, les méthodes <a class="reference internal" href="#http.cookies.BaseCookie.value_encode" title="http.cookies.BaseCookie.value_encode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">value_encode()</span></code></a> et <a class="reference internal" href="#http.cookies.BaseCookie.value_decode" title="http.cookies.BaseCookie.value_decode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">value_decode()</span></code></a> doivent être inverses l'une de l'autre, c'est-à-dire qu'en envoyant la sortie de l'un dans l'entrée de l'autre la valeur finale doit être égale à la valeur initiale.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.BaseCookie.output">
+<span class="sig-prename descclassname"><span class="pre">BaseCookie.</span></span><span class="sig-name descname"><span class="pre">output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Set-Cookie:'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\r\n'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.BaseCookie.output" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une représentation textuelle compatible avec les en-têtes HTTP. <em>attrs et *header</em> sont envoyés à la méthode <a class="reference internal" href="#http.cookies.BaseCookie.output" title="http.cookies.BaseCookie.output"><code class="xref py py-meth docutils literal notranslate"><span class="pre">output()</span></code></a> de chaque classe <a class="reference internal" href="#http.cookies.Morsel" title="http.cookies.Morsel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Morsel</span></code></a>. <em>sep</em> est le séparateur à utiliser pour joindre les valeurs d'en-têtes. Sa valeur par défaut est <code class="docutils literal notranslate"><span class="pre">'\r\n'</span></code> (CRLF).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.BaseCookie.js_output">
+<span class="sig-prename descclassname"><span class="pre">BaseCookie.</span></span><span class="sig-name descname"><span class="pre">js_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.BaseCookie.js_output" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie un extrait de code JavaScript qui, lorsque exécuté par un navigateur qui supporte le JavaScript, va fonctionner de la même manière que si les en-têtes HTTP avaient été envoyés.</p>
+<p><em>attrs</em> a la même signification que dans la méthode <a class="reference internal" href="#http.cookies.BaseCookie.output" title="http.cookies.BaseCookie.output"><code class="xref py py-meth docutils literal notranslate"><span class="pre">output()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.BaseCookie.load">
+<span class="sig-prename descclassname"><span class="pre">BaseCookie.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rawdata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.BaseCookie.load" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Si <em>rawdata</em> est une chaine de caractères, l'analyser comme étant un <code class="docutils literal notranslate"><span class="pre">HTTP_COOKIE</span></code> et ajouter les valeurs trouvées en tant que <a class="reference internal" href="#http.cookies.Morsel" title="http.cookies.Morsel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Morsel</span></code></a>s. S'il s'agit d'un dictionnaire, cela est équivalent à :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">rawdata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">cookie</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="morsel-objects">
+<span id="id2"></span><h2>Objets <em>Morsel</em><a class="headerlink" href="#morsel-objects" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="http.cookies.Morsel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">http.cookies.</span></span><span class="sig-name descname"><span class="pre">Morsel</span></span><a class="headerlink" href="#http.cookies.Morsel" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Abstraction de paire clé / valeur, accompagnée d'attributs provenant de la spécification <span class="target" id="index-18"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2109.html"><strong>RFC 2109</strong></a>.</p>
+<p>Les objets <em>Morsel</em> sont des objets compatibles dictionnaire, dont l'ensemble des clés est fixe et égal aux attributs <span class="target" id="index-19"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2109.html"><strong>RFC 2109</strong></a> valides, qui sont</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">expires</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">comment</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">domain</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max-age</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">secure</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">httponly</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">samesite</span></code></p></li>
+</ul>
+<p>L'attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">httponly</span></code> spécifie que le témoin transféré dans les requêtes HTTP n'est pas accessible par le biais de JavaScript. Il s'agit d'une contre-mesure à certaines attaques de scripts inter-sites (<em>XSS</em>).</p>
+<p>L'attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">samesite</span></code> spécifie que le navigateur n'est pas autorisé à envoyer le témoin de connexion avec les requêtes inter-sites. Cela vise à contrer les attaques <em>CSRF</em>. Les valeurs valides pour cet attribut sont « Strict » et « Lax ».</p>
+<p>Les clés ne sont pas sensibles à la casse, leur valeur par défaut est <code class="docutils literal notranslate"><span class="pre">''</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>dorénavant, <code class="xref py py-meth docutils literal notranslate"><span class="pre">__eq__()</span></code> prend en compte <a class="reference internal" href="#http.cookies.Morsel.key" title="http.cookies.Morsel.key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">key</span></code></a> et <a class="reference internal" href="#http.cookies.Morsel.value" title="http.cookies.Morsel.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7: </span>les attributs <a class="reference internal" href="#http.cookies.Morsel.key" title="http.cookies.Morsel.key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">key</span></code></a>, <a class="reference internal" href="#http.cookies.Morsel.value" title="http.cookies.Morsel.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a> et <a class="reference internal" href="#http.cookies.Morsel.coded_value" title="http.cookies.Morsel.coded_value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">coded_value</span></code></a> sont en lecture seule. Utilisez <a class="reference internal" href="#http.cookies.Morsel.set" title="http.cookies.Morsel.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set()</span></code></a> pour les assigner.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>ajout de la prise en charge de l'attribut <code class="xref py py-attr docutils literal notranslate"><span class="pre">samesite</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="http.cookies.Morsel.value">
+<span class="sig-prename descclassname"><span class="pre">Morsel.</span></span><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#http.cookies.Morsel.value" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La valeur du témoin.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="http.cookies.Morsel.coded_value">
+<span class="sig-prename descclassname"><span class="pre">Morsel.</span></span><span class="sig-name descname"><span class="pre">coded_value</span></span><a class="headerlink" href="#http.cookies.Morsel.coded_value" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La valeur codée du témoin. C'est celle qui doit être transférée.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="http.cookies.Morsel.key">
+<span class="sig-prename descclassname"><span class="pre">Morsel.</span></span><span class="sig-name descname"><span class="pre">key</span></span><a class="headerlink" href="#http.cookies.Morsel.key" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Le nom du témoin.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.Morsel.set">
+<span class="sig-prename descclassname"><span class="pre">Morsel.</span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coded_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.Morsel.set" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Assigne les attributs <em>key</em>, <em>value</em> et <em>coded_value</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.Morsel.isReservedKey">
+<span class="sig-prename descclassname"><span class="pre">Morsel.</span></span><span class="sig-name descname"><span class="pre">isReservedKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.Morsel.isReservedKey" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie si <em>K</em> est membre des clés d'un <a class="reference internal" href="#http.cookies.Morsel" title="http.cookies.Morsel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Morsel</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.Morsel.output">
+<span class="sig-prename descclassname"><span class="pre">Morsel.</span></span><span class="sig-name descname"><span class="pre">output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Set-Cookie:'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.Morsel.output" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une représentation textuelle du <em>Morsel</em> compatible avec les en-têtes HTTP. Par défaut, tous les attributs sont inclus, à moins que <em>attrs</em> ne soit renseigné. Dans ce cas la valeur doit être une liste d'attributs à utiliser. Par défaut, <em>header</em> a la valeur <code class="docutils literal notranslate"><span class="pre">&quot;Set-Cookie:&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.Morsel.js_output">
+<span class="sig-prename descclassname"><span class="pre">Morsel.</span></span><span class="sig-name descname"><span class="pre">js_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.Morsel.js_output" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie un extrait de code JavaScript qui, lorsque exécuté par un navigateur qui supporte le JavaScript, va fonctionner de la même manière que si les en-têtes HTTP avaient été envoyés.</p>
+<p><em>attrs</em> a la même signification que dans la méthode <a class="reference internal" href="#http.cookies.Morsel.output" title="http.cookies.Morsel.output"><code class="xref py py-meth docutils literal notranslate"><span class="pre">output()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.Morsel.OutputString">
+<span class="sig-prename descclassname"><span class="pre">Morsel.</span></span><span class="sig-name descname"><span class="pre">OutputString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.Morsel.OutputString" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une chaine de caractères représentant le <em>Morsel</em>, nettoyé de son contexte HTTP ou JavaScript.</p>
+<p><em>attrs</em> a la même signification que dans la méthode <a class="reference internal" href="#http.cookies.Morsel.output" title="http.cookies.Morsel.output"><code class="xref py py-meth docutils literal notranslate"><span class="pre">output()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.Morsel.update">
+<span class="sig-prename descclassname"><span class="pre">Morsel.</span></span><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.Morsel.update" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Met à jour les valeurs du dictionnaire du <em>Morsel</em> avec les valeurs provenant du dictionnaire <em>values</em>.  Lève une erreur si une des clés n'est pas un attribut <span class="target" id="index-20"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2109.html"><strong>RFC 2109</strong></a> valide.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>une erreur est levée pour les clés invalides.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.Morsel.copy">
+<span class="sig-prename descclassname"><span class="pre">Morsel.</span></span><span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.Morsel.copy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une copie superficielle de l'objet <em>Morsel</em>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>renvoie un objet <em>Morsel</em> au lieu d'un <code class="docutils literal notranslate"><span class="pre">dict</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="http.cookies.Morsel.setdefault">
+<span class="sig-prename descclassname"><span class="pre">Morsel.</span></span><span class="sig-name descname"><span class="pre">setdefault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#http.cookies.Morsel.setdefault" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Lève une erreur si la clé n'est pas un attribut <span class="target" id="index-21"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2109.html"><strong>RFC 2109</strong></a> valide, sinon fonctionne de la même manière que <a class="reference internal" href="stdtypes.html#dict.setdefault" title="dict.setdefault"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dict.setdefault()</span></code></a>.</p>
+</dd></dl>
+
+</section>
+<section id="example">
+<span id="cookie-example"></span><h2>Exemple<a class="headerlink" href="#example" title="Lien permanent vers ce titre">¶</a></h2>
+<p>L'exemple suivant montre comment utiliser le module <a class="reference internal" href="#module-http.cookies" title="http.cookies: Support for HTTP state management (cookies)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code></a>.</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">http</span> <span class="kn">import</span> <span class="n">cookies</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="n">cookies</span><span class="o">.</span><span class="n">SimpleCookie</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;fig&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;newton&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;sugar&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;wafer&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="c1"># generate HTTP headers</span>
+<span class="go">Set-Cookie: fig=newton</span>
+<span class="go">Set-Cookie: sugar=wafer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">output</span><span class="p">())</span> <span class="c1"># same thing</span>
+<span class="go">Set-Cookie: fig=newton</span>
+<span class="go">Set-Cookie: sugar=wafer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="n">cookies</span><span class="o">.</span><span class="n">SimpleCookie</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;rocky&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;road&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;rocky&quot;</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;/cookie&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="s2">&quot;Cookie:&quot;</span><span class="p">))</span>
+<span class="go">Cookie: rocky=road; Path=/cookie</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">[],</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;Cookie:&quot;</span><span class="p">))</span>
+<span class="go">Cookie: rocky=road</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="n">cookies</span><span class="o">.</span><span class="n">SimpleCookie</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;chips=ahoy; vienna=finger&quot;</span><span class="p">)</span> <span class="c1"># load from a string (HTTP header)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<span class="go">Set-Cookie: chips=ahoy</span>
+<span class="go">Set-Cookie: vienna=finger</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="n">cookies</span><span class="o">.</span><span class="n">SimpleCookie</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;keebler=&quot;E=everybody; L=</span><span class="se">\\</span><span class="s1">&quot;Loves</span><span class="se">\\</span><span class="s1">&quot;; fudge=</span><span class="se">\\</span><span class="s1">012;&quot;;&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<span class="go">Set-Cookie: keebler=&quot;E=everybody; L=\&quot;Loves\&quot;; fudge=\012;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="n">cookies</span><span class="o">.</span><span class="n">SimpleCookie</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;oreo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;doublestuff&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;oreo&quot;</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<span class="go">Set-Cookie: oreo=doublestuff; Path=/</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="n">cookies</span><span class="o">.</span><span class="n">SimpleCookie</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;twix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;none for you&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;twix&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+<span class="go">&#39;none for you&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="n">cookies</span><span class="o">.</span><span class="n">SimpleCookie</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span> <span class="c1"># equivalent to C[&quot;number&quot;] = str(7)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;string&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;seven&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+<span class="go">&#39;7&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">[</span><span class="s2">&quot;string&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+<span class="go">&#39;seven&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<span class="go">Set-Cookie: number=7</span>
+<span class="go">Set-Cookie: string=seven</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — gestion d'état pour HTTP</a><ul>
+<li><a class="reference internal" href="#cookie-objects">Objets <em>Cookie</em></a></li>
+<li><a class="reference internal" href="#morsel-objects">Objets <em>Morsel</em></a></li>
+<li><a class="reference internal" href="#example">Exemple</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="http.server.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> --- serveurs HTTP</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="http.cookiejar.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> --- Cookie handling for HTTP clients</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/http.cookies.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="http.cookiejar.html" title="http.cookiejar --- Cookie handling for HTTP clients"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="http.server.html" title="http.server --- serveurs HTTP"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="internet.html" >Gestion des protocoles internet</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — gestion d'état pour HTTP</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

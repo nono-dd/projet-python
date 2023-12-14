@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="uu — Encode et décode les fichiers uuencode" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/uu.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/uu.py Ce module encode et décode les fichiers au format uuencode, permettant à des données binaires d'être transférées lors de connexion ASCII. Pour tous les arguments où un fichi..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/uu.py Ce module encode et décode les fichiers au format uuencode, permettant à des données binaires d'être transférées lors de connexion ASCII. Pour tous les arguments où un fichi..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>uu — Encode et décode les fichiers uuencode &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="xdrlib --- Encode and decode XDR data" href="xdrlib.html" />
+    <link rel="prev" title="telnetlib --- Telnet client" href="telnetlib.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/uu.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="telnetlib.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">telnetlib</span></code> --- Telnet client</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="xdrlib.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xdrlib</span></code> --- Encode and decode XDR data</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/uu.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xdrlib.html" title="xdrlib --- Encode and decode XDR data"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="telnetlib.html" title="telnetlib --- Telnet client"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="superseded.html" accesskey="U">Modules remplacés</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">uu</span></code> — Encode et décode les fichiers <em>uuencode</em></a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-uu">
+<span id="uu-encode-and-decode-uuencode-files"></span><h1><a class="reference internal" href="#module-uu" title="uu: Encode and decode files in uuencode format. (obsolète)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uu</span></code></a> — Encode et décode les fichiers <em>uuencode</em><a class="headerlink" href="#module-uu" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/uu.py">Lib/uu.py</a></p>
+<div class="deprecated-removed">
+<p><span class="versionmodified">Obsolète depuis la version 3.11, sera supprimé dans la version 3.13: </span>The <a class="reference internal" href="#module-uu" title="uu: Encode and decode files in uuencode format. (obsolète)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uu</span></code></a> module is deprecated
+(see <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0594/#uu-and-the-uu-encoding"><strong>PEP 594</strong></a> for details).
+<a class="reference internal" href="base64.html#module-base64" title="base64: RFC 4648: Base16, Base32, Base64 Data Encodings; Base85 and Ascii85"><code class="xref py py-mod docutils literal notranslate"><span class="pre">base64</span></code></a> is a modern alternative.</p>
+</div>
+<hr class="docutils" />
+<p>Ce module encode et décode les fichiers au format <em>uuencode</em>, permettant à des données binaires d'être transférées lors de connexion ASCII. Pour tous les arguments où un fichier est attendu, les fonctions acceptent un &quot;objet fichier-compatible&quot;. Pour des raisons de compatibilité avec les anciennes versions de Python, une chaîne de caractères contenant un chemin est aussi acceptée, et le fichier correspondant sera ouvert en lecture et écriture ; le chemin <code class="docutils literal notranslate"><span class="pre">'-'</span></code> est considéré comme l'entrée ou la sortie standard. Cependant cette interface est obsolète ; il vaut mieux que l'appelant ouvre le fichier lui-même, en s'assurant si nécessaire que le mode d'ouverture soit <code class="docutils literal notranslate"><span class="pre">'rb'</span></code> ou <code class="docutils literal notranslate"><span class="pre">'wb'</span></code> sur Windows.</p>
+<p id="index-1">Ce code provient d'une contribution de Lance Ellinghouse et a été modifié par Jack Jansen.</p>
+<p>Le module <a class="reference internal" href="#module-uu" title="uu: Encode and decode files in uuencode format. (obsolète)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uu</span></code></a> définit les fonctions suivantes :</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="uu.encode">
+<span class="sig-prename descclassname"><span class="pre">uu.</span></span><span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backtick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uu.encode" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><em>Uuencode</em> le fichier <em>in_file</em> dans le fichier <em>out_file</em>. Le fichier <em>uuencodé</em> contiendra une entête spécifiant les valeurs de <em>name</em> et <em>mode</em> par défaut pour le décodage du fichier. Par défaut ces valeurs sont prises de <em>in_file</em> ou valent respectivement <code class="docutils literal notranslate"><span class="pre">'-'</span></code> et <code class="docutils literal notranslate"><span class="pre">0o666</span></code>. Si <em>backtick</em> est vrai, les zéros sont représentés par des <code class="docutils literal notranslate"><span class="pre">'`'</span></code> plutôt que des espaces.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7: </span>Ajout du paramètre <em>backtick</em>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uu.decode">
+<span class="sig-prename descclassname"><span class="pre">uu.</span></span><span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quiet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uu.decode" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Décode le fichier <em>in_file</em> et écrit le résultat dans <em>out_file</em>. Si <em>out_file</em> est un chemin, <em>mode</em> est utilisé pour les permissions du fichier lors de sa création. Les valeurs par défaut pour <em>out_file</em> et <em>mode</em> sont récupérées des entêtes <em>uuencode</em>. Cependant, si le fichier spécifié par les entêtes est déjà existant, une exception <a class="reference internal" href="#uu.Error" title="uu.Error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">uu.Error</span></code></a> est levée.</p>
+<p>La fonction <a class="reference internal" href="#uu.decode" title="uu.decode"><code class="xref py py-func docutils literal notranslate"><span class="pre">decode()</span></code></a> écrit un avertissement sur la sortie d'erreur si l'entrée contient des erreurs mais que Python a pu s'en sortir. Mettre <em>quiet</em> à <em>True</em> empêche l'écriture de cet avertissement.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="uu.Error">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">uu.</span></span><span class="sig-name descname"><span class="pre">Error</span></span><a class="headerlink" href="#uu.Error" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe fille d'<a class="reference internal" href="exceptions.html#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a>, elle peut être levée par <a class="reference internal" href="#uu.decode" title="uu.decode"><code class="xref py py-func docutils literal notranslate"><span class="pre">uu.decode()</span></code></a> dans différentes situations, tel que décrit plus haut, mais aussi en cas d'entête mal formatée ou d'entrée tronquée.</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt>Module <a class="reference internal" href="binascii.html#module-binascii" title="binascii: Tools for converting between binary and various ASCII-encoded binary representations."><code class="xref py py-mod docutils literal notranslate"><span class="pre">binascii</span></code></a></dt><dd><p>Module secondaire contenant les conversions ASCII vers binaire et binaire vers ASCII.</p>
+</dd>
+</dl>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="telnetlib.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">telnetlib</span></code> --- Telnet client</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="xdrlib.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xdrlib</span></code> --- Encode and decode XDR data</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/uu.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xdrlib.html" title="xdrlib --- Encode and decode XDR data"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="telnetlib.html" title="telnetlib --- Telnet client"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="superseded.html" >Modules remplacés</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">uu</span></code> — Encode et décode les fichiers <em>uuencode</em></a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

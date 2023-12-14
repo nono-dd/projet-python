@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="lzma — Compression via l'algorithme LZMA" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/lzma.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/lzma.py Ce module fournit des classes et des fonctions utiles pour compresser et décompresser des données en utilisant l'algorithme de compression LZMA. Ce module inclut aussi aus..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/lzma.py Ce module fournit des classes et des fonctions utiles pour compresser et décompresser des données en utilisant l'algorithme de compression LZMA. Ce module inclut aussi aus..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>lzma — Compression via l&#39;algorithme LZMA &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="zipfile — Travailler avec des archives ZIP" href="zipfile.html" />
+    <link rel="prev" title="bz2 — Prise en charge de la compression bzip2" href="bz2.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/lzma.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression via l'algorithme LZMA</a><ul>
+<li><a class="reference internal" href="#reading-and-writing-compressed-files">Lire et écrire des fichiers compressés</a></li>
+<li><a class="reference internal" href="#compressing-and-decompressing-data-in-memory">Compresser et décompresser une donnée en mémoire</a></li>
+<li><a class="reference internal" href="#miscellaneous">Divers</a></li>
+<li><a class="reference internal" href="#specifying-custom-filter-chains">Préciser des chaînes de filtre personnalisées</a></li>
+<li><a class="reference internal" href="#examples">Exemples</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="bz2.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Prise en charge de la compression <strong class="program">bzip2</strong></a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="zipfile.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Travailler avec des archives ZIP</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/lzma.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="zipfile.html" title="zipfile — Travailler avec des archives ZIP"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="bz2.html" title="bz2 — Prise en charge de la compression bzip2"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="archiving.html" accesskey="U">Compression de donnée et archivage</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression via l'algorithme LZMA</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-lzma">
+<span id="lzma-compression-using-the-lzma-algorithm"></span><h1><a class="reference internal" href="#module-lzma" title="lzma: A Python wrapper for the liblzma compression library."><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code></a> — Compression via l'algorithme LZMA<a class="headerlink" href="#module-lzma" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.3.</span></p>
+</div>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/lzma.py">Lib/lzma.py</a></p>
+<hr class="docutils" />
+<p>Ce module fournit des classes et des fonctions utiles pour compresser et décompresser des données en utilisant l'algorithme de compression LZMA. Ce module inclut aussi aussi une interface prenant en charge les fichiers <code class="docutils literal notranslate"><span class="pre">.xz</span></code> et son format originel <code class="docutils literal notranslate"><span class="pre">.lzma</span></code> utilisés par l'utilitaire <strong class="program">xz</strong>, ainsi que les flux bruts compressés.</p>
+<p>The interface provided by this module is very similar to that of the <a class="reference internal" href="bz2.html#module-bz2" title="bz2: Interfaces for bzip2 compression and decompression."><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code></a>
+module. Note that <a class="reference internal" href="#lzma.LZMAFile" title="lzma.LZMAFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAFile</span></code></a> and <a class="reference internal" href="bz2.html#bz2.BZ2File" title="bz2.BZ2File"><code class="xref py py-class docutils literal notranslate"><span class="pre">bz2.BZ2File</span></code></a> are <em>not</em>
+thread-safe, so if you need to use a single <a class="reference internal" href="#lzma.LZMAFile" title="lzma.LZMAFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAFile</span></code></a> instance
+from multiple threads, it is necessary to protect it with a lock.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="lzma.LZMAError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lzma.</span></span><span class="sig-name descname"><span class="pre">LZMAError</span></span><a class="headerlink" href="#lzma.LZMAError" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Cette exception est levée dès lors qu'une erreur survient pendant la compression ou la décompression, ou pendant l'initialisation de l'état de la compression/décompression.</p>
+</dd></dl>
+
+<section id="reading-and-writing-compressed-files">
+<h2>Lire et écrire des fichiers compressés<a class="headerlink" href="#reading-and-writing-compressed-files" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="lzma.open">
+<span class="sig-prename descclassname"><span class="pre">lzma.</span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rb'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lzma.open" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Open an LZMA-compressed file in binary or text mode, returning a <a class="reference internal" href="../glossary.html#term-file-object"><span class="xref std std-term">file
+object</span></a>.</p>
+<p>L'argument <em>nom de fichier</em> peut être soit le nom d'un fichier à créer (donné pour <a class="reference internal" href="stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> ou un objet <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like</span></a>), dont le fichier nommé reste ouvert, ou soit un objet fichier existant à lire ou à écrire.</p>
+<p>L'argument <em>mode</em> peut être n'importe quel argument suivant : <code class="docutils literal notranslate"><span class="pre">&quot;r&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;rb&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;w&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;wb&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;x&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;xb&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code> ou <code class="docutils literal notranslate"><span class="pre">&quot;ab&quot;</span></code> pour le mode binaire, ou <code class="docutils literal notranslate"><span class="pre">&quot;rt&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;wt&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;xt&quot;</span></code>, ou <code class="docutils literal notranslate"><span class="pre">&quot;at&quot;</span></code> pour le mode texte. La valeur par défaut est <code class="docutils literal notranslate"><span class="pre">&quot;rb&quot;</span></code>.</p>
+<p>Quand un fichier est ouvert pour le lire, les arguments <em>format</em> et <em>filters</em> ont les mêmes significations que pour la <a class="reference internal" href="#lzma.LZMADecompressor" title="lzma.LZMADecompressor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMADecompressor</span></code></a>. Par conséquent, les arguments <em>check</em> et <em>preset</em> ne devront pas être sollicités.</p>
+<p>Dès ouverture d'un fichier pour l'écriture, les arguments <em>format</em>, <em>check</em>, <em>preset</em> et <em>filters</em> ont le même sens que dans la <a class="reference internal" href="#lzma.LZMACompressor" title="lzma.LZMACompressor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMACompressor</span></code></a>.</p>
+<p>Pour le mode binaire, cette fonction équivaut au constructeur de la <a class="reference internal" href="#lzma.LZMAFile" title="lzma.LZMAFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAFile</span></code></a> : <code class="docutils literal notranslate"><span class="pre">LZMAFile(filename,</span> <span class="pre">mode,</span> <span class="pre">...)</span></code>. Dans ce cas précis, les arguments <em>encoding</em>, <em>errors</em> et <em>newline</em> ne sont pas accessibles.</p>
+<p>For text mode, a <a class="reference internal" href="#lzma.LZMAFile" title="lzma.LZMAFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAFile</span></code></a> object is created, and wrapped in an
+<a class="reference internal" href="io.html#io.TextIOWrapper" title="io.TextIOWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.TextIOWrapper</span></code></a> instance with the specified encoding, error
+handling behavior, and line ending(s).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.4: </span>Support ajouté pour les modes <code class="docutils literal notranslate"><span class="pre">&quot;x&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;xb&quot;</span></code> et <code class="docutils literal notranslate"><span class="pre">&quot;xt&quot;</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>Accepte un <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lzma.LZMAFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lzma.</span></span><span class="sig-name descname"><span class="pre">LZMAFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lzma.LZMAFile" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ouvre un fichier LZMA compressé en mode binaire.</p>
+<p>An <a class="reference internal" href="#lzma.LZMAFile" title="lzma.LZMAFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAFile</span></code></a> can wrap an already-open <a class="reference internal" href="../glossary.html#term-file-object"><span class="xref std std-term">file object</span></a>, or operate
+directly on a named file. The <em>filename</em> argument specifies either the file
+object to wrap, or the name of the file to open (as a <a class="reference internal" href="stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>,
+<a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> or <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like</span></a> object). When wrapping an
+existing file object, the wrapped file will not be closed when the
+<a class="reference internal" href="#lzma.LZMAFile" title="lzma.LZMAFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAFile</span></code></a> is closed.</p>
+<p>L'argument <em>mode</em> peut être soit <code class="docutils literal notranslate"><span class="pre">&quot;r&quot;</span></code> pour la lecture (défaut), <code class="docutils literal notranslate"><span class="pre">&quot;w&quot;</span></code> pour la ré-écriture, <code class="docutils literal notranslate"><span class="pre">&quot;x&quot;</span></code> pour la création exclusive, ou <code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code> pour l'insertion. Elles peuvent aussi être écrites de la façon suivante : <code class="docutils literal notranslate"><span class="pre">&quot;rb&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;wb&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;xb&quot;</span></code> et <code class="docutils literal notranslate"><span class="pre">&quot;ab&quot;</span></code> respectivement.</p>
+<p>If <em>filename</em> is a file object (rather than an actual file name), a mode of
+<code class="docutils literal notranslate"><span class="pre">&quot;w&quot;</span></code> does not truncate the file, and is instead equivalent to <code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code>.</p>
+<p>Dès l'ouverture d'un fichier pour être lu, le fichier d'entrée peut être le résultat d'une concaténation de plusieurs flux distincts et compressés. Ceux-ci sont décodés de manière transparente en un seul flux logique.</p>
+<p>Quand un fichier est ouvert pour le lire, les arguments <em>format</em> et <em>filters</em> ont les mêmes significations que pour la <a class="reference internal" href="#lzma.LZMADecompressor" title="lzma.LZMADecompressor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMADecompressor</span></code></a>. Par conséquent, les arguments <em>check</em> et <em>preset</em> ne devront pas être sollicités.</p>
+<p>Dès ouverture d'un fichier pour l'écriture, les arguments <em>format</em>, <em>check</em>, <em>preset</em> et <em>filters</em> ont le même sens que dans la <a class="reference internal" href="#lzma.LZMACompressor" title="lzma.LZMACompressor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMACompressor</span></code></a>.</p>
+<p><a class="reference internal" href="#lzma.LZMAFile" title="lzma.LZMAFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAFile</span></code></a> supports all the members specified by
+<a class="reference internal" href="io.html#io.BufferedIOBase" title="io.BufferedIOBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BufferedIOBase</span></code></a>, except for <a class="reference internal" href="io.html#io.BufferedIOBase.detach" title="io.BufferedIOBase.detach"><code class="xref py py-meth docutils literal notranslate"><span class="pre">detach()</span></code></a>
+and <a class="reference internal" href="io.html#io.IOBase.truncate" title="io.IOBase.truncate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">truncate()</span></code></a>.
+Iteration and the <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement are supported.</p>
+<p>Les méthodes suivantes sont aussi disponibles :</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lzma.LZMAFile.peek">
+<span class="sig-name descname"><span class="pre">peek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lzma.LZMAFile.peek" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie la donnée en mémoire-tampon sans progression de la position du fichier. Au moins un octet de donnée sera renvoyé, jusqu'à ce que l'EOF soit atteinte. Le nombre exact d'octets renvoyés demeure indéterminé (l'argument <em>taille</em> est ignoré).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While calling <a class="reference internal" href="#lzma.LZMAFile.peek" title="lzma.LZMAFile.peek"><code class="xref py py-meth docutils literal notranslate"><span class="pre">peek()</span></code></a> does not change the file position of
+the <a class="reference internal" href="#lzma.LZMAFile" title="lzma.LZMAFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAFile</span></code></a>, it may change the position of the underlying
+file object (e.g. if the <a class="reference internal" href="#lzma.LZMAFile" title="lzma.LZMAFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAFile</span></code></a> was constructed by passing a
+file object for <em>filename</em>).</p>
+</div>
+</dd></dl>
+
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.4: </span>Added support for the <code class="docutils literal notranslate"><span class="pre">&quot;x&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;xb&quot;</span></code> modes.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>La méthode <a class="reference internal" href="io.html#io.BufferedIOBase.read" title="io.BufferedIOBase.read"><code class="xref py py-meth docutils literal notranslate"><span class="pre">read()</span></code></a> accepte maintenant un argument <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>Accepte un <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a>.</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="compressing-and-decompressing-data-in-memory">
+<h2>Compresser et décompresser une donnée en mémoire<a class="headerlink" href="#compressing-and-decompressing-data-in-memory" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="lzma.LZMACompressor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lzma.</span></span><span class="sig-name descname"><span class="pre">LZMACompressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">FORMAT_XZ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lzma.LZMACompressor" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Créé un objet compresseur, qui peut être utilisé pour compresser incrémentalement une donnée.</p>
+<p>Pour une façon plus adaptée de compresser un seul extrait de donnée, voir <a class="reference internal" href="#lzma.compress" title="lzma.compress"><code class="xref py py-func docutils literal notranslate"><span class="pre">compress()</span></code></a>.</p>
+<p>L'argument <em>format</em> définit quel format de conteneur sera mis en œuvre. Les valeurs possibles sont :</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_XZ</span></code>: Le format du  conteneur <code class="docutils literal notranslate"><span class="pre">.xz</span></code>.</dt><dd><p>C'est le format par défaut.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_ALONE</span></code>: L'ancien format du conteneur <code class="docutils literal notranslate"><span class="pre">.lzma</span></code>.</dt><dd><p>Ce format est davantage limité que <code class="docutils literal notranslate"><span class="pre">.xz</span></code> --il ne supporte pas les vérifications d'intégrité ou les filtres multiples.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_RAW</span></code>: Un flux de données brut, n'utilisant aucun format de conteneur.</dt><dd><p>Ce format spécifique ne prend pas en charge les vérifications d'intégrité et exige systématiquement la définition d'une chaîne de filtrage personnalisée (à la fois pour la compression et la décompression). Par ailleurs, les données compressées par ce biais ne peuvent pas être décompressées par l'usage de <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_AUTO</span></code> (voir :  <a class="reference internal" href="#lzma.LZMADecompressor" title="lzma.LZMADecompressor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMADecompressor</span></code></a>).</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>L'argument <em>check</em> détermine le type de vérification d'intégrité à exploiter avec la donnée compressée. Cette vérification est déclenchée lors de la décompression, pour garantir que la donnée n'a pas été corrompue. Les valeurs possibles sont :</p>
+<ul class="simple">
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">CHECK_NONE</span></code>: Pas de vérification d'intégrité. C'est la valeur par défaut (et la seule valeur acceptable) pour <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_ALONE</span></code> et <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_RAW</span></code>.</p></li>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">CHECK_CRC32</span></code>: Vérification par Redondance Cyclique 32-bit (<em>Cyclic Redundancy Check</em>).</p></li>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">CHECK_CRC64</span></code>: Vérification par Redondance Cyclique 64-bit (<em>Cyclic Redundancy Check</em>). Valeur par défaut pour <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_XZ</span></code>.</p></li>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">CHECK_SHA256</span></code>: Algorithme de Hachage Sécurisé 256-bit (<em>Secure Hash Algorithm</em>).</p></li>
+</ul>
+<p>Si le type de vérification n'est pas supporté par le système, une erreur de type <a class="reference internal" href="#lzma.LZMAError" title="lzma.LZMAError"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAError</span></code></a> est levée.</p>
+<p>Les réglages de compression peuvent être définis soit comme un pré-réglage de niveau de compression (avec l'argument <em>preset</em>) ; soit de façon détaillée comme une chaîne particulière de filtres (avec l'argument <em>filters</em>).</p>
+<p>L'argument <em>preset</em> (s'il est fourni) doit être un entier compris entre <code class="docutils literal notranslate"><span class="pre">0</span></code> et <code class="docutils literal notranslate"><span class="pre">9</span></code> (inclus), éventuellement relié à OR avec la constante <code class="xref py py-const docutils literal notranslate"><span class="pre">PRESET_EXTREME</span></code>. Si aucun <em>preset</em> ni <em>filters</em> ne ont définis, le comportement par défaut consiste à utiliser la <code class="xref py py-const docutils literal notranslate"><span class="pre">PRESET_DEFAULT</span></code> (niveau par défaut : <code class="docutils literal notranslate"><span class="pre">6</span></code>). Des pré-réglages plus élevés entraîne une sortie plus petite, mais rend le processus de compression plus lent.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>En plus d'être plus gourmande en CPU, la compression avec des préréglages plus élevés nécessite beaucoup plus de mémoire (et produit des résultats qui nécessitent plus de mémoire pour décompresser). Par exemple, avec le préréglage <code class="docutils literal notranslate"><span class="pre">9</span></code>, l'objet d'une <a class="reference internal" href="#lzma.LZMACompressor" title="lzma.LZMACompressor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMACompressor</span></code></a> peut dépasser largement les 800 Mo. Pour cette raison, il est généralement préférable de respecter le préréglage par défaut.</p>
+</div>
+<p>L'argument <em>filters</em> (s'il est défini) doit être un critère de la chaîne de filtrage. Voir <a class="reference internal" href="#filter-chain-specs"><span class="std std-ref">Préciser des chaînes de filtre personnalisées</span></a> pour plus de précisions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lzma.LZMACompressor.compress">
+<span class="sig-name descname"><span class="pre">compress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lzma.LZMACompressor.compress" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Une <em>data</em> compressée (un objet <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>), renvoie un objet <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> contenant une donnée compressée pour au moins une partie de l'entrée. Certaine <em>data</em> peuvent être mise en tampon, pour être utiliser lors de prochains appels par <a class="reference internal" href="#lzma.compress" title="lzma.compress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compress()</span></code></a> et <a class="reference internal" href="#lzma.LZMACompressor.flush" title="lzma.LZMACompressor.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a>. La donnée renvoyée pourra être concaténée avec la sortie d'appels précédents vers la méthode <a class="reference internal" href="#lzma.compress" title="lzma.compress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compress()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lzma.LZMACompressor.flush">
+<span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lzma.LZMACompressor.flush" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Conclut l'opération de compression, en renvoyant l'objet <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> constitué de toutes les données stockées dans les tampons interne du compresseur.</p>
+<p>The compressor cannot be used after this method has been called.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lzma.LZMADecompressor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lzma.</span></span><span class="sig-name descname"><span class="pre">LZMADecompressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">FORMAT_AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memlimit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lzma.LZMADecompressor" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Créé un objet de décompression, pour décompresser de façon incrémentale une donnée.</p>
+<p>Pour un moyen plus pratique de décompresser un flux compressé complet en une seule fois, voir <a class="reference internal" href="#lzma.decompress" title="lzma.decompress"><code class="xref py py-func docutils literal notranslate"><span class="pre">decompress()</span></code></a>.</p>
+<p>L'argument <em>format</em> spécifie le format du conteneur à utiliser. La valeur par défaut est <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_AUTO</span></code> pouvant à la fois décompresser les fichiers <code class="docutils literal notranslate"><span class="pre">.xz</span></code> et <code class="docutils literal notranslate"><span class="pre">.lzma</span></code>. D'autres valeurs sont possibles comme <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_XZ</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_ALONE</span></code>, et <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_RAW</span></code>.</p>
+<p>L'argument <em>memlimit</em> spécifie une limite (en octets) sur la quantité de mémoire que le décompresseur peut utiliser. Lorsque cet argument est utilisé, la décompression échouera avec une <a class="reference internal" href="#lzma.LZMAError" title="lzma.LZMAError"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAError</span></code></a> s'il n'est pas possible de décompresser l'entrée dans la limite mémoire disponible.</p>
+<p>L'argument <em>filters</em> spécifie la chaîne de filtrage utilisée pour créer le flux décompressé. Cet argument est requis si <em>format</em> est <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_RAW</span></code>, mais ne doit pas être utilisé pour d'autres formats. Voir <a class="reference internal" href="#filter-chain-specs"><span class="std std-ref">Préciser des chaînes de filtre personnalisées</span></a> pour plus d'informations sur les chaînes de filtrage.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cette classe ne gère pas de manière transparente les entrées contenant plusieurs flux compressés, contrairement à <a class="reference internal" href="#lzma.decompress" title="lzma.decompress"><code class="xref py py-func docutils literal notranslate"><span class="pre">decompress()</span></code></a> et <a class="reference internal" href="#lzma.LZMAFile" title="lzma.LZMAFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMAFile</span></code></a>. Pour décompresser une entrée multi-flux avec  <a class="reference internal" href="#lzma.LZMADecompressor" title="lzma.LZMADecompressor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMADecompressor</span></code></a>, vous devez créer un nouveau décompresseur à chaque flux.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lzma.LZMADecompressor.decompress">
+<span class="sig-name descname"><span class="pre">decompress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lzma.LZMADecompressor.decompress" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Décompresse <em>data</em> (un <a class="reference internal" href="../glossary.html#term-bytes-like-object"><span class="xref std std-term">bytes-like object</span></a>), renvoyant une donnée non compressée en tant que chaîne d'octets. Certaines de ces <em>data</em> peuvent être mises en interne en tampon, pour un usage lors d'appels ultérieurs par la méthode <a class="reference internal" href="#lzma.decompress" title="lzma.decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decompress()</span></code></a>. La donnée renvoyée doit être concaténée avec la sortie des appels précédents à la méthode <a class="reference internal" href="#lzma.decompress" title="lzma.decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decompress()</span></code></a>.</p>
+<p>Si <em>max_length</em> est positif, renvoie au plus <em>max_length</em> octets de données compressées. Si la limite est atteinte et que d'autres sorties peuvent être produites, l'attribut <a class="reference internal" href="#lzma.LZMADecompressor.needs_input" title="lzma.LZMADecompressor.needs_input"><code class="xref py py-attr docutils literal notranslate"><span class="pre">needs_input</span></code></a> est positionné sur <code class="docutils literal notranslate"><span class="pre">False</span></code>. Dans ce cas, lors de l'appel suivant à la méthode <a class="reference internal" href="#lzma.LZMADecompressor.decompress" title="lzma.LZMADecompressor.decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decompress()</span></code></a>, vous pouvez fournir <code class="docutils literal notranslate"><span class="pre">b''</span></code> dans <em>data</em> afin d'obtenir la suite de la sortie.</p>
+<p>Si toutes les données entrées ont été décompressées et renvoyées (soit parce qu'il y avait moins de <em>max_length</em> octets, ou parce que <em>max_length</em> était négatif), l'attribut <a class="reference internal" href="#lzma.LZMADecompressor.needs_input" title="lzma.LZMADecompressor.needs_input"><code class="xref py py-attr docutils literal notranslate"><span class="pre">needs_input</span></code></a> sera configuré sur <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p>Attempting to decompress data after the end of stream is reached
+raises an <a class="reference internal" href="exceptions.html#EOFError" title="EOFError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">EOFError</span></code></a>.  Any data found after the end of the
+stream is ignored and saved in the <a class="reference internal" href="#lzma.LZMADecompressor.unused_data" title="lzma.LZMADecompressor.unused_data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">unused_data</span></code></a> attribute.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>Ajout du paramètre <em>max_length</em>.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lzma.LZMADecompressor.check">
+<span class="sig-name descname"><span class="pre">check</span></span><a class="headerlink" href="#lzma.LZMADecompressor.check" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>L'ID de la vérification d'intégrité exploité par le flux entrant. Il s'agit de <code class="xref py py-const docutils literal notranslate"><span class="pre">CHECK_UNKNOWN</span></code> tant que ce flux a été décodé pour déterminer quel type de vérification d'intégrité à été utilisé.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lzma.LZMADecompressor.eof">
+<span class="sig-name descname"><span class="pre">eof</span></span><a class="headerlink" href="#lzma.LZMADecompressor.eof" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> si le marqueur de fin de flux a été atteint.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lzma.LZMADecompressor.unused_data">
+<span class="sig-name descname"><span class="pre">unused_data</span></span><a class="headerlink" href="#lzma.LZMADecompressor.unused_data" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Donnée trouvée après la fin du flux compressé.</p>
+<p>Avant d'atteindre la fin du flux, ce sera <code class="docutils literal notranslate"><span class="pre">b&quot;&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lzma.LZMADecompressor.needs_input">
+<span class="sig-name descname"><span class="pre">needs_input</span></span><a class="headerlink" href="#lzma.LZMADecompressor.needs_input" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">False</span></code> si la méthode <a class="reference internal" href="#lzma.LZMADecompressor.decompress" title="lzma.LZMADecompressor.decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decompress()</span></code></a> peut fournir plus de données décompressées avant l'acquisition d'une nouvelle entrée non compressée.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.5.</span></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lzma.compress">
+<span class="sig-prename descclassname"><span class="pre">lzma.</span></span><span class="sig-name descname"><span class="pre">compress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">FORMAT_XZ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lzma.compress" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><em>data</em> compressée (un objet <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>), renvoyant une donnée compressée comme un objet <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>.</p>
+<p>Voir <a class="reference internal" href="#lzma.LZMACompressor" title="lzma.LZMACompressor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMACompressor</span></code></a> ci-dessus pour une description des arguments <em>format</em>, <em>check</em>, <em>preset</em> et <em>filters</em>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lzma.decompress">
+<span class="sig-prename descclassname"><span class="pre">lzma.</span></span><span class="sig-name descname"><span class="pre">decompress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">FORMAT_AUTO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memlimit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lzma.decompress" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Décompresse <em>data</em> (un objet <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> ), et retourne la donnée décompressée sous la forme d'un objet <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>.</p>
+<p>Si <em>data</em> est le résultat de la concaténation de plusieurs flux compressés et distincts , il les décompresse tous, et retourne les résultats concaténés.</p>
+<p>Voir <a class="reference internal" href="#lzma.LZMADecompressor" title="lzma.LZMADecompressor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LZMADecompressor</span></code></a> ci-dessus pour une description des arguments <em>format</em>, <em>memlimit</em> et <em>filters</em>.</p>
+</dd></dl>
+
+</section>
+<section id="miscellaneous">
+<h2>Divers<a class="headerlink" href="#miscellaneous" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="lzma.is_check_supported">
+<span class="sig-prename descclassname"><span class="pre">lzma.</span></span><span class="sig-name descname"><span class="pre">is_check_supported</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">check</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lzma.is_check_supported" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the given integrity check is supported on this system.</p>
+<p><code class="xref py py-const docutils literal notranslate"><span class="pre">CHECK_NONE</span></code> et <code class="xref py py-const docutils literal notranslate"><span class="pre">CHECK_CRC32</span></code> sont toujours pris en charge. <code class="xref py py-const docutils literal notranslate"><span class="pre">CHECK_CRC64</span></code> et <code class="xref py py-const docutils literal notranslate"><span class="pre">CHECK_SHA256</span></code> peuvent être indisponibles si vous utilisez une version de <strong class="program">liblzma</strong> compilée avec des possibilités restreintes.</p>
+</dd></dl>
+
+</section>
+<section id="specifying-custom-filter-chains">
+<span id="filter-chain-specs"></span><h2>Préciser des chaînes de filtre personnalisées<a class="headerlink" href="#specifying-custom-filter-chains" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Une chaîne de filtres est une séquence de dictionnaires, où chaque dictionnaire contient l'ID et les options pour chaque filtre. Le moindre dictionnaire contient la clé <code class="docutils literal notranslate"><span class="pre">&quot;id&quot;</span></code> et peut aussi contenir d'autres clés pour préciser chaque options relative au filtre déclaré. Les ID valides des filtres sont définies comme suit :</p>
+<ul class="simple">
+<li><p>Filtres de compression :</p>
+<ul>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">FILTER_LZMA1</span></code> (à utiliser avec <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_ALONE</span></code>)</p></li>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">FILTER_LZMA2</span></code> (à utiliser avec <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_XZ</span></code> et <code class="xref py py-const docutils literal notranslate"><span class="pre">FORMAT_RAW</span></code>)</p></li>
+</ul>
+</li>
+<li><p>Filtre Delta :</p>
+<ul>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">FILTER_DELTA</span></code></p></li>
+</ul>
+</li>
+<li><p>Filtres Branch-Call-Jump (BCJ) :</p>
+<ul>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">FILTER_X86</span></code></p></li>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">FILTER_IA64</span></code></p></li>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">FILTER_ARM</span></code></p></li>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">FILTER_ARMTHUMB</span></code></p></li>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">FILTER_POWERPC</span></code></p></li>
+<li><p><code class="xref py py-const docutils literal notranslate"><span class="pre">FILTER_SPARC</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p>Une chaîne de filtres peut contenir jusqu'à 4 filtres, et ne peut pas être vide. Le dernier filtre de cette chaîne devra être un filtre de compression, et tous les autres doivent être des filtres delta ou BCJ.</p>
+<p>Les filtres de compression contiennent les options suivantes (définies comme entrées additionnelles dans le dictionnaire qui représente le filtre) :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">preset</span></code>: Un pré-réglage à exploiter comme une source de valeurs par défaut pour les options qui ne sont pas explicitement définies.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dict_size</span></code>: La taille du dictionnaire en octets. Comprise entre 4 Ko et 1.5 Go (inclus).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lc</span></code>: Nombre de bits dans le contexte littéral.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lp</span></code>: Nombre de bits dans la position littérale. La somme <code class="docutils literal notranslate"><span class="pre">lc</span> <span class="pre">+</span> <span class="pre">lp</span></code> devra être au moins 4.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pb</span></code>: Nombre de bits à cette position ; au moins 4.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: <code class="xref py py-const docutils literal notranslate"><span class="pre">MODE_FAST</span></code> ou <code class="xref py py-const docutils literal notranslate"><span class="pre">MODE_NORMAL</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nice_len</span></code>: Ce qui devra être pris en compte comme &quot;longueur appréciable&quot; pour une recherche. Il devra être 273 ou moins.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mf</span></code>: Quel type d'index de recherche à utiliser -- <code class="xref py py-const docutils literal notranslate"><span class="pre">MF_HC3</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">MF_HC4</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">MF_BT2</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">MF_BT3</span></code>, ou <code class="xref py py-const docutils literal notranslate"><span class="pre">MF_BT4</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">depth</span></code>: Profondeur maximum de la recherche, utilisée par l'index de recherche. 0 (défaut) signifie une sélection automatique basée sur des options de filtres différents.</p></li>
+</ul>
+<p>Le filtre delta stocke les différences entre octets, induisant davantage d'entrées répétitives pour le compresseur, selon les circonstances. Il support une option, <code class="docutils literal notranslate"><span class="pre">dist</span></code>. Ce paramètre définit la distance entre les octets à soustraire. Par défaut : 1, soit la différence entre des octets adjacents.</p>
+<p>Les filtres BCJ sont conçus pour être appliqués sur du langage machine. Ils convertissent les branches relatives, les appels et les sauts dans le code à des fins d'adressage strict, dans le but d'augmenter la redondance mise en jeu par le compresseur. Ils ne supportent qu'une seule option : <code class="docutils literal notranslate"><span class="pre">start_offset</span></code>, pour définir l'adresse où sera déclenché le début de la donnée d'entrée. Par défaut : 0.</p>
+</section>
+<section id="examples">
+<h2>Exemples<a class="headerlink" href="#examples" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Lire un fichier compressé :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lzma</span>
+<span class="k">with</span> <span class="n">lzma</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;file.xz&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">file_content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Créer un fichier compressé :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lzma</span>
+<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Insert Data Here&quot;</span>
+<span class="k">with</span> <span class="n">lzma</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;file.xz&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Compresser des données en mémoire :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lzma</span>
+<span class="n">data_in</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Insert Data Here&quot;</span>
+<span class="n">data_out</span> <span class="o">=</span> <span class="n">lzma</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">data_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Compression incrémentale :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lzma</span>
+<span class="n">lzc</span> <span class="o">=</span> <span class="n">lzma</span><span class="o">.</span><span class="n">LZMACompressor</span><span class="p">()</span>
+<span class="n">out1</span> <span class="o">=</span> <span class="n">lzc</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;Some data</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">out2</span> <span class="o">=</span> <span class="n">lzc</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;Another piece of data</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">out3</span> <span class="o">=</span> <span class="n">lzc</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;Even more data</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">out4</span> <span class="o">=</span> <span class="n">lzc</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="c1"># Concatenate all the partial results:</span>
+<span class="n">result</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">out1</span><span class="p">,</span> <span class="n">out2</span><span class="p">,</span> <span class="n">out3</span><span class="p">,</span> <span class="n">out4</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Écrire des données compressées dans un fichier préalablement ouvert :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lzma</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;file.xz&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;This data will not be compressed</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">lzma</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">lzf</span><span class="p">:</span>
+        <span class="n">lzf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;This *will* be compressed</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;Not compressed</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Créer un fichier compressé en utilisant une chaîne de filtre personnalisée :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lzma</span>
+<span class="n">my_filters</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">lzma</span><span class="o">.</span><span class="n">FILTER_DELTA</span><span class="p">,</span> <span class="s2">&quot;dist&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">lzma</span><span class="o">.</span><span class="n">FILTER_LZMA2</span><span class="p">,</span> <span class="s2">&quot;preset&quot;</span><span class="p">:</span> <span class="mi">7</span> <span class="o">|</span> <span class="n">lzma</span><span class="o">.</span><span class="n">PRESET_EXTREME</span><span class="p">},</span>
+<span class="p">]</span>
+<span class="k">with</span> <span class="n">lzma</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;file.xz&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">my_filters</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;blah blah blah&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression via l'algorithme LZMA</a><ul>
+<li><a class="reference internal" href="#reading-and-writing-compressed-files">Lire et écrire des fichiers compressés</a></li>
+<li><a class="reference internal" href="#compressing-and-decompressing-data-in-memory">Compresser et décompresser une donnée en mémoire</a></li>
+<li><a class="reference internal" href="#miscellaneous">Divers</a></li>
+<li><a class="reference internal" href="#specifying-custom-filter-chains">Préciser des chaînes de filtre personnalisées</a></li>
+<li><a class="reference internal" href="#examples">Exemples</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="bz2.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Prise en charge de la compression <strong class="program">bzip2</strong></a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="zipfile.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Travailler avec des archives ZIP</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/lzma.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="zipfile.html" title="zipfile — Travailler avec des archives ZIP"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="bz2.html" title="bz2 — Prise en charge de la compression bzip2"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="archiving.html" >Compression de donnée et archivage</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression via l'algorithme LZMA</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,542 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="Index de l'API de haut niveau" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/asyncio-api-index.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Cette page répertorie toutes les API async/await de haut niveau disponibles dans l'API asyncio. Tâches: Utilitaires pour exécuter des programmes asynchrones, créer des tâches et attendre plusieurs ..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Cette page répertorie toutes les API async/await de haut niveau disponibles dans l'API asyncio. Tâches: Utilitaires pour exécuter des programmes asynchrones, créer des tâches et attendre plusieurs ..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>Index de l&#39;API de haut niveau &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Index de l&#39;API de bas niveau" href="asyncio-llapi-index.html" />
+    <link rel="prev" title="Extension" href="asyncio-extending.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/asyncio-api-index.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Index de l'API de haut niveau</a><ul>
+<li><a class="reference internal" href="#tasks">Tâches</a></li>
+<li><a class="reference internal" href="#queues">Files d'attente</a></li>
+<li><a class="reference internal" href="#subprocesses">Sous-processus</a></li>
+<li><a class="reference internal" href="#streams">Flux (<em>streams</em>)</a></li>
+<li><a class="reference internal" href="#synchronization">Synchronisation</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="asyncio-extending.html"
+                          title="Chapitre précédent">Extension</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="asyncio-llapi-index.html"
+                          title="Chapitre suivant">Index de l'API de bas niveau</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/asyncio-api-index.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asyncio-llapi-index.html" title="Index de l&#39;API de bas niveau"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="asyncio-extending.html" title="Extension"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="ipc.html" >Réseau et communication entre processus</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asyncio.html" accesskey="U"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Entrées/Sorties asynchrones</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Index de l'API de haut niveau</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="high-level-api-index">
+<h1>Index de l'API de haut niveau<a class="headerlink" href="#high-level-api-index" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Cette page répertorie toutes les API <em>async/await</em> de haut niveau disponibles dans l'API <em>asyncio</em>.</p>
+<section id="tasks">
+<h2>Tâches<a class="headerlink" href="#tasks" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Utilitaires pour exécuter des programmes asynchrones, créer des tâches et attendre plusieurs choses avec des délais maximaux d'attente.</p>
+<table class="colwidths-given full-width-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-runner.html#asyncio.run" title="asyncio.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a></p></td>
+<td><p>Crée une boucle d'événements, exécute une coroutine, ferme la boucle.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="asyncio-runner.html#asyncio.Runner" title="asyncio.Runner"><code class="xref py py-class docutils literal notranslate"><span class="pre">Runner</span></code></a></p></td>
+<td><p>Gestionnaire de contexte qui simplifie plusieurs appels de fonction asynchrones.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-task.html#asyncio.Task" title="asyncio.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a></p></td>
+<td><p>Objet de tâche.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="asyncio-task.html#asyncio.TaskGroup" title="asyncio.TaskGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskGroup</span></code></a></p></td>
+<td><p>Gestionnaire de contexte pour un groupe de tâches. Fournit un moyen pratique et fiable d'attendre la fin de toutes les tâches du groupe.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-task.html#asyncio.create_task" title="asyncio.create_task"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_task()</span></code></a></p></td>
+<td><p>Démarre une tâche asynchrone, puis la renvoie.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="asyncio-task.html#asyncio.current_task" title="asyncio.current_task"><code class="xref py py-func docutils literal notranslate"><span class="pre">current_task()</span></code></a></p></td>
+<td><p>Renvoie la tâche actuelle.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-task.html#asyncio.all_tasks" title="asyncio.all_tasks"><code class="xref py py-func docutils literal notranslate"><span class="pre">all_tasks()</span></code></a></p></td>
+<td><p>Renvoie toutes les tâches qui ne sont pas encore terminées pour une boucle d'événements.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> <a class="reference internal" href="asyncio-task.html#asyncio.sleep" title="asyncio.sleep"><code class="xref py py-func docutils literal notranslate"><span class="pre">sleep()</span></code></a></p></td>
+<td><p>Dort quelques secondes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> <a class="reference internal" href="asyncio-task.html#asyncio.gather" title="asyncio.gather"><code class="xref py py-func docutils literal notranslate"><span class="pre">gather()</span></code></a></p></td>
+<td><p>Planifie et attend des choses concurrentes.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> <a class="reference internal" href="asyncio-task.html#asyncio.wait_for" title="asyncio.wait_for"><code class="xref py py-func docutils literal notranslate"><span class="pre">wait_for()</span></code></a></p></td>
+<td><p>Exécute avec un délai d'attente.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> <a class="reference internal" href="asyncio-task.html#asyncio.shield" title="asyncio.shield"><code class="xref py py-func docutils literal notranslate"><span class="pre">shield()</span></code></a></p></td>
+<td><p>Empêche l'annulation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> <a class="reference internal" href="asyncio-task.html#asyncio.wait" title="asyncio.wait"><code class="xref py py-func docutils literal notranslate"><span class="pre">wait()</span></code></a></p></td>
+<td><p>Surveille l'achèvement.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-task.html#asyncio.timeout" title="asyncio.timeout"><code class="xref py py-func docutils literal notranslate"><span class="pre">timeout()</span></code></a></p></td>
+<td><p>Exécute avec un délai d'attente. Utile dans les cas où <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> ne convient pas.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="asyncio-task.html#asyncio.to_thread" title="asyncio.to_thread"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_thread()</span></code></a></p></td>
+<td><p>Exécute de manière asynchrone une fonction dans un fil d'exécution séparé.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-task.html#asyncio.run_coroutine_threadsafe" title="asyncio.run_coroutine_threadsafe"><code class="xref py py-func docutils literal notranslate"><span class="pre">run_coroutine_threadsafe()</span></code></a></p></td>
+<td><p>Planifie une coroutine à partir d'un autre fil d'exécution.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">in</span></code> <a class="reference internal" href="asyncio-task.html#asyncio.as_completed" title="asyncio.as_completed"><code class="xref py py-func docutils literal notranslate"><span class="pre">as_completed()</span></code></a></p></td>
+<td><p>Surveille l'achèvement avec une boucle <code class="docutils literal notranslate"><span class="pre">for</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exemples</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="asyncio-task.html#asyncio-example-gather"><span class="std std-ref">Utilisation d'asyncio.gather() pour exécuter des choses en parallèle</span></a>.</p></li>
+<li><p><a class="reference internal" href="asyncio-task.html#asyncio-example-waitfor"><span class="std std-ref">Utilisation d'asyncio.wait_for() pour appliquer un délai d'attente</span></a>.</p></li>
+<li><p><a class="reference internal" href="asyncio-task.html#asyncio-example-task-cancel"><span class="std std-ref">Annulation</span></a>.</p></li>
+<li><p><a class="reference internal" href="asyncio-task.html#asyncio-example-sleep"><span class="std std-ref">Utilisation d'asyncio.sleep()</span></a>.</p></li>
+<li><p>Voir aussi la page de <a class="reference internal" href="asyncio-task.html#coroutine"><span class="std std-ref">documentation de Tasks</span></a>.</p></li>
+</ul>
+</section>
+<section id="queues">
+<h2>Files d'attente<a class="headerlink" href="#queues" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les files d'attente doivent être utilisées pour répartir le travail entre plusieurs tâches asynchrones, implémenter des pools de connexions et des modèles <em>pub</em>/<em>sub</em>.</p>
+<table class="colwidths-given full-width-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-queue.html#asyncio.Queue" title="asyncio.Queue"><code class="xref py py-class docutils literal notranslate"><span class="pre">Queue</span></code></a></p></td>
+<td><p>File d'attente FIFO (premier entré, premier sorti).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="asyncio-queue.html#asyncio.PriorityQueue" title="asyncio.PriorityQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityQueue</span></code></a></p></td>
+<td><p>File d'attente avec gestion des priorités.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-queue.html#asyncio.LifoQueue" title="asyncio.LifoQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">LifoQueue</span></code></a></p></td>
+<td><p>Pile LIFO (dernier entré, premier sorti).</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exemples</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="asyncio-queue.html#asyncio-example-queue-dist"><span class="std std-ref">Utilisation d'asyncio.Queue pour répartir la charge de travail entre plusieurs tâches</span></a>.</p></li>
+<li><p>Voir aussi la page de <a class="reference internal" href="asyncio-queue.html#asyncio-queues"><span class="std std-ref">documentation des Queues</span></a>.</p></li>
+</ul>
+</section>
+<section id="subprocesses">
+<h2>Sous-processus<a class="headerlink" href="#subprocesses" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Utilitaires pour générer des sous-processus et exécuter des commandes shell.</p>
+<table class="colwidths-given full-width-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> <a class="reference internal" href="asyncio-subprocess.html#asyncio.create_subprocess_exec" title="asyncio.create_subprocess_exec"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_subprocess_exec()</span></code></a></p></td>
+<td><p>Crée un sous-processus.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> <a class="reference internal" href="asyncio-subprocess.html#asyncio.create_subprocess_shell" title="asyncio.create_subprocess_shell"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_subprocess_shell()</span></code></a></p></td>
+<td><p>Exécute une commande shell.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exemples</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="asyncio-subprocess.html#asyncio-example-subprocess-shell"><span class="std std-ref">Exécution d'une commande shell</span></a>.</p></li>
+<li><p>Voir aussi la documentation des <a class="reference internal" href="asyncio-subprocess.html#asyncio-subprocess"><span class="std std-ref">API subprocess</span></a>.</p></li>
+</ul>
+</section>
+<section id="streams">
+<h2>Flux (<em>streams</em>)<a class="headerlink" href="#streams" title="Lien permanent vers ce titre">¶</a></h2>
+<p>API de haut niveau pour travailler avec les entrées-sorties réseau.</p>
+<table class="colwidths-given full-width-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> <a class="reference internal" href="asyncio-stream.html#asyncio.open_connection" title="asyncio.open_connection"><code class="xref py py-func docutils literal notranslate"><span class="pre">open_connection()</span></code></a></p></td>
+<td><p>Établit une connexion TCP.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> <a class="reference internal" href="asyncio-stream.html#asyncio.open_unix_connection" title="asyncio.open_unix_connection"><code class="xref py py-func docutils literal notranslate"><span class="pre">open_unix_connection()</span></code></a></p></td>
+<td><p>Établit une connexion sur un connecteur Unix.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> <a class="reference internal" href="asyncio-stream.html#asyncio.start_server" title="asyncio.start_server"><code class="xref py py-func docutils literal notranslate"><span class="pre">start_server()</span></code></a></p></td>
+<td><p>Démarre un serveur TCP.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> <a class="reference internal" href="asyncio-stream.html#asyncio.start_unix_server" title="asyncio.start_unix_server"><code class="xref py py-func docutils literal notranslate"><span class="pre">start_unix_server()</span></code></a></p></td>
+<td><p>Démarre un serveur de socket Unix.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-stream.html#asyncio.StreamReader" title="asyncio.StreamReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamReader</span></code></a></p></td>
+<td><p>Objet <em>async/await</em> de haut niveau pour recevoir des données réseau.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="asyncio-stream.html#asyncio.StreamWriter" title="asyncio.StreamWriter"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamWriter</span></code></a></p></td>
+<td><p>Objet <em>async/await</em> de haut niveau pour envoyer des données réseau.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exemples</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="asyncio-stream.html#asyncio-example-stream"><span class="std std-ref">Exemple de client TCP</span></a>.</p></li>
+<li><p>Voir aussi la documentation des <a class="reference internal" href="asyncio-stream.html#asyncio-streams"><span class="std std-ref">API streams</span></a>.</p></li>
+</ul>
+</section>
+<section id="synchronization">
+<h2>Synchronisation<a class="headerlink" href="#synchronization" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Primitives de synchronisation de type thread qui peuvent être utilisées dans les tâches.</p>
+<table class="colwidths-given full-width-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-sync.html#asyncio.Lock" title="asyncio.Lock"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lock</span></code></a></p></td>
+<td><p>Verrou mutex.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="asyncio-sync.html#asyncio.Event" title="asyncio.Event"><code class="xref py py-class docutils literal notranslate"><span class="pre">Event</span></code></a></p></td>
+<td><p>Objet événement.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-sync.html#asyncio.Condition" title="asyncio.Condition"><code class="xref py py-class docutils literal notranslate"><span class="pre">Condition</span></code></a></p></td>
+<td><p>Objet condition.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="asyncio-sync.html#asyncio.Semaphore" title="asyncio.Semaphore"><code class="xref py py-class docutils literal notranslate"><span class="pre">Semaphore</span></code></a></p></td>
+<td><p>Sémaphore.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-sync.html#asyncio.BoundedSemaphore" title="asyncio.BoundedSemaphore"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoundedSemaphore</span></code></a></p></td>
+<td><p>Sémaphore avec des bornes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="asyncio-sync.html#asyncio.Barrier" title="asyncio.Barrier"><code class="xref py py-class docutils literal notranslate"><span class="pre">Barrier</span></code></a></p></td>
+<td><p>Objet barrière.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exemples</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="asyncio-sync.html#asyncio-example-sync-event"><span class="std std-ref">Utilisation d'asyncio.Event</span></a>.</p></li>
+<li><p><a class="reference internal" href="asyncio-sync.html#asyncio-example-barrier"><span class="std std-ref">Utilisation d'asyncio.Barrier</span></a>.</p></li>
+<li><p>Voir aussi la documentation des <a class="reference internal" href="asyncio-sync.html#asyncio-sync"><span class="std std-ref">primitives asyncio de synchronisation</span></a>.</p></li>
+</ul>
+</section>
+<section id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Lien permanent vers ce titre">¶</a></h2>
+<table class="colwidths-given full-width-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="asyncio-exceptions.html#asyncio.CancelledError" title="asyncio.CancelledError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">asyncio.CancelledError</span></code></a></p></td>
+<td><p>Levée lorsqu'une tâche est annulée. Voir aussi <a class="reference internal" href="asyncio-task.html#asyncio.Task.cancel" title="asyncio.Task.cancel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Task.cancel()</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="asyncio-sync.html#asyncio.BrokenBarrierError" title="asyncio.BrokenBarrierError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">asyncio.BrokenBarrierError</span></code></a></p></td>
+<td><p>Levée lorsqu'une barrière est brisée. Voir aussi <a class="reference internal" href="asyncio-sync.html#asyncio.Barrier.wait" title="asyncio.Barrier.wait"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Barrier.wait()</span></code></a>.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exemples</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="asyncio-task.html#asyncio-example-task-cancel"><span class="std std-ref">Utilisation de CancelledError pour exécuter le code sur la demande d'annulation</span></a>.</p></li>
+<li><p>Voir aussi la liste complète des <a class="reference internal" href="asyncio-exceptions.html#asyncio-exceptions"><span class="std std-ref">exceptions spécifiques asyncio</span></a>.</p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Index de l'API de haut niveau</a><ul>
+<li><a class="reference internal" href="#tasks">Tâches</a></li>
+<li><a class="reference internal" href="#queues">Files d'attente</a></li>
+<li><a class="reference internal" href="#subprocesses">Sous-processus</a></li>
+<li><a class="reference internal" href="#streams">Flux (<em>streams</em>)</a></li>
+<li><a class="reference internal" href="#synchronization">Synchronisation</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="asyncio-extending.html"
+                          title="Chapitre précédent">Extension</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="asyncio-llapi-index.html"
+                          title="Chapitre suivant">Index de l'API de bas niveau</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/asyncio-api-index.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asyncio-llapi-index.html" title="Index de l&#39;API de bas niveau"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="asyncio-extending.html" title="Extension"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="ipc.html" >Réseau et communication entre processus</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asyncio.html" ><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Entrées/Sorties asynchrones</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Index de l'API de haut niveau</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

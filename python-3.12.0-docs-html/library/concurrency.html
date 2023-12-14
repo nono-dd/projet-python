@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="Exécution concourante" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/concurrency.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Les modules documentés dans ce chapitre fournissent des outils d'exécution concourante de code. Le choix de l'outil approprié dépend de la tâche à exécuter (limitée par le CPU ( CPU bound), ou limi..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Les modules documentés dans ce chapitre fournissent des outils d'exécution concourante de code. Le choix de l'outil approprié dépend de la tâche à exécuter (limitée par le CPU ( CPU bound), ou limi..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>Exécution concourante &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="threading — Parallélisme basé sur les fils d’exécution (threads)" href="threading.html" />
+    <link rel="prev" title="ctypes — Bibliothèque Python d&#39;appels à des fonctions externes" href="ctypes.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/concurrency.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="ctypes.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — Bibliothèque Python d'appels à des fonctions externes</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="threading.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Parallélisme basé sur les fils d’exécution (<em>threads</em>)</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/concurrency.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="threading.html" title="threading — Parallélisme basé sur les fils d’exécution (threads)"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="ctypes.html" title="ctypes — Bibliothèque Python d&#39;appels à des fonctions externes"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">La bibliothèque standard</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Exécution concourante</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="concurrent-execution">
+<span id="concurrency"></span><h1>Exécution concourante<a class="headerlink" href="#concurrent-execution" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Les modules documentés dans ce chapitre fournissent des outils d'exécution concourante de code. Le choix de l'outil approprié dépend de la tâche à exécuter (limitée par le CPU (<em>CPU bound</em>), ou limitée la vitesse des entrées-sorties (<em>IO bound</em>)) et du style de développement désiré (coopération gérée par des évènements ou multitâche préemptif). En voici un survol :</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Parallélisme basé sur les fils d’exécution (<em>threads</em>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#thread-local-data">Données locales au fil d'exécution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#thread-objects">Objets <em>Threads</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#lock-objects">Verrous</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#rlock-objects">RLock Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#condition-objects">Condition Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#semaphore-objects">Semaphore Objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="threading.html#semaphore-example"><code class="xref py py-class docutils literal notranslate"><span class="pre">Semaphore</span></code> Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#event-objects">Event Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#timer-objects">Timer Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#barrier-objects">Barrier Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#using-locks-conditions-and-semaphores-in-the-with-statement">Using locks, conditions, and semaphores in the <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code> statement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — Parallélisme par processus</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="multiprocessing.html#introduction">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#the-process-class">La classe <code class="xref py py-class docutils literal notranslate"><span class="pre">Process</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#contexts-and-start-methods">Contextes et méthodes de démarrage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#exchanging-objects-between-processes">Échange d'objets entre les processus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#synchronization-between-processes">Synchronisation entre processus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#sharing-state-between-processes">Partager un état entre les processus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#using-a-pool-of-workers">Utiliser un pool de <em>workers</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiprocessing.html#reference">Référence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#process-and-exceptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">Process</span></code> et exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#pipes-and-queues">Tubes (<em>pipes</em>) et files (<em>queues</em>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#miscellaneous">Divers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#connection-objects">Objets de connexions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#synchronization-primitives">Primitives de synchronisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#shared-ctypes-objects">Objets <code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> partagés</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiprocessing.html#module-multiprocessing.sharedctypes">Le module <code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.sharedctypes</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#managers">Gestionnaires</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiprocessing.html#customized-managers">Gestionnaires personnalisés</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiprocessing.html#using-a-remote-manager">Utiliser un gestionnaire distant</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#proxy-objects">Objets mandataires</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiprocessing.html#cleanup">Nettoyage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#module-multiprocessing.pool">Pools de processus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#module-multiprocessing.connection">Auditeurs et Clients</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiprocessing.html#address-formats">Formats d'adresses</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#authentication-keys">Clés d'authentification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#logging">Journalisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#module-multiprocessing.dummy">Le module <code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.dummy</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiprocessing.html#programming-guidelines">Lignes directrices de programmation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#all-start-methods">Toutes les méthodes de démarrage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#the-spawn-and-forkserver-start-methods">Les méthodes de démarrage <em>spawn</em> et <em>forkserver</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiprocessing.html#examples">Exemples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> --- Shared memory for direct access across processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concurrent.html">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> --- Launching parallel tasks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#executor-objects">Executor Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#threadpoolexecutor">ThreadPoolExecutor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html#threadpoolexecutor-example">ThreadPoolExecutor Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#processpoolexecutor">ProcessPoolExecutor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html#processpoolexecutor-example">ProcessPoolExecutor Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#future-objects">Future Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#module-functions">Module Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#exception-classes">Exception classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Gestion de sous-processus</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#using-the-subprocess-module">Utiliser le module <code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#frequently-used-arguments">Arguments fréquemment utilisés</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#popen-constructor">Constructeur de <em>Popen</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#security-considerations">Considérations de sécurité</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#popen-objects">Objets <em>Popen</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#windows-popen-helpers">Utilitaires <em>Popen</em> pour Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#windows-constants">Constantes Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#older-high-level-api">Ancienne interface (<em>API</em>) haut-niveau</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#replacing-older-functions-with-the-subprocess-module">Remplacer les fonctions plus anciennes par le module <code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-bin-sh-shell-command-substitution">Remplacement de la substitution de commandes de terminal <strong class="program">/bin/sh</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-shell-pipeline">Remplacer les <em>pipes</em> du <em>shell</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-os-system">Remplacer <code class="xref py py-func docutils literal notranslate"><span class="pre">os.system()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-the-os-spawn-family">Remplacer les fonctions de la famille <code class="xref py py-func docutils literal notranslate"><span class="pre">os.spawn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-os-popen-os-popen2-os-popen3">Remplacer <code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen2()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen3()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-functions-from-the-popen2-module">Remplacer les fonctions du module <code class="xref py py-mod docutils literal notranslate"><span class="pre">popen2</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#legacy-shell-invocation-functions">Remplacement des fonctions originales d'invocation du <em>shell</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#notes">Notes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#converting-an-argument-sequence-to-a-string-on-windows">Convertir une séquence d'arguments vers une chaîne de caractères sous Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#disabling-use-of-vfork-or-posix-spawn">Disabling use of <code class="docutils literal notranslate"><span class="pre">vfork()</span></code> or <code class="docutils literal notranslate"><span class="pre">posix_spawn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> --- Event scheduler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sched.html#scheduler-objects">Scheduler Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — File synchronisée</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="queue.html#queue-objects">Objets <code class="docutils literal notranslate"><span class="pre">Queue</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="queue.html#simplequeue-objects">Objets <code class="docutils literal notranslate"><span class="pre">SimpleQueue</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — Variables de contexte</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contextvars.html#context-variables">Variables de contexte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contextvars.html#manual-context-management">Gestion de contexte manuelle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contextvars.html#asyncio-support">Gestion avec <em>asyncio</em></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Les modules suivants servent de fondation pour certains services cités ci-dessus :</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — API bas niveau de gestion de fils d'exécution</a></li>
+</ul>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="ctypes.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — Bibliothèque Python d'appels à des fonctions externes</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="threading.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Parallélisme basé sur les fils d’exécution (<em>threads</em>)</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/concurrency.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="threading.html" title="threading — Parallélisme basé sur les fils d’exécution (threads)"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="ctypes.html" title="ctypes — Bibliothèque Python d&#39;appels à des fonctions externes"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Exécution concourante</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

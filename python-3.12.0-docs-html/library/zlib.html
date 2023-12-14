@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="zlib — Compression compatible avec gzip" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/zlib.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Pour des applications nécessitant de compresser des données, les fonctions de ce module permettent la compression et la décompression via la bibliothèque zlib. La bibliothèque zlib a sa propre page..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Pour des applications nécessitant de compresser des données, les fonctions de ce module permettent la compression et la décompression via la bibliothèque zlib. La bibliothèque zlib a sa propre page..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>zlib — Compression compatible avec gzip &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="gzip — Support pour les fichiers gzip" href="gzip.html" />
+    <link rel="prev" title="Compression de donnée et archivage" href="archiving.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/zlib.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="archiving.html"
+                          title="Chapitre précédent">Compression de donnée et archivage</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="gzip.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support pour les fichiers <strong class="program">gzip</strong></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/zlib.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gzip.html" title="gzip — Support pour les fichiers gzip"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="archiving.html" title="Compression de donnée et archivage"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="archiving.html" accesskey="U">Compression de donnée et archivage</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible avec <strong class="program">gzip</strong></a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-zlib">
+<span id="zlib-compression-compatible-with-gzip"></span><h1><a class="reference internal" href="#module-zlib" title="zlib: Low-level interface to compression and decompression routines compatible with gzip."><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code></a> — Compression compatible avec <strong class="program">gzip</strong><a class="headerlink" href="#module-zlib" title="Lien permanent vers ce titre">¶</a></h1>
+<hr class="docutils" />
+<p>Pour des applications nécessitant de compresser des données, les fonctions de ce module permettent la compression et la décompression via la bibliothèque <em>zlib</em>. La bibliothèque <em>zlib</em> a sa propre page web sur <a class="reference external" href="https://www.zlib.net">https://www.zlib.net</a>. Il existe des incompatibilités connues entre le module Python et les versions de la bibliothèque <em>zlib</em> plus anciennes que la 1.1.3 ; 1.1.3 contient une <a class="reference external" href="https://zlib.net/zlib_faq.html#faq33">faille de sécurité</a> et nous recommandons d'utiliser plutôt la version 1.1.4 ou plus récente.</p>
+<p>Les fonctions <em>zlib</em> recèlent de nombreuses options et il est nécessaire de suivre un ordre précis. Cette documentation n'a pas pour but de couvrir la globalité des possibilités. Aussi, veuillez consulter le manuel <em>zlib</em> en ligne sur <a class="reference external" href="http://www.zlib.net/manual.html">http://www.zlib.net/manual.html</a> pour compléter davantage son utilisation.</p>
+<p>Pour lire ou écrire des fichiers <code class="docutils literal notranslate"><span class="pre">.gz</span></code> veuillez consulter le module <a class="reference internal" href="gzip.html#module-gzip" title="gzip: Interfaces for gzip compression and decompression using file objects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code></a>.</p>
+<p>Les exceptions et fonctions disponibles dans ce module sont :</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="zlib.error">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zlib.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#zlib.error" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Exception levée lors d'erreurs de compression et de décompression.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="zlib.adler32">
+<span class="sig-prename descclassname"><span class="pre">zlib.</span></span><span class="sig-name descname"><span class="pre">adler32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#zlib.adler32" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Calcule une somme de contrôle Adler-32 de <em>data</em> (une somme de contrôle Adler-32 est aussi fiable qu'un CRC32 mais peut être calculée bien plus rapidement). Le résultat produit est un entier non signé de 32-bit. Si <em>value</em> est défini, il devient la valeur initiale de la somme de contrôle ; sinon une valeur par défaut de 1 est utilisée. Définir <em>value</em> permet de calculer une somme de contrôle continue pendant la concaténation de plusieurs entrées. Cet algorithme n'a aucune garantie cryptographique puissante, et ne doit pas être utilisé ni pour l'authentification, ni pour des signatures numériques. Conçu comme un algorithme de somme de contrôle, il n'est pas adapté pour une utilisation sous forme de clé de hachage générique.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.0: </span>Renvoie une valeur non-signée.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="zlib.compress">
+<span class="sig-prename descclassname"><span class="pre">zlib.</span></span><span class="sig-name descname"><span class="pre">compress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MAX_WBITS</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zlib.compress" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Compresses the bytes in <em>data</em>, returning a bytes object containing compressed data.
+<em>level</em> is an integer from <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">9</span></code> or <code class="docutils literal notranslate"><span class="pre">-1</span></code> controlling the level of compression;
+<code class="docutils literal notranslate"><span class="pre">1</span></code> (Z_BEST_SPEED) is fastest and produces the least compression, <code class="docutils literal notranslate"><span class="pre">9</span></code> (Z_BEST_COMPRESSION)
+is slowest and produces the most.  <code class="docutils literal notranslate"><span class="pre">0</span></code> (Z_NO_COMPRESSION) is no compression.
+The default value is <code class="docutils literal notranslate"><span class="pre">-1</span></code> (Z_DEFAULT_COMPRESSION).  Z_DEFAULT_COMPRESSION represents a default
+compromise between speed and compression (currently equivalent to level 6).</p>
+<p id="compress-wbits">L'argument <em>wbits</em> contrôle la taille du tampon d'historique (&quot;<em>window size</em>&quot;) utilisé lors de la compression, et si un en-tête et un bloc final seront inclus. Il accepte plusieurs intervalles de valeurs, et vaut <code class="docutils literal notranslate"><span class="pre">15</span></code> (MAX_WBITS) par défaut :</p>
+<ul class="simple">
+<li><p>De +9 à +15 : le logarithme binaire de la taille du tampon, par conséquent compris entre 512 et 32 768. Des valeurs plus grandes produisent de meilleures compressions aux dépens d'une utilisation mémoire plus grande. Le résultat final inclus des en-têtes et des blocs spécifiques à <em>zlib</em>.</p></li>
+<li><p>De <code class="docutils literal notranslate"><span class="pre">-9</span></code> à <code class="docutils literal notranslate"><span class="pre">-15</span></code> : utilise la valeur absolue de <em>wbits</em> comme logarithme binaire de la taille du tampon, et ne produit pas d'entêtes ni de bloc final.</p></li>
+<li><p>De +25 à +31 = 16 + (9 à 15) : utilise les 4 bits de poids faible comme logarithme binaire de la taille du tampon, tout en incluant un entête <strong class="program">gzip</strong> et une somme de contrôle finale.</p></li>
+</ul>
+<p>Raises the <a class="reference internal" href="#zlib.error" title="zlib.error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">error</span></code></a> exception if any error occurs.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span><em>level</em> peut maintenant être passé par son nom.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.11: </span>The <em>wbits</em> parameter is now available to set window bits and
+compression type.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="zlib.compressobj">
+<span class="sig-prename descclassname"><span class="pre">zlib.</span></span><span class="sig-name descname"><span class="pre">compressobj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level=-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method=DEFLATED</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wbits=MAX_WBITS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memLevel=DEF_MEM_LEVEL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy=Z_DEFAULT_STRATEGY</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">zdict</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#zlib.compressobj" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie un objet &quot;compresseur&quot;, à utiliser pour compresser des flux de données qui ne peuvent pas être stockés entièrement en mémoire.</p>
+<p><em>level</em> est le taux de compression -- un entier compris entre <code class="docutils literal notranslate"><span class="pre">0</span></code> et <code class="docutils literal notranslate"><span class="pre">9</span></code> ou <code class="docutils literal notranslate"><span class="pre">-1</span></code>. La valeur <code class="docutils literal notranslate"><span class="pre">1</span></code> est la plus rapide avec taux de compression minimal, tandis que la valeur <code class="docutils literal notranslate"><span class="pre">9</span></code> est la plus lente mais produit une compression maximale. <code class="docutils literal notranslate"><span class="pre">0</span></code> ne produit aucune compression. La valeur par défaut est <code class="docutils literal notranslate"><span class="pre">-1</span></code> (<em>Z_DEFAULT_COMPRESSION</em>). La constante <em>Z_DEFAULT_COMPRESSION</em> équivaut à un bon compromis par défaut entre rapidité et bonne compression (valeur équivalente au niveau 6).</p>
+<p><em>method</em> définit l'algorithme de compression. Pour le moment, la seule valeur acceptée est <code class="xref py py-const docutils literal notranslate"><span class="pre">DEFLATED</span></code>.</p>
+<p>The <em>wbits</em> parameter controls the size of the history buffer (or the
+&quot;window size&quot;), and what header and trailer format will be used. It has
+the same meaning as <a class="reference external" href="#compress-wbits">described for compress()</a>.</p>
+<p>L'argument <em>memLevel</em> permet d'ajuster la quantité de mémoire utilisée pour stocker l'état interne de la compression. Les valeurs valides sont comprises entre <code class="docutils literal notranslate"><span class="pre">1</span></code> et <code class="docutils literal notranslate"><span class="pre">9</span></code>. Des valeurs plus élevées occupent davantage de mémoire, mais sont plus rapides et produisent des sorties plus compressées.</p>
+<p><em>strategy</em> permet d'ajuster l'algorithme de compression. Les valeurs possibles sont <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_DEFAULT_STRATEGY</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_FILTERED</span></code>, et <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_HUFFMAN_ONLY</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_RLE</span></code> (<em>zlib</em> 1.2.0.1) et <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_FIXED</span></code> (<em>zlib</em> 1.2.2.2).</p>
+<p><em>zdict</em> est un dictionnaire de compression prédéfini. C'est une séquence d'octets (tel qu'un objet <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>) contenant des sous-séquences attendues régulièrement dans les données à compresser. Les sous-séquences les plus fréquentes sont à placer à la fin du dictionnaire.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span>Ajout du paramètre <em>zdict</em>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="zlib.crc32">
+<span class="sig-prename descclassname"><span class="pre">zlib.</span></span><span class="sig-name descname"><span class="pre">crc32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#zlib.crc32" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p id="index-0">Calcule la somme de contrôle CRC (<em>Cyclic Redundancy Check</em> en anglais) de l'argument <em>data</em>. Il renvoie un entier non signé de 32 bits. Si l'argument <em>value</em> est présent, il permet de définir la valeur de départ de la somme de contrôle. Sinon, la valeur par défaut est 0. L'argument <em>value</em> permet de calculer la somme de contrôle glissante d'une concaténation de données. L'algorithme n'est pas fort d'un point de vue cryptographique, et ne doit pas être utilisé pour l'authentification ou des signatures numériques. Cet algorithme a été conçu pour être exploité comme un algorithme de somme de contrôle, ce n'est pas un algorithme de hachage générique.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.0: </span>Renvoie une valeur non-signée.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="zlib.decompress">
+<span class="sig-prename descclassname"><span class="pre">zlib.</span></span><span class="sig-name descname"><span class="pre">decompress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MAX_WBITS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bufsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEF_BUF_SIZE</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zlib.decompress" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Décompresse les octets de <em>data</em>, renvoyant un objet <em>bytes</em> contenant les données décompressées. Le paramètre <em>wbits</em> dépend du format des données compressées, et est abordé plus loin. Si l'argument <em>bufsize</em> est défini, il est utilisé comme taille initiale du tampon de sortie. En cas d'erreur, l'exception <a class="reference internal" href="#zlib.error" title="zlib.error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">error</span></code></a> est levée.</p>
+<p id="decompress-wbits">L'argument <em>wbits</em> contrôle la taille du tampon d'historique (&quot;<em>window size</em>&quot;) utilisé lors de la compression, et si un en-tête et un bloc final sont attendus. Similaire au paramètre de <a class="reference internal" href="#zlib.compressobj" title="zlib.compressobj"><code class="xref py py-func docutils literal notranslate"><span class="pre">compressobj()</span></code></a>, mais accepte une gamme plus large de valeurs :</p>
+<ul class="simple">
+<li><p>De +8 à +15 : logarithme binaire pour la taille du tampon. L'entrée doit contenir un en-tête et un bloc <em>zlib</em>.</p></li>
+<li><p>0 : détermine automatiquement la taille du tampon à partir de l'en-tête <em>zlib</em>. Géré uniquement depuis <em>zlib</em> 1.2.3.5.</p></li>
+<li><p>De <code class="docutils literal notranslate"><span class="pre">-8</span></code> à <code class="docutils literal notranslate"><span class="pre">-15</span></code> : utilise la valeur absolue de <em>wbits</em> comme logarithme binaire pour la taille du tampon. L'entrée doit être un flux brut, sans en-tête ni bloc final.</p></li>
+<li><p>De +24 à +31 = 16 + (8 à 15) : utilise les 4 de poids faible comme logarithme binaire pour la taille du tampon. L'entrée doit contenir un en-tête <em>gzip</em> et son bloc final.</p></li>
+<li><p>De +40 à +47 = 32 + (8 à 15) : utilise les 4 bits de poids faible comme logarithme binaire pour la taille du tampon, et accepte automatiquement les formats <em>zlib</em> ou <em>gzip</em>.</p></li>
+</ul>
+<p>Lors de la décompression d'un flux, la taille du tampon ne doit pas être inférieure à la taille initialement utilisée pour compresser le flux. L'utilisation d'une valeur trop petite peut déclencher une exception <a class="reference internal" href="#zlib.error" title="zlib.error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">error</span></code></a>. La valeur par défaut <em>wbits</em> correspond à une taille élevée du tampon et nécessite d'y adjoindre un en-tête <em>zlib</em> et son bloc final.</p>
+<p>L'argument <em>bufsize</em> correspond à la taille initiale du tampon utilisé pour contenir les données décompressées. Si plus d'espace est nécessaire, la taille du tampon sera augmentée au besoin, donc vous n'avez pas besoin de deviner la valeur exacte. Un réglage précis n'économisera que quelques appels à <code class="xref c c-func docutils literal notranslate"><span class="pre">malloc()</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span><em>wbits</em> et <em>bufsize</em> peuvent être utilisés comme arguments nommés.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="zlib.decompressobj">
+<span class="sig-prename descclassname"><span class="pre">zlib.</span></span><span class="sig-name descname"><span class="pre">decompressobj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wbits=MAX_WBITS</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">zdict</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#zlib.decompressobj" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie un objet &quot;décompresseur&quot;, à utiliser pour décompresser des flux de données qui ne rentrent pas entièrement en mémoire.</p>
+<p>Le paramètre <em>wbits</em> contrôle la taille du tampon, et détermine quel format d'en-tête et de bloc sont prévus. Il a la même signification que décrit pour <a class="reference external" href="#decompress-wbits">decompress()</a>.</p>
+<p>Le paramètre <em>zdict</em> définit un dictionnaire de compression prédéfini. S'il est fourni, il doit être identique au dictionnaire utilisé par le compresseur, à l'origine des données à décompresser.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Si <em>zdict</em> est un objet modifiable (tel qu'un <a class="reference internal" href="stdtypes.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a>, par exemple), vous ne devez pas modifier son contenu entre l'appel à la fonction <a class="reference internal" href="#zlib.decompressobj" title="zlib.decompressobj"><code class="xref py py-func docutils literal notranslate"><span class="pre">decompressobj()</span></code></a> et le premier appel à la méthode <code class="docutils literal notranslate"><span class="pre">decompress()</span></code> du décompresseur.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.3: </span>Ajout du paramètre <em>zdict</em>.</p>
+</div>
+</dd></dl>
+
+<p>Les objets de compression gèrent les méthodes suivantes :</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="zlib.Compress.compress">
+<span class="sig-prename descclassname"><span class="pre">Compress.</span></span><span class="sig-name descname"><span class="pre">compress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zlib.Compress.compress" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Compresse <em>data</em> et renvoie au moins une partie des données compressées sous forme d'objet <em>bytes</em>. Ces données doivent être concaténées à la suite des appels précédant à <a class="reference internal" href="#zlib.compress" title="zlib.compress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compress()</span></code></a>. Certaines entrées peuvent être conservées dans des tampons internes pour un traitement ultérieur.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zlib.Compress.flush">
+<span class="sig-prename descclassname"><span class="pre">Compress.</span></span><span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#zlib.Compress.flush" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Toutes les entrées mises en attente sont traitées et un objet <em>bytes</em> contenant la sortie des données compressées restantes est renvoyé. L'argument <em>mode</em> accepte l'une des constantes suivantes : <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_NO_FLUSH</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_PARTIAL_FLUSH</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_SYNC_FLUSH</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_FULL_FLUSH</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_BLOCK</span></code> (<em>zlib</em> 1.2.3.4), et <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_FINISH</span></code>, par défaut <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_FINISH</span></code>. Sauf <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_FINISH</span></code>, toutes les constantes permettent de compresser d'autres chaînes d'octets, tandis que <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_FINISH</span></code> finalise le flux compressé et bloque toute autre tentative de compression. Suite à l'appel de la méthode <a class="reference internal" href="#zlib.Compress.flush" title="zlib.Compress.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a> avec l'argument <em>mode</em> défini à <code class="xref py py-const docutils literal notranslate"><span class="pre">Z_FINISH</span></code>, la méthode <a class="reference internal" href="#zlib.compress" title="zlib.compress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compress()</span></code></a> ne peut plus être rappelée. Il ne reste plus qu'à supprimer l'objet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zlib.Compress.copy">
+<span class="sig-prename descclassname"><span class="pre">Compress.</span></span><span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zlib.Compress.copy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une copie de l'objet &quot;compresseur&quot;. Utile pour compresser efficacement un ensemble de données qui partagent un préfixe initial commun.</p>
+</dd></dl>
+
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>Les objets compresseurs gère maintenant <a class="reference internal" href="copy.html#copy.copy" title="copy.copy"><code class="xref py py-func docutils literal notranslate"><span class="pre">copy.copy()</span></code></a> et <a class="reference internal" href="copy.html#copy.deepcopy" title="copy.deepcopy"><code class="xref py py-func docutils literal notranslate"><span class="pre">copy.deepcopy()</span></code></a>.</p>
+</div>
+<p>Les objets décompresseurs prennent en charge les méthodes et attributs suivants :</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zlib.Decompress.unused_data">
+<span class="sig-prename descclassname"><span class="pre">Decompress.</span></span><span class="sig-name descname"><span class="pre">unused_data</span></span><a class="headerlink" href="#zlib.Decompress.unused_data" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Un objet <em>bytes</em> contenant tous les octets restants après les données compressées. Il vaut donc <code class="docutils literal notranslate"><span class="pre">b&quot;&quot;</span></code> tant que des données compressées sont disponibles. Si toute la chaîne d'octets ne contient que des données compressées, il vaut toujours <code class="docutils literal notranslate"><span class="pre">b&quot;&quot;</span></code>, un objet <em>bytes</em> vide.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zlib.Decompress.unconsumed_tail">
+<span class="sig-prename descclassname"><span class="pre">Decompress.</span></span><span class="sig-name descname"><span class="pre">unconsumed_tail</span></span><a class="headerlink" href="#zlib.Decompress.unconsumed_tail" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Un objet <em>bytes</em> contenant toutes les données non-traitées par le dernier appel à la méthode <a class="reference internal" href="#zlib.decompress" title="zlib.decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decompress()</span></code></a>, à cause d'un dépassement de la limite du tampon de données décompressées. Ces données n'ont pas encore été traitées par la bibliothèque <em>zlib</em>, vous devez donc les envoyer (potentiellement en y concaténant encore des données) par un appel à la méthode <a class="reference internal" href="#zlib.decompress" title="zlib.decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decompress()</span></code></a> pour obtenir une sortie correcte.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="zlib.Decompress.eof">
+<span class="sig-prename descclassname"><span class="pre">Decompress.</span></span><span class="sig-name descname"><span class="pre">eof</span></span><a class="headerlink" href="#zlib.Decompress.eof" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Booléen qui signale si la fin du flux compressé est atteint.</p>
+<p>This makes it possible to distinguish between a properly formed compressed
+stream, and an incomplete or truncated one.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zlib.Decompress.decompress">
+<span class="sig-prename descclassname"><span class="pre">Decompress.</span></span><span class="sig-name descname"><span class="pre">decompress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zlib.Decompress.decompress" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Décompresse <em>data</em>, renvoie un objet <em>bytes</em>, contenant au moins une partie des données décompressées. Ce résultat doit être concaténé aux résultats des appels précédents à <a class="reference internal" href="#zlib.decompress" title="zlib.decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decompress()</span></code></a>. Des données d'entrée peuvent être conservées dans les tampons internes pour un traitement ultérieur.</p>
+<p>Si le paramètre optionnel <em>max_length</em> est différent de zéro alors la valeur renvoyée n'est pas plus grande que <em>max_length</em>. Cela peut amener à une décompression partielle. Les données non-encore décompressées sont stockées dans l'attribut <a class="reference internal" href="#zlib.Decompress.unconsumed_tail" title="zlib.Decompress.unconsumed_tail"><code class="xref py py-attr docutils literal notranslate"><span class="pre">unconsumed_tail</span></code></a>. Cette chaîne d'octets doit être transmise à un appel ultérieur à <a class="reference internal" href="#zlib.decompress" title="zlib.decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decompress()</span></code></a>. Si <em>max_length</em> vaut zéro, la totalité de l'entrée est décompressée, et l'attribut <a class="reference internal" href="#zlib.Decompress.unconsumed_tail" title="zlib.Decompress.unconsumed_tail"><code class="xref py py-attr docutils literal notranslate"><span class="pre">unconsumed_tail</span></code></a> reste vide.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span><em>max_length</em> peut être utilisé comme un argument nommé.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zlib.Decompress.flush">
+<span class="sig-prename descclassname"><span class="pre">Decompress.</span></span><span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">length</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#zlib.Decompress.flush" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Toutes les entrées en attente sont traitées, et un objet <em>bytes</em> est renvoyé, contenant le reste des données à décompresser. Après l'appel à <a class="reference internal" href="#zlib.Decompress.flush" title="zlib.Decompress.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">flush()</span></code></a>, la méthode <a class="reference internal" href="#zlib.decompress" title="zlib.decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decompress()</span></code></a> ne peut pas être rappelée. Il ne reste qu'à détruire l'objet.</p>
+<p>Le paramètre optionnel <em>length</em> définit la taille initiale du tampon de sortie.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zlib.Decompress.copy">
+<span class="sig-prename descclassname"><span class="pre">Decompress.</span></span><span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zlib.Decompress.copy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Renvoie une copie du décompresseur. Vous pouvez l'utiliser pour sauvegarder l'état de la décompression en cours, afin de pouvoir revenir rapidement à cet endroit plus tard.</p>
+</dd></dl>
+
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>Ajout de <a class="reference internal" href="copy.html#copy.copy" title="copy.copy"><code class="xref py py-func docutils literal notranslate"><span class="pre">copy.copy()</span></code></a> et de <a class="reference internal" href="copy.html#copy.deepcopy" title="copy.deepcopy"><code class="xref py py-func docutils literal notranslate"><span class="pre">copy.deepcopy()</span></code></a> au support de décompression d'objets.</p>
+</div>
+<p>Des informations relatives à la version de la bibliothèque <em>zlib</em> utilisée sont disponibles via les constantes suivantes :</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="zlib.ZLIB_VERSION">
+<span class="sig-prename descclassname"><span class="pre">zlib.</span></span><span class="sig-name descname"><span class="pre">ZLIB_VERSION</span></span><a class="headerlink" href="#zlib.ZLIB_VERSION" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Version de la bibliothèque <em>zlib</em> utilisée lors de la compilation du module. Elle peut être différente de la bibliothèque <em>zlib</em> actuellement utilisée par le système, qui est consultable par <a class="reference internal" href="#zlib.ZLIB_RUNTIME_VERSION" title="zlib.ZLIB_RUNTIME_VERSION"><code class="xref py py-const docutils literal notranslate"><span class="pre">ZLIB_RUNTIME_VERSION</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="zlib.ZLIB_RUNTIME_VERSION">
+<span class="sig-prename descclassname"><span class="pre">zlib.</span></span><span class="sig-name descname"><span class="pre">ZLIB_RUNTIME_VERSION</span></span><a class="headerlink" href="#zlib.ZLIB_RUNTIME_VERSION" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Chaîne contenant la version de la bibliothèque <em>zlib</em> actuellement utilisée par l'interpréteur.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt>Module <a class="reference internal" href="gzip.html#module-gzip" title="gzip: Interfaces for gzip compression and decompression using file objects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code></a></dt><dd><p>Lire et écrire des fichiers au format <strong class="program">gzip</strong>.</p>
+</dd>
+<dt><a class="reference external" href="http://www.zlib.net">http://www.zlib.net</a></dt><dd><p>Page officielle de la bibliothèque <em>zlib</em>.</p>
+</dd>
+<dt><a class="reference external" href="http://www.zlib.net/manual.html">http://www.zlib.net/manual.html</a></dt><dd><p>La documentation de <em>zlib</em> explique le sens et l'utilisation des nombreuses fonctions fournies par la bibliothèque.</p>
+</dd>
+</dl>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="archiving.html"
+                          title="Chapitre précédent">Compression de donnée et archivage</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="gzip.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support pour les fichiers <strong class="program">gzip</strong></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/zlib.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gzip.html" title="gzip — Support pour les fichiers gzip"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="archiving.html" title="Compression de donnée et archivage"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="archiving.html" >Compression de donnée et archivage</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible avec <strong class="program">gzip</strong></a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>

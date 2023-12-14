@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="compileall — Génération du code intermédiaire des bibliothèques Python" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://docs.python.org/3/library/compileall.html" />
+<meta property="og:site_name" content="Python documentation" />
+<meta property="og:description" content="Code source : Lib/compileall.py Ce module contient des fonctions qui facilitent l'installation de bibliothèques Python. Elles compilent, sous forme de code intermédiaire ( bytecode), les fichiers s..." />
+<meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
+<meta property="og:image:alt" content="Python documentation" />
+<meta name="description" content="Code source : Lib/compileall.py Ce module contient des fonctions qui facilitent l'installation de bibliothèques Python. Elles compilent, sous forme de code intermédiaire ( bytecode), les fichiers s..." />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
+
+    <title>compileall — Génération du code intermédiaire des bibliothèques Python &#8212; Documentation Python 3.12.0</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?digest=b37c26da2f7529d09fe70b41c4b2133fe4931a90" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Recherchez dans Documentation Python 3.12.0"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="À propos de ces documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="dis – Désassembleur pour le code intermédiaire de Python" href="dis.html" />
+    <link rel="prev" title="py_compile — Compilation de sources Python" href="py_compile.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/compileall.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Génération du code intermédiaire des bibliothèques Python</a><ul>
+<li><a class="reference internal" href="#command-line-use">Utilisation en ligne de commande</a></li>
+<li><a class="reference internal" href="#public-functions">Fonctions publiques</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="py_compile.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compilation de sources Python</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="dis.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> – Désassembleur pour le code intermédiaire de Python</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/compileall.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dis.html" title="dis – Désassembleur pour le code intermédiaire de Python"
+             accesskey="N">suivant</a> |</li>
+        <li class="right" >
+          <a href="py_compile.html" title="py_compile — Compilation de sources Python"
+             accesskey="P">précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" accesskey="U">Services du Langage Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Génération du code intermédiaire des bibliothèques Python</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-compileall">
+<span id="compileall-byte-compile-python-libraries"></span><h1><a class="reference internal" href="#module-compileall" title="compileall: Tools for byte-compiling all Python source files in a directory tree."><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code></a> — Génération du code intermédiaire des bibliothèques Python<a class="headerlink" href="#module-compileall" title="Lien permanent vers ce titre">¶</a></h1>
+<p><strong>Code source :</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/compileall.py">Lib/compileall.py</a></p>
+<hr class="docutils" />
+<p>Ce module contient des fonctions qui facilitent l'installation de bibliothèques Python. Elles compilent, sous forme de code intermédiaire (<em>bytecode</em>), les fichiers source situés dans un dossier de votre choix. Ce module est particulièrement utile pour générer les fichiers de code intermédiaire lors de l'installation d'une bibliothèque, les rendant disponibles même pour les utilisateurs qui n'ont pas les privilèges d'écriture dans l'emplacement d'installation.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not Emscripten, not WASI.</p>
+<p>This module does not work or is not available on WebAssembly platforms
+<code class="docutils literal notranslate"><span class="pre">wasm32-emscripten</span></code> and <code class="docutils literal notranslate"><span class="pre">wasm32-wasi</span></code>. See
+<a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">Plateformes WebAssembly</span></a> for more information.</p>
+</div>
+<section id="command-line-use">
+<span id="compileall-cli"></span><h2>Utilisation en ligne de commande<a class="headerlink" href="#command-line-use" title="Lien permanent vers ce titre">¶</a></h2>
+<p>On peut se servir de ce module comme d'un script (avec <strong class="program">python -m compileall</strong>) pour compiler les fichiers source Python.</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-arg-directory">
+<span class="sig-name descname"><span class="pre">directory</span></span><span class="sig-prename descclassname"> <span class="pre">...</span></span><a class="headerlink" href="#cmdoption-compileall-arg-directory" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object std" id="cmdoption-compileall-arg-file">
+<span class="sig-name descname"><span class="pre">file</span></span><span class="sig-prename descclassname"> <span class="pre">...</span></span><a class="headerlink" href="#cmdoption-compileall-arg-file" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Positional arguments are files to compile or directories that contain
+source files, traversed recursively.  If no argument is given, behave as if
+the command line was <code class="samp docutils literal notranslate"><span class="pre">-l</span> <em><span class="pre">&lt;directories</span> <span class="pre">from</span> <span class="pre">sys.path&gt;</span></em></code>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-l">
+<span class="sig-name descname"><span class="pre">-l</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-compileall-l" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Compiler uniquement les fichiers situés directement dans les dossiers passés en argument ou implicites, sans descendre récursivement dans les sous-dossiers.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-f">
+<span class="sig-name descname"><span class="pre">-f</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-compileall-f" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Forcer la recompilation même si les horodatages sont à jour.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-q">
+<span class="sig-name descname"><span class="pre">-q</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-compileall-q" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Supprimer l'affichage des noms des fichiers compilés.Si cette option est donnée une seule fois, les erreurs sont affichées malgré tout. Vous pouvez les supprimer en passant l'option deux fois (c'est-à-dire avec <code class="docutils literal notranslate"><span class="pre">-qq</span></code>).</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-d">
+<span class="sig-name descname"><span class="pre">-d</span></span><span class="sig-prename descclassname"> <span class="pre">destdir</span></span><a class="headerlink" href="#cmdoption-compileall-d" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ce nom de dossier est ajouté en tête du chemin de chaque fichier compilé. Il aura une influence sur les traces d'appels pour les erreurs levées lors de la compilation, et sera reflété dans les fichiers de code intermédiaire, pour utilisation dans les traces d'appels et autres messages si le fichier source n'existe pas au moment de l'exécution.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-s">
+<span class="sig-name descname"><span class="pre">-s</span></span><span class="sig-prename descclassname"> <span class="pre">strip_prefix</span></span><a class="headerlink" href="#cmdoption-compileall-s" title="Lien permanent vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-p">
+<span class="sig-name descname"><span class="pre">-p</span></span><span class="sig-prename descclassname"> <span class="pre">prepend_prefix</span></span><a class="headerlink" href="#cmdoption-compileall-p" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retire (<code class="docutils literal notranslate"><span class="pre">-s</span></code>) ou ajoute (<code class="docutils literal notranslate"><span class="pre">-p</span></code>) le préfixe aux chemins stockés dans les fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code>. Cette option ne peut pas être combinée avec <code class="docutils literal notranslate"><span class="pre">-d</span></code>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-x">
+<span class="sig-name descname"><span class="pre">-x</span></span><span class="sig-prename descclassname"> <span class="pre">regex</span></span><a class="headerlink" href="#cmdoption-compileall-x" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Exclut tous les fichiers dont les noms correspondent à l'expression régulière <em>regex</em>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-i">
+<span class="sig-name descname"><span class="pre">-i</span></span><span class="sig-prename descclassname"> <span class="pre">list</span></span><a class="headerlink" href="#cmdoption-compileall-i" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ajoute chaque ligne du fichier <em>list</em> aux fichiers et dossiers à compiler. <em>list</em> peut être <code class="docutils literal notranslate"><span class="pre">-</span></code>, auquel cas le script lit l'entrée standard.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-b">
+<span class="sig-name descname"><span class="pre">-b</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-compileall-b" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Utilise l'ancienne manière de nommer et placer les fichiers de code intermédiaire, en écrasant éventuellement ceux générés par une autre version de Python. Par défaut, les règles décrites dans la <span class="target" id="index-8"></span><a class="pep reference external" href="https://peps.python.org/pep-3147/"><strong>PEP 3147</strong></a> s'appliquent. Elles permettent à différentes versions de l'interpréteur Python de coexister en conservant chacune ses propres fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-r">
+<span class="sig-name descname"><span class="pre">-r</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-compileall-r" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Règle le niveau de récursion maximal pour le parcours des sous-dossiers. Lorsque cette option est fournie, <code class="docutils literal notranslate"><span class="pre">-l</span></code> est ignorée. <strong class="program">python -m compileall &lt;dossier&gt; -r 0</strong> revient au même que <strong class="program">python -m compileall &lt;dossier&gt; -l</strong>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-j">
+<span class="sig-name descname"><span class="pre">-j</span></span><span class="sig-prename descclassname"> <span class="pre">N</span></span><a class="headerlink" href="#cmdoption-compileall-j" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Effectue la compilation avec <em>N</em> processus parallèles. Si <em>N</em> vaut 0, autant de processus sont créés que la machine dispose de processeurs (résultat de <a class="reference internal" href="os.html#os.cpu_count" title="os.cpu_count"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.cpu_count()</span></code></a>).</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-invalidation-mode">
+<span class="sig-name descname"><span class="pre">--invalidation-mode</span></span><span class="sig-prename descclassname"> <span class="pre">[timestamp|checked-hash|unchecked-hash]</span></span><a class="headerlink" href="#cmdoption-compileall-invalidation-mode" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la manière dont les fichiers de code intermédiaire seront invalidés au moment de l'exécution. Avec <code class="docutils literal notranslate"><span class="pre">timestamp</span></code>, les fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> générés comportent l'horodatage de la source et sa taille. Avec <code class="docutils literal notranslate"><span class="pre">checked-hash</span></code> ou <code class="docutils literal notranslate"><span class="pre">unchecked-hash</span></code>, ce seront des pyc utilisant le hachage, qui contiennent une empreinte du code source plutôt qu'un horodatage. Voir <a class="reference internal" href="../reference/import.html#pyc-invalidation"><span class="std std-ref">Invalidation de bytecode mis en cache</span></a> pour plus d'informations sur la manière dont Python valide les fichiers de code intermédiaire conservés en cache lors de l'exécution. La valeur par défaut est <code class="docutils literal notranslate"><span class="pre">timestamp</span></code>. Cependant, si la variable d'environnement <span class="target" id="index-9"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">SOURCE_DATE_EPOCH</span></code> a été réglée, elle devient <code class="docutils literal notranslate"><span class="pre">checked-hash</span></code>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-o">
+<span class="sig-name descname"><span class="pre">-o</span></span><span class="sig-prename descclassname"> <span class="pre">level</span></span><a class="headerlink" href="#cmdoption-compileall-o" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Compile avec un certain niveau d'optimisation. Cette option peut être passée plusieurs fois afin de compiler pour plusieurs niveaux d'un seul coup (par exemple, <code class="docutils literal notranslate"><span class="pre">compileall</span> <span class="pre">-o</span> <span class="pre">1</span> <span class="pre">-o</span> <span class="pre">2</span></code>).</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-e">
+<span class="sig-name descname"><span class="pre">-e</span></span><span class="sig-prename descclassname"> <span class="pre">dir</span></span><a class="headerlink" href="#cmdoption-compileall-e" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ignore les liens symboliques qui redirigent en dehors du dossier.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-compileall-hardlink-dupes">
+<span class="sig-name descname"><span class="pre">--hardlink-dupes</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-compileall-hardlink-dupes" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Si deux fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> compilés avec des niveaux d'optimisation différents ont finalement le même contenu, emploie des liens physiques pour les fusionner.</p>
+</dd></dl>
+
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.2: </span>ajout des options <code class="docutils literal notranslate"><span class="pre">-i</span></code>, <code class="docutils literal notranslate"><span class="pre">-b</span></code> et <code class="docutils literal notranslate"><span class="pre">-h</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>ajout des options <code class="docutils literal notranslate"><span class="pre">-j</span></code>, <code class="docutils literal notranslate"><span class="pre">-r</span></code> et <code class="docutils literal notranslate"><span class="pre">-qq</span></code> (l'option <code class="docutils literal notranslate"><span class="pre">-q</span></code> peut donc prendre plusieurs niveaux). <code class="docutils literal notranslate"><span class="pre">-b</span></code> produit toujours un fichier de code intermédiaire portant l'extension <code class="docutils literal notranslate"><span class="pre">.pyc</span></code>, et jamais <code class="docutils literal notranslate"><span class="pre">.pyo</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7: </span>ajout de l'option <code class="docutils literal notranslate"><span class="pre">--invalidation-mode</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.9: </span>ajout des options <code class="docutils literal notranslate"><span class="pre">-s</span></code>, <code class="docutils literal notranslate"><span class="pre">-p</span></code>, <code class="docutils literal notranslate"><span class="pre">-e</span></code> et <code class="docutils literal notranslate"><span class="pre">--hardlink-dupes</span></code>. Rehaussement de la limite de récursion par défaut à <a class="reference internal" href="sys.html#sys.getrecursionlimit" title="sys.getrecursionlimit"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.getrecursionlimit()</span></code></a> au lieu de 10 précédemment. L'option <code class="docutils literal notranslate"><span class="pre">-o</span></code> peut être passée plusieurs fois.</p>
+</div>
+<p>Il n'y a pas d'option en ligne de commande pour contrôler le niveau d'optimisation utilisé par la fonction <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a>. Il suffit en effet d'utiliser l'option <code class="docutils literal notranslate"><span class="pre">-O</span></code> de l'interpréteur Python lui-même : <strong class="program">python -O -m compileall</strong>.</p>
+<p>Similarly, the <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a> function respects the <a class="reference internal" href="sys.html#sys.pycache_prefix" title="sys.pycache_prefix"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.pycache_prefix</span></code></a>
+setting. The generated bytecode cache will only be useful if <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a> is
+run with the same <a class="reference internal" href="sys.html#sys.pycache_prefix" title="sys.pycache_prefix"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.pycache_prefix</span></code></a> (if any) that will be used at
+runtime.</p>
+</section>
+<section id="public-functions">
+<h2>Fonctions publiques<a class="headerlink" href="#public-functions" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="compileall.compile_dir">
+<span class="sig-prename descclassname"><span class="pre">compileall.</span></span><span class="sig-name descname"><span class="pre">compile_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxlevels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">sys.getrecursionlimit()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ddir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quiet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legacy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invalidation_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stripdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prependdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_sl_dest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardlink_dupes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#compileall.compile_dir" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Parcourt récursivement le dossier <em>dir</em>, en compilant tous les fichiers <code class="file docutils literal notranslate"><span class="pre">.py</span></code>. Renvoie une valeur vraie si tous les fichiers ont été compilés sans erreur, et une valeur fausse dans le cas contraire.</p>
+<p>Le paramètre <em>maxlevels</em> permet de limiter la profondeur de récursion. Sa valeur par défaut est celle de <code class="docutils literal notranslate"><span class="pre">sys.getrecursionlimit()</span></code>.</p>
+<p>Si <em>ddir</em> est fourni, il est ajouté en tête du chemin de chaque fichier compilé, ce qui modifie l'affichage des traces d'appels pour les erreurs qui seraient levées lors de la compilation. De plus, il se retrouve dans les fichiers de code intermédiaire, pour utilisation dans les traces et autres messages si le fichier source n'existe pas au moment de l'exécution.</p>
+<p>Si <em>force</em> est vrai, les modules sont recompilés même si leurs horodatages sont à jour.</p>
+<p>Si <em>rx</em> est donné, sa méthode <code class="docutils literal notranslate"><span class="pre">search</span></code> est appelée sur le chemin complet de chaque fichier source, et si elle renvoie une valeur vraie, le fichier est sauté. <em>rx</em> sera habituellement une expression régulière (objet <a class="reference internal" href="re.html#re-objects"><span class="std std-ref">re.Pattern</span></a>).</p>
+<p>Si <em>quiet</em> est <code class="docutils literal notranslate"><span class="pre">False</span></code> ou bien <code class="docutils literal notranslate"><span class="pre">0</span></code> (la valeur par défaut), les noms de fichiers et d'autres informations sont affichés sur la sortie standard. Avec <code class="docutils literal notranslate"><span class="pre">1</span></code>, seules les erreurs sont affichées. Avec <code class="docutils literal notranslate"><span class="pre">2</span></code>, aucune sortie n'est émise.</p>
+<p>Si <em>legacy</em> est vrai, les fichiers de code intermédiaire sont nommés et placés selon l'ancienne méthode, en écrasant éventuellement ceux générés par une autre version de Python. Par défaut, les règles décrites dans la <span class="target" id="index-10"></span><a class="pep reference external" href="https://peps.python.org/pep-3147/"><strong>PEP 3147</strong></a> s'appliquent. Elles permettent à différentes versions de l'interpréteur Python de coexister en conservant chacune ses propres fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code>.</p>
+<p><em>optimize</em> définit le niveau d'optimisation qu'applique le compilateur. Cet argument est passé directement à la fonction native <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a>. Il peut également être fourni sous la forme d'une séquence de niveaux d'optimisation, ce qui permet de compiler chaque fichier <code class="file docutils literal notranslate"><span class="pre">.py</span></code> plusieurs fois en appliquant divers niveaux d'optimisation.</p>
+<p><em>workers</em> est le nombre de tâches lancées en parallèle pour la compilation. Par défaut, les fichiers sont compilés séquentiellement. Cette même stratégie s'applique dans tous les cas lorsque le parallélisme n'est pas possible sur la plateforme d'exécution. Si <em>workers</em> vaut 0, autant de tâches sont lancées que le système comporte de cœurs. Si <em>workers</em> est strictement négatif, une exception de type <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> est levée.</p>
+<p><em>invalidation_mode</em> doit être un membre de l'énumération <a class="reference internal" href="py_compile.html#py_compile.PycInvalidationMode" title="py_compile.PycInvalidationMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">py_compile.PycInvalidationMode</span></code></a> et détermine la manière dont les fichiers <code class="file docutils literal notranslate"><span class="pre">.pyc</span></code> sont invalidés lorsque l'interpréteur tente de les utiliser.</p>
+<p>The <em>stripdir</em>, <em>prependdir</em> and <em>limit_sl_dest</em> arguments correspond to
+the <code class="docutils literal notranslate"><span class="pre">-s</span></code>, <code class="docutils literal notranslate"><span class="pre">-p</span></code> and <code class="docutils literal notranslate"><span class="pre">-e</span></code> options described above.
+They may be specified as <code class="docutils literal notranslate"><span class="pre">str</span></code> or <a class="reference internal" href="os.html#os.PathLike" title="os.PathLike"><code class="xref py py-class docutils literal notranslate"><span class="pre">os.PathLike</span></code></a>.</p>
+<p>Un argument <em>hardlink_dupes</em> vrai correspond à l'utilisation de l'option <code class="docutils literal notranslate"><span class="pre">--hardlink-dupes</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.2: </span>ajout des paramètres <em>legacy</em> et <em>optimize</em>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>ajout du paramètre <em>workers</em>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>le paramètre <em>quiet</em> peut prendre plusieurs niveaux.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>Lorsque le paramètre <em>legacy</em> est vrai, des fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code>, et jamais <code class="docutils literal notranslate"><span class="pre">.pyo</span></code>, sont générés, quel que soit le niveau d'optimisation.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.6: </span>accepte un <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">objet simili-chemin</span></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7: </span>ajout du paramètre <em>invalidation_mode</em>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7.2: </span>La valeur par défaut du paramètre <em>invalidation_mode</em> est changée à <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.8: </span>Un nombre de processus adapté à la machine est choisi lorsque <em>workers</em> vaut 0.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.9: </span>ajout des arguments <em>stripdir</em>, <em>prependdir</em>, <em>limit_sl_dest</em> et <em>hardlink_dupes</em>. La valeur par défaut de <em>maxlevels</em> a été changée pour <code class="docutils literal notranslate"><span class="pre">sys.getrecursionlimit()</span></code> (elle était de 10 auparavant).</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="compileall.compile_file">
+<span class="sig-prename descclassname"><span class="pre">compileall.</span></span><span class="sig-name descname"><span class="pre">compile_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fullname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ddir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quiet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legacy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invalidation_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stripdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prependdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_sl_dest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardlink_dupes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#compileall.compile_file" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Compile le fichier dont le chemin est donné par <em>fullname</em>. Renvoie une valeur vraie si et seulement si le fichier est compilé sans erreur.</p>
+<p>Si <em>ddir</em> est fourni, il est ajouté en tête du chemin de chaque fichier compilé, ce qui modifie l'affichage des traces pour les erreurs qui seraient levées lors de la compilation. De plus, il se retrouve dans les fichiers de code intermédiaire, pour utilisation dans les traces et autres messages si le fichier source n'existe pas au moment de l'exécution.</p>
+<p>Si <em>rx</em> est donné, sa méthode <code class="docutils literal notranslate"><span class="pre">search</span></code> est appelée sur le chemin complet de chaque fichier source, et si elle renvoie une valeur vraie, le fichier est sauté. <em>rx</em> sera habituellement une expression régulière (objet <a class="reference internal" href="re.html#re-objects"><span class="std std-ref">re.Pattern</span></a>).</p>
+<p>Si <em>quiet</em> est <code class="docutils literal notranslate"><span class="pre">False</span></code> ou bien <code class="docutils literal notranslate"><span class="pre">0</span></code> (la valeur par défaut), les noms de fichiers et d'autres informations sont affichés sur la sortie standard. Avec <code class="docutils literal notranslate"><span class="pre">1</span></code>, seules les erreurs sont affichées. Avec <code class="docutils literal notranslate"><span class="pre">2</span></code>, aucune sortie n'est émise.</p>
+<p>Si <em>legacy</em> est vrai, les fichiers de code intermédiaire sont nommés et placés selon l'ancienne méthode, en écrasant éventuellement ceux générés par une autre version de Python. Par défaut, les règles décrites dans la <span class="target" id="index-11"></span><a class="pep reference external" href="https://peps.python.org/pep-3147/"><strong>PEP 3147</strong></a> s'appliquent. Elles permettent à différentes versions de l'interpréteur Python de coexister en conservant chacune ses propres fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code>.</p>
+<p><em>optimize</em> définit le niveau d'optimisation qu'applique le compilateur. Cet argument est passé directement à la fonction native <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a>. Il peut également être fourni sous la forme d'une séquence de niveaux d'optimisation, ce qui permet de compiler chaque fichier <code class="file docutils literal notranslate"><span class="pre">.py</span></code> plusieurs fois en appliquant divers niveaux d'optimisation.</p>
+<p><em>invalidation_mode</em> doit être un membre de l'énumération <a class="reference internal" href="py_compile.html#py_compile.PycInvalidationMode" title="py_compile.PycInvalidationMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">py_compile.PycInvalidationMode</span></code></a> et détermine la manière dont les fichiers <code class="file docutils literal notranslate"><span class="pre">.pyc</span></code> sont invalidés lorsque l'interpréteur tente de les utiliser.</p>
+<p>The <em>stripdir</em>, <em>prependdir</em> and <em>limit_sl_dest</em> arguments correspond to
+the <code class="docutils literal notranslate"><span class="pre">-s</span></code>, <code class="docutils literal notranslate"><span class="pre">-p</span></code> and <code class="docutils literal notranslate"><span class="pre">-e</span></code> options described above.
+They may be specified as <code class="docutils literal notranslate"><span class="pre">str</span></code> or <a class="reference internal" href="os.html#os.PathLike" title="os.PathLike"><code class="xref py py-class docutils literal notranslate"><span class="pre">os.PathLike</span></code></a>.</p>
+<p>Un argument <em>hardlink_dupes</em> vrai correspond à l'utilisation de l'option <code class="docutils literal notranslate"><span class="pre">--hardlink-dupes</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Nouveau dans la version 3.2.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>le paramètre <em>quiet</em> peut prendre plusieurs niveaux.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>Lorsque le paramètre <em>legacy</em> est vrai, des fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code>, et jamais <code class="docutils literal notranslate"><span class="pre">.pyo</span></code>, sont générés, quel que soit le niveau d'optimisation.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7: </span>ajout du paramètre <em>invalidation_mode</em>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7.2: </span>La valeur par défaut du paramètre <em>invalidation_mode</em> est changée à <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.9: </span>Ajout des arguments <em>stripdir</em>, <em>prependdir</em>, <em>limit_sl_dest</em> et <em>hardlink_dupes</em>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="compileall.compile_path">
+<span class="sig-prename descclassname"><span class="pre">compileall.</span></span><span class="sig-name descname"><span class="pre">compile_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_curdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxlevels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quiet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legacy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invalidation_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#compileall.compile_path" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Compile tous les fichiers <code class="file docutils literal notranslate"><span class="pre">.py</span></code> contenus dans les dossiers de <code class="docutils literal notranslate"><span class="pre">sys.path</span></code>. Renvoie une valeur vraie s'ils ont tous été compilés sans erreur, et une valeur fausse dans le cas contraire.</p>
+<p>Si <em>skip_curdir</em> est vrai (c'est le cas par défaut), le dossier courant est exclu de la recherche. Les autres paramètres sont passés à <a class="reference internal" href="#compileall.compile_dir" title="compileall.compile_dir"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile_dir()</span></code></a>. Notez que contrairement aux autres fonctions de ce module, la valeur par défaut de <code class="docutils literal notranslate"><span class="pre">maxlevels</span></code> est <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.2: </span>ajout des paramètres <em>legacy</em> et <em>optimize</em>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>le paramètre <em>quiet</em> peut prendre plusieurs niveaux.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.5: </span>Lorsque le paramètre <em>legacy</em> est vrai, des fichiers <code class="docutils literal notranslate"><span class="pre">.pyc</span></code>, et jamais <code class="docutils literal notranslate"><span class="pre">.pyo</span></code>, sont générés, quel que soit le niveau d'optimisation.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7: </span>ajout du paramètre <em>invalidation_mode</em>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Modifié dans la version 3.7.2: </span>La valeur par défaut du paramètre <em>invalidation_mode</em> est changée à <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</div>
+</dd></dl>
+
+<p>Pour forcer la recompilation de tous les fichiers <code class="file docutils literal notranslate"><span class="pre">.py</span></code> dans le dossier <code class="file docutils literal notranslate"><span class="pre">Lib/</span></code> et tous ses sous-dossiers :</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">compileall</span>
+
+<span class="n">compileall</span><span class="o">.</span><span class="n">compile_dir</span><span class="p">(</span><span class="s1">&#39;Lib/&#39;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Perform same compilation, excluding files in .svn directories.</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="n">compileall</span><span class="o">.</span><span class="n">compile_dir</span><span class="p">(</span><span class="s1">&#39;Lib/&#39;</span><span class="p">,</span> <span class="n">rx</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[/</span><span class="se">\\</span><span class="s1">][.]svn&#39;</span><span class="p">),</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># pathlib.Path objects can also be used.</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="n">compileall</span><span class="o">.</span><span class="n">compile_dir</span><span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Lib/&#39;</span><span class="p">),</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt>Module <a class="reference internal" href="py_compile.html#module-py_compile" title="py_compile: Generate byte-code files from Python source files."><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code></a></dt><dd><p>Compiler un fichier source unique.</p>
+</dd>
+</dl>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table des matières</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Génération du code intermédiaire des bibliothèques Python</a><ul>
+<li><a class="reference internal" href="#command-line-use">Utilisation en ligne de commande</a></li>
+<li><a class="reference internal" href="#public-functions">Fonctions publiques</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Sujet précédent</h4>
+    <p class="topless"><a href="py_compile.html"
+                          title="Chapitre précédent"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compilation de sources Python</a></p>
+  </div>
+  <div>
+    <h4>Sujet suivant</h4>
+    <p class="topless"><a href="dis.html"
+                          title="Chapitre suivant"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> – Désassembleur pour le code intermédiaire de Python</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Signalement de bogue</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/compileall.rst"
+            rel="nofollow">Voir la source
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dis.html" title="dis – Désassembleur pour le code intermédiaire de Python"
+             >suivant</a> |</li>
+        <li class="right" >
+          <a href="py_compile.html" title="py_compile — Compilation de sources Python"
+             >précédent</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.12.0 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >La bibliothèque standard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" >Services du Langage Python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Génération du code intermédiaire des bibliothèques Python</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Recherche rapide" aria-label="Recherche rapide" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2001-2023, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Mis à jour le oct. 26, 2023.
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Créé en utilisant <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    </div>
+
+  </body>
+</html>
