@@ -2,10 +2,13 @@
 
 # importation des modules
 import time
-from pathlib import Path
+# from pathlib import Path
+from datetime import datetime
+
 
 # Initialisation du répertoire téléphonique
 phonebook_stock = {}
+temps_actuelle = datetime.now()
 
 
 def ajouter_un_numero():
@@ -31,9 +34,9 @@ def ajouter_un_numero():
     # Stockage des informations dans le répertoire téléphonique
     all_name = first_name + ' ' + last_name
     phonebook_stock[all_name] = number
-    time.sleep(2)
+    time.sleep(1)
     print(f"{all_name} a été ajouté au répertoire avec le numéro {number}")
-    time.sleep(3)
+    time.sleep(1.4)
 
 
 # ...
@@ -178,30 +181,26 @@ def delete_number():
 def save_to_file():
     verif = input('''Avez-vous un fichier pour l'enregistrement ??
     1. Oui
-    2. Non''')
+    2. Non
+    3. Quit''')
     if verif == '1':
         file_name = input('Entrer le nom du fichier : ')
-        if Path(file_name).exists():
-            with open(file_name, "w") as fic:
-                for book in phonebook_stock.items():
-                    fic.write(f"{book}\n")
+        with open(file_name, "w") as fic:
+            for name, number in phonebook_stock.items():
+                fic.write(f"{name}: {number}\n")
+            fic.write(f"\n\t {temps_actuelle}")
+            fic.close()
+        print(f"Le répertoire téléphonique a été écrit dans le fichier {file_name}.")
 
-            time.sleep(2)
-            print(f"Le répertoire téléphonique a été écrit dans le fichier {file_name}.")
-        else:
-            print("Votre fichier n'existe pas !!")
-            save_to_file()
     elif verif == '2':
         file_name = input('Entrer le nom du repertoire a créer : ')
-        if file_name.strip() and Path(file_name).exists():
-            print("Le nom du fichier est valide")
-            time.sleep(1)
-            with open(file_name, 'w') as fic:
-                fic.write(f"{phonebook_stock}")
-        else:
-            print("Le nom du fichier n'est pas valide ou le fichier n'existe pas.")
-            time.sleep(3)
-            save_to_file()
+        with open(file_name, 'w') as fic:
+            for name, number in phonebook_stock.items():
+                fic.write(f"{name}: {number}\n")
+            fic.write(f"\n\t {temps_actuelle}")
+        fic.close()
+    elif verif == '3':
+        print('')
 
 
 def phonebook():
@@ -228,6 +227,8 @@ def phonebook():
             ajouter_un_numero()
         elif choice_index == 2:
             delete_number()
+        elif choice_index == 3:
+            recherche_contact()
         elif choice_index == 5:
             save_to_file()
             print(". . . .. .. BYE (- o -)")
