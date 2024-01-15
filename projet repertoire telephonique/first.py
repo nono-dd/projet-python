@@ -1,4 +1,6 @@
 # phonebook
+# Auteur : Nono
+# Date : 15/01/2024
 
 # importation des modules
 import time
@@ -188,16 +190,17 @@ def save_to_file():
         with open(file_name, "w") as fic:
             for name, number in phonebook_stock.items():
                 fic.write(f"{name}: {number}\n")
-            fic.write(f"\n\t {temps_actuelle}")
+            fic.write(f"\n\t Le répertoire téléphonique a été enregistrer a {temps_actuelle}")
             fic.close()
         print(f"Le répertoire téléphonique a été écrit dans le fichier {file_name}.")
+        time.sleep(1)
 
     elif verif == '2':
-        file_name = input('Entrer le nom du repertoire a créer : ')
+        file_name = input('Entrer le nom du fichier a créer : ')
         with open(file_name, 'w') as fic:
             for name, number in phonebook_stock.items():
                 fic.write(f"{name}: {number}\n")
-            fic.write(f"\n\t {temps_actuelle}")
+            fic.write(f"\n\t Le répertoire téléphonique a été enregistrer a {temps_actuelle}")
         fic.close()
     elif verif == '3':
         print('')
